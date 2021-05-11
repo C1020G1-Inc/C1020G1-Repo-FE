@@ -1,1 +1,279 @@
-<p>list-product-admin works!</p>
+<div class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+      <div class="logo"><a class="simple-text logo-normal">
+        Admin Page
+      </a></div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item active ">
+            <a class="nav-link" href="./tables.html">
+              <i class="fa fa-list-alt"></i>
+              <p>Danh sách sản phẩm</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./statistical.html">
+              <i class="fa fa-line-chart"></i>
+              <p>Thống kê</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Danh sách sản phẩm</h4>
+                </div>
+                <div class="card-body">
+                  <div>
+                    <span style="padding: 10px;color: white">Tên sản phẩm:</span>
+                    <input placeholder="Nhập tên..." [(ngModel)]="productName">
+                    <span style="padding: 10px;color: white">Loại sản phẩm</span>
+                    <select style="width: 100px;" [(ngModel)]="categoryId">
+                      <option value="0">--Tất Cả--</option>
+                      <option value="1">Điện tử</option>
+                      <option value="2">Dụng Cụ</option>
+                    </select>
+                    <span style="padding: 10px;color: white">Người đăng:</span>
+                    <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName">
+                    <span style="padding: 10px;color: white">Tình trạng</span>
+                    <select style="width: 150px" [(ngModel)]="productStatusId">
+                      <option value="0">--Tất Cả--</option>
+                      <option value="1">Chưa duyệt</option>
+                      <option value="2">Đang đấu giá</option>
+                      <option value="3">Chờ thanh toán</option>
+                      <option value="4">Hoàn thành</option>
+                      <option value="5">Thất bại</option>
+                    </select>
+                    <input type="button" class="btn btn-primary" value="Tìm kiếm" (click)="doSearch()"
+                           style="margin-left: 3%">
+                  </div>
+                  <div class="table-responsive" *ngIf="productList.length != 0">
+                    <table class="table">
+                      <thead class="text-primary" style="background-color: #00795f">
+                      <th style="color: white">
+                        ID
+                      </th>
+                      <th style="color: white">
+                        Tên sản phẩm
+                      </th>
+                      <th style="color: white">
+                        Chủng loại
+                      </th>
+                      <th style="color: white">
+                        Người Đăng
+                      </th>
+                      <th style="color: white">
+                        Giá khởi điểm
+                      </th>
+                      <th style="color: white">
+                        Tình trạng
+                      </th>
+                      <th style="color: white">
+                        Hành Động
+                      </th>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let product of productList">
+                        <td>
+                          {{product.productId}}
+                        </td>
+                        <td>
+                          {{product.productName}}
+                        </td>
+                        <td>
+                          {{product.category.categoryName}}
+                        </td>
+                        <td>
+                          {{product.account.user.userName}}
+                        </td>
+                        <td class="text-primary">
+                          {{product.price | currency:'VND':'symbol'}}
+                        </td>
+                        <td *ngIf="product.productStatus.id == 1">
+                          <a href="#acceptProduct" data-toggle="modal" class="text-danger"
+                             (click)="sendProduct(product)">Chưa
+                            Duyệt</a>
+                        </td>
+                        <td *ngIf="product.productStatus.id != 1">
+                          {{product.productStatus.statusName}}
+                        </td>
+                        <td *ngIf="product.productStatus.id == 1">
+                          <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"
+                             href="#editProduct" data-toggle="modal">
+                            <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
+                          </a>
+                          <a style="cursor: pointer;margin-left: 10px" href="#deleteModal" data-toggle="modal">
+                            <i class="fa fa-trash fa-2x" title="Xóa"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div *ngIf="productList.length == 0">
+                    <h2 style="text-align: center;padding: 10%" class="text-warning">Không tìm thấy sản phẩm !!!</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h4 class="modal-title">Xóa sản phẩm</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc muốn xóa sản phẩm này?</p>
+            <p class="text-warning"><small>Sau khi xóa sẽ không hoàn tác lại được.</small></p>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-danger" value="Xóa">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="acceptProduct" class="modal fade" *ngIf="product">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h4 class="modal-title">Duyệt sản phẩm</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <table>
+              <tr>
+                <th style="padding: 30px">Tên sản phẩm:</th>
+                <td>{{product.productName}}</td>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Người đăng:</th>
+                <td>{{product.account.user.userName}}</td>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Chủng loại:</th>
+                <td>{{product.category.categoryName}}</td>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Giá khởi điểm:</th>
+                <td>{{product.price | currency:'VND':'symbol'}}</td>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Bước giá:</th>
+                <td>{{product.priceStep | currency:'VND':'symbol'}}</td>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Hình ảnh:</th>
+                <td><img style="width: 100px;height: 70px"
+                         src="https://cdn.tgdd.vn/Products/Images/7077/117880/apple-watch-3-phien-ban-38-mm-1-2-org.jpg">
+                </td>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Thời gian:</th>
+                <td>{{product.auctionTime}} phút</td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="editProduct" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h4 class="modal-title">Cập nhật !!</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <table>
+                <tr>
+                  <th style="padding: 30px">Tên sản phẩm:</th>
+                  <td><input type="text" value="Apple Watch Series 3"></td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Người đăng:</th>
+                  <td><input type="text" value="Lê Phước Thanh Cao"></td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Chủng loại:</th>
+                  <td>
+                    <select style="width: 100px;">
+                      <option>Điện tử</option>
+                      <option>Dụng Cụ</option>
+                      <option>Điện thoại</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Giá khởi điểm:</th>
+                  <td><input type="text" value="500.000VNĐ"></td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Bước giá:</th>
+                  <td><input type="text" value="200.000VNĐ"></td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Hình ảnh:</th>
+                  <td>
+                    <label for="upload-photo" class="material-icons"
+                           style="color: #4545e5;cursor: pointer">image</label>
+                    <input type="file" id="upload-photo">
+                    <img style="width: 100px;height: 70px"
+                         src="https://cdn.tgdd.vn/Products/Images/7077/117880/apple-watch-3-phien-ban-38-mm-1-2-org.jpg">
+                  </td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Thời gian:</th>
+                  <td>
+                    <select style="width: 100px;">
+                      <option>60 phút</option>
+                      <option>120 phút</option>
+                      <option>180 phút</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" value="Duyệt">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--   Core JS Files   -->
+<script src="src/assets/js/core/jquery.min.js"></script>
+<script src="src/assets/js/core/popper.min.js"></script>
+<script src="src/assets/js/core/bootstrap-material-design.min.js"></script>

@@ -4,13 +4,15 @@ import { ListProductAdminComponent } from './list-product-admin/list-product-adm
 import { ApproveProductComponent } from './approve-product/approve-product.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { ProductChartComponent } from './product-chart/product-chart.component';
+import {FormsModule} from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [ListProductAdminComponent, ApproveProductComponent, UpdateProductComponent, ProductChartComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class ProductManagementModule { }
