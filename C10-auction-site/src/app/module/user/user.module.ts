@@ -19,6 +19,7 @@ import { FooterComponent } from './footer/footer.component';
     AuctionModule,
     LoginModule,
     HomePageModule
-  ]
+  ],
+  exports: [HeaderComponent]
 })
 export class UserModule { }

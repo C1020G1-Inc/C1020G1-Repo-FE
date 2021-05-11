@@ -36,7 +36,7 @@ const routes: Routes = [
       {path: 'chat', component: AdminChatComponent},
     ]
   },
-  {path: 'login', component: LoginComponent},
+  {path: '', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {

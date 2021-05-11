@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
@@ -10,9 +11,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 
 
 @NgModule({
-  declarations: [ViewProfileComponent, UpdateProfileComponent, HistoryRegisterProductComponent, HistoryAuctionProductComponent, RegisterComponent, ForgotPasswordComponent],
+  declarations: [ViewProfileComponent, UpdateProfileComponent, HistoryRegisterProductComponent,
+    HistoryAuctionProductComponent, RegisterComponent, ForgotPasswordComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfileModule { }

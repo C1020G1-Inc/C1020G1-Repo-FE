@@ -1,1 +1,171 @@
-<p>register works!</p>
+<div class="container-fluid mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-6"
+            style="background: url('https://www.chilindo.com/assets/svgIcon/blueLandingHeader.svg'); background-repeat: no-repeat;">
+        </div>
+        <div class="col-lg-5">
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="card opa">
+                    <div class="card-header bg-transparent text-center">
+                        <img width="40px" height="40px" src="https://img.icons8.com/plasticine/2x/auction.png"
+                            alt="">
+                        <h4>Đăng Kí Tài Khoản Mới</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 text-center">
+                                <input accept=".jpg,.png" (change)="changeImage($event)" id="avatar" type="file"
+                                    hidden>
+                                <div class="text-center d-inline-block avatar">
+                                    <img id="avt" style="border-radius: 50%" width="90px" height="90px"
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU"
+                                        alt="">
+                                    <i onclick="document.getElementById('avatar').click()"
+                                        title="Click to change avatar"
+                                        class="fa fa-camera position-relative right-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="accountName">Tên đăng nhập <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="accountName" formControlName="accountName" type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="fullname">Họ và tên <span class="text-danger">(*)</span></label>
+                                <input id="fullname" formControlName="userName" type="text" class="form-control">
+                                <div class="invalid-feedback">no</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="password">Mật khẩu <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="password" formControlName="password" type="password" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-lock" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="passwordConfirm">Nhập lại mật khẩu <span
+                                        class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="passwordConfirm" formControlName="repassword" type="password" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-lock" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback">no</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="email">Email <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="email" formControlName="email" type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="date">Ngày Sinh <span class="text-danger">(*)</span></label>
+                                <input id="date" class="form-control" type="date">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="phone">Số điện thoại <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="phone" type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="identity">CMND <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="identity" type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="far fa-address-card" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="address">Địa chỉ <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <input id="address" type="text" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-floating">
+                                <label for="floatingTextarea2">Điều khoản sử dụng dịch vụ <span
+                                        class="text-danger">(*)</span>
+                                    <span class="text-danger" style="font-size: 12px"><i>Hãy đọc và đồng ý với điều
+                                            khoản sử dụng dịch vụ để đăng kí tài khoản</i></span>
+                                </label>
+                                <textarea class="form-control" id="floatingTextarea2" style="height: 100px"
+                                    readonly>C10Auction cung cấp các dịch vụ theo Điều khoản dịch vụ này. Truy cập hoặc đăng ký tài khoản trong hệ thống của chúng tôi bằng bất kỳ cách nào có nghĩa là bạn đồng ý và cam kết tuân thủ nghiêm ngặt Điều khoản dịch vụ này. Chúng tôi có quyền sửa đổi nội dung của Điều khoản dịch vụ theo quyết định của mình mà không cần thông báo trước cho người dùng. Bằng cách tiếp tục sử dụng trang web của chúng tôi, người dùng tự động đồng ý với nội dung mới của Điều khoản dịch vụ đã sửa đổi.
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-row mt-3">
+                            <div class="form-group">
+                                <input id="check" type="checkbox">
+                                <label for="check">Tôi đã đọc và đồng ý các điều khoản trên
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="row">
+                            <div class="col-lg-6 pl-1 pr-1 mb-1">
+                                <button type="submit" class="btn btn-success btn-block">Đăng kí</button>
+                            </div>
+                            <div class="col-lg-6 pl-1 pr-1 mb-1">
+                                <a href="login.html" class="btn btn-primary btn-block">Quay về đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
