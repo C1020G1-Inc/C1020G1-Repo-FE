@@ -7,13 +7,13 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active ">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link">
               <i class="fa fa-list-alt"></i>
               <p>Danh sách sản phẩm</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./statistical.html">
+            <a class="nav-link">
               <i class="fa fa-line-chart"></i>
               <p>Thống kê</p>
             </a>
@@ -80,7 +80,7 @@
                       </th>
                       </thead>
                       <tbody>
-                      <tr *ngFor="let product of productList">
+                      <tr *ngFor="let product of productList | paginate: {itemsPerPage: 5, currentPage: page}">
                         <td>
                           {{product.productId}}
                         </td>
@@ -122,12 +122,15 @@
                   </div>
                 </div>
               </div>
+              <pagination-controls previousLabel="Trước"
+                                   nextLabel="Sau" class="my-pagination" (pageChange)="page = $event" style="float: right"></pagination-controls>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 
 
   <div id="deleteModal" class="modal fade">

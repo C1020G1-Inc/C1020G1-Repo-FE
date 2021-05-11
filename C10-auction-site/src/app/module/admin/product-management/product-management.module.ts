@@ -5,6 +5,9 @@ import { ApproveProductComponent } from './approve-product/approve-product.compo
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { ProductChartComponent } from './product-chart/product-chart.component';
 import {FormsModule} from '@angular/forms';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {ChartsModule} from 'ng2-charts';
+
 
 
 
@@ -12,7 +15,9 @@ import {FormsModule} from '@angular/forms';
   declarations: [ListProductAdminComponent, ApproveProductComponent, UpdateProductComponent, ProductChartComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule,
+    ChartsModule
   ]
 })
 export class ProductManagementModule { }

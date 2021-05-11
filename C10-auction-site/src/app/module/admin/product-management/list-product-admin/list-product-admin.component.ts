@@ -15,6 +15,7 @@ export class ListProductAdminComponent implements OnInit {
   userName: string;
   productStatusId: number;
   categoryId: number;
+  page;
 
   constructor(private productService: ProductService) {
   }

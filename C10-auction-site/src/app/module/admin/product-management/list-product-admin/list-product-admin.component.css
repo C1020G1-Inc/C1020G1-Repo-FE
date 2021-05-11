@@ -22068,4 +22068,17 @@ fieldset[disabled][disabled] .dark-edition .has-error .form-control,
   }
 }
 
+
+.my-pagination {
+  color: #ffffff;
+}
+.my-pagination /deep/ .ngx-pagination .current {
+  background: #bb00ff;
+}
+
+.my-pagination /deep/ .ngx-pagination :hover {
+  background: #bb00ff;
+}
+
+
 /*# sourceMappingURL=dashboard-free.css.map */

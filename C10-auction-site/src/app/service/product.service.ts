@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Product} from '../model/product/product';
@@ -9,21 +9,27 @@ import {applySourceSpanToExpressionIfNeeded} from '@angular/compiler/src/output/
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getAllProduct(): Observable<any>{
+  getAllProduct(): Observable<any> {
     return this.http.get('http://localhost:8080/admin/list_product');
   }
 
-  approvedProduct(idProduct: number): Observable<any>{
+  approvedProduct(idProduct: number): Observable<any> {
     // @ts-ignore
     return this.http.put('http://localhost:8080/admin/approve/' + idProduct);
   }
 
-  getProductBySearch(productName, categoryId: number, userName, productStatusId: number): Observable<any>{
+  getProductBySearch(productName, categoryId: number, userName, productStatusId: number): Observable<any> {
     return this.http.get('http://localhost:8080/admin/search?productName=' + productName + '' +
       '&categoryId=' + categoryId + '' +
       '&userName=' + userName + '' +
       '&productStatusId=' + productStatusId);
+  }
+
+  getProductByDate(monthSearch, yearSearch): Observable<any> {
+    return this.http.get('http://localhost:8080/admin/statistic?monthSearch=' + monthSearch  + '' +
+     '&yearSearch=' + yearSearch);
   }
 }
