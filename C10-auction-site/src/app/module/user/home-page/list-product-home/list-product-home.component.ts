@@ -1,8 +1,7 @@
-import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../../service/authentication/token-storage';
+import { AccountService } from './../../../../service/authentication/account-service';
 import { Component, OnInit } from '@angular/core';
-import { Account } from 'src/app/model/Account';
-import { TestService } from 'src/app/service/test-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-product-home',
@@ -11,41 +10,15 @@ import { TestService } from 'src/app/service/test-service';
 })
 export class ListProductHomeComponent implements OnInit {
 
-  constructor(private tokenStorage: TokenStorageService, private router: Router, private testService: TestService) { }
+  constructor(private accountService: AccountService, private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  get token(): string {
-    return this.tokenStorage.getToken();
-  }
-
-  get account(): Account {
-    return this.tokenStorage.getAccount();
-  }
-
-  get roles(): string[] {
-    return this.tokenStorage.getRoles();
-  }
-
   logout() {
-    this.tokenStorage.logOut();
-    this.router.navigateByUrl('/');
-  }
-
-  requestAdmin() {
-    this.testService.requestAdmin().subscribe(data => console.log(data), err => {
-      if (err.status === 401) {
-        this.logout();
-      }
+    this.accountService.logout().subscribe(() => {
+      this.tokenStorage.logOut();
+      this.router.navigateByUrl('/');
     });
-  }
-
-  requestMember() {
-    this.testService.requestMember().subscribe(data => console.log(data));
-  }
-
-  requestGuest() {
-    this.testService.requestGuest().subscribe(data => console.log(data));
   }
 }

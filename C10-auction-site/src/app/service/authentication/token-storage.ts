@@ -59,14 +59,14 @@ export class TokenStorageService {
     }
 
     public getRoles(): string[] {
-        if (this.isRemember()) {
+        if (window.localStorage.getItem(ROLES_KEY) != null) {
             return JSON.parse(localStorage.getItem(ROLES_KEY));
         }
         return JSON.parse(sessionStorage.getItem(ROLES_KEY));
     }
 
     public getAccount(): Account {
-        if (this.isRemember()) {
+        if (window.localStorage.getItem(ACCOUNT_KEY) != null) {
             return JSON.parse(window.localStorage.getItem(ACCOUNT_KEY));
         }
         return JSON.parse(window.sessionStorage.getItem(ACCOUNT_KEY));

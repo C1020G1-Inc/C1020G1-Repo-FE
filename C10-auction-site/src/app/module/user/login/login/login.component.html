@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label for="account">Tên đăng nhập</label>
                             <div class="input-group">
-                                <input [class.is-invalid]="accountName.invalid && accountName.touched"
+                                <input [class.is-invalid]="accountName.invalid && (accountName.dirty || accountName.touched)"
                                     [class.is-valid]="accountName.valid" type="text" formControlName="accountName"
                                     id="account" class="form-control" placeholder="" aria-describedby="helpId">
                                 <div class="input-group-append">
@@ -22,7 +22,7 @@
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <div *ngIf="accountName.invalid && accountName.touched" class="invalid-feedback">
+                                <div *ngIf="accountName.invalid && (accountName.dirty || accountName.touched)" class="invalid-feedback">
                                     <div *ngIf="accountName.errors.required">
                                         <div class="text-danger" [hidden]="!accountName.errors.required">Tên đăng nhập
                                             không được để trống!
@@ -30,7 +30,7 @@
                                     </div>
                                     <div *ngIf="accountName.errors.pattern">
                                         <div class="text-danger" [hidden]="!accountName.errors.pattern">Tên đăng nhập
-                                            phải có ít nhất 6 kí tự ít nhất 1 kí tự chữ và không chứa các kí tự đặc
+                                            phải có ít nhất 8 kí tự, không bắt đầu bằng số, ít nhất 1 kí tự chữ và không chứa các kí tự đặc
                                             biệt!</div>
                                     </div>
                                 </div>
@@ -52,8 +52,8 @@
                                         <div class="text-danger" [hidden]="!password.errors.required">Mật khẩu không
                                             được để trống!</div>
                                     </div>
-                                    <div class="text-danger" [hidden]="!password.errors.pattern">Mật khẩu chứa ít nhất 6
-                                        kí tự!</div>
+                                    <div class="text-danger" [hidden]="!password.errors.pattern">Mật khẩu chứa ít nhất 8
+                                        kí tự, tối thiểu 1 chữ viết hoa và 1 số!</div>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                             <div class="col-lg-6"><a href="" class="text-decoration-none ml-auto">Quên mật
                                     khẩu</a>
                             </div>
-                            <div class="col-lg-6">Chưa có tài khoản? <a href="registration.html"
+                            <div class="col-lg-6">Chưa có tài khoản? <a href="/register"
                                     class="text-decoration-none ml-auto">đăng kí</a></div>
                         </div>
                         <div class="form-group">

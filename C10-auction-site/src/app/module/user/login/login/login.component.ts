@@ -1,4 +1,3 @@
-import { Account } from './../../../../model/Account';
 import { AuthenticationService } from './../../../../service/authentication/authentication-service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../../service/authentication/token-storage';
@@ -29,8 +28,8 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/home');
     }
     this.formLogin = new FormGroup({
-      accountName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]{1,5}[a-zA-Z0-9]{5,15}$')]),
-      password: new FormControl('', [Validators.required, Validators.pattern('^.{6,20}')]),
+      accountName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]{1,5}[a-zA-Z0-9]{7,15}$')]),
+      password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)]),
       remmember: new FormControl(false)
     });
   }
@@ -102,7 +101,8 @@ export class LoginComponent implements OnInit {
             this.accountNameZ = req.account.accountName;
             this.isLocked = true;
           } else if (req.jwtToken === '') {
-            this.tokenStorage.saveAccountSession(req.account);
+            this.tokenStorage.saveAccountStorage(req.account);
+            console.log(req.account);
             this.router.navigateByUrl('/register');
           } else {
             this.tokenStorage.saveTokenStorage(req.jwtToken);
