@@ -20,7 +20,11 @@
     "@angular/platform-browser-dynamic": "~9.1.13",
     "@angular/router": "~9.1.13",
     "bootstrap": "^4.6.0",
+    "html-to-pdfmake": "^2.1.7",
+    "html2pdf.js": "^0.9.3",
     "jquery": "^3.6.0",
+    "jspdf": "^2.3.1",
+    "pdfmake": "^0.1.71",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
