@@ -123,3 +123,12 @@ li.post-comment .comet-button {
 label {
   margin-bottom: -0.5rem;
 }
+
+.warningg {
+  position: relative;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  font-size: 17px;
+  margin-left: 10px;
+}

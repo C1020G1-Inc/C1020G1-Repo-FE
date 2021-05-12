@@ -19,11 +19,17 @@ export class CommentProductComponent implements OnInit {
   user: User;
   formComment: FormGroup;
   account: Account;
+  formEditComment: FormGroup;
+  idDeleteComment: number;
+  message: string;
+  fileImage: any;
+  check = false;
 
   constructor(private commentService: CommentService,
               private productService: ProductService,
               private activatedRouter: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private formBuilders: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -56,21 +62,138 @@ export class CommentProductComponent implements OnInit {
     this.productService.findProductById(productId).subscribe(data => {
       this.formComment.get('product').setValue(data);
     });
+    this.formEditComment = this.formBuilders.group({
+      commentId: [''],
+      content: ['', [Validators.required]],
+      image: [''],
+      commentTime: [''],
+      product: [''],
+      account: ['']
+    });
   }
 
+  /**
+   * Author : SonPH
+   * find all comment by productId
+   */
   getAllCommentByProductId(productId: number) {
     this.commentService.findAllCommentByProductId(productId).subscribe(data => {
       this.comments = data;
     });
   }
 
+  /**
+   * Author : SonPH
+   * create comment
+   */
   createComment() {
-    this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
-    this.formComment.get('image').setValue('abc.jpg');
-    console.log(this.formComment.value);
-    this.commentService.createNewComment(this.formComment.value).subscribe(data => {
-      $('#myText').data('emojioneArea').setText('');
+    if (($('#myText').data('emojioneArea').getText() !== '')) {
+      this.message = null;
+      this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
+      this.formComment.get('image').setValue('abc.jpg');
+      console.log(this.formComment.value);
+      this.commentService.createNewComment(this.formComment.value).subscribe(data => {
+        $('#myText').data('emojioneArea').setText('');
+        this.ngOnInit();
+      });
+    } else {
+      this.message = 'Không được để trống nội dung!!';
+    }
+  }
+
+  /**
+   * Author : SonPH
+   * send form edit to screen
+   */
+  sendFormEdit(commentId: number) {
+    this.commentService.findCommentById(commentId).subscribe(data => {
+      this.formEditComment.get('commentId').setValue(data.commentId);
+      this.formEditComment.get('content').setValue(data.content);
+      this.formEditComment.get('image').setValue(data.image);
+      this.formEditComment.get('commentTime').setValue(data.commentTime);
+      this.formEditComment.get('product').setValue(data.product);
+      this.formEditComment.get('account').setValue(data.account);
+      console.log(this.formEditComment.value);
+      $('#editComment').data('emojioneArea').setText(data.content);
+    });
+  }
+
+  /**
+   * Author : SonPH
+   * edit comment
+   */
+  editComment() {
+    this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
+    console.log(this.formEditComment.value);
+    this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
+      $('#editComment').data('emojioneArea').setText('');
       this.ngOnInit();
     });
   }
+
+  /**
+   * Author : SonPH
+   *  get commentId from screen
+   */
+  getCommentIdToDelete(commentId: number) {
+    this.idDeleteComment = commentId;
+  }
+
+  /**
+   * Author : SonPH
+   * delete comment
+   */
+  deleteComment() {
+    this.commentService.deleteComment(this.idDeleteComment).subscribe(data => {
+      this.ngOnInit();
+    });
+  }
+
+  /**
+   * Author : SonPH
+   * import image to screen and validate image
+   */
+  importImages(event) {
+    const files = event.target.files;
+    console.log(files);
+    const length = files.length;
+    if (length < 2) {
+      const name = files[0].type;
+      const size = files[0].size;
+      if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
+        if (size <= 1000000) {
+          this.check = true;
+          this.message = null;
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.fileImage = {
+              url: e.target.result,
+              file: files[0]
+            };
+          };
+          reader.readAsDataURL(files[0]);
+          console.log(this.fileImage);
+        } else {
+          this.check = false;
+          return this.message = 'Dung lượng ảnh quá cao!!';
+        }
+      } else {
+        this.check = false;
+        return this.message = 'Đây không phải hình ảnh!!';
+      }
+    } else {
+      this.check = false;
+      return this.message = 'Chỉ được chọn một ảnh!!';
+    }
+  }
+
+  /**
+   * Author : SonPH
+   * delete image in screen
+   */
+  deleteUpdateImage(event) {
+    this.fileImage = null;
+    this.check = false;
+  }
 }
+
