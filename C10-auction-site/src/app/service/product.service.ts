@@ -16,9 +16,9 @@ export class ProductService {
     return this.http.get('http://localhost:8080/admin/list_product');
   }
 
-  approvedProduct(idProduct: number): Observable<any> {
+  approvedProduct(productId: number): Observable<any> {
     // @ts-ignore
-    return this.http.put('http://localhost:8080/admin/approve/' + idProduct);
+    return this.http.put('http://localhost:8080/admin/approve/' + productId);
   }
 
   getProductBySearch(productName, categoryId: number, userName, productStatusId: number): Observable<any> {
@@ -29,7 +29,15 @@ export class ProductService {
   }
 
   getProductByDate(monthSearch, yearSearch): Observable<any> {
-    return this.http.get('http://localhost:8080/admin/statistic?monthSearch=' + monthSearch  + '' +
-     '&yearSearch=' + yearSearch);
+    return this.http.get('http://localhost:8080/admin/statistic?monthSearch=' + monthSearch + '' +
+      '&yearSearch=' + yearSearch);
+  }
+
+  getProductById(productId): Observable<any> {
+    return this.http.get('http://localhost:8080/admin/product/' + productId);
+  }
+
+  getAllCategory(): Observable<any> {
+    return this.http.get('http://localhost:8080/admin/product_category');
   }
 }

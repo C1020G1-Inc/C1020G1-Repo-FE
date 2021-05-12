@@ -106,7 +106,7 @@
                         </td>
                         <td *ngIf="product.productStatus.id == 1">
                           <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"
-                             href="#editProduct" data-toggle="modal">
+                             href="#editProduct" data-toggle="modal" (click)="sendProductId(product.productId)">
                             <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
                           </a>
                           <a style="cursor: pointer;margin-left: 10px" href="#deleteModal" data-toggle="modal">
@@ -215,33 +215,33 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           </div>
           <div class="modal-body">
-            <form>
+            <form [formGroup]="editForm">
               <table>
                 <tr>
                   <th style="padding: 30px">Tên sản phẩm:</th>
-                  <td><input type="text" value="Apple Watch Series 3"></td>
+                  <td><input type="text" id="productName" name="productName" formControlName="productName"/></td>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Người đăng:</th>
-                  <td><input type="text" value="Lê Phước Thanh Cao"></td>
+                  <td><input type="text" id="account" name="account" formControlName="account" disabled/></td>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Chủng loại:</th>
                   <td>
-                    <select style="width: 100px;">
-                      <option>Điện tử</option>
-                      <option>Dụng Cụ</option>
-                      <option>Điện thoại</option>
+                    <select style="width: 100px;" id="category" name="category" formControlName="category">
+                      <option [ngValue]="category.categoryName" *ngFor="let category of categoryList">
+                        {{category.categoryName}}
+                      </option>
                     </select>
                   </td>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Giá khởi điểm:</th>
-                  <td><input type="text" value="500.000VNĐ"></td>
+                  <td><input type="text" id="price" name="price" formControlName="price" disabled/></td>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Bước giá:</th>
-                  <td><input type="text" value="200.000VNĐ"></td>
+                  <td><input type="text" id="priceStep" name="priceStep" formControlName="priceStep" disabled/></td>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Hình ảnh:</th>
@@ -256,20 +256,21 @@
                 <tr>
                   <th style="padding: 30px">Thời gian:</th>
                   <td>
-                    <select style="width: 100px;">
-                      <option>60 phút</option>
-                      <option>120 phút</option>
-                      <option>180 phút</option>
+                    <select style="width: 100px;" id="auctionTime" name="auctionTime" formControlName="auctionTime">
+                      <option value="60">60 phút</option>
+                      <option value="120">120 phút</option>
+                      <option value="180">180 phút</option>
                     </select>
                   </td>
                 </tr>
               </table>
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Duyệt">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+              </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Duyệt">
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-          </div>
+
         </form>
       </div>
     </div>

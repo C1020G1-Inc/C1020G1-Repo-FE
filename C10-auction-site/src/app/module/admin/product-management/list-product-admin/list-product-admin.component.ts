@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../../../model/product/product';
 import {ProductService} from '../../../../service/product.service';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {Category} from '../../../../model/product/category';
 
 @Component({
   selector: 'app-list-product-admin',
@@ -16,12 +18,28 @@ export class ListProductAdminComponent implements OnInit {
   productStatusId: number;
   categoryId: number;
   page;
+  productEdit: Product;
+  categoryList: Category[];
 
-  constructor(private productService: ProductService) {
+  editForm: FormGroup;
+
+  constructor(private productService: ProductService,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.getAllProduct();
+    this.productService.getAllCategory().subscribe(data => this.categoryList = data);
+    this.editForm = this.formBuilder.group({
+      productId: [''],
+      productName: [''],
+      category: [''],
+      price: [''],
+      priceStep: [''],
+      account: [''],
+      productStatus: [''],
+      auctionTime: [''],
+    });
   }
 
   getAllProduct() {
@@ -51,4 +69,19 @@ export class ListProductAdminComponent implements OnInit {
       console.log(data);
     });
   }
+
+  sendProductId(productId: number) {
+    this.productService.getProductById(productId).subscribe( data => {
+      this.productEdit = data;
+      this.editForm.controls.productId.setValue(this.productEdit.productId);
+      this.editForm.controls.productName.setValue(this.productEdit.productName);
+      this.editForm.controls.category.setValue(this.productEdit.category.categoryName);
+      this.editForm.controls.price.setValue(this.productEdit.price);
+      this.editForm.controls.priceStep.setValue(this.productEdit.priceStep);
+      this.editForm.controls.account.setValue(this.productEdit.account.user.userName);
+      this.editForm.controls.auctionTime.setValue(this.productEdit.auctionTime);
+    });
+  }
+
+
 }
