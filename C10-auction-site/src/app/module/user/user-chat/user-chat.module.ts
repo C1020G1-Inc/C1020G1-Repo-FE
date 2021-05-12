@@ -5,9 +5,12 @@ import { UserChatComponent } from './user-chat/user-chat.component';
 
 
 @NgModule({
-  declarations: [UserChatComponent],
-  imports: [
-    CommonModule
-  ]
+    declarations: [UserChatComponent],
+    exports: [
+        UserChatComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class UserChatModule { }

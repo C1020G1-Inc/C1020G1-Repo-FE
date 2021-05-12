@@ -10,7 +10,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 
 
 @NgModule({
-  declarations: [ViewProfileComponent, UpdateProfileComponent, HistoryRegisterProductComponent, HistoryAuctionProductComponent, RegisterComponent, ForgotPasswordComponent],
+  declarations: [ViewProfileComponent,
+    UpdateProfileComponent,
+    HistoryRegisterProductComponent,
+    HistoryAuctionProductComponent,
+    RegisterComponent,
+    ForgotPasswordComponent],
   imports: [
     CommonModule
   ]

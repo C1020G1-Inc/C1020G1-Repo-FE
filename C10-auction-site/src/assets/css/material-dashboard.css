@@ -15142,7 +15142,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .wrapper {
   position: relative;
   top: 0;
-  height: 100vh;
+  height: 100%;
 }
 
 .sidebar {
@@ -15533,6 +15533,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   float: right;
   width: calc(100% - 260px);
   transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
+  background-color: #1a2035 !important;
 }
 
 .main-panel>.content {
@@ -19552,7 +19553,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .dark-edition {
-  background-color: #1a2035 !important;
+  background-color: #1a2035;
 }
 
 .dark-edition .btn,
