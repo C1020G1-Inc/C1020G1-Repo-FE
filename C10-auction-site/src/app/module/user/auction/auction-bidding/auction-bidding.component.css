@@ -1,0 +1,29 @@
+
+body {
+  font-family: Roboto, serif;
+}
+
+.countdown {
+  font-size: 30px;
+  border-radius: 5px;
+  width: 45px;
+  height: 45px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffc107;
+  border: 14px #28a745;
+  margin-bottom: 5px;
+}
+
+.countdown-colon {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffc107
+}
+
+.countdown-text {
+  font-size: 15px;
+  text-align: center;
+  font-weight: bolder;
+}

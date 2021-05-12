@@ -1,1 +1,198 @@
-<p>auction-bidding works!</p>
+<div class="container-fluid p-lg-5">
+  <div class="row">
+    <div class="col-6 col-lg-4">
+      <h1 class="text-center text-info font-weight-bolder"
+          style="font-size: 20px">{{this.productDetail.productName}}</h1>
+      <p class="text-info text-center">Mã sản phẩm: {{this.productDetail.productId}}</p>
+      <div class="row mb-2" style="font-size: 15px">
+        <div class="col-6">
+          <div class="text-secondary">Giá khởi điểm:</div>
+          <div style="font-size: 1.2rem"><span class="badge badge-pill badge-info">{{this.productDetail.price}} đ</span>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="text-secondary">Tình trạng:</div>
+          <div style="font-size: 1.2rem"><span class="badge badge-pill badge-success">Đang đấu giá</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2" style="font-size: 15px">
+        <div class="col-6">
+          <div class="text-secondary">Giá hiện tại:</div>
+          <div style="font-size: 1.2rem"><span class="badge badge-pill badge-warning">1.000.000 đ</span></div>
+        </div>
+        <div class="col-6">
+          <div class="text-secondary">Người đấu giá:</div>
+          <div style="font-size: 1.2rem"><span class="badge badge-pill badge-primary">phuc_123</span></div>
+        </div>
+      </div>
+      <div class="row mb-4" style="font-size: 15px">
+        <div class="col-6">
+          <div class="text-secondary">Thời điểm bắt đầu:</div>
+          <div style="font-size: 1.2rem"><span
+            class="badge badge-pill badge-secondary">{{this.productDetail.registerTime |date :"dd/MM/yyyy HH:mm:ss":"700"}}</span>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="text-secondary">Thời điểm kết thúc:</div>
+          <div style="font-size: 1.2rem"><span
+            class="badge badge-pill badge-danger">{{this.auctionEndTime |date :"dd/MM/yyyy HH:mm:ss":"700"}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2" style="font-size: 15px">
+        <h6 class="text-info">Thời gian còn lại</h6>
+        <div id="countdown-timer" class="row ml-0">
+          <div class="mr-1">
+            <div class="countdown text-light">{{this.day | number: '2.0-0'}}</div>
+            <p class="countdown-text text-info">Ngày</p>
+          </div>
+          <div class="mr-1">
+            <div class="countdown-colon">:</div>
+          </div>
+          <div class="mr-1">
+            <div class="countdown text-light">{{this.hour | number: '2.0-0'}}</div>
+            <p class="countdown-text text-info">Giờ</p>
+          </div>
+          <div class="mr-1">
+            <div class="countdown-colon">:</div>
+          </div>
+          <div class="mr-1">
+            <div class="countdown text-light">{{this.minute| number: '2.0-0'}}</div>
+            <p class="countdown-text text-info">Phút</p>
+          </div>
+          <div class="mr-1">
+            <div class="countdown-colon">:</div>
+          </div>
+          <div class="mr-1">
+            <div class="countdown text-light">{{this.second | number: '2.0-0'}}</div>
+            <p class="countdown-text text-info">Giây</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="quantity-left-minus btn btn-danger btn-number">-</button>
+                    </span>
+            <input type="text" id="quantity" name="quantity" class="form-control input-number">
+            <div class="input-group-append">
+              <span class="input-group-text">₫</span>
+            </div>
+            <span class="input-group-btn">
+
+                        <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                data-type="plus">+</button>
+                    </span>
+          </div>
+          <span class="text-info" style="font-size: 20px">Bước giá: <span class="badge badge-pill badge-primary">50.000 đ</span></span>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-block btn-success"><i class="fa fa-gavel"></i> Đặt giá</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-4">
+      <div id="image-auction-carousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#image-auction-carousel"
+              *ngFor="let image of this.productDetail.images; let i = index"
+              [attr.data-slide-to]="i" [ngClass]="(i == 0)?'active':null"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item align-content-center" *ngFor="let image of this.productDetail.images; let i = index"
+               [ngClass]="(i == 0)?'active':null">
+            <img
+              [src]=image.image
+              class="d-block w-100 img-fluid" alt="...">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#image-auction-carousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#image-auction-carousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      <div class="accordion" id="item-information-accordion">
+        <div class="card">
+          <div class="card-header" id="item-description">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapse-item-description" aria-expanded="true"
+                      aria-controls="collapseOne">
+                Mô tả sản phẩm
+              </button>
+            </h2>
+          </div>
+
+          <div id="collapse-item-description" class="collapse show" aria-labelledby="item-description"
+               data-parent="#item-information-accordion">
+            <div class="card-body">
+              {{this.productDetail.description}}
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="auctionRule">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button"
+                      data-toggle="collapse" data-target="#collapseAuctionRule" aria-expanded="false"
+                      aria-controls="collapseAuctionRule">
+                Điều khoản đấu giá
+              </button>
+            </h2>
+          </div>
+          <div id="collapseAuctionRule" class="collapse" aria-labelledby="auctionRule"
+               data-parent="#item-information-accordion">
+            <div class="card-body">
+              <p>Người đấu giá phải đặt giá mới ít nhất bằng giá cũ cộng với bước giá và số tiền đặt phải
+                là bội số của bước giá</p>
+              <p>Bước gíá tính theo giá hiện tại theo các mức như sau:</p>
+              <ul>
+                <li>Dưới 20.000 -> bước giá 1000</li>
+                <li>Từ 20.000 đến 100.000 -> bước giá 5.000</li>
+                <li>Từ 100.000 đến 500.000 -> bước giá 10.000</li>
+                <li>Từ 500.000 đến 2.000.000 -> bước giá 20.000</li>
+                <li>Từ 2.000.000 đến 5.000.000 -> bước giá 50.000</li>
+                <li>Từ 5.000.000 đến 10.000.000 -> bước giá 100.000</li>
+                <li>Từ 10.000.000 đến 20.000.000 -> bước giá 200.000</li>
+                <li>Từ 20.000.000 đến 50.000.000 -> bước giá 500.000</li>
+                <li>Từ 50.000.000 đến 100.000.000 -> bước giá 1.000.000</li>
+                <li>Trên 100.000.000 -> bước giá 2.000.000</li>
+              </ul>
+              <p>Trong vòng 24h, người thắng cuộc phải thanh toán giá trị của món hàng. Sau 24h thì giao dịch cho sản
+                phẩm sẽ bị khóa</p>
+              <p>Quý khách hàng không được hủy giao dịch quá 3 lần</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <h6 class="text-info text-center" style="font-size: 14px">Lịch sử đấu giá</h6>
+      <table class="table table-striped">
+        <thead class="text-success">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tài khoản</th>
+          <th scope="col">Mức giá</th>
+          <th scope="col">Thời gian đặt</th>
+        </tr>
+        </thead>
+        <tbody class="text-secondary">
+        <tr class="table-success">
+          <th scope="row">1</th>
+          <td>phuc_1</td>
+          <td>10.000.000</td>
+          <td>07/05/2021 12:11:00</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

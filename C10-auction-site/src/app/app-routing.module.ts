@@ -63,7 +63,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), AdminModule, UserModule],
+  imports: [RouterModule.forRoot(routes), AdminModule, UserModule, RouterModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
