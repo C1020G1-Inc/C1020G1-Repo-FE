@@ -14,4 +14,5 @@ export class UserService {
   public updateUser(userId: number, user): Observable<any> {
     return this.httpClient.put(this.API_URL + '/edit/' + userId, user);
   }
+
 }

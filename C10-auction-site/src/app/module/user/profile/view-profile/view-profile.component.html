@@ -11,7 +11,7 @@
         </tr>
         <tr>
           <td><h5>Email: </h5></td>
-          <td><h5>{{accountLoggin.email}}</h5></td>
+          <td><h5>{{accountLogin.email}}</h5></td>
         </tr>
         <tr>
           <td><h5>Ngày sinh: </h5></td>
@@ -31,7 +31,7 @@
         </tr>
       </table>
       <div class="d-flex justify-content-center align-items-center mt-3">
-        <a class="btn btn-warning" routerLink="/profile/update">Cập nhật</a>
+        <a class="btn btn-warning" [routerLink]="['/profile/update', accountLogin.accountId]">Cập nhật</a>
       </div>
     </div>
   </div>

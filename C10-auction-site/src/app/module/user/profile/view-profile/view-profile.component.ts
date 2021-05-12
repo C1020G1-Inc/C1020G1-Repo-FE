@@ -19,7 +19,7 @@ export class ViewProfileComponent implements OnInit {
     avatar: 'qưeqwe'
   };
 
-  accountLoggin: Account = {
+  accountLogin: Account = {
     accountId: 1,
     accountName: 'anhdung',
     password: '$2a$10$h5ZtBnGe4zRcgshrQVhwF.pQk1JS2SX5iT2qLz9bRwWFM9G2zdaru',

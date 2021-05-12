@@ -7,18 +7,24 @@ import { LoginModule } from './login/login.module';
 import { HomePageModule } from './home-page/home-page.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import {RouterModule} from "@angular/router";
 
 
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent],
+  exports: [
+    HeaderComponent,
+    FooterComponent
+  ],
   imports: [
     CommonModule,
     ProfileModule,
     UserChatModule,
     AuctionModule,
     LoginModule,
-    HomePageModule
+    HomePageModule,
+    RouterModule
   ]
 })
 export class UserModule { }

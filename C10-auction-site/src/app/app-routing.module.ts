@@ -43,7 +43,7 @@ const routes: Routes = [
     path: 'profile',
     children: [
       {path: 'view', component: ViewProfileComponent},
-      {path: 'update', component: UpdateProfileComponent},
+      {path: 'update/:id', component: UpdateProfileComponent},
       {path: 'history-register', component: HistoryRegisterProductComponent},
       {path: 'history-auction', component: HistoryAuctionProductComponent},
     ]
