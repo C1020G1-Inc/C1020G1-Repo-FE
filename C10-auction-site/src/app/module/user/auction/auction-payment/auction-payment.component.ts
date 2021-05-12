@@ -5,6 +5,7 @@ import {Product} from '../../../../model/Product';
 import {District, Province, Ward} from '../../../../model/Address';
 import {AddressService} from '../../../../service/address.service';
 import {OrderDTO} from '../../../../model/OrderDTO';
+import {OrderService} from '../../../../service/order.service';
 
 @Component({
   selector: 'app-auction-payment',
@@ -20,7 +21,8 @@ export class AuctionPaymentComponent implements OnInit {
   districts: Array<District>;
   wards: Array<Ward>;
 
-  constructor(private addressService: AddressService) {
+  constructor(private addressService: AddressService,
+              private orderService: OrderService) {
     this.account = {
       accountId: 1,
       accountName: 'leechoncaao',
@@ -140,9 +142,16 @@ export class AuctionPaymentComponent implements OnInit {
     let orderDTO = new OrderDTO();
     orderDTO.order = this.paymentForm.value;
     orderDTO.order.account = this.account;
+    orderDTO.order.userName = this.account.user.userName;
+    orderDTO.order.userEmail = this.account.email;
     orderDTO.products = this.products;
 
+    console.log(this.paymentForm.value);
     console.log(orderDTO);
+
+    this.orderService.createOrder(orderDTO).subscribe(data => {
+      console.log(data);
+    });
   }
 
   changeDistrict(event) {
