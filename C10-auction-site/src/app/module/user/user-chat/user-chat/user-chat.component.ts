@@ -5,6 +5,7 @@ import {Chat} from '../../../../model/temporary/chat';
 import {Account} from '../../../../model/temporary/account';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
+import {Notification} from '../../../../model/temporary/notification';
 
 export const snapshotToArray = (snapshot: any) => {
   const returnArr = [];
@@ -40,6 +41,7 @@ export class UserChatComponent implements OnInit {
     this.account = JSON.parse(localStorage.getItem('account'));
     firebase.database().ref('chats/').on('value', resp => {
       this.chats = snapshotToArray(resp).filter(x => x.roomName === this.account.accountName);
+      this.setTimeForChat();
     });
   }
 
@@ -83,6 +85,29 @@ export class UserChatComponent implements OnInit {
     $('.chat_converse').toggleClass('chat_converse2');
   }
 
+  private setTimeForChat() {
+    const currentDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+    for (const chat of this.chats) {
+      const minute = (Date.parse(currentDate) - Date.parse(chat.date)) / (1000 * 60);
+      if (minute < 1) {
+        chat.date = 'vừa xong';
+      } else if (minute > 1 && minute < 60) {
+        chat.date = Math.round(minute) + ' phút trước';
+        return;
+      }
+      const hour = minute / 60;
+
+      if (hour < 2) {
+        chat.date = Math.round(hour) + ' giờ trước';
+      } else if (hour > 2 && hour < 24) {
+        chat.date = Math.round(hour) + ' giờ trước';
+      } else {
+        chat.date = chat.date.slice(0, 10);
+      }
+
+    }
+  }
+
 
   onFormSubmit(form: any) {
     const chat = form;
@@ -90,8 +115,13 @@ export class UserChatComponent implements OnInit {
     chat.nickname = this.account.accountName;
     chat.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     chat.type = 'message';
-    const newMessage = firebase.database().ref('chats/').push();
-    newMessage.set(chat);
+
+    firebase.database().ref('chats/').push().set(chat);
+
+    const notification = new Notification(chat, false, 'user', this.account.user.userName, this.account.user.userAvatar);
+    firebase.database().ref('notifications/').push().set(notification);
+
     this.chatForm.reset();
   }
+
 }

@@ -5,6 +5,7 @@ import {DatePipe} from '@angular/common';
 import firebase from 'firebase';
 import {UserDTO} from '../../../model/temporary/userDTO';
 import {Chat} from '../../../model/temporary/chat';
+import DateTimeFormat = Intl.DateTimeFormat;
 
 export const snapshotToArray = (snapshot: any) => {
   const returnArr = [];
@@ -72,12 +73,27 @@ export class ChatRoomComponent implements OnInit {
   }
 
   private setTimeForChat() {
-    const currentDate = new Date();
-
-    // tslint:disable-next-line:forin
+    const currentDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     for (const chat of this.chats) {
-    const seconds = (currentDate.getTime() - Date.parse(chat.date)) / 1000;
+      const minute = (Date.parse(currentDate) - Date.parse(chat.date)) / (1000 * 60);
+      if (minute < 1) {
+        chat.date = 'vừa xong';
+      } else if (minute > 1 && minute < 60) {
+        chat.date = Math.round(minute) + ' phút trước';
+        return;
+      }
+      const hour = minute / 60 ;
+
+      if (hour < 2) {
+        chat.date = Math.round(hour) + ' giờ trước';
+      } else if (hour > 2 && hour < 24) {
+        chat.date = Math.round(hour) + ' giờ trước';
+      } else {
+        chat.date = chat.date.slice(0, 10);
+      }
+
     }
+
   }
 
 }

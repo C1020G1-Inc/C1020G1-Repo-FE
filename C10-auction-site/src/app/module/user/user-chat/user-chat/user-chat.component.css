@@ -407,6 +407,12 @@ ul li{
   opacity: 0.3;
 }
 
+.status2 {
+  float: left;
+  font-size: 11px;
+  opacity: 0.3;
+}
+
 .chat .chat_converse .chat_msg_item .chat_avatar {
   position: absolute;
   top: 0;

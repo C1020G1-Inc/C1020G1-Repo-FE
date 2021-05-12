@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import firebase from 'firebase';
 import {Room} from '../../../../model/temporary/room';
+import {Notification} from '../../../../model/temporary/notification';
 
 
 export const snapshotToArray = (snapshot: any) => {
@@ -28,6 +29,8 @@ export class AdminChatComponent implements OnInit {
   nickname = '';
   rooms = new Array<Room>();
   isLoadingResults = true;
+  notifications = new Array<Notification>();
+  year = new Date().getFullYear();
 
   constructor(private route: ActivatedRoute, private router: Router) {
   }
@@ -38,10 +41,22 @@ export class AdminChatComponent implements OnInit {
       this.rooms = snapshotToArray(resp);
       this.isLoadingResults = false;
     });
+
+    firebase.database().ref('notifications/').orderByChild('role').equalTo('user').on('value' , (resp: any) => {
+      this.notifications = snapshotToArray(resp).filter(x => x.isRead === false);
+    });
+
   }
 
 
   enterChatRoom(roomName: string) {
+    for (const readNotification of this.notifications) {
+      if (readNotification.chat.roomName === roomName) {
+        console.log(readNotification.key);
+        firebase.database().ref('notifications/').child(readNotification.key).child('isRead').set(true);
+      }
+    }
+
     this.router.navigate(['/admin/chat', roomName]);
   }
 

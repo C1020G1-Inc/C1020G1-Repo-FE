@@ -21,14 +21,14 @@
     <ul class="m-b-0">
       <li class="clearfix" *ngFor="let chat of chats">
         <div class="message-data text-right" *ngIf="chat.nickname === roomName">
-          <span class="message-data-time">10:10 AM, Hôm Nay </span>
+          <span class="message-data-time">{{chat.date}} </span>
           <img src="{{user.userAvatar}}"
                alt="avatar">
         </div>
         <div class="message other-message float-right" *ngIf="chat.nickname === roomName">{{chat.message}}
         </div>
         <div class="message-data" *ngIf="chat.nickname !== roomName">
-          <span class="message-data-time">10:12 AM, Hôm Nay</span>
+          <span class="message-data-time">{{chat.date}} </span>
         </div>
         <div class="message my-message" *ngIf="chat.nickname !== roomName">{{chat.message}}</div>
       </li>
