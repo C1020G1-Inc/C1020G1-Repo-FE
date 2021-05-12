@@ -1,1 +1,90 @@
-<p>detail-product works!</p>
+<div id="body">
+<div class="container-fluid" style="margin-top: 50px;">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="card">
+        <img src="https://vinhcatgroup.com/Uploads/images/pin-nang-luong-mat-troi-la-gi.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{product.productName}}</h5>
+        </div>
+
+        <div class="card-body">
+          <button type="button" class="btn btn-success">Đấu Giá</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div>
+        <ul class="list-group list-group-flush" >
+          <li class="list-group-item">ID: {{product.productId}}</li>
+          <li class="list-group-item">Bắt Đầu: {{product.registerTime}}</li>
+          <li class="list-group-item">Kết Thúc: {{product.endTime}}</li>
+          <li class="list-group-item">Thời Gian Còn Lại: </li>
+          <li class="list-group-item">Giá Gốc: {{product.price}} VND</li>
+          <li class="list-group-item">Giá Hiện Tại: VND  </li>
+          <li class="list-group-item">Mỗi Lần Tăng Giá Nhiều Nhất: {{product.priceStep}} VND</li>
+          <li class="list-group-item">Giá Đấu Giá : {{product.lastPrice}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div style="background: white">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Số Tiền</th>
+            <th scope="col">Thời Gian Đấu Giá</th>
+            <th scope="col">Thành Viên</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let a of auction">
+            <th scope="row">1</th>
+            <td>{{a.price}}</td>
+            <td>{{a.timeAuction}}</td>
+            <td>{{a.account.accountName}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <a href="" style="float: right ; color: white">Xem Tất Cả</a>
+      </div>
+    </div>
+  </div>
+  <h3 style="color: white">Hình Ảnh</h3>
+  <div class="row">
+    <div class="col-lg-10" style="margin-left: 100px">
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" *ngFor="let a of ">
+            <img style="width: 200px ; height: 400px" src="https://vioa.com.vn/wp-content/uploads/2019/06/tam-pin-nang-luong-mat-troi-poly-340w-gia-re-1.jpeg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<h3 style="margin-top: 20px ; color: white">Chi Tiết Sản Phẩm</h3>
+<ul style="color:white">
+  <li>{{product.description}}</li>
+</ul>
+<div>
+  <h3 style="margin-top: 20px ; color: white">Địa Chỉ Nhận Hàng</h3>
+  <ul style="color: white">
+    <li>Địa Chỉ Nhận Hàng : {{product.account.user.address}}</li>
+    <li>SĐT : {{product.account.user.phone}} </li>
+  </ul>
+</div>
+</div>
+
+
+
