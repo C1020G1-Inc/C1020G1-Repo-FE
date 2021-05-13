@@ -11,6 +11,7 @@
           <div class="table-responsive">
             <table class="table table-striped">
               <tr class="table-warning">
+                <th>STT</th>
                 <th>ID Sản Phẩm</th>
                 <th>Tên sản phẩm</th>
                 <th>Thông tin sản phẩm</th>
@@ -19,7 +20,8 @@
                 <th>Huỷ đăng kí</th>
               </tr>
               <tbody>
-                <tr *ngFor="let items of productRegister">
+                <tr *ngFor="let items of productRegister,let i = index">
+                  <td>{{i+1}}</td>
                   <td>{{items.productId}}</td>
                   <td>{{items.productName}}</td>
                   <td>{{items.description}}</td>
@@ -34,10 +36,9 @@
               </tbody>
             </table>
             <br>
-            <div class="loadmore" *ngIf="productRegister">
-              <span>Viewing {{productRegister.length}} of {{data.totalElements}} Items</span>
-              <button *ngIf="productRegister.length !== data.totalElements" class="btn-view btn-load-more" title="Load More" data-toggle="tooltip"
-                      (click)="loadMoreProduct()"></button>
+            <div class="text-center" *ngIf="productRegister">
+              <span>Viewing {{productRegister.length}} of {{data.totalElements}} Items</span><br>
+              <i class="fas fa-chevron-circle-down " style="font-size: 150%; cursor: pointer" *ngIf="productRegister.length !== data.totalElements" (click)="loadMoreProduct()"></i>
             </div>
 
 
@@ -70,6 +71,7 @@
   </div>
 </div>
 
+<!--Đăng kí lại-->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

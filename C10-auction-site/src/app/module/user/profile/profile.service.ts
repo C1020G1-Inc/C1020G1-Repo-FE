@@ -10,6 +10,9 @@ export class ProfileService {
   constructor(
     public  http: HttpClient) { }
 
+  getAllProductAuction(accountId, pageNumber: number): Observable<any>{
+    return this.http.get(this.API + '/product-auction/' + accountId + '?page=' + pageNumber);
+  }
   getAllProductRegister(accountId, pageNumber: number): Observable<any> {
     return this.http.get(this.API + '/product-register/' + accountId + '?page=' + pageNumber);
   }
@@ -20,4 +23,8 @@ export class ProfileService {
   setProduct(price, description, id): Observable<any>{
     return this.http.put(this.API + '/product-register/update/' + price + '/' + description + '/' + id, null);
   }
+
+  // searchProductRegister(name, time, price): Observable<any>{
+  //   return this.http.get(this.API + '/product-register/search/' + name + '/' + time + '/' + price);
+  // }
 }

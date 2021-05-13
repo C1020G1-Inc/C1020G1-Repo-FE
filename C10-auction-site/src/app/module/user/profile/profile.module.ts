@@ -13,9 +13,10 @@ import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [ViewProfileComponent, UpdateProfileComponent, HistoryRegisterProductComponent, HistoryAuctionProductComponent, RegisterComponent, ForgotPasswordComponent],
-  exports: [
-    HistoryRegisterProductComponent
-  ],
+    exports: [
+        HistoryRegisterProductComponent,
+        HistoryAuctionProductComponent
+    ],
   imports: [
     CommonModule,
     RouterModule,
