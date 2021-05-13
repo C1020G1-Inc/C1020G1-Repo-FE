@@ -1,7 +1,7 @@
+<ngx-loading [show]="loading" [config]="config"></ngx-loading>
 <div class="container-fluid">
-
   <h2>Bình Luận</h2>
-  <div class="row" style="margin-left: 10px">
+  <div class="row" style="background-color: whitesmoke">
     <ul class="we-comet" style="margin-top: 10px">
       <li *ngFor="let comment of comments">
         <div>
@@ -71,9 +71,9 @@
           </button>
         </li>
       </form>
-      <div *ngIf="check" class="d-inline-block" style="max-height:120px; margin-left: 52px">
+      <div *ngIf="check" class="d-inline-block" style="max-height:120px; margin-left: 61px">
         <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage()"></i></span>
-        <img [src]="fileImage[0].url" style="margin:3px; height: 120px; width: auto; float: left">
+        <img [src]="fileImage[0].url" style="height: 120px; width: auto; float: left">
       </div>
     </ul>
   </div>
@@ -107,11 +107,13 @@
               {{this.messageEdit}}
           </span>
           </div>
+          <div style="display: block; margin-top: 12px; margin-bottom: -14px">
+            <label>
+              <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên"></i>
+              <input type="file" id="upload_file_2" name="upload_file[]" (change)="importImagesEdit($event)" hidden/>
+            </label>
+          </div>
           <label class="col-form-label" style="margin-top: 5px">Bình luận của bạn:</label>
-          <label>
-            <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên"></i>
-            <input type="file" id="upload_file_2" name="upload_file[]" (change)="importImagesEdit($event)" hidden/>
-          </label>
           <form [formGroup]="formEditComment">
             <input formControlName="image" hidden>
             <input formControlName="account" hidden>
@@ -169,4 +171,3 @@
     </div>
   </div>
 </div>
-

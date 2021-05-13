@@ -8,6 +8,7 @@ import {Account} from '../../../../models/Account';
 import {ProductService} from '../../../../service/product/product.service';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
+import {ngxLoadingAnimationTypes} from 'ngx-loading';
 
 declare const $: any;
 
@@ -17,6 +18,13 @@ declare const $: any;
   styleUrls: ['./comment-product.component.css']
 })
 export class CommentProductComponent implements OnInit {
+  config = {
+    animationType: ngxLoadingAnimationTypes.doubleBounce,
+    primaryColour: '#006ddd',
+    backdropBorderRadius: '3px'
+  };
+  loading = false;
+
   comments: Comment[];
   user: User;
   formComment: FormGroup;
@@ -99,11 +107,12 @@ export class CommentProductComponent implements OnInit {
   async createComment() {
     if (($('#myText').data('emojioneArea').getText() !== '')) {
       this.message = null;
+      this.loading = true;
       await this.addImageToFireBase(this.fileImage);
       this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
       this.formComment.get('image').setValue(this.urlImage);
-      console.log(this.formComment.value);
       this.commentService.createNewComment(this.formComment.value).subscribe(data => {
+        // this.loading = false;
         $('#myText').data('emojioneArea').setText('');
         this.ngOnInit();
         this.fileImage = [];
@@ -127,7 +136,6 @@ export class CommentProductComponent implements OnInit {
       this.formEditComment.get('product').setValue(data.product);
       this.formEditComment.get('account').setValue(data.account);
       this.urlImageEdit = data.image;
-      console.log(this.formEditComment.value);
       $('#editComment').data('emojioneArea').setText(data.content);
     });
   }
@@ -138,6 +146,7 @@ export class CommentProductComponent implements OnInit {
    */
   async editComment() {
     if ($('#editComment').data('emojioneArea').getText() !== '') {
+      this.loading = true;
       this.messageEdit = null;
       await this.addImageToFireBase(this.fileImageEdit);
       if (this.urlImageEdit == null && this.urlImage == null) {
@@ -149,6 +158,7 @@ export class CommentProductComponent implements OnInit {
       }
       this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
       this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
+        this.loading = false;
         $('#editComment').data('emojioneArea').setText('');
         this.ngOnInit();
         this.checkImageEdit = false;
@@ -184,7 +194,6 @@ export class CommentProductComponent implements OnInit {
     this.fileImage = [];
     const files = event.target.files;
     const length = files.length;
-    console.log(length);
     if (length < 2) {
       for (const file of files) {
         const name = file.type;
@@ -201,7 +210,6 @@ export class CommentProductComponent implements OnInit {
               });
             };
             reader.readAsDataURL(file);
-            console.log(this.fileImage);
           } else {
             this.check = false;
             return this.message = 'Dung lượng ảnh quá cao!!';

@@ -5,6 +5,7 @@ import {DetailProductComponent} from './detail-product/detail-product.component'
 import {CommentProductComponent} from './comment-product/comment-product.component';
 import {GuideComponent} from './guide/guide.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgxLoadingModule} from 'ngx-loading';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxLoadingModule.forRoot({})
   ]
 })
 export class HomePageModule {

@@ -1,6 +1,7 @@
 .img-custom {
   height: 60px;
   width: 50px;
+  margin-left: 5px;
 }
 
 .we-comet {
@@ -19,7 +20,7 @@
 }
 
 .we-comment {
-  border-bottom: 1px solid #ede9e9;
+  border-bottom: 1px solid #adb5bd;
   display: inline-block;
   padding-bottom: 15px;
   padding-left: 17px;
@@ -118,6 +119,7 @@ li.post-comment .comet-button {
   padding-left: 15px;
   position: relative;
   width: 90%;
+  margin-left: 5px;
 }
 
 label {
