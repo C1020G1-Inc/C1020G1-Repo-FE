@@ -6,6 +6,7 @@ import {Account} from '../../../../model/temporary/account';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {Notification} from '../../../../model/temporary/notification';
+import {Room} from '../../../../model/temporary/room';
 
 export const snapshotToArray = (snapshot: any) => {
   const returnArr = [];
@@ -29,6 +30,8 @@ export class UserChatComponent implements OnInit {
   chats = new Array<Chat>();
   account: Account;
   chatForm: FormGroup;
+  room: Room;
+  notifications = new Array<Notification>();
 
   constructor(private formBuilder: FormBuilder,
               private datePipe: DatePipe) { }
@@ -42,6 +45,9 @@ export class UserChatComponent implements OnInit {
     firebase.database().ref('chats/').on('value', resp => {
       this.chats = snapshotToArray(resp).filter(x => x.roomName === this.account.accountName);
       this.setTimeForChat();
+    });
+    firebase.database().ref('notifications/').orderByChild('role').equalTo('admin').on('value' , (resp: any) => {
+      this.notifications = snapshotToArray(resp).filter(x => x.isRead === false && x.chat.roomName === this.account.accountName);
     });
   }
 
@@ -69,6 +75,7 @@ export class UserChatComponent implements OnInit {
         $('#chat_body').css('display', 'none');
         $('.chat_login').css('display', 'none');
         $('.chat_fullscreen_loader').css('display', 'block');
+        this.readNoti();
         break;
     }
   }
@@ -83,6 +90,12 @@ export class UserChatComponent implements OnInit {
     $('.chat_header').toggleClass('chat_header2');
     $('.fab_field').toggleClass('fab_field2');
     $('.chat_converse').toggleClass('chat_converse2');
+  }
+
+  readNoti(){
+    for (const readNotification of this.notifications) {
+      firebase.database().ref('notifications/').child(readNotification.key).child('isRead').set(true);
+    }
   }
 
   private setTimeForChat() {
@@ -121,6 +134,12 @@ export class UserChatComponent implements OnInit {
     const notification = new Notification(chat, false, 'user', this.account.user.userName, this.account.user.userAvatar);
     firebase.database().ref('notifications/').push().set(notification);
 
+    firebase.database().ref('rooms/').orderByChild('roomName').on('child_added', (resp: any) => {
+      this.room = resp.val();
+      this.room.key = resp.key;
+      this.room.newMess++;
+      firebase.database().ref('rooms').child(this.room.key).child('newMess').set(this.room.newMess++);
+    });
     this.chatForm.reset();
   }
 

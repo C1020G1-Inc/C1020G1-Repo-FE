@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import {UserDTO} from '../../../model/temporary/userDTO';
 import {Chat} from '../../../model/temporary/chat';
 import DateTimeFormat = Intl.DateTimeFormat;
+import {Notification} from '../../../model/temporary/notification';
 
 export const snapshotToArray = (snapshot: any) => {
   const returnArr = [];
@@ -26,8 +27,6 @@ export const snapshotToArray = (snapshot: any) => {
 })
 export class ChatRoomComponent implements OnInit {
 
-  // @ViewChild('chatcontent') chatcontent: ElementRef;
-  // scrolltop: number = null;
 
   chatForm: FormGroup;
   nickname = '';
@@ -53,7 +52,6 @@ export class ChatRoomComponent implements OnInit {
       firebase.database().ref('chats/').on('value', resp => {
         this.chats = snapshotToArray(resp).filter(x => x.roomName === this.roomName);
         this.setTimeForChat();
-
       });
       firebase.database().ref('rooms').orderByChild('roomName').equalTo(this.roomName).on('child_added', (resp2: any) => {
         this.user = resp2.val().user;
@@ -69,6 +67,9 @@ export class ChatRoomComponent implements OnInit {
     chat.type = 'message';
     const newMessage = firebase.database().ref('chats/').push();
     newMessage.set(chat);
+
+    const notification = new Notification(chat, false, 'admin', this.user.userName, this.user.userAvatar);
+    firebase.database().ref('notifications/').push().set(notification);
     this.chatForm.reset();
   }
 
@@ -78,6 +79,7 @@ export class ChatRoomComponent implements OnInit {
       const minute = (Date.parse(currentDate) - Date.parse(chat.date)) / (1000 * 60);
       if (minute < 1) {
         chat.date = 'vừa xong';
+        return;
       } else if (minute > 1 && minute < 60) {
         chat.date = Math.round(minute) + ' phút trước';
         return;
@@ -96,4 +98,7 @@ export class ChatRoomComponent implements OnInit {
 
   }
 
+  readNoti() {
+    // firebase.database().ref('notifications/').child()
+  }
 }

@@ -95,7 +95,9 @@
 
 .chat-admin .chat-history {
   padding: 20px;
-  border-bottom: 2px solid gray
+  border-bottom: 2px solid gray;
+  overflow-y: auto;
+  height: 500px;
 }
 
 .chat-admin .chat-history ul {
@@ -272,4 +274,18 @@
     height: calc(100vh - 350px);
     overflow-x: auto
   }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  margin: 2px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
 }

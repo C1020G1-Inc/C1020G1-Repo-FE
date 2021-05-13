@@ -16,7 +16,7 @@
       <a id="chat_first_screen" class="fab" (click)="hideChat(1)"><i class="zmdi zmdi-arrow-right"></i></a>
       <p>Chúng tôi kết nối doanh nghiệp với mọi người một cách đơn giản và hiệu quả, hãy hỏi bất cứ điều gì</p>
     </div>
-    <div id="chat_converse" class="chat_conversion chat_converse">
+    <div id="chat_converse" class="chat_conversion chat_converse" (scroll)="readNoti()">
       <span class="chat_msg_item chat_msg_item_admin">
             <div class="chat_avatar">
                <img src="http://res.cloudinary.com/dqvwa7vpe/image/upload/v1496415051/avatar_ma6vug.jpg"/>
@@ -52,5 +52,9 @@
       </form>
     </div>
   </div>
-  <a id="primeCustom" class="fab" (click)="toggleFab()"><i class="prime zmdi zmdi-comment-outline"></i></a>
+  <p class="badge badge-danger position-absolute ml-5" *ngIf="notifications.length !== 0">{{notifications.length}}</p>
+  <a id="primeCustom" class="fab mt-1" (click)="toggleFab()">
+    <i class="prime zmdi zmdi-comment-outline"></i>
+  </a>
 </div>
+

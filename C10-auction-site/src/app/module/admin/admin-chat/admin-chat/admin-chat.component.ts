@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DatePipe} from '@angular/common';
 import firebase from 'firebase';
 import {Room} from '../../../../model/temporary/room';
 import {Notification} from '../../../../model/temporary/notification';
@@ -49,15 +48,14 @@ export class AdminChatComponent implements OnInit {
   }
 
 
-  enterChatRoom(roomName: string) {
+  enterChatRoom(room: Room) {
     for (const readNotification of this.notifications) {
-      if (readNotification.chat.roomName === roomName) {
-        console.log(readNotification.key);
+      if (readNotification.chat.roomName === room.roomName) {
         firebase.database().ref('notifications/').child(readNotification.key).child('isRead').set(true);
+        firebase.database().ref('rooms/').child(room.key).child('newMess').set(0);
       }
     }
 
-    this.router.navigate(['/admin/chat', roomName]);
+    this.router.navigate(['/admin/chat', room.roomName]);
   }
-
 }

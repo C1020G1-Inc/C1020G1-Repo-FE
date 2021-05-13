@@ -48,9 +48,7 @@ export class ErrorComponent implements OnInit {
 
   ref = firebase.database().ref('rooms/');
 
-  room: Room = {
-    roomName: this.account1.accountName, user: this.user1
-  };
+  room = new Room(this.account1.accountName, this.user1, 0);
 
   constructor(private router: Router) { }
 
@@ -60,8 +58,8 @@ export class ErrorComponent implements OnInit {
   login() {
     this.addRoom(this.room);
     localStorage.clear();
-    localStorage.setItem('nickname', this.account1.accountName);
-    localStorage.setItem('account', JSON.stringify(this.account1));
+    localStorage.setItem('nickname', this.account2.accountName);
+    localStorage.setItem('account', JSON.stringify(this.account2));
     this.router.navigate(['/admin/chat', this.account1.accountName]);
   }
 

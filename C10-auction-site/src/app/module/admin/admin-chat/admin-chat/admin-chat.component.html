@@ -117,27 +117,31 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="card chat-app">
-                      <div id="plist" class="people-list">
+                      <div id="plist2" class="people-list">
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                           </div>
                           <input type="text" class="form-control" placeholder="Tìm Kiếm...">
                         </div>
+                      </div>
+
+                      <div id="plist" class="people-list scroll">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                           <li *ngIf="isLoadingResults">
                             <div class="spinner-border text-white" style="margin-left: 5rem !important;" role="status">
                               <span class="sr-only">Loading...</span>
                             </div>
                           </li>
-                          <li class="clearfix" *ngFor="let room of rooms" (click)="enterChatRoom(room.roomName)">
+                          <li class="clearfix" *ngFor="let room of rooms" (click)="enterChatRoom(room)">
                             <img src="{{room.user.userAvatar}}"
                                  alt="avatar">
                             <div class="about">
                               <div class="name">{{room.user.userName}}</div>
-                              <div class="status"><i class="fa fa-circle offline"></i> 7 phút trước
+                              <div class="status"><i class="fa fa-circle offline" ></i> 7 phút trước
                               </div>
                             </div>
+                            <span class="badge badge-danger float-right mt-3" *ngIf="room.newMess != 0">{{room.newMess}}</span>
                           </li>
                         </ul>
                       </div>
