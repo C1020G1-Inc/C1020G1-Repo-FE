@@ -18,4 +18,9 @@ export class TransactionService {
   public deleteTransaction(transactionId: number): Observable<any> {
     return this.httpClient.delete(this.API_URL + '/delete/' + transactionId);
   }
+
+  public getTransactionBySearch(namePost, nameBuy, productName, price: number, status): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/search?namePost=' + namePost + '&nameBuy=' + nameBuy + '&productName=' + productName
+      + '&price=' + price + '&status=' + status);
+  }
 }

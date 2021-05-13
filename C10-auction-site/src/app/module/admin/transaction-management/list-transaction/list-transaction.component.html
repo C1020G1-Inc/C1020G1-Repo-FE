@@ -2,7 +2,7 @@
 <div class="wrapper ">
   <div class="sidebar" data-color="purple" data-background-color="black" data-image="./assets/img/sidebar-2.jpg">
     <div class="logo">
-      <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <a href="#" class="simple-text logo-normal">
         Trang Quản Lý
       </a>
     </div>
@@ -28,31 +28,31 @@
                 <div class="row mt-5">
                   <div class="col">
                     <label>Người đăng: </label>
-                    <input type="text" class="form-control" placeholder="">
+                    <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="namePost">
                   </div>
                   <div class="col">
                     <label>Người mua: </label>
-                    <input type="text" class="form-control" placeholder="">
+                    <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="nameBuy">
                   </div>
                   <div class="col">
                     <label>Tên sản phẩm: </label>
-                    <input type="text" class="form-control" placeholder="">
+                    <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="productName">
                   </div>
                   <div class="col">
                     <label>Thành tiền: </label>
-                    <input type="text" class="form-control" placeholder="">
+                    <input type="text" class="form-control" placeholder="Nhập tiền..." [(ngModel)]="price">
                   </div>
                   <div class="col">
                     <label>Tình trạng: </label>
-                    <select id="" class="custom-select">
-                      <option value="">Tất cả</option>
+                    <select id="" class="custom-select" [(ngModel)]="status">
+                      <option value="undefined">Tất cả</option>
                       <option value="Thành công">Thành công</option>
                       <option value="Thất bại">Thất bại</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group d-flex justify-content-end mt-3 mr-3">
-                  <button class="btn btn-primary mr-3" type="submit">Tìm kiếm</button>
+                  <button class="btn btn-primary mr-3" type="submit" (click)="seach()">Tìm kiếm</button>
                 </div>
               </div>
               <div class="d-flex justify-content-end mr-5 mb-4">
@@ -79,7 +79,7 @@
                     <tbody>
                     <tr *ngFor="let transaction of listTransaction">
                       <td>{{transaction.transactionId}}</td>
-                      <td>{{transaction.trasactionTime | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                      <td>{{transaction.transactionTime | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                       <td>{{transaction.product.account.user.userName}}</td>
                       <td>{{transaction.account.user.userName}}</td>
                       <td>{{transaction.product.productName}}</td>
