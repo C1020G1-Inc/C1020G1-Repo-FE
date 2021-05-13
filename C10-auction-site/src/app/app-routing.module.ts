@@ -18,7 +18,7 @@ import {ListProductHomeComponent} from './module/user/home-page/list-product-hom
 import {DetailProductComponent} from './module/user/home-page/detail-product/detail-product.component';
 import {GuideComponent} from './module/user/home-page/guide/guide.component';
 import {AuctionBiddingComponent} from './module/user/auction/auction-bidding/auction-bidding.component';
-import {AuctionRequestComponent} from './module/user/auction/auction-request/auction-request.component';
+import {CreateProductComponent} from './module/user/auction/auction-request/create-product/create-product.component';
 import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-cart.component';
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
@@ -54,7 +54,7 @@ const routes: Routes = [
     path: 'auction',
     children: [
       {path: 'bidding/:id', component: AuctionBiddingComponent},
-      {path: 'request', component: AuctionRequestComponent},
+      {path: 'request', component: CreateProductComponent},
       {path: 'cart', component: AuctionCartComponent},
       {path: 'payment', component: AuctionPaymentComponent},
       {path: 'invoice', component: InvoiceComponent}
