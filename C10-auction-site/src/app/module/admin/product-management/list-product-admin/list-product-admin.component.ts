@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../../../model/product/product';
 import {ProductService} from '../../../../service/product.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Category} from '../../../../model/product/category';
 import {ProductImage} from '../../../../model/product/product_image';
 import {ProductDto} from '../../../../model/product/product_dto';
@@ -40,6 +40,7 @@ export class ListProductAdminComponent implements OnInit {
   productImageUpdate = new Array<any>();
   // file ảnh update dùng để up lên firebase.
   imageToUpFireBase = new Array<any>();
+  lengthOfImage;
 
   constructor(private productService: ProductService,
               private formBuilder: FormBuilder,
@@ -51,14 +52,14 @@ export class ListProductAdminComponent implements OnInit {
     this.productService.getAllCategory().subscribe(data => this.categoryList = data);
     this.editForm = this.formBuilder.group({
       productId: [''],
-      productName: [''],
-      category: [''],
+      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      category: ['', [Validators.required]],
       price: [''],
       priceStep: [''],
       account: [''],
       productStatus: [''],
       auctionTime: [''],
-      quantity: [''],
+      quantity: ['', [Validators.required]],
       description: [''],
     });
   }
@@ -95,13 +96,17 @@ export class ListProductAdminComponent implements OnInit {
   }
 
   sendProductIdForForm(productId: number) {
+    this.lengthOfImage = 0;
     this.listProductImage = new Array<any>();
     this.productImageUpdate = new Array<any>();
     this.productService.getProductById(productId).subscribe(data => {
       this.productDTO = data;
       console.log(this.productDTO);
+
       this.productEdit = this.productDTO.product;
       this.listProductImage = this.productDTO.productImageList;
+      this.lengthOfImage = this.listProductImage.length;
+
       this.editForm.controls.productId.setValue(this.productEdit.productId);
       this.editForm.controls.productName.setValue(this.productEdit.productName);
       this.editForm.controls.category.setValue(this.productEdit.category.id);
@@ -137,28 +142,31 @@ export class ListProductAdminComponent implements OnInit {
 
   deleteImage(i: number) {
     this.listProductImage.splice(i, 1);
-    console.log(this.listProductImage);
+    this.lengthOfImage--;
   }
 
   selectFile(event) {
-    let files = event.target.files;
-    if (files) {
-      for (let file of files) {
-        const name = file.type;
-        const size = file.size;
-        if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
-          if (size <= 1000000) {
-            let reader = new FileReader();
-            reader.onload = (e: any) => {
-              this.productImageUpdate.push({url: e.target.result, fileToShow: file});
-              this.imageToUpFireBase.push(file);
-            };
-            reader.readAsDataURL(file);
+    if (this.lengthOfImage < 5) {
+      let files = event.target.files;
+      if (files) {
+        for (let file of files) {
+          const name = file.type;
+          const size = file.size;
+          if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
+            if (size <= 1000000) {
+              let reader = new FileReader();
+              reader.onload = (e: any) => {
+                this.productImageUpdate.push({url: e.target.result, fileToShow: file});
+                this.imageToUpFireBase.push(file);
+                this.lengthOfImage++;
+              };
+              reader.readAsDataURL(file);
+            } else {
+              alert('Ảnh không được quá 1Mb');
+            }
           } else {
-            alert('Ảnh không được quá 1Mb');
+            alert('Vui lòng chỉ chọn file ảnh');
           }
-        } else {
-          alert('Vui lòng chỉ chọn file ảnh');
         }
       }
     }
@@ -168,12 +176,13 @@ export class ListProductAdminComponent implements OnInit {
     let index = event.target.attributes['data-index'].value;
     this.productImageUpdate.splice(index, 1);
     this.imageToUpFireBase.splice(index, 1);
+    this.lengthOfImage--;
   }
 
-  async addImageToFireBase(productUpdate) {
+  addImageToFireBase(productUpdate) {
     return new Promise(resolve => {
       Promise.all(this.imageToUpFireBase.map(file =>
-        new Promise(() => {
+        new Promise(resolve => {
           const name = file.name;
           if (name.match(/.*\.(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
             const fileRef = this.storage.ref('images/' + name);
@@ -187,7 +196,6 @@ export class ListProductAdminComponent implements OnInit {
                       image: url
                     };
                     this.listProductImage.push(productImage);
-                    console.log('a');
                     resolve(1);
                   });
               })).subscribe();

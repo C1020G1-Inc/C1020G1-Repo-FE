@@ -22,6 +22,7 @@ import {AuctionRequestComponent} from './module/user/auction/auction-request/auc
 import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-cart.component';
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
+import {UpdateProductComponent} from './module/admin/product-management/update-product/update-product.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
       {path: 'user-management/chart', component: UserChartComponent},
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
+      {path: 'product-management/update', component: UpdateProductComponent},
       {path: 'transactions', component: TransactionManagementModule},
     ]
   },

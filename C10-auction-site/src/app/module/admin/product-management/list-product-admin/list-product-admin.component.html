@@ -155,7 +155,7 @@
   </div>
 
   <div id="acceptProduct" class="modal fade" *ngIf="product">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
           <div class="modal-header">
@@ -187,8 +187,8 @@
               <tr>
                 <th style="padding: 30px">Hình ảnh:</th>
                 <td>
-                  <div *ngFor="let image of listProductImage">
-                    <img style="width: 100px;height: 70px"
+                  <div *ngFor="let image of listProductImage" style="display: inline-block">
+                    <img style="width: 150px;height: 100px;margin-right:5px;float: left"
                          src="{{image.image}}">
                   </div>
                 </td>
@@ -201,7 +201,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" style="margin-right: 30%">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" style="margin-right: 45%">
           </div>
         </form>
       </div>
@@ -213,23 +213,40 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
-          <div class="modal-header">
-            <h4 class="modal-title">Cập nhật !!</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-header" style="background: #8506bd">
+            <h4 class="modal-title" style="color: white">Cập nhật !!</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: whitesmoke">
+              &times;
+            </button>
           </div>
           <div class="modal-body" *ngIf="productEdit">
             <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
               <table>
                 <tr>
-                  <th style="padding: 30px">Tên sản phẩm:</th>
-                  <td><input type="text" id="productName" name="productName" formControlName="productName"/></td>
+                  <th style="padding: 15px"> Tên sản phẩm:</th>
+                  <td><input type="text" id="productName" name="productName" formControlName="productName"/>
+                    <br>
+                    <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.required  &&
+                  (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
+                    Vui lòng nhập tên sản phẩm !!
+                  </span>
+                    <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.minlength  &&
+                  (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
+                    Tên sản phẩm tối thiểu chứa 6 ký tự !!
+                  </span>
+                    <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.maxlength  &&
+                  (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
+                    Tên sản phẩm tối đa 30 ký tự !!
+                  </span>
+                  </td>
+
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Người đăng:</th>
+                  <th style="padding: 15px">Người đăng:</th>
                   <th>{{productEdit.account.user.userName}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Chủng loại:</th>
+                  <th style="padding: 15px">Chủng loại:</th>
                   <td>
                     <select style="width: 100px;" id="category" name="category" formControlName="category">
                       <option [ngValue]="category.id" *ngFor="let category of categoryList">
@@ -239,47 +256,54 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Giá khởi điểm:</th>
+                  <th style="padding: 15px">Giá khởi điểm:</th>
                   <th>{{productEdit.price | currency :'VND':'symbol'}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Bước giá:</th>
+                  <th style="padding: 15px">Bước giá:</th>
                   <th>{{productEdit.priceStep | currency: 'VND':'symbol'}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Hình ảnh:</th>
+                  <th style="padding: 15px">Hình ảnh:</th>
 
                   <td>
                     <div class="fileinputs">
                       <input type="file" (change)="selectFile($event)" class="file" multiple/>
                       <div class="fakefile">
-                        <i class="fa fa-image fa-2x" style="color: #0066ff"></i>
+                        <i class="fa fa-image fa-2x" style="color: #a303bb"></i>
                       </div>
                     </div>
-
-                    <div *ngFor="let image of listProductImage ; let i = index"
-                         style="margin-left: 0; display: inline-block">
+                      <div *ngFor="let image of listProductImage ; let i = index"
+                           style="margin-left: 0; display: inline-block" class="item">
                       <span>
-                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteImage(i)"></i>
-                      </span>
-                      <img style="width: 150px;height: 100px"
-                           src="{{image.image}}">
-                    </div>
-
-                    <div *ngFor="let imageUpdate of productImageUpdate ; let i = index"
-                         style="margin-left: 0; display: inline-block">
-                      <span>
-                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage($event)"
-                           [attr.data-index]="i">
+                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteImage(i)"
+                           style="color: red;cursor: pointer">
                         </i>
                       </span>
-                      <img style="width: 150px;height: 100px;float: left"
-                           src="{{imageUpdate.url}}">
+                        <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                             src="{{image.image}}">
+                      </div>
+
+                      <div *ngFor="let imageUpdate of productImageUpdate ; let i = index"
+                           style="margin-left: 0; display: inline-block">
+                      <span>
+                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage($event)"
+                           [attr.data-index]="i" style="color: red;cursor: pointer">
+                        </i>
+                      </span>
+                        <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                             src="{{imageUpdate.url}}">
+                      </div>
+                    <div *ngIf="lengthOfImage > 5">
+                      <p style="color: red">Chỉ tối đa 5 ảnh</p>
+                    </div>
+                    <div *ngIf="lengthOfImage < 1">
+                      <p style="color: red">Vui lòng chọn 1 ảnh</p>
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Thời gian:</th>
+                  <th style="padding: 15px">Thời gian:</th>
                   <td>
                     <select style="width: 100px;" id="auctionTime" name="auctionTime" formControlName="auctionTime">
                       <option value="60">60 phút</option>
@@ -289,7 +313,9 @@
                   </td>
                 </tr>
               </table>
-              <input type="submit" class="btn btn-primary" value="Sửa" style="margin-left: 30%;margin-right: 10px">
+              <input type="submit" class="btn btn-primary" value="Sửa"
+                     style="margin-left: 30%;margin-right: 10px"
+                     [disabled]="!editForm.valid || this.lengthOfImage > 5 || this.lengthOfImage < 1">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" id="close">
             </form>
           </div>
