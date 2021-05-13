@@ -28,4 +28,15 @@ export class UserService {
     // @ts-ignore
     return this.http.put('http://localhost:8080/admin/unlock-user/' + userId);
   }
+
+  searchUser(userName, userId, address, userEmail): Observable<any> {
+    console.log(userName);
+    return this.http.get('http://localhost:8080/admin/search-user?userName=' + userName + ''
+      + '&userId=' + userId + '' + '&address=' + address + '' + '&userEmail=' + userEmail);
+  }
+
+  getUserByDate(month, year): Observable<any> {
+    return this.http.get('http://localhost:8080/admin/user-chart?month=' + month + '' +
+      '&year=' + year);
+  }
 }

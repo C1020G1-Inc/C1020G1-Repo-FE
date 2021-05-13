@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../../../model/user';
 import {UserService} from '../../../../service/user.service';
 import {Account} from '../../../../model/account';
 
@@ -12,10 +11,12 @@ export class ListUserComponent implements OnInit {
   userList: Account[];
   account: Account;
   userName: string;
-  userPhone: string;
   userAddress: string;
 
   userId: number;
+
+  userEmail: string;
+  page: any;
 
 
   constructor(private userService: UserService) {
@@ -47,5 +48,16 @@ export class ListUserComponent implements OnInit {
 
   unlockUserById(userId: number) {
     this.userService.unlockUserById(userId).subscribe(data2 => this.ngOnInit());
+  }
+
+  search() {
+    if (this.userId === undefined){
+      this.userId = 0;
+    }
+    console.log(this.userId);
+    this.userService.searchUser(this.userName, this.userId, this.userAddress, this.userEmail).subscribe(data => {
+      this.userList = data;
+      console.log(data);
+    });
   }
 }
