@@ -6,7 +6,7 @@ import {District, Province, Ward} from '../../../../model/Address';
 import {AddressService} from '../../../../service/address.service';
 import {OrderDTO} from '../../../../model/OrderDTO';
 import {OrderService} from '../../../../service/order.service';
-import {ngxLoadingAnimationTypes, NgxLoadingComponent} from 'ngx-loading';
+import {NgxLoadingComponent} from 'ngx-loading';
 
 declare var paypal;
 
