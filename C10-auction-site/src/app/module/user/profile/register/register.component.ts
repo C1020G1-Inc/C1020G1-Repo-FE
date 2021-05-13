@@ -30,6 +30,9 @@ export class RegisterComponent implements OnInit {
               private router: Router, private storage: AngularFireStorage, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    if (this.tokenStorage.isLogged()){
+      this.router.navigateByUrl('/home');
+    }
     this.accountService.getAllProvince().subscribe(data => {
       this.provinceList = data.results;
       this.province.setValue(this.provinceList[0].province_name);
