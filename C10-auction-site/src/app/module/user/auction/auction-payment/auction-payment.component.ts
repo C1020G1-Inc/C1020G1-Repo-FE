@@ -7,6 +7,8 @@ import {AddressService} from '../../../../service/address.service';
 import {OrderDTO} from '../../../../model/OrderDTO';
 import {OrderService} from '../../../../service/order.service';
 
+declare var paypal;
+
 @Component({
   selector: 'app-auction-payment',
   templateUrl: './auction-payment.component.html',
@@ -45,7 +47,7 @@ export class AuctionPaymentComponent implements OnInit {
         address: '41b Mai Lão Bạng'
       }
     };
-    this.totalInVND = 100000;
+    this.totalInVND = 10000000;
     this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
     this.products = [
       {
