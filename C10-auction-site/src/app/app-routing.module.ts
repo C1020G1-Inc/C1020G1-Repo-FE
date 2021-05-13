@@ -23,6 +23,7 @@ import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-c
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
+import {ListTransactionComponent} from "./module/admin/transaction-management/list-transaction/list-transaction.component";
 
 const routes: Routes = [
   {
@@ -32,7 +33,7 @@ const routes: Routes = [
       {path: 'user-management/chart', component: UserChartComponent},
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
-      {path: 'transactions', component: TransactionManagementModule},
+      {path: 'transactions', component: ListTransactionComponent},
       {path: 'chat', component: AdminChatComponent},
     ]
   },

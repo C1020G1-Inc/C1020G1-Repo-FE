@@ -1,1 +1,155 @@
-<p>list-transaction works!</p>
+<div class="dark-edition">
+<div class="wrapper ">
+  <div class="sidebar" data-color="purple" data-background-color="black" data-image="./assets/img/sidebar-2.jpg">
+    <div class="logo">
+      <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        Trang Quản Lý
+      </a>
+    </div>
+    <div class="sidebar-wrapper">
+      <ul class="nav">
+        <li class="nav-item active  ">
+          <a class="nav-link" href="javascript:void(0)">
+            <i class="material-icons">dashboard</i>
+            <p>Quản lý giao dịch</p>
+          </a>
+        </li>
+        <!-- your sidebar here -->
+      </ul>
+    </div>
+  </div>
+  <div class="main-panel" >
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="container" id="myDIV" style="display: none" >
+                <div class="row mt-5">
+                  <div class="col">
+                    <label>Người đăng: </label>
+                    <input type="text" class="form-control" placeholder="">
+                  </div>
+                  <div class="col">
+                    <label>Người mua: </label>
+                    <input type="text" class="form-control" placeholder="">
+                  </div>
+                  <div class="col">
+                    <label>Tên sản phẩm: </label>
+                    <input type="text" class="form-control" placeholder="">
+                  </div>
+                  <div class="col">
+                    <label>Thành tiền: </label>
+                    <input type="text" class="form-control" placeholder="">
+                  </div>
+                  <div class="col">
+                    <label>Tình trạng: </label>
+                    <select id="" class="custom-select">
+                      <option value="">Tất cả</option>
+                      <option value="Thành công">Thành công</option>
+                      <option value="Thất bại">Thất bại</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group d-flex justify-content-end mt-3 mr-3">
+                  <button class="btn btn-primary mr-3" type="submit">Tìm kiếm</button>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mr-5 mb-4">
+                <button onclick="myFunctionSearch()" class="btn btn-primary"  data-ripple="">Tìm kiếm nâng cao</button>
+              </div>
+              <div class="card-header card-header-primary">
+                <h4 class="card-title ">Quản lý giao dịch</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th scope="col">Mã Giao Dịch</th>
+                      <th scope="col">Thời gian đấu<br> giá thành công</th>
+                      <th scope="col">Người đăng</th>
+                      <th scope="col">Người mua</th>
+                      <th scope="col">Tên sản phẩm</th>
+                      <th scope="col">Số lượng<br>(cái, con, lít, v.v..)</th>
+                      <th scope="col">Thành tiền (VND)</th>
+                      <th scope="col">Phí dịch vụ (VND)</th>
+                      <th scope="col">Tình trạng giao dịch</th>
+                      <th scope="col"></th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let transaction of listTransaction">
+                      <td>{{transaction.transactionId}}</td>
+                      <td>{{transaction.trasactionTime | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                      <td>{{transaction.product.account.user.userName}}</td>
+                      <td>{{transaction.account.user.userName}}</td>
+                      <td>{{transaction.product.productName}}</td>
+                      <td>1</td>
+                      <td>{{transaction.auction.price}}</td>
+                      <td>{{transaction.auction.price*5/100}}</td>
+                      <td>{{transaction.status}}</td>
+                      <td><button class="btn btn-danger" type="submit" data-ripple="" data-toggle="modal" data-target="#exampleModal"
+                      (click)="showDelete(transaction.transactionId)">
+                        Xóa</button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end mr-5">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">XÓA GIAO DỊCH</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="my-3">Bạn có chắc chắn muốn xóa giao dịch này không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 80px">Hủy</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 80px" (click)="delete()">Đồng ý</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container-fluid">
+        <nav class="float-left">
+          <ul>
+            <li>
+              <a href="https://www.creative-tim.com">
+                Creative Tim
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+      </div>
+    </footer>
+  </div>
+</div>
+
