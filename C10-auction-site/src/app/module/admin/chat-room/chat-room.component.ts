@@ -1,8 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import firebase from 'firebase';
 import {UserDTO} from '../../../model/temporary/userDTO';
 import {Chat} from '../../../model/temporary/chat';
 import {Notification} from '../../../model/temporary/notification';
@@ -122,4 +121,5 @@ export class ChatRoomComponent implements OnInit {
     const index = $event.target.attributes['data-index'].value;
     this.fileImage.splice(index, 1);
   }
+
 }
