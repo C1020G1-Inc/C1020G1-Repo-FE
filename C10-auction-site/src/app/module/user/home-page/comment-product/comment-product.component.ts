@@ -6,6 +6,8 @@ import {User} from '../../../../models/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Account} from '../../../../models/Account';
 import {ProductService} from '../../../../service/product/product.service';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage} from '@angular/fire/storage';
 
 declare const $: any;
 
@@ -22,17 +24,25 @@ export class CommentProductComponent implements OnInit {
   formEditComment: FormGroup;
   idDeleteComment: number;
   message: string;
+  messageEdit: string;
   fileImage: any;
+  fileImageEdit: any;
   check = false;
+  checkImageEdit = false;
+  private urlImage: string;
+  urlImageEdit: string;
 
   constructor(private commentService: CommentService,
               private productService: ProductService,
               private activatedRouter: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private formBuilders: FormBuilder) {
+              private formBuilders: FormBuilder,
+              public storage: AngularFireStorage) {
   }
 
   ngOnInit(): void {
+    this.fileImage = [];
+    this.fileImageEdit = [];
     const productId = this.activatedRouter.snapshot.params.id;
     this.getAllCommentByProductId(productId);
     this.user = {
@@ -86,15 +96,18 @@ export class CommentProductComponent implements OnInit {
    * Author : SonPH
    * create comment
    */
-  createComment() {
+  async createComment() {
     if (($('#myText').data('emojioneArea').getText() !== '')) {
       this.message = null;
+      await this.addImageToFireBase(this.fileImage);
       this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
-      this.formComment.get('image').setValue('abc.jpg');
+      this.formComment.get('image').setValue(this.urlImage);
       console.log(this.formComment.value);
       this.commentService.createNewComment(this.formComment.value).subscribe(data => {
         $('#myText').data('emojioneArea').setText('');
         this.ngOnInit();
+        this.fileImage = [];
+        this.check = false;
       });
     } else {
       this.message = 'Không được để trống nội dung!!';
@@ -113,6 +126,7 @@ export class CommentProductComponent implements OnInit {
       this.formEditComment.get('commentTime').setValue(data.commentTime);
       this.formEditComment.get('product').setValue(data.product);
       this.formEditComment.get('account').setValue(data.account);
+      this.urlImageEdit = data.image;
       console.log(this.formEditComment.value);
       $('#editComment').data('emojioneArea').setText(data.content);
     });
@@ -122,13 +136,26 @@ export class CommentProductComponent implements OnInit {
    * Author : SonPH
    * edit comment
    */
-  editComment() {
-    this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
-    console.log(this.formEditComment.value);
-    this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
-      $('#editComment').data('emojioneArea').setText('');
-      this.ngOnInit();
-    });
+  async editComment() {
+    if ($('#editComment').data('emojioneArea').getText() !== '') {
+      this.messageEdit = null;
+      await this.addImageToFireBase(this.fileImageEdit);
+      if (this.urlImageEdit == null && this.urlImage == null) {
+        this.formEditComment.get('image').setValue(null);
+      } else if (this.urlImageEdit != null && this.urlImage == null) {
+        this.formEditComment.get('image').setValue(this.urlImageEdit);
+      } else if (this.urlImageEdit == null && this.urlImage != null) {
+        this.formEditComment.get('image').setValue(this.urlImage);
+      }
+      this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
+      this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
+        $('#editComment').data('emojioneArea').setText('');
+        this.ngOnInit();
+        this.checkImageEdit = false;
+      });
+    } else {
+      this.messageEdit = 'Không được để trống nội dung trong lúc chỉnh sửa!!';
+    }
   }
 
   /**
@@ -154,32 +181,35 @@ export class CommentProductComponent implements OnInit {
    * import image to screen and validate image
    */
   importImages(event) {
+    this.fileImage = [];
     const files = event.target.files;
-    console.log(files);
     const length = files.length;
+    console.log(length);
     if (length < 2) {
-      const name = files[0].type;
-      const size = files[0].size;
-      if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
-        if (size <= 1000000) {
-          this.check = true;
-          this.message = null;
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.fileImage = {
-              url: e.target.result,
-              file: files[0]
+      for (const file of files) {
+        const name = file.type;
+        const size = file.size;
+        if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
+          if (size <= 1000000) {
+            this.check = true;
+            this.message = null;
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+              this.fileImage.push({
+                url: e.target.result,
+                file
+              });
             };
-          };
-          reader.readAsDataURL(files[0]);
-          console.log(this.fileImage);
+            reader.readAsDataURL(file);
+            console.log(this.fileImage);
+          } else {
+            this.check = false;
+            return this.message = 'Dung lượng ảnh quá cao!!';
+          }
         } else {
           this.check = false;
-          return this.message = 'Dung lượng ảnh quá cao!!';
+          return this.message = 'Đây không phải hình ảnh!!';
         }
-      } else {
-        this.check = false;
-        return this.message = 'Đây không phải hình ảnh!!';
       }
     } else {
       this.check = false;
@@ -191,9 +221,107 @@ export class CommentProductComponent implements OnInit {
    * Author : SonPH
    * delete image in screen
    */
-  deleteUpdateImage(event) {
-    this.fileImage = null;
+  deleteUpdateImage() {
+    this.fileImage = [];
     this.check = false;
+  }
+
+  /**
+   * Author : SonPH
+   * add image to firebase
+   */
+  addImageToFireBase(fileChanges: any) {
+    this.urlImage = null;
+    return new Promise(resolve => {
+      Promise.all(fileChanges.map(file =>
+        new Promise((resolve) => {
+          const name = file.file.name;
+          if (name.match(/.*\.(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
+            const fileRef = this.storage.ref(name);
+            // const fileRef = this.storage.ref("/filename" +name); lưu vào thư mục filename
+            this.storage.upload(name, file.file).snapshotChanges().pipe(
+              finalize(() => {
+                fileRef.getDownloadURL()
+                  .subscribe((url) => {
+                    this.urlImage = url;
+                    resolve(1);
+                  });
+              })).subscribe();
+          }
+        }))).then(() => {
+        resolve(1);
+      });
+    });
+  }
+
+  get content() {
+    return this.formComment.get('content');
+  }
+
+  get contentEdit() {
+    return this.formEditComment.get('content');
+  }
+
+  /**
+   * Author : SonPH
+   * delete image in screen edit
+   */
+  deleteImageEdit() {
+    this.urlImageEdit = null;
+  }
+
+  /**
+   * Author : SonPH
+   * import image in screen edit
+   */
+  importImagesEdit(event) {
+    this.fileImageEdit = [];
+    if (this.urlImageEdit == null) {
+      const files = event.target.files;
+      const length = files.length;
+      console.log(length);
+      if (length < 2) {
+        for (const file of files) {
+          const name = file.type;
+          const size = file.size;
+          if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
+            if (size <= 1000000) {
+              this.checkImageEdit = true;
+              this.messageEdit = null;
+              const reader = new FileReader();
+              reader.onload = (e: any) => {
+                this.fileImageEdit.push({
+                  url: e.target.result,
+                  file
+                });
+              };
+              reader.readAsDataURL(file);
+              console.log(this.fileImageEdit);
+            } else {
+              this.checkImageEdit = false;
+              return this.messageEdit = 'Dung lượng ảnh quá cao!!';
+            }
+          } else {
+            this.checkImageEdit = false;
+            return this.messageEdit = 'Đây không phải hình ảnh!!';
+          }
+        }
+      } else {
+        this.checkImageEdit = false;
+        return this.messageEdit = 'Chỉ được chọn một ảnh!!';
+      }
+    } else {
+      this.checkImageEdit = false;
+      return this.messageEdit = 'Bình luận này đã có ảnh, vui lòng xóa để thay đổi ảnh khác!!';
+    }
+  }
+
+  /**
+   * Author : SonPH
+   * get check validate in screen edit
+   */
+  getCheck() {
+    this.messageEdit = null;
   }
 }
 

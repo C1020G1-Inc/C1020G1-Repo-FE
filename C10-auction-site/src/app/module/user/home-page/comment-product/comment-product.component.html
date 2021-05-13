@@ -26,9 +26,13 @@
                  data-toggle="modal" data-target="#deleteParentCommentModal" title="Xóa"
                  (click)="getCommentIdToDelete(comment.commentId)"></i>
             </span>
-            <p style="display: block">
-              {{comment.content}}
-            </p>
+            <div style="display: block">
+              <p>
+                {{comment.content}}
+              </p>
+              <img *ngIf="comment.image" [src]="comment.image" style="height: 120px; width: auto;display: block"
+                   alt="hình ảnh">
+            </div>
           </div>
         </div>
       </li>
@@ -47,11 +51,15 @@
             <input formControlName="account" hidden>
             <input formControlName="product" hidden>
             <label>
-              <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên" ></i>
+              <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên"></i>
               <input type="file" id="upload_file" name="upload_file[]" (change)="importImages($event)" hidden/>
             </label>
             <span *ngIf="message != null" class="warningg alert-danger" role="alert">
               {{this.message}}
+            </span>
+            <span *ngIf="messageEdit == 'Không được để trống nội dung trong lúc chỉnh sửa!!'"
+                  class="warningg alert-danger" role="alert">
+              {{this.messageEdit}}
             </span>
             <textarea formControlName="content" class="form-control emoji" id="myText"
                       placeholder="Nhập bình luận của bạn"></textarea>
@@ -64,8 +72,8 @@
         </li>
       </form>
       <div *ngIf="check" class="d-inline-block" style="max-height:120px; margin-left: 52px">
-        <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage($event)" ></i></span>
-        <img [src]="fileImage.url" style="margin:3px; height: 120px; width: auto; float: left">
+        <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage()"></i></span>
+        <img [src]="fileImage[0].url" style="margin:3px; height: 120px; width: auto; float: left">
       </div>
     </ul>
   </div>
@@ -89,25 +97,40 @@
           data-dismiss="modal"
           aria-label="Close"
         >
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" (click)="getCheck()">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="form-group" style="margin-top: 0; margin-bottom: 0">
-          <label class="col-form-label"
-          >Bình luận của bạn:</label
-          >
+          <div style="display: block">
+          <span *ngIf="messageEdit != null" class="alert alert-danger" role="alert">
+              {{this.messageEdit}}
+          </span>
+          </div>
+          <label class="col-form-label" style="margin-top: 5px">Bình luận của bạn:</label>
+          <label>
+            <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên"></i>
+            <input type="file" id="upload_file_2" name="upload_file[]" (change)="importImagesEdit($event)" hidden/>
+          </label>
           <form [formGroup]="formEditComment">
             <input formControlName="image" hidden>
             <input formControlName="account" hidden>
             <input formControlName="product" hidden>
             <input class="form-control comment-input emojiEdit" id="editComment"
                    formControlName="content" placeholder="Nhập bình luận của bạn"/>
+            <div *ngIf="checkImageEdit">
+              <img [src]="fileImageEdit[0].url" style="margin-top: 5px; height: 120px; width: auto">
+            </div>
+            <div *ngIf="urlImageEdit" class="d-inline-block" style="max-height:120px">
+              <img [src]="urlImageEdit"
+                   style="height: 120px; margin-top:5px; width: auto" alt="hình ảnh">
+              <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteImageEdit()"></i></span>
+            </div>
             <div class="modal-footer d-flex justify-content-end" style="margin-top: 10px">
-              <button type="button" class="btn btn-outline-primary mr-3 " data-dismiss="modal" (click)="editComment()">
+              <button type="button" class="btn btn-outline-primary mr-3" data-dismiss="modal" (click)="editComment()">
                 Lưu
               </button>
-              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Hủy</button>
+              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="getCheck()">Hủy</button>
             </div>
           </form>
         </div>
