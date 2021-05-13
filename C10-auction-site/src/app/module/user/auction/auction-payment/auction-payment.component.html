@@ -1,1 +1,176 @@
-<p>auction-payment works!</p>
+<!-- MultiStep Form -->
+<div class="container-fluid" id="grad1">
+  <div class="row justify-content-center mt-0">
+    <div
+      class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"
+    >
+      <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+        <h2><strong>Thanh Toán</strong></h2>
+        <div class="row">
+          <div class="col-md-12 mx-0">
+            <form id="msform" method="post" [formGroup]="paymentForm">
+              <!-- progressbar -->
+              <ul id="progressbar">
+                <li class="active" id="delivery-address">
+                  <strong>Địa chỉ gửi hàng</strong>
+                </li>
+                <li id="delivery-format-title">
+                  <strong>Hình thức giao hàng</strong>
+                </li>
+                <li id="checkout-format">
+                  <strong>Hình thức thanh toán</strong>
+                </li>
+                <li id="confirm"><strong>Tình trạng đơn hàng</strong></li>
+              </ul>
+
+              <!-- Địa chỉ thanh toán -->
+              <fieldset>
+                <div class="form-card">
+                  <h2 class="fs-title">Địa chỉ gửi hàng</h2>
+                  <input
+                    type="text"
+                    placeholder="Họ và tên*"
+                    formControlName="userName"
+                  />
+                  <select (change)="changeDistrict($event)">
+                    <option disabled selected>Thành phố/Tỉnh*</option>
+                    <option *ngFor="let province of provinces"
+                            [value]="province.provinceId">{{province.provinceName}}</option>
+                  </select>
+                  <select (change)="changeWard($event)">
+                    <option disabled selected>Quận/Huyện*</option>
+                    <option *ngFor="let district of districts"
+                            [value]="district.districtId">{{district.districtName}}</option>
+                  </select>
+                  <select formControlName="ward">
+                    <option disabled [ngValue]="null" selected>Phường/Xã*</option>
+                    <option *ngFor="let ward of wards"
+                            [ngValue]="ward">{{ward.wardName}}</option>
+                  </select>
+                  <span class="text-danger" style="font-size: 12px"
+                        *ngIf="paymentForm.controls.ward.errors?.required && (paymentForm.controls.ward?.touched ||paymentForm.controls.ward?.dirty)"><i
+                    class="fa fa-exclamation-circle"></i><i> Thành phố/Tỉnh, Quận/Huyện, Phường/Xã chưa chọn !</i>
+                  </span>
+                  <input type="text" placeholder="Địa chỉ*" formControlName="address"/>
+                  <span class="text-danger" style="font-size: 12px"
+                        *ngIf="paymentForm.controls.address.errors?.required && (paymentForm.controls.address?.touched ||paymentForm.controls.address?.dirty)"><i
+                    class="fa fa-exclamation-circle"></i><i> Trường này là bắt buộc</i>
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Email*"
+                    formControlName="userEmail"
+                  />
+                  <input type="text" placeholder="Số điện thoại*" formControlName="phone"/>
+                  <span class="text-danger" style="font-size: 12px"
+                        *ngIf="paymentForm.controls.phone.errors?.required && (paymentForm.controls.phone?.touched ||paymentForm.controls.phone?.dirty)"><i
+                    class="fa fa-exclamation-circle"></i><i> Trường này là bắt buộc</i>
+                  </span>
+                  <span class="text-danger" style="font-size: 12px"
+                        *ngIf="paymentForm.get('phone').hasError('pattern')"><i
+                    class="fa fa-exclamation-circle"></i><i> Định dạng không đúng (10 số, bắt đầu bằng 0)</i>
+                  </span>
+                  <textarea
+                    cols="30"
+                    rows="5"
+                    placeholder="Hướng dẫn giao hàng (không bắt buộc)"
+                    style="resize: none"
+                    formControlName="guide"
+                  ></textarea>
+                </div>
+                <input
+                  type="button"
+                  name="next"
+                  class="next action-button"
+                  value="Tiếp theo"
+                  [disabled]="!paymentForm.valid"
+                />
+              </fieldset>
+
+              <!-- Hình thức giao hàng -->
+              <fieldset>
+                <div class="form-card">
+                  <h2 class="fs-title">Hình thức giao hàng</h2>
+                  <input
+                    type="radio"
+                    name="delivery-format"
+                    id="delivery-format"
+                    checked
+                  />
+                  <label for="delivery-format"
+                  >Giao hàng tiêu chuẩn - giao hàng tận nơi</label
+                  >
+                </div>
+                <input
+                  type="button"
+                  name="previous"
+                  class="previous action-button-previous"
+                  value="Quay lại"
+                />
+                <input
+                  type="button"
+                  name="make_payment"
+                  class="next action-button"
+                  value="Tiếp theo"
+                />
+              </fieldset>
+
+              <!--              hình thức thanh toán-->
+              <fieldset>
+                <div class="form-card">
+                  <h2 class="fs-title">Hình thức thanh toán</h2>
+
+                  <input
+                    type="radio"
+                    id="non-credit"
+                    value="0"
+                    checked
+                    name="methodPay"
+                    formControlName="methodPay"
+                    (click)="onCheck1()"
+                  />
+                  <label for="non-credit">Trả tiền sau khi nhận hàng</label
+                  ><br/>
+                  <input
+                    type="radio"
+                    id="checkout-credit"
+                    value="1"
+                    name="methodPay"
+                    formControlName="methodPay"
+                    (click)="onCheck2()"
+                  />
+                  <label for="checkout-credit"
+                  >Thanh toán bằng ví điện tử (Paypal)</label
+                  >
+                  <div #paypal style="width: 35%; margin-left: 10%; display: none" id="paypal-button"></div>
+                  <h5 style="margin-left: 10%; color: #7b0c32" *ngIf="messagePayment">{{messagePayment}}</h5>
+                </div>
+                <input
+                  type="button"
+                  name="previous"
+                  class="previous action-button-previous"
+                  value="Quay lại"
+                />
+                <input
+                  type="button"
+                  name="next"
+                  class="next action-button"
+                  [disabled]="(!isChecked1) && (isChecked2 && (!messagePayment))"
+                  value="Xem hóa đơn"
+                  style="width: 20%"
+                  (click)="submit()"
+                />
+              </fieldset>
+              <fieldset>
+                <div class="form-card">
+                  <h2 class="fs-title text-center">Tình trạng đơn hàng</h2>
+                  <h4>Phần này của Trần Hữu Kiên</h4>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
