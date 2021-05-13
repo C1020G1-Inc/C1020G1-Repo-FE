@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListTransactionComponent } from './list-transaction/list-transaction.component';
 import {FormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 
@@ -9,7 +10,8 @@ import {FormsModule} from "@angular/forms";
   declarations: [ListTransactionComponent],
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        NgxPaginationModule
     ]
 })
 export class TransactionManagementModule { }

@@ -44,7 +44,7 @@
                   </div>
                   <div class="col">
                     <label>Tình trạng: </label>
-                    <select id="" class="custom-select" [(ngModel)]="status">
+                    <select id="" class="form-control" [(ngModel)]="status">
                       <option value="undefined">Tất cả</option>
                       <option value="Thành công">Thành công</option>
                       <option value="Thất bại">Thất bại</option>
@@ -52,11 +52,11 @@
                   </div>
                 </div>
                 <div class="form-group d-flex justify-content-end mt-3 mr-3">
-                  <button class="btn btn-primary mr-3" type="submit" (click)="seach()">Tìm kiếm</button>
+                  <button class="btn btn-primary mr-3" type="submit" (click)="seach()" style="font-size: 1rem">Tìm kiếm</button>
                 </div>
               </div>
               <div class="d-flex justify-content-end mr-5 mb-4">
-                <button onclick="myFunctionSearch()" class="btn btn-primary"  data-ripple="">Tìm kiếm nâng cao</button>
+                <button onclick="myFunctionSearch()" class="btn btn-primary"  data-ripple="" style="font-size: 1rem">Tìm kiếm nâng cao</button>
               </div>
               <div class="card-header card-header-primary">
                 <h4 class="card-title ">Quản lý giao dịch</h4>
@@ -71,13 +71,13 @@
                       <th scope="col">Người mua</th>
                       <th scope="col">Tên sản phẩm</th>
                       <th scope="col">Số lượng<br>(cái, con, lít, v.v..)</th>
-                      <th scope="col">Thành tiền (VND)</th>
-                      <th scope="col">Phí dịch vụ (VND)</th>
-                      <th scope="col">Tình trạng giao dịch</th>
+                      <th scope="col">Thành tiền<br>(VND)</th>
+                      <th scope="col">Phí dịch vụ<br> (VND)</th>
+                      <th scope="col">Tình trạng<br> giao dịch</th>
                       <th scope="col"></th>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let transaction of listTransaction">
+                    <tr *ngFor="let transaction of listTransaction | paginate: { itemsPerPage: 5, currentPage: page }">
                       <td>{{transaction.transactionId}}</td>
                       <td>{{transaction.transactionTime | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                       <td>{{transaction.product.account.user.userName}}</td>
@@ -87,26 +87,21 @@
                       <td>{{transaction.auction.price}}</td>
                       <td>{{transaction.auction.price*5/100}}</td>
                       <td>{{transaction.status}}</td>
-                      <td><button class="btn btn-danger" type="submit" data-ripple="" data-toggle="modal" data-target="#exampleModal"
-                      (click)="showDelete(transaction.transactionId)">
-                        Xóa</button></td>
+                      <td>
+                        <a href="#exampleModal" data-toggle="modal" (click)="showDelete(transaction.transactionId)">
+                          <i class="fa fa-trash fa-2x ml-5" style="color: orangered" title="Xóa"></i>
+                        </a>
+                      </td>
                     </tr>
                     </tbody>
                   </table>
 
-                  <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-end mr-5">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </nav>
+                <div>
+                <pagination-controls previousLabel="Trước"
+                                     nextLabel="Sau" class="my-pagination mr-5" (pageChange)="page = $event"
+                                     style="float: right">
+                </pagination-controls>
+                </div>
                 </div>
               </div>
             </div>

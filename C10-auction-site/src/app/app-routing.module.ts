@@ -23,7 +23,8 @@ import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-c
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
-import {ListTransactionComponent} from "./module/admin/transaction-management/list-transaction/list-transaction.component";
+import {ListTransactionComponent} from './module/admin/transaction-management/list-transaction/list-transaction.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 const routes: Routes = [
   {
@@ -65,7 +66,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), AdminModule, UserModule],
+  imports: [RouterModule.forRoot(routes), AdminModule, UserModule, NgxPaginationModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

@@ -16,6 +16,7 @@ export class ListTransactionComponent implements OnInit {
   public productName: string;
   public price: number;
   public status: string;
+  page;
 
   constructor(
     private transactionService: TransactionService,
@@ -24,7 +25,7 @@ export class ListTransactionComponent implements OnInit {
 
   ngOnInit(): void {
       this.transactionService.getAllTransaction().subscribe(data => {
-        this.listTransaction = data.content;
+        this.listTransaction = data;
         console.log(this.listTransaction);
       });
   }
