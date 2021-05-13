@@ -7,6 +7,7 @@ import {AuctionPaymentComponent} from './auction-payment/auction-payment.compone
 import {InvoiceComponent} from './invoice/invoice.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ActivatedRoute, ActivatedRouteSnapshot, RouterModule} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {ActivatedRoute, ActivatedRouteSnapshot, RouterModule} from '@angular/rou
   imports: [
     CommonModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ]
 })
 export class AuctionModule {

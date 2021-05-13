@@ -1,8 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {AuctionBackendService} from '../../../../service/auction-backend.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {ProductDetail} from '../../../../model/auction-bidding.model';
-import {interval, Observable} from 'rxjs';
+import {HistoryAuction, ProductDetail} from '../../../../model/auction-bidding.model';
+import {interval} from 'rxjs';
+import {FirebaseDatabaseService} from '../../../../service/firebase-database.service';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {mergeMap} from 'rxjs/operators';
+
+declare const $: any;
 
 @Component({
   selector: 'app-auction-bidding',
@@ -18,9 +23,18 @@ export class AuctionBiddingComponent implements OnInit {
   public hour = 0;
   public minute = 0;
   public second = 0;
+  public historyAuction: HistoryAuction;
+  public priceForm: FormGroup;
+  public currentPrice: number;
+  public currentStep: number;
+  public currentWinner = '-';
+  public isInProgress: boolean;
+  public accountId = 1;
+  public isNewCart = false;
 
   constructor(public auctionBackendService: AuctionBackendService,
-              public activateRoute: ActivatedRoute) {
+              public activateRoute: ActivatedRoute,
+              public firebaseDatabaseService: FirebaseDatabaseService) {
   }
 
   ngOnInit(): void {
@@ -34,6 +48,9 @@ export class AuctionBiddingComponent implements OnInit {
         this.productDetail = data;
         this.productDetail.registerTime = new Date(this.productDetail.registerTime);
         this.auctionEndTime = new Date(this.productDetail.registerTime.getTime() + this.productDetail.auctionTime * 60 * 1000);
+        this.currentPrice = (this.productDetail.lastPrice) ? this.productDetail.lastPrice : this.productDetail.price;
+        this.currentStep = this.productDetail.priceStep;
+        this.isInProgress = this.productDetail.productStatus.id === 2;
       });
 
     const changeBySecond = interval(1000).subscribe(() => {
@@ -44,7 +61,92 @@ export class AuctionBiddingComponent implements OnInit {
         this.hour = Math.floor(differentInTime / (1000 * 60 * 60)) - this.day * 24;
         this.minute = Math.floor(differentInTime / (1000 * 60)) - this.hour * 60 - this.day * 24 * 60;
         this.second = Math.floor(differentInTime / 1000) - this.day * 24 * 60 * 60 - this.hour * 60 * 60 - this.minute * 60;
+        return;
+      }
+      this.isInProgress = false;
+      changeBySecond.unsubscribe();
+      getListAuction.unsubscribe();
+    });
+
+    this.auctionBackendService.getListAuction(this.productId).subscribe(data => {
+      if (data != null) {
+        data.auctions.map(a => a.timeAuction = new Date(a.timeAuction));
+        this.historyAuction = data;
+        if (this.historyAuction.auctions[0]) {
+          this.currentPrice = this.historyAuction.auctions[0]?.price;
+          this.currentWinner = this.historyAuction.auctions[0]?.accountName;
+        }
+        this.currentStep = this.historyAuction.currentStep;
       }
     });
+
+    const getListAuction = this.firebaseDatabaseService.getListAuction(this.productId).subscribe(data => {
+      if (data?.auctions != null) {
+        data.auctions.map(a => a.timeAuction = new Date(a.timeAuction.time));
+        this.historyAuction = data;
+        this.currentPrice = this.historyAuction.auctions[0].price;
+        this.currentWinner = this.historyAuction.auctions[0].accountName;
+        this.currentStep = this.historyAuction.currentStep;
+      }
+    });
+
+    this.priceForm = new FormGroup({
+      newPrice: new FormControl('', [Validators.required, this.confirmEmailValidator()])
+    });
+
+    this.firebaseDatabaseService.getNotifyByAccount(this.accountId).subscribe(data => {
+      this.isNewCart = true;
+    });
   }
+
+  submit() {
+    this.auctionBackendService.submitAuction({
+      productId: this.productId,
+      timeAuction: new Date(),
+      price: this.priceForm.controls.newPrice.value
+    }).subscribe(() => {
+      $('#toast-success').toast('show');
+      this.priceForm.controls.newPrice.setValue('');
+    });
+  }
+
+  confirmEmailValidator() {
+    return (control: AbstractControl) => {
+      const price = control.value;
+      if (price < this.currentPrice + this.currentStep) {
+        return {low_price: true};
+      }
+      if (price % this.currentStep !== 0) {
+        return {not_divide: true};
+      }
+      return null;
+    };
+  }
+
+  increasePrice() {
+    if (this.priceForm.controls.newPrice.value === '' || +this.priceForm.controls.newPrice.value
+      + this.currentStep < this.currentPrice + this.currentStep) {
+      this.priceForm.controls.newPrice.setValue(Math.ceil(this.currentPrice / this.currentStep) * this.currentStep + this.currentStep);
+      return;
+    }
+    if (this.priceForm.controls.newPrice.value % this.currentStep === 0) {
+      this.priceForm.controls.newPrice.setValue(+this.priceForm.controls.newPrice.value + this.currentStep);
+      return;
+    }
+    this.priceForm.controls.newPrice.setValue(Math.ceil(+this.priceForm.controls.newPrice.value / this.currentStep) * this.currentStep);
+  }
+
+  decreasePrice() {
+    if (this.priceForm.controls.newPrice.value === '' || +this.priceForm.controls.newPrice.value
+      - this.currentStep < Math.ceil(this.currentPrice / this.currentStep) * this.currentStep + this.currentStep) {
+      this.priceForm.controls.newPrice.setValue(Math.ceil(this.currentPrice / this.currentStep) * this.currentStep + this.currentStep);
+      return;
+    }
+    if (this.priceForm.controls.newPrice.value % this.currentStep === 0) {
+      this.priceForm.controls.newPrice.setValue(+this.priceForm.controls.newPrice.value - this.currentStep);
+      return;
+    }
+    this.priceForm.controls.newPrice.setValue(Math.floor(+this.priceForm.controls.newPrice.value / this.currentStep) * this.currentStep);
+  }
+
 }

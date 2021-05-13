@@ -35,3 +35,31 @@ export interface ProductDetail {
   account: AccountSimple;
   images: Array<Image>;
 }
+
+export interface AuctionDetail {
+  accountId: number;
+  accountName: string;
+  auctionId: number;
+  price: number;
+  status: string;
+  timeAuction: Date;
+}
+
+export interface HistoryAuction {
+  auctions: Array<AuctionDetail>;
+  currentStep: number;
+}
+
+export interface AuctionSubmit {
+  productId: number;
+  timeAuction: Date;
+  price: number;
+}
+
+export interface TransactionDTO {
+  transactionId: number;
+  detailProductDTO: ProductDetail;
+  status: string;
+  transactionTime: Date;
+  auction: AuctionDetail;
+}

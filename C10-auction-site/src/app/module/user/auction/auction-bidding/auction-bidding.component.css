@@ -10,7 +10,7 @@ body {
   height: 45px;
   font-weight: bold;
   text-align: center;
-  background-color: #ffc107;
+  background-color: #494f54;
   border: 14px #28a745;
   margin-bottom: 5px;
 }
@@ -19,7 +19,7 @@ body {
   font-size: 30px;
   font-weight: bold;
   text-align: center;
-  color: #ffc107
+  color: #494f54;
 }
 
 .countdown-text {
@@ -27,3 +27,5 @@ body {
   text-align: center;
   font-weight: bolder;
 }
+
+
