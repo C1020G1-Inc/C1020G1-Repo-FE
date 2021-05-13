@@ -98,7 +98,7 @@
                         </td>
                         <td *ngIf="product.productStatus.id == 1">
                           <a href="#acceptProduct" data-toggle="modal" class="text-danger"
-                             (click)="sendProduct(product)">Chưa
+                             (click)="sendProductIdForApprove(product.productId)">Chưa
                             Duyệt</a>
                         </td>
                         <td *ngIf="product.productStatus.id != 1">
@@ -106,7 +106,7 @@
                         </td>
                         <td *ngIf="product.productStatus.id == 1">
                           <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"
-                             href="#editProduct" data-toggle="modal" (click)="sendProductId(product.productId)">
+                             href="#editProduct" data-toggle="modal" (click)="sendProductIdForForm(product.productId)">
                             <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
                           </a>
                           <a style="cursor: pointer;margin-left: 10px" href="#deleteModal" data-toggle="modal">
@@ -123,14 +123,14 @@
                 </div>
               </div>
               <pagination-controls previousLabel="Trước"
-                                   nextLabel="Sau" class="my-pagination" (pageChange)="page = $event" style="float: right"></pagination-controls>
+                                   nextLabel="Sau" class="my-pagination" (pageChange)="page = $event"
+                                   style="float: right"></pagination-controls>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 
 
   <div id="deleteModal" class="modal fade">
@@ -143,7 +143,7 @@
           </div>
           <div class="modal-body">
             <p>Bạn có chắc muốn xóa sản phẩm này?</p>
-            <p class="text-warning"><small>Sau khi xóa sẽ không hoàn tác lại được.</small></p>
+            <h3 class="text-warning">Sau khi xóa sẽ không hoàn tác lại được.</h3>
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-danger" value="Xóa">
@@ -186,8 +186,11 @@
               </tr>
               <tr>
                 <th style="padding: 30px">Hình ảnh:</th>
-                <td><img style="width: 100px;height: 70px"
-                         src="https://cdn.tgdd.vn/Products/Images/7077/117880/apple-watch-3-phien-ban-38-mm-1-2-org.jpg">
+                <td>
+                  <div *ngFor="let image of listProductImage">
+                    <img style="width: 100px;height: 70px"
+                         src="{{image.image}}">
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -198,7 +201,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" style="margin-right: 30%">
           </div>
         </form>
       </div>
@@ -207,15 +210,15 @@
 
 
   <div id="editProduct" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
           <div class="modal-header">
             <h4 class="modal-title">Cập nhật !!</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           </div>
-          <div class="modal-body">
-            <form [formGroup]="editForm">
+          <div class="modal-body" *ngIf="productEdit">
+            <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
               <table>
                 <tr>
                   <th style="padding: 30px">Tên sản phẩm:</th>
@@ -223,13 +226,13 @@
                 </tr>
                 <tr>
                   <th style="padding: 30px">Người đăng:</th>
-                  <td><input type="text" id="account" name="account" formControlName="account" disabled/></td>
+                  <th>{{productEdit.account.user.userName}}</th>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Chủng loại:</th>
                   <td>
                     <select style="width: 100px;" id="category" name="category" formControlName="category">
-                      <option [ngValue]="category.categoryName" *ngFor="let category of categoryList">
+                      <option [ngValue]="category.id" *ngFor="let category of categoryList">
                         {{category.categoryName}}
                       </option>
                     </select>
@@ -237,20 +240,42 @@
                 </tr>
                 <tr>
                   <th style="padding: 30px">Giá khởi điểm:</th>
-                  <td><input type="text" id="price" name="price" formControlName="price" disabled/></td>
+                  <th>{{productEdit.price | currency :'VND':'symbol'}}</th>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Bước giá:</th>
-                  <td><input type="text" id="priceStep" name="priceStep" formControlName="priceStep" disabled/></td>
+                  <th>{{productEdit.priceStep | currency: 'VND':'symbol'}}</th>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Hình ảnh:</th>
+
                   <td>
-                    <label for="upload-photo" class="material-icons"
-                           style="color: #4545e5;cursor: pointer">image</label>
-                    <input type="file" id="upload-photo">
-                    <img style="width: 100px;height: 70px"
-                         src="https://cdn.tgdd.vn/Products/Images/7077/117880/apple-watch-3-phien-ban-38-mm-1-2-org.jpg">
+                    <div class="fileinputs">
+                      <input type="file" (change)="selectFile($event)" class="file" multiple/>
+                      <div class="fakefile">
+                        <i class="fa fa-image fa-2x" style="color: #0066ff"></i>
+                      </div>
+                    </div>
+
+                    <div *ngFor="let image of listProductImage ; let i = index"
+                         style="margin-left: 0; display: inline-block">
+                      <span>
+                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteImage(i)"></i>
+                      </span>
+                      <img style="width: 150px;height: 100px"
+                           src="{{image.image}}">
+                    </div>
+
+                    <div *ngFor="let imageUpdate of productImageUpdate ; let i = index"
+                         style="margin-left: 0; display: inline-block">
+                      <span>
+                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage($event)"
+                           [attr.data-index]="i">
+                        </i>
+                      </span>
+                      <img style="width: 150px;height: 100px;float: left"
+                           src="{{imageUpdate.url}}">
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -264,13 +289,10 @@
                   </td>
                 </tr>
               </table>
-              <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Duyệt">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-              </div>
+              <input type="submit" class="btn btn-primary" value="Sửa" style="margin-left: 30%;margin-right: 10px">
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" id="close">
             </form>
           </div>
-
         </form>
       </div>
     </div>

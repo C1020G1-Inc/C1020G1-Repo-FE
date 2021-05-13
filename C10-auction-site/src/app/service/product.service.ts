@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Product} from '../model/product/product';
 import {applySourceSpanToExpressionIfNeeded} from '@angular/compiler/src/output/output_ast';
+import {ProductDto} from '../model/product/product_dto';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,14 @@ export class ProductService {
 
   getAllCategory(): Observable<any> {
     return this.http.get('http://localhost:8080/admin/product_category');
+  }
+
+  getCategoryById(categoryId): Observable<any> {
+    return this.http.get('http://localhost:8080/admin/product_category/' + categoryId);
+  }
+
+  updateProduct(productDTO: ProductDto): Observable<any>{
+    console.log(productDTO);
+    return this.http.put('http://localhost:8080/admin/edit_product' , productDTO);
   }
 }
