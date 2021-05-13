@@ -4,6 +4,7 @@ import {ProductService} from '../../../service/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {Auction} from '../../model/Auction';
 import {ProductImage} from '../../model/ProductImage';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-detail-product',
@@ -16,10 +17,14 @@ export class DetailProductComponent implements OnInit {
   public  productImage: ProductImage[] ;
   p = 1;
 
+  today = new Date();
+  todaysDataTime = '' ;
+
   constructor(
     public productService: ProductService ,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {this.todaysDataTime = formatDate(this.today , 'dd/MM/yyyy hh:mm:ss a' , 'en-US' , '+0700');
+  }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params.id;

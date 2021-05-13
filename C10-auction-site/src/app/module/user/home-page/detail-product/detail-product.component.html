@@ -7,7 +7,6 @@
         <div class="card-body">
           <h5 class="card-title">{{product.productName}}</h5>
         </div>
-
         <div class="card-body">
           <button type="button" class="btn btn-success">Đấu Giá</button>
         </div>
@@ -19,7 +18,6 @@
           <li class="list-group-item">ID: {{product.productId}} </li>
           <li class="list-group-item">Bắt Đầu: {{product.registerTime | date: 'dd/MM/yyyy HH:mm'}} </li>
           <li class="list-group-item">Kết Thúc: {{product.endTime |date: 'dd/MM/yyyy HH:mm'}} </li>
-          <li class="list-group-item">Thời Gian Còn Lại:   </li>
           <li class="list-group-item">Giá Gốc: {{product.price}} VND </li>
           <li class="list-group-item">Giá Hiện Tại: {{product.lastPrice}}VND  </li>
           <li class="list-group-item">Mỗi Lần Tăng Giá Nhiều Nhất: {{product.priceStep}} VND </li>
@@ -27,7 +25,6 @@
         </ul>
       </div>
     </div>
-
     <div class="col-lg-6">
       <div style="background: white">
         <table class="table table-striped">
@@ -52,8 +49,8 @@
       </div>
     </div>
   </div>
-  <h3 style="color: white ; background-color: purple">Hình Ảnh</h3>
-  <div class="row" style="background-color: purple" >
+  <h3 style="color: black">Hình Ảnh</h3>
+  <div class="row">
     <div class="col-lg-10" style="margin-left: 100px">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -79,13 +76,15 @@
     </div>
   </div>
 </div>
-<h3 style="margin-top: 20px ; color: white">Chi Tiết Sản Phẩm</h3>
-<ul style="color:white">
+  <div>
+<h3 style="margin-top: 20px ; color: black " >Chi Tiết Sản Phẩm</h3>
+<ul style="color:black ">
   <li>{{product.description}}</li>
 </ul>
-<div style="background: purple">
-  <h3 style="margin-top: 20px ; color: white">Địa Chỉ Nhận Hàng</h3>
-  <ul style="color: white">
+  </div>
+<div >
+  <h3 style="margin-top: 20px ; color: black ">Địa Chỉ Nhận Hàng</h3>
+  <ul style="color: black">
     <li>Địa Chỉ Nhận Hàng : {{product.account.user.address}}</li>
     <li>SĐT : {{product.account.user.phone}} </li>
   </ul>
