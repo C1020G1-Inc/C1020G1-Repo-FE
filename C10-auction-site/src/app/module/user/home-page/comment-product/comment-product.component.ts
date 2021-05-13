@@ -24,6 +24,7 @@ export class CommentProductComponent implements OnInit {
     backdropBorderRadius: '3px'
   };
   loading = false;
+  loadingEdit = false;
 
   comments: Comment[];
   user: User;
@@ -112,7 +113,7 @@ export class CommentProductComponent implements OnInit {
       this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
       this.formComment.get('image').setValue(this.urlImage);
       this.commentService.createNewComment(this.formComment.value).subscribe(data => {
-        // this.loading = false;
+        this.loading = false;
         $('#myText').data('emojioneArea').setText('');
         this.ngOnInit();
         this.fileImage = [];
@@ -146,7 +147,7 @@ export class CommentProductComponent implements OnInit {
    */
   async editComment() {
     if ($('#editComment').data('emojioneArea').getText() !== '') {
-      this.loading = true;
+      this.loadingEdit = true;
       this.messageEdit = null;
       await this.addImageToFireBase(this.fileImageEdit);
       if (this.urlImageEdit == null && this.urlImage == null) {
@@ -158,7 +159,8 @@ export class CommentProductComponent implements OnInit {
       }
       this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
       this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
-        this.loading = false;
+        $('#editCommentModal').click();
+        this.loadingEdit = false;
         $('#editComment').data('emojioneArea').setText('');
         this.ngOnInit();
         this.checkImageEdit = false;

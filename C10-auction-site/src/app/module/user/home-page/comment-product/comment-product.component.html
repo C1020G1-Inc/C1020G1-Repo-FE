@@ -1,9 +1,7 @@
-<ngx-loading [show]="loading" [config]="config"></ngx-loading>
 <div class="container-fluid">
-  <h2>Bình Luận</h2>
   <div class="row" style="background-color: whitesmoke">
-    <ul class="we-comet" style="margin-top: 10px">
-      <li *ngFor="let comment of comments">
+    <ul class="we-comet" style="margin-top: 241px;border-top: 1px solid #adb5bd">
+      <li *ngFor="let comment of comments" style="margin-top: 5px">
         <div>
           <div class="comet-avatar">
             <a href="" target="_blank">
@@ -19,11 +17,11 @@
             </span>
             <span *ngIf="comment.account.user.userId == user.userId" style="float:right; margin-right: 10px">
               <i style="color: blue; margin-right: 5px" class="fa fa-edit fa-lg" aria-hidden="true"
-                 data-toggle="modal" data-target="#editParentCommentModal" title="Chỉnh sửa"
+                 data-toggle="modal" data-target="#editCommentModal" title="Chỉnh sửa"
                  (click)="sendFormEdit(comment.commentId)"></i>
 
               <i style="color: red" class="fa fa-trash fa-lg" aria-hidden="true"
-                 data-toggle="modal" data-target="#deleteParentCommentModal" title="Xóa"
+                 data-toggle="modal" data-target="#deleteCommentModal" title="Xóa"
                  (click)="getCommentIdToDelete(comment.commentId)"></i>
             </span>
             <div style="display: block">
@@ -38,7 +36,9 @@
       </li>
     </ul>
 
-    <ul class="we-comet" style="margin-top: 10px; margin-bottom: 10px">
+    <ul class="we-comet" style="margin-top: 10px; margin-bottom: 10px; position: absolute;">
+      <ngx-loading [show]="loading" [config]="config">
+      </ngx-loading>
       <form [formGroup]="formComment">
         <li class="post-comment">
           <div class="comet-avatar" style="margin-right: 10px; margin-top: 2px">
@@ -82,12 +82,14 @@
 <!--editComment-->
 <div
   class="modal fade"
-  id="editParentCommentModal"
+  id="editCommentModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
+    <ngx-loading [show]="loadingEdit" [config]="config">
+    </ngx-loading>
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Chỉnh sửa bình luận</h5>
@@ -129,7 +131,7 @@
               <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteImageEdit()"></i></span>
             </div>
             <div class="modal-footer d-flex justify-content-end" style="margin-top: 10px">
-              <button type="button" class="btn btn-outline-primary mr-3" data-dismiss="modal" (click)="editComment()">
+              <button type="button" class="btn btn-outline-primary mr-3" (click)="editComment()">
                 Lưu
               </button>
               <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="getCheck()">Hủy
@@ -143,7 +145,7 @@
 </div>
 
 <!-- modal delete comment -->
-<div id="deleteParentCommentModal" class="modal fade">
+<div id="deleteCommentModal" class="modal fade">
   <div class="modal-dialog modal-confirm">
     <div class="modal-content">
       <div class="modal-header" style="text-align: center">
