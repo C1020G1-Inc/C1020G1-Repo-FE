@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ListProductAuctionService} from './list-product-auction.service';
+import {ListProductAuctionService} from '../list-product-auction.service';
 
 @Component({
-  selector: 'app-list-product-home',
-  templateUrl: './list-product-home.component.html',
-  styleUrls: ['./list-product-home.component.css']
+  selector: 'app-list-product-end-auction',
+  templateUrl: './list-product-end-auction.component.html',
+  styleUrls: ['./list-product-end-auction.component.css']
 })
-export class ListProductHomeComponent implements OnInit {
+export class ListProductEndAuctionComponent implements OnInit {
 
-  constructor(private listProductAuctionService: ListProductAuctionService) {
+  constructor(private listProductAuctionService: ListProductAuctionService ) {
   }
 
   public listProduct: [];
@@ -19,8 +19,10 @@ export class ListProductHomeComponent implements OnInit {
   public activeFour;
   public activeFive;
   public category = 0;
+
   ngOnInit(): void {
-    this.listProductAuctionService.showAllProductAuction(this.category).subscribe((data) => {
+    this.listProductAuctionService.showAllProductEndAuction(this.category).subscribe((data) => {
+      console.log(data);
       this.listProduct = data;
     });
   }
@@ -44,6 +46,7 @@ export class ListProductHomeComponent implements OnInit {
     this.category = 2;
     this.ngOnInit();
   }
+
   showByTechnology() {
     this.activeOne = '';
     this.activeTwo = '';

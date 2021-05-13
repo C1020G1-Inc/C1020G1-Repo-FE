@@ -5,14 +5,16 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
 import { CommentProductComponent } from './comment-product/comment-product.component';
 import { GuideComponent } from './guide/guide.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import { ListProductEndAuctionComponent } from './list-product-home/list-product-end-auction/list-product-end-auction.component';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
-  declarations: [ListProductHomeComponent, DetailProductComponent, CommentProductComponent, GuideComponent],
+  declarations: [ListProductHomeComponent, DetailProductComponent, CommentProductComponent, GuideComponent, ListProductEndAuctionComponent],
   imports: [
     CommonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    RouterModule,
   ]
 })
 export class HomePageModule { }

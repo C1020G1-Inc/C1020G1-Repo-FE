@@ -12,6 +12,9 @@ export class ListProductAuctionService {
   }
 
   public showAllProductAuction(category: number): Observable<any> {
-    return this.http.get(this.API_PRODUCT + '/' + category);
+    return this.http.get(this.API_PRODUCT + '/category/' + category);
+  }
+  public showAllProductEndAuction(category: number): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/end/category/' + category);
   }
 }
