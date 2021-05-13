@@ -5,5 +5,5 @@ export interface Auction {
   price: string ;
   timeAuction: string ;
   status: string ;
-  account: Account[] ;
+  account: Account ;
 }

@@ -3,6 +3,7 @@ import {Product} from '../../model/Product';
 import {ProductService} from '../../../service/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {Auction} from '../../model/Auction';
+import {ProductImage} from '../../model/ProductImage';
 
 @Component({
   selector: 'app-detail-product',
@@ -12,6 +13,9 @@ import {Auction} from '../../model/Auction';
 export class DetailProductComponent implements OnInit {
   public product: Product;
   public auction: Auction[];
+  public  productImage: ProductImage[] ;
+  p = 1;
+
   constructor(
     public productService: ProductService ,
     private activatedRoute: ActivatedRoute
@@ -24,6 +28,10 @@ export class DetailProductComponent implements OnInit {
     });
     this.productService.findAuctionById(id).subscribe(data1 => {
       this.auction = data1 ;
+    });
+    this.productService.findProductImageById(id).subscribe(data2 => {
+      this.productImage = data2 ;
+      console.log(data2);
     });
   }
 

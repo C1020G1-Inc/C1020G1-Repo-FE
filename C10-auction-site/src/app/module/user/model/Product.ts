@@ -12,5 +12,5 @@ export interface Product {
   registerTime: string ;
   auctionTime: string ;
   endTime: string ;
-  account: Account[] ;
+  account: Account ;
 }
