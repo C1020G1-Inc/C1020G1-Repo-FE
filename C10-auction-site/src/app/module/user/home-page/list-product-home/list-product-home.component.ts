@@ -10,15 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ListProductHomeComponent implements OnInit {
 
-  constructor(private accountService: AccountService, private tokenStorage: TokenStorageService, private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  logout() {
-    this.accountService.logout().subscribe(() => {
-      this.tokenStorage.logOut();
-      this.router.navigateByUrl('/');
-    });
   }
 }

@@ -25,7 +25,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenStorage.isLogged()) {
-      this.router.navigateByUrl('/home');
+      if (this.tokenStorage.getRoles()[0] === 'MEMBER'){
+        this.router.navigateByUrl('/home');
+      } else {
+        this.router.navigateByUrl('/admin/product-management/list');
+      }
     }
     this.formLogin = new FormGroup({
       accountName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]{1,5}[a-zA-Z0-9]{7,15}$')]),
@@ -102,7 +106,6 @@ export class LoginComponent implements OnInit {
             this.isLocked = true;
           } else if (req.jwtToken === '') {
             this.tokenStorage.saveAccountStorage(req.account);
-            console.log(req.account);
             this.router.navigateByUrl('/register');
           } else {
             this.tokenStorage.saveTokenStorage(req.jwtToken);

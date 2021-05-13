@@ -4,10 +4,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRegisDiaComponent } from './mat-regis-dia/mat-regis-dia.component';
+import { MatLoadingDiaComponent } from './mat-loading-dia/mat-loading-dia.component';
 
 
 @NgModule({
-    declarations: [],
+    declarations: [MatRegisDiaComponent, MatLoadingDiaComponent],
     imports: [
         MatDatepickerModule,
         MatFormFieldModule,
@@ -20,7 +23,12 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
         MatFormFieldModule,
         MatNativeDateModule,
         MatInputModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule
+    ],
+    entryComponents: [
+        MatRegisDiaComponent,
+        MatLoadingDiaComponent
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'vi-VN' }

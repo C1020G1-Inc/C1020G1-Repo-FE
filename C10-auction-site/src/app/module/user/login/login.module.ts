@@ -1,3 +1,4 @@
+import { ProfileModule } from './../profile/profile.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
@@ -10,7 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [LoginComponent, LogoutComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProfileModule
   ]
 })
 export class LoginModule { }

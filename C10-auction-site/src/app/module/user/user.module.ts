@@ -5,13 +5,12 @@ import { UserChatModule } from './user-chat/user-chat.module';
 import { AuctionModule } from './auction/auction.module';
 import { LoginModule } from './login/login.module';
 import { HomePageModule } from './home-page/home-page.module';
-import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgModule } from '@angular/core';
 
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
+  declarations: [FooterComponent],
   imports: [
     CommonModule,
     ProfileModule,
@@ -19,8 +18,8 @@ import { NgModule } from '@angular/core';
     AuctionModule,
     LoginModule,
     HomePageModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
-  exports: [HeaderComponent]
+  exports: []
 })
 export class UserModule { }

@@ -1,3 +1,5 @@
+import { MatLoadingDiaComponent } from './../../material/mat-loading-dia/mat-loading-dia.component';
+import { MatRegisDiaComponent } from './../../material/mat-regis-dia/mat-regis-dia.component';
 import { Router } from '@angular/router';
 import { AccountService } from './../../../../service/authentication/account-service';
 import { User } from './../../../../model/User';
@@ -5,7 +7,10 @@ import { TokenStorageService } from './../../../../service/authentication/token-
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Account } from 'src/app/model/Account';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { RegisDistrict, RegisProvince, RegisWard } from 'src/app/service/authentication/account-province';
 
 @Component({
   selector: 'app-register',
@@ -16,9 +21,32 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   minDate: Date;
   maxDate: Date;
-  constructor(private tokenStorage: TokenStorageService, private accountService: AccountService, private router: Router) { }
+  selectedImage: any;
+  provinceList: RegisProvince[] = [];
+  districtList: RegisDistrict[] = [];
+  wardList: RegisWard[] = [];
+  imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
+  constructor(private tokenStorage: TokenStorageService, private accountService: AccountService,
+              private router: Router, private storage: AngularFireStorage, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.accountService.getAllProvince().subscribe(data => {
+      this.provinceList = data.results;
+      this.province.setValue(this.provinceList[0].province_name);
+      this.accountService.getAllDistrictByProvince(this.provinceList[0].province_id).subscribe(dataDis => {
+        this.districtList = dataDis.results;
+        this.district.setValue(this.districtList[0].district_name);
+        this.accountService.getAllWardByDistrict(this.districtList[0].district_id).subscribe(dataWard => {
+          this.wardList = dataWard.results;
+          this.ward.setValue(this.wardList[0].ward_name);
+          if (this.wardList === undefined || this.wardList.length === 0) {
+            this.address.setValue(this.district.value + '' + this.province.value);
+          } else {
+            this.address.setValue(this.ward.value + ' ' + this.district.value + '' + this.province.value);
+          }
+        });
+      });
+    });
     let email = '';
     let username = '';
     const account = this.tokenStorage.getAccount();
@@ -45,8 +73,11 @@ export class RegisterComponent implements OnInit {
       identity: new FormControl('', [Validators.required, Validators.pattern('\\d{9}(\\d{3})?')],
         [this.identityDuplicateValidator.bind(this)]),
       address: new FormControl('', [Validators.required]),
-      avatar: new FormControl(''),
-      checkbox: new FormControl(false, [Validators.requiredTrue])
+      avatar: new FormControl(this.imgSrc, [Validators.required]),
+      checkbox: new FormControl(false, [Validators.requiredTrue]),
+      province: new FormControl('', [Validators.required]),
+      district: new FormControl('', [Validators.required]),
+      ward: new FormControl('', [Validators.required])
     });
   }
 
@@ -139,17 +170,72 @@ export class RegisterComponent implements OnInit {
     };
     this.accountService.saveAccount(account).subscribe(data => {
       if (data !== null) {
-        this.router.navigateByUrl('/');
+        const config = new MatDialogConfig();
+        config.position = { top: '5%' };
+        this.dialog.open(MatRegisDiaComponent, config);
+        this.form.reset();
       }
     });
   }
 
-  con() {
-    console.log(this.form);
+  submitAvatar() {
+    if (this.selectedImage !== null) {
+      const filePath = `avatar/${this.selectedImage.name}/${new Date().getTime()}`;
+      const fileRef = this.storage.ref(filePath);
+      this.storage.upload(filePath, this.selectedImage).snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(url => {
+            this.imgSrc = url;
+            this.avatar.setValue(url);
+            this.dialog.closeAll();
+          });
+        })
+      ).subscribe();
+    }
   }
 
   changeImage(event) {
-    console.log(event);
+    this.avatar.setValue('');
+    this.dialog.open(MatLoadingDiaComponent, { panelClass: 'loading-dialog', position: { top: '0', left: '17%' }, disableClose: true });
+    if (event.target.files && event.target.files[0]) {
+      this.selectedImage = event.target.files[0];
+      this.submitAvatar();
+    } else {
+      this.imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
+      this.avatar.setValue(this.imgSrc);
+      this.selectedImage = null;
+      this.dialog.closeAll();
+    }
+  }
+
+  changeProvince(provinceId: number) {
+    this.district.setValue('');
+    const provinceSelect = this.provinceList.find(e => e.province_id === provinceId);
+    this.province.setValue(provinceSelect.province_name);
+    this.accountService.getAllDistrictByProvince(provinceId).subscribe(data => {
+      this.districtList = data.results;
+      this.changeDistrict(this.districtList[0].district_id);
+    });
+  }
+
+  changeDistrict(districtId: number) {
+    this.ward.setValue('');
+    const districtSelect = this.districtList.find(e => e.district_id === districtId);
+    this.district.setValue(districtSelect.district_name);
+    this.accountService.getAllWardByDistrict(districtId).subscribe(data => {
+      this.wardList = data.results;
+      if (this.wardList === undefined || this.wardList.length === 0) {
+        this.address.setValue(this.district.value + '' + this.province.value);
+      } else {
+        this.changeWard(this.wardList[0].ward_id);
+      }
+    });
+  }
+
+  changeWard(wardId: number) {
+    const wardSelect = this.wardList.find(e => e.ward_id === wardId);
+    this.ward.setValue(wardSelect.ward_name);
+    this.address.setValue(this.ward.value + ' ' + this.district.value + '' + this.province.value);
   }
 
   get accountName() {
@@ -178,6 +264,15 @@ export class RegisterComponent implements OnInit {
   }
   get address() {
     return this.form.get('address');
+  }
+  get province() {
+    return this.form.get('province');
+  }
+  get district() {
+    return this.form.get('district');
+  }
+  get ward() {
+    return this.form.get('ward');
   }
   get avatar() {
     return this.form.get('avatar');

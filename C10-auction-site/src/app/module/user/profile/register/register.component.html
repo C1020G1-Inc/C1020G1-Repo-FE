@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container-fluid mt-5 mb-5">
     <div class="row">
         <div class="col-lg-6"
@@ -15,8 +16,7 @@
                             <div class="form-group col-md-12 text-center">
                                 <input accept=".jpg,.png" (change)="changeImage($event)" id="avatar" type="file" hidden>
                                 <div class="text-center d-inline-block avatar">
-                                    <img id="avt" style="border-radius: 50%" width="90px" height="90px"
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU"
+                                    <img id="avt" style="border-radius: 50%" width="90px" height="90px" [src]="imgSrc"
                                         alt="">
                                     <i onclick="document.getElementById('avatar').click()"
                                         title="Click to change avatar"
@@ -121,8 +121,8 @@
                                 <div class="input-group">
                                     <input id="passwordConfirm"
                                         [class.is-invalid]="repassword.invalid && (repassword.dirty || repassword.touched)"
-                                        [class.is-valid]="repassword.valid && repassword.touched" formControlName="repassword" type="password"
-                                        class="form-control">
+                                        [class.is-valid]="repassword.valid && repassword.touched"
+                                        formControlName="repassword" type="password" class="form-control">
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -272,17 +272,36 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="address">Địa chỉ <span class="text-danger">(*)</span></label>
+                            <div class="form-group col-md-4">
+                                <label for="province"> Tỉnh/Thành phố <span class="text-danger">(*)</span></label>
                                 <div class="input-group">
-                                    <input [class.is-invalid]="address.invalid && (address.dirty || address.touched)"
-                                        [class.is-valid]="address.valid" formControlName="address" id="address"
-                                        type="text" class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
+                                    <select [class.is-invalid]="province.invalid && (province.dirty || province.touched)"
+                                        [class.is-valid]="province.valid" id="province"
+                                        class="form-control" (change)="changeProvince($event.target.value)">
+                                        <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">{{provinces.province_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="province"> Quận/Huyện <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <select [class.is-invalid]="district.invalid && (district.dirty || district.touched)"
+                                        [class.is-valid]="district.valid" id="district"
+                                        class="form-control" (change)="changeDistrict($event.target.value)">
+                                        <option *ngFor="let districts of districtList" [value]="districts.district_id">{{districts.district_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="province"> Xã/Thị trấn <span class="text-danger">(*)</span></label>
+                                <div class="input-group">
+                                    <select [class.is-invalid]="ward.invalid && (ward.dirty || ward.touched)"
+                                        [class.is-valid]="ward.valid" id="ward"
+                                        class="form-control" (change)="changeWard($event.target.value)">
+                                        <option *ngFor="let wards of wardList" [value]="wards.ward_id">{{wards.ward_name}}</option>
+                                    </select>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -313,7 +332,7 @@
                                     kí</button>
                             </div>
                             <div class="col-lg-6 pl-1 pr-1 mb-1">
-                                <a href="/" class="btn btn-primary btn-block">Quay về đăng nhập</a>
+                                <a href="/login" class="btn btn-primary btn-block">Quay về đăng nhập</a>
                             </div>
                         </div>
                     </div>
@@ -322,5 +341,4 @@
         </div>
         <div class="col-lg-1"></div>
     </div>
-    <button (click)="con()">click</button>
 </div>

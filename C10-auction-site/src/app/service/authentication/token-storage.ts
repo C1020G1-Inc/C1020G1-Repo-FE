@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Account } from './../../model/Account';
 import { JwtResponse } from './JwtRespone';
 import { Injectable } from '@angular/core';
@@ -10,21 +11,39 @@ const ROLES_KEY = 'pPpPFvvv5ax291ETMe38';
     providedIn: 'root'
 })
 export class TokenStorageService {
-
-    constructor() { }
+    constructor(private router: Router) { }
 
     logOut() {
         window.sessionStorage.clear();
         window.localStorage.clear();
     }
 
+    public saveTimeTokenLocal() {
+        const date = new Date(new Date().getTime() + (10 * 1000));
+        window.localStorage.setItem('time', JSON.stringify(date.toJSON()));
+    }
+
+    public saveTimeTokenSession() {
+        const date = new Date(new Date().getTime() + (10 * 1000));
+        window.sessionStorage.setItem('time', JSON.stringify(date.toJSON()));
+    }
+
+    public getTime(): Date {
+        if (localStorage.getItem(TOKEN_KEY) !== null){
+            return new Date(JSON.parse(window.localStorage.getItem('time')));
+        }
+        return new Date(JSON.parse(window.sessionStorage.getItem('time')));
+    }
+
     public saveData(data: JwtResponse, remmember: boolean) {
         this.logOut();
         if (remmember) {
+            this.saveTimeTokenLocal();
             this.saveTokenStorage(data.jwtToken);
             this.saveAccountStorage(data.account);
             this.saveRolesStorage(data.roles);
         } else {
+            this.saveTimeTokenSession();
             this.saveTokenSession(data.jwtToken);
             this.saveAccountSession(data.account);
             this.saveRolesSession(data.roles);
