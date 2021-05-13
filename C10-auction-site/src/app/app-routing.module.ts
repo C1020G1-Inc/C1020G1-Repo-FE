@@ -33,7 +33,7 @@ const routes: Routes = [
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
       {path: 'transactions', component: TransactionManagementModule},
-      {path: 'chat', component: AdminChatComponent},
+      {path: 'chat', component: AdminChatComponent}
     ]
   },
   {path: 'login', component: LoginComponent},
