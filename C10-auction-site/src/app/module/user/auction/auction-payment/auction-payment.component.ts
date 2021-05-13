@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Account} from '../../../../model/Account';
 import {Product} from '../../../../model/Product';
@@ -6,6 +6,7 @@ import {District, Province, Ward} from '../../../../model/Address';
 import {AddressService} from '../../../../service/address.service';
 import {OrderDTO} from '../../../../model/OrderDTO';
 import {OrderService} from '../../../../service/order.service';
+import {ngxLoadingAnimationTypes, NgxLoadingComponent} from 'ngx-loading';
 
 declare var paypal;
 
@@ -27,6 +28,9 @@ export class AuctionPaymentComponent implements OnInit {
   isChecked1 = true;
   isChecked2 = false;
   @ViewChild('paypal', {static: true}) paypalElement: ElementRef;
+  // for loading process
+  @ViewChild('ngxLoading', { static: false }) ngxLoadingComponent: NgxLoadingComponent;
+  loading = false;
 
   constructor(private addressService: AddressService,
               private orderService: OrderService) {
@@ -149,7 +153,6 @@ export class AuctionPaymentComponent implements OnInit {
   }
 
   onPay() {
-    // Do not delete this variable 'paypal' -> not bug
     paypal.Buttons({
       createOrder: (data, actions) => {
         // This function sets up the details of the transaction, including the amount and line item details.
@@ -162,10 +165,12 @@ export class AuctionPaymentComponent implements OnInit {
         });
       },
       onApprove: (data, actions) => {
+        this.loading = true;
         // This function captures the funds from the transaction.
         return actions.order.capture().then((details) => {
           // This function shows a transaction success message to your buyer.
           this.messagePayment = 'Thanh toán thành công !';
+          this.loading = false;
         });
       }
     }).render(this.paypalElement.nativeElement);
