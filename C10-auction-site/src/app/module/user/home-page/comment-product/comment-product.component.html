@@ -1,3 +1,4 @@
+<p style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Có {{comments.length}} bình luận cho sản phẩm này</p>
 <div class="container-fluid">
   <div class="row" style="background-color: whitesmoke">
     <ul class="we-comet" style="margin-top: 241px;border-top: 1px solid #adb5bd">
@@ -24,11 +25,11 @@
                  data-toggle="modal" data-target="#deleteCommentModal" title="Xóa"
                  (click)="getCommentIdToDelete(comment.commentId)"></i>
             </span>
-            <div style="display: block">
-              <p>
+            <div style="display: block; margin-left: 20px">
+              <p style="font-size: 17px">
                 {{comment.content}}
               </p>
-              <img *ngIf="comment.image" [src]="comment.image" style="height: 120px; width: auto;display: block"
+              <img *ngIf="comment.image" [src]="comment.image" style="height: 300px; width: auto;display: block"
                    alt="hình ảnh">
             </div>
           </div>
@@ -65,7 +66,7 @@
                       placeholder="Nhập bình luận của bạn"></textarea>
 
           </div>
-          <button class="btn btn-primary comet-button" style="margin-top: 23px; margin-left: 5px"
+          <button class="btn btn-primary comet-button" style="margin-top: 24px; margin-left: 5px"
                   (click)="createComment()">
             <i class="fa fa-paper-plane" aria-hidden="true" title="Gửi"></i>
           </button>
