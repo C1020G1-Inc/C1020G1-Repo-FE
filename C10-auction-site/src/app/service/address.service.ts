@@ -12,14 +12,26 @@ export class AddressService {
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * Author : CaoLPT
+   * Get all provinces from db
+   */
   public getAllProvinces(): Observable<any> {
     return this.http.get(this.BASE_URL + '/' + 'province');
   }
 
+  /**
+   * Author : CaoLPT
+   * Get list districts by province_id from db
+   */
   public getDistrictByProvince(provinceId): Observable<any> {
     return this.http.get(this.BASE_URL + '/district/' + provinceId);
   }
 
+  /**
+   * Author : CaoLPT
+   * Get list wards by district_id from db
+   */
   public getWardByDistrict(districtId): Observable<any> {
     return this.http.get(this.BASE_URL + '/ward/' + districtId);
   }

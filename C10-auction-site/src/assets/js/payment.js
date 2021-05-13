@@ -72,11 +72,14 @@ $(document).ready(function () {
     return false;
   });
 
-  // $(function () {
-  //   $("input[name=checkout-format]")
-  //     .on("click init-post-format", function () {
-  //       $("#credit-card").toggle($("#checkout-credit").prop("checked"));
-  //     })
-  //     .trigger("init-post-format");
-  // });
+  $('input[type="radio"]').click(function() {
+    if($(this).attr('id') === 'checkout-credit') {
+      $('#paypal-button').show();
+    }
+    else {
+      $('#paypal-button').hide();
+    }
+  });
+
 });
+

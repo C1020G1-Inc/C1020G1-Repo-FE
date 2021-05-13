@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Account} from '../../../../model/Account';
 import {Product} from '../../../../model/Product';
@@ -15,11 +15,16 @@ import {OrderService} from '../../../../service/order.service';
 export class AuctionPaymentComponent implements OnInit {
   products: Product[];
   account: Account;
-  total: number;
+  totalInVND: number;
+  totalInUSD: string;
   paymentForm: FormGroup;
   provinces: Array<Province>;
   districts: Array<District>;
   wards: Array<Ward>;
+  messagePayment: string;
+  isChecked1 = true;
+  isChecked2 = false;
+  @ViewChild('paypal', {static: true}) paypalElement: ElementRef;
 
   constructor(private addressService: AddressService,
               private orderService: OrderService) {
@@ -40,7 +45,8 @@ export class AuctionPaymentComponent implements OnInit {
         address: '41b Mai Lão Bạng'
       }
     };
-    this.total = 32131233121;
+    this.totalInVND = 100000;
+    this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
     this.products = [
       {
         productId: 1,
@@ -125,16 +131,42 @@ export class AuctionPaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.messagePayment = null;
     this.paymentForm = new FormGroup({
       address: new FormControl(null, Validators.required),
       phone: new FormControl(null, [Validators.required, Validators.pattern('(^(0)\\d{9}$)')]),
       guide: new FormControl(null),
-      total: new FormControl(this.total),
+      total: new FormControl(this.totalInVND),
       methodPay: new FormControl('0'),
-      userName: new FormControl({value : this.account.user.userName, disabled: true}),
-      userEmail: new FormControl({value : this.account.email, disabled: true}),
+      userName: new FormControl({value: this.account.user.userName, disabled: true}),
+      userEmail: new FormControl({value: this.account.email, disabled: true}),
       ward: new FormControl(null, Validators.required)
     });
+
+    this.onPay();
+  }
+
+  onPay() {
+    // Do not delete this variable 'paypal' -> not bug
+    paypal.Buttons({
+      createOrder: (data, actions) => {
+        // This function sets up the details of the transaction, including the amount and line item details.
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: this.totalInUSD
+            }
+          }]
+        });
+      },
+      onApprove: (data, actions) => {
+        // This function captures the funds from the transaction.
+        return actions.order.capture().then((details) => {
+          // This function shows a transaction success message to your buyer.
+          this.messagePayment = 'Thanh toán thành công !';
+        });
+      }
+    }).render(this.paypalElement.nativeElement);
   }
 
   submit() {
@@ -166,5 +198,15 @@ export class AuctionPaymentComponent implements OnInit {
     this.addressService.getWardByDistrict(districtId).subscribe(data => {
       this.wards = data;
     });
+  }
+
+  onCheck2() {
+    this.isChecked1 = false;
+    this.isChecked2 = true;
+  }
+
+  onCheck1() {
+    this.isChecked1 = true;
+    this.isChecked2 = false;
   }
 }

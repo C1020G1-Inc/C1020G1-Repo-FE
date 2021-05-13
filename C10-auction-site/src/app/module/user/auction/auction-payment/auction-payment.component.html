@@ -122,40 +122,28 @@
 
                   <input
                     type="radio"
-                    name="checkout-format"
                     id="non-credit"
                     value="0"
                     checked
                     name="methodPay"
                     formControlName="methodPay"
+                    (click)="onCheck1()"
                   />
                   <label for="non-credit">Trả tiền sau khi nhận hàng</label
                   ><br/>
                   <input
                     type="radio"
-                    name="checkout-format"
                     id="checkout-credit"
                     value="1"
                     name="methodPay"
                     formControlName="methodPay"
+                    (click)="onCheck2()"
                   />
                   <label for="checkout-credit"
                   >Thanh toán bằng ví điện tử (Paypal)</label
                   >
-                  <div id="credit-card" *ngIf="paymentForm.get('methodPay').value == '1'">
-                    <button
-                      style="
-                            background-color: rgb(228, 195, 49);
-                            width: 45%;
-                            cursor: pointer;
-                            margin-left: 5%;
-                            padding: 1%;
-                            border: none;
-                          "
-                    >
-                      <img src="src/assets/img/payment/Paypal%20icon.svg" alt=""/>
-                    </button>
-                  </div>
+                  <div #paypal style="width: 35%; margin-left: 10%; display: none" id="paypal-button"></div>
+                  <h5 style="margin-left: 10%; color: #7b0c32" *ngIf="messagePayment">{{messagePayment}}</h5>
                 </div>
                 <input
                   type="button"
@@ -167,8 +155,9 @@
                   type="button"
                   name="next"
                   class="next action-button"
-                  value="Xác nhận thanh toán"
-                  style="width: 30%"
+                  [disabled]="(!isChecked1) && (isChecked2 && (!messagePayment))"
+                  value="Xem hóa đơn"
+                  style="width: 20%"
                   (click)="submit()"
                 />
               </fieldset>

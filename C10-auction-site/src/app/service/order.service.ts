@@ -11,6 +11,10 @@ export class OrderService {
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * Author : CaoLPT
+   * Add new order to db
+   */
   public createOrder(orderDTO): Observable<any> {
     return this.http.post(this.BASE_URL, orderDTO);
   }
