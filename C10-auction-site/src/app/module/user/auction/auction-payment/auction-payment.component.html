@@ -144,6 +144,7 @@
                   >
                   <div #paypal style="width: 35%; margin-left: 10%; display: none" id="paypal-button"></div>
                   <h5 style="margin-left: 10%; color: #7b0c32" *ngIf="messagePayment">{{messagePayment}}</h5>
+                  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true }"></ngx-loading>
                 </div>
                 <input
                   type="button"
