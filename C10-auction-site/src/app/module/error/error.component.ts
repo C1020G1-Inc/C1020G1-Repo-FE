@@ -58,8 +58,8 @@ export class ErrorComponent implements OnInit {
   login() {
     this.addRoom(this.room);
     localStorage.clear();
-    localStorage.setItem('nickname', this.account2.accountName);
-    localStorage.setItem('account', JSON.stringify(this.account2));
+    localStorage.setItem('nickname', this.account1.accountName);
+    localStorage.setItem('account', JSON.stringify(this.account1));
     this.router.navigate(['/admin/chat', this.account1.accountName]);
   }
 

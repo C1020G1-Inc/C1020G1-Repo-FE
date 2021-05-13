@@ -3,19 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import firebase from 'firebase';
 import {Room} from '../../../../model/temporary/room';
 import {Notification} from '../../../../model/temporary/notification';
-
-
-export const snapshotToArray = (snapshot: any) => {
-  const returnArr = [];
-
-  snapshot.forEach((childSnapshot: any) => {
-    const item = childSnapshot.val();
-    item.key = childSnapshot.key;
-    returnArr.push(item);
-  });
-
-  return returnArr;
-};
+import {ChatService} from '../../../../service/chat.service';
 
 
 @Component({
@@ -31,18 +19,19 @@ export class AdminChatComponent implements OnInit {
   notifications = new Array<Notification>();
   year = new Date().getFullYear();
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router,
+              private chatService: ChatService) {
   }
 
   ngOnInit(): void {
     this.nickname = localStorage.getItem('nickname');
-    firebase.database().ref('rooms/').on('value', resp => {
-      this.rooms = snapshotToArray(resp);
+    this.chatService.refRooms.on('value', resp => {
+      this.rooms = this.chatService.snapshotToArray(resp);
       this.isLoadingResults = false;
     });
 
-    firebase.database().ref('notifications/').orderByChild('role').equalTo('user').on('value' , (resp: any) => {
-      this.notifications = snapshotToArray(resp).filter(x => x.isRead === false);
+    this.chatService.getNotiOfUser().on('value' , (resp: any) => {
+      this.notifications = this.chatService.snapshotToArray(resp).filter(x => x.isRead === false);
     });
 
   }
@@ -51,8 +40,8 @@ export class AdminChatComponent implements OnInit {
   enterChatRoom(room: Room) {
     for (const readNotification of this.notifications) {
       if (readNotification.chat.roomName === room.roomName) {
-        firebase.database().ref('notifications/').child(readNotification.key).child('isRead').set(true);
-        firebase.database().ref('rooms/').child(room.key).child('newMess').set(0);
+        this.chatService.readNoti(readNotification.key);
+        this.chatService.readNewMess(room.key);
       }
     }
 

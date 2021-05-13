@@ -13,7 +13,10 @@
         </div>
       </div>
       <div class="col-lg-6 hidden-sm text-right">
-        <a href="" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
+          <label class="btn btn-outline-primary" for="file-input">
+            <i class="fa fa-image"></i>
+            <input type="file" (change)="importImages($event)" id="file-input" multiple class="inputfile">
+          </label>
       </div>
     </div>
   </div>
@@ -40,10 +43,14 @@
         <span class="input-group-text"><i class="fa fa-send"></i></span>
       </div>
       <form action="" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value)" style="width: 90%">
-        <input type="text" class="form-control " formControlName="message"
+        <input type="text" class="form-control m-0 text-white" formControlName="message"
                placeholder="Nhập tin nhắn...">
-        <span *ngIf="!chatForm.get('message').valid && chatForm.get('message').touched">Enter your message</span>
       </form>
+      <div *ngFor="let file of this.fileImage; let i = index" class="d-inline-block" style="margin: 0">
+            <span><i class="fa fa-times delete-icon" (click)="deleteUpdateImage($event)"
+                     [attr.data-index]="i"></i></span>
+        <img [src]="file.url" style="margin:3px; height: 100px; width: auto; float: left">
+      </div>
     </div>
   </div>
 </div>

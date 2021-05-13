@@ -5,20 +5,10 @@ import {DatePipe} from '@angular/common';
 import firebase from 'firebase';
 import {UserDTO} from '../../../model/temporary/userDTO';
 import {Chat} from '../../../model/temporary/chat';
-import DateTimeFormat = Intl.DateTimeFormat;
 import {Notification} from '../../../model/temporary/notification';
+import {ChatService} from '../../../service/chat.service';
+import {File} from '../../../model/temporary/file';
 
-export const snapshotToArray = (snapshot: any) => {
-  const returnArr = [];
-
-  snapshot.forEach((childSnapshot: any) => {
-    const item = childSnapshot.val();
-    item.key = childSnapshot.key;
-    returnArr.push(item);
-  });
-
-  return returnArr;
-};
 
 @Component({
   selector: 'app-chat-room',
@@ -34,11 +24,13 @@ export class ChatRoomComponent implements OnInit {
   message = '';
   user: UserDTO;
   chats = new Array<Chat>();
-  ref = firebase.database().ref('rooms/');
+  fileImage = new Array<File>();
+  urlImage: [];
   constructor(private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
-              public datepipe: DatePipe) { }
+              public datepipe: DatePipe,
+              private chatService: ChatService) { }
 
   ngOnInit(): void {
 
@@ -49,28 +41,29 @@ export class ChatRoomComponent implements OnInit {
     this.nickname = JSON.parse(localStorage.getItem('account')).accountName;
     this.roomName = this.route.snapshot.params.roomname;
     if (this.roomName) {
-      firebase.database().ref('chats/').on('value', resp => {
-        this.chats = snapshotToArray(resp).filter(x => x.roomName === this.roomName);
+      this.chatService.refChats.on('value', resp => {
+        this.chats = this.chatService.snapshotToArray(resp).filter(x => x.roomName === this.roomName);
         this.setTimeForChat();
       });
-      firebase.database().ref('rooms').orderByChild('roomName').equalTo(this.roomName).on('child_added', (resp2: any) => {
+      this.chatService.refRooms.orderByChild('roomName').equalTo(this.roomName).on('child_added', (resp2: any) => {
         this.user = resp2.val().user;
       });
     }
   }
 
   onFormSubmit(form: any) {
-    const chat = form;
-    chat.roomName = this.roomName;
-    chat.nickname = this.nickname;
-    chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
-    chat.type = 'message';
-    const newMessage = firebase.database().ref('chats/').push();
-    newMessage.set(chat);
+    if (form.message) {
+      const chat = form;
+      chat.roomName = this.roomName;
+      chat.nickname = this.nickname;
+      chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+      chat.type = 'message';
+      this.chatService.addNewChat(chat);
 
-    const notification = new Notification(chat, false, 'admin', this.user.userName, this.user.userAvatar);
-    firebase.database().ref('notifications/').push().set(notification);
-    this.chatForm.reset();
+      const notification = new Notification(chat, false, 'admin', this.user.userName, this.user.userAvatar);
+      this.chatService.addNewNoti(notification);
+      this.chatForm.reset();
+    }
   }
 
   private setTimeForChat() {
@@ -100,5 +93,33 @@ export class ChatRoomComponent implements OnInit {
 
   readNoti() {
     // firebase.database().ref('notifications/').child()
+  }
+
+  importImages($event) {
+    const files = $event.target.files;
+    if (files) {
+      for (const file of files) {
+        const name = file.type;
+        const size = file.size;
+        if (name.match(/(png|jpeg|jpg|PNG|JPEG|JPG)$/)) {
+          if (size <= 1000000) {
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+              this.fileImage.push( new File(e.target.result, file ) );
+            };
+            reader.readAsDataURL(file);
+          } else {
+            return this.message = 'Big size!!';
+          }
+        } else {
+          return this.message = 'Not Image!!';
+        }
+      }
+    }
+  }
+
+  deleteUpdateImage($event) {
+    const index = $event.target.attributes['data-index'].value;
+    this.fileImage.splice(index, 1);
   }
 }
