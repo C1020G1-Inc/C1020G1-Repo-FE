@@ -19,7 +19,8 @@ export class CreateProductComponent implements OnInit {
   private createService: CreateServiceService;
 
 
-  constructor(){}
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.createProduct = new FormGroup({
@@ -35,8 +36,15 @@ export class CreateProductComponent implements OnInit {
       registerTime: new FormControl('')
     });
 
-    this.category = this.createService.getCategory();
+    this.category = this.getCategory();
   }
+
+  getCategory() {
+    this.createService.getCategory().subscribe(category => {
+      this.category = category;
+    });
+  }
+
 
   submit() {
     this.createService.createProduct(this.createProduct.value).subscribe(data => {
