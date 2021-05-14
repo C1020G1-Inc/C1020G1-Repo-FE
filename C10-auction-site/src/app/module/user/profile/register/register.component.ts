@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('Đăng ký');
-    if (this.tokenStorage.isLogged()){
+    if (this.tokenStorage.isLogged()) {
       this.router.navigateByUrl('/home');
     }
     this.accountService.getAllProvince().subscribe(data => {
@@ -201,7 +201,8 @@ export class RegisterComponent implements OnInit {
             this.dialog.closeAll();
           });
         })
-      ).subscribe();
+      ).subscribe(() => { }, () => this.dialog.closeAll()
+      );
     }
   }
 
