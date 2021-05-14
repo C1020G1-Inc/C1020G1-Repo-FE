@@ -22104,7 +22104,19 @@ input.file {
 }
 
 .modal-lg {
-  max-width: 40% !important;
+  max-width: 35% !important;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
 
+::-webkit-scrollbar-track {
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  margin: 2px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}

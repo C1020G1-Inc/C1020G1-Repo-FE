@@ -35,7 +35,7 @@ export class ProductChartComponent implements OnInit {
   public monthSearch;
   public yearSearch;
   public message;
-  public checkButton;
+  public checkButton: string;
 
   constructor(private productService: ProductService) {
   }

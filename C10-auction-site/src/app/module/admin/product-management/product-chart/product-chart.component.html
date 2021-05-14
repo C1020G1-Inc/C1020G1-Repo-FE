@@ -31,22 +31,26 @@
                 <h4 class="card-title ">Thống kê</h4>
               </div>
               <div class="card-body">
-                <label for="selectType" style="padding-right: 10px;float: left;margin-top: 5px">Thống kê theo: </label>
-                <select id="selectType" style="padding: 0 10px 0 10px;margin-top:5px;float: left" [(ngModel)]="checkButton">
+                <label for="selectType" style="padding-right: 10px;float: left;margin-top: 12px">Thống kê theo: </label>
+                <select id="selectType" style="float: left;width: 100px;height: 35px;margin-top: 5px"
+                        [(ngModel)]="checkButton" class="custom-select">
+                  <option value="undefined">Chọn</option>
                   <option value="showSelect">Tháng</option>
                   <option value="hideSelect">Năm</option>
                 </select>
 
 
-                <label style="padding-left: 20px;padding-right:20px;margin-top:8px;float: left" class="month">Năm: </label>
-                <select style="padding: 0 10px 0 10px;float: left;margin-top: 5px" class="month" [(ngModel)]="yearSearch">
+                <label style="margin-top: 12px;padding-left: 20px;padding-right:20px;float: left" class="month">Năm: </label>
+                <select style="float: left;width: 100px;height: 35px;margin-top: 5px" class="month custom-select" [(ngModel)]="yearSearch">
+                  <option value="undefined">Chọn</option>
                   <option value="2020">2020</option>
                   <option value="2021">2021</option>
                 </select>
 
                 <div id="hideSelect" class="showSelect" style="float: left;margin-top: 5px">
                   <label style="padding-right: 10px;padding-left: 20px">Tháng: </label>
-                  <select style="padding: 0 10px 0 10px" [(ngModel)]="monthSearch">
+                  <select style="width: 100px;height: 35px" [(ngModel)]="monthSearch" class="custom-select">
+                    <option value="undefined">Chọn</option>
                     <option value="1">Tháng 1</option>
                     <option value="2">Tháng 2</option>
                     <option value="3">Tháng 3</option>
@@ -62,10 +66,10 @@
                   </select>
                 </div>
 
-                <input class="btn btn-primary" type="button" style="margin-left: 30px;margin-top: 0;padding: 10px 20px"
+                <input class="btn btn-primary" type="button" style="margin-left: 30px;margin-top: 5px;padding: 10px 20px"
                        value="Tìm kiếm" (click)="getChartByMonth()" *ngIf="checkButton == 'showSelect'">
 
-                <input class="btn btn-primary" type="button" style="margin-left: 30px;margin-top: 0;padding: 10px 20px"
+                <input class="btn btn-primary" type="button" style="margin-left: 30px;margin-top: 5px;padding: 10px 20px"
                        value="Tìm kiếm" (click)="getChartByYear()" *ngIf="checkButton == 'hideSelect'">
 
                 <div *ngIf="message == 1">

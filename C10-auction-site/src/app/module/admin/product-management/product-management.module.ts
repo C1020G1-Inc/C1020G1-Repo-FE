@@ -6,12 +6,13 @@ import { ProductChartComponent } from './product-chart/product-chart.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ChartsModule} from 'ng2-charts';
+import { LoadingComponent } from './loading/loading.component';
 
 
 
 
 @NgModule({
-  declarations: [ListProductAdminComponent, UpdateProductComponent, ProductChartComponent],
+  declarations: [ListProductAdminComponent, UpdateProductComponent, ProductChartComponent, LoadingComponent],
   imports: [
     CommonModule,
     FormsModule,

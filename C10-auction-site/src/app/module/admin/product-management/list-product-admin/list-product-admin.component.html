@@ -32,27 +32,25 @@
                 </div>
                 <div class="card-body">
                   <div>
-                    <span style="padding: 10px;color: white">Tên sản phẩm:</span>
-                    <input placeholder="Nhập tên..." [(ngModel)]="productName">
-                    <span style="padding: 10px;color: white">Loại sản phẩm</span>
-                    <select style="width: 100px;" [(ngModel)]="categoryId">
-                      <option value="0">--Tất Cả--</option>
+                    <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tên sản phẩm:</span>
+                    <input placeholder="Nhập tên..." [(ngModel)]="productName" class="form-control" style="width: 200px;float: left;margin-right: 10px">
+                    <span style="padding: 10px;color: white;float: left;margin-right: 10px">Loại sản phẩm:</span>
+                    <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId" class="custom-select">
+                      <option value="0">Chọn Tất Cả</option>
                       <option value="1">Điện tử</option>
                       <option value="2">Dụng Cụ</option>
                     </select>
-                    <span style="padding: 10px;color: white">Người đăng:</span>
-                    <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName">
-                    <span style="padding: 10px;color: white">Tình trạng</span>
-                    <select style="width: 150px" [(ngModel)]="productStatusId">
-                      <option value="0">--Tất Cả--</option>
-                      <option value="1">Chưa duyệt</option>
-                      <option value="2">Đang đấu giá</option>
-                      <option value="3">Chờ thanh toán</option>
-                      <option value="4">Hoàn thành</option>
-                      <option value="5">Thất bại</option>
+                    <span style="padding: 10px;color: white;float:left;margin-right: 10px">Người đăng:</span>
+                    <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName" style="width: 200px;float: left;margin-right: 10px" class="form-control">
+                    <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tình trạng</span>
+                    <select style="width: 130px;float: left;height: 35px;margin-right: 10px" [(ngModel)]="productStatusId" class="custom-select">
+                      <option value="0">Chọn Tất Cả</option>
+                      <option value="1">Chờ Duyệt</option>
+                      <option value="2">Đang Đấu Giá</option>
+                      <option value="4">Hoàn Thành</option>
                     </select>
                     <input type="button" class="btn btn-primary" value="Tìm kiếm" (click)="doSearch()"
-                           style="margin-left: 3%">
+                           style="margin-left: 3%;margin-top: 0">
                   </div>
                   <div class="table-responsive" *ngIf="productList.length != 0">
                     <table class="table">
@@ -109,9 +107,6 @@
                              href="#editProduct" data-toggle="modal" (click)="sendProductIdForForm(product.productId)">
                             <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
                           </a>
-                          <a style="cursor: pointer;margin-left: 10px" href="#deleteModal" data-toggle="modal">
-                            <i class="fa fa-trash fa-2x" title="Xóa"></i>
-                          </a>
                         </td>
                       </tr>
                       </tbody>
@@ -158,50 +153,52 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
-          <div class="modal-header">
-            <h4 class="modal-title">Duyệt sản phẩm</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-header" style="background: #9e08e3">
+            <h4 class="modal-title" style="color: white">Duyệt sản phẩm</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">&times;</button>
           </div>
-          <div class="modal-body">
-            <table>
+          <div class="modal-body table-responsive">
+            <table class="table">
               <tr>
                 <th style="padding: 30px">Tên sản phẩm:</th>
-                <td>{{product.productName}}</td>
+                <th style="padding: 30px">{{product.productName}}</th>
               </tr>
               <tr>
                 <th style="padding: 30px">Người đăng:</th>
-                <td>{{product.account.user.userName}}</td>
+                <th style="padding: 30px">{{product.account.user.userName}}</th>
               </tr>
               <tr>
                 <th style="padding: 30px">Chủng loại:</th>
-                <td>{{product.category.categoryName}}</td>
+                <th style="padding: 30px">{{product.category.categoryName}}</th>
               </tr>
               <tr>
                 <th style="padding: 30px">Giá khởi điểm:</th>
-                <td>{{product.price | currency:'VND':'symbol'}}</td>
+                <th style="padding: 30px">{{product.price | currency:'VND':'symbol'}}</th>
               </tr>
               <tr>
                 <th style="padding: 30px">Bước giá:</th>
-                <td>{{product.priceStep | currency:'VND':'symbol'}}</td>
+                <th style="padding: 30px">{{product.priceStep | currency:'VND':'symbol'}}</th>
               </tr>
               <tr>
                 <th style="padding: 30px">Hình ảnh:</th>
-                <td>
+                <th>
+                  <div style="height: 120px;width: 420px;overflow-y: auto">
                   <div *ngFor="let image of listProductImage" style="display: inline-block">
-                    <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                    <img style="width: 150px;height: 100px;margin:5px;float: left"
                          src="{{image.image}}">
                   </div>
-                </td>
+                  </div>
+                </th>
               </tr>
               <tr>
                 <th style="padding: 30px">Thời gian:</th>
-                <td>{{product.auctionTime}} phút</td>
+                <th style="padding: 30px">{{product.auctionTime}} phút</th>
               </tr>
             </table>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" style="margin-right: 45%">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" style="margin-right: 35%;margin-left: 10px">
           </div>
         </form>
       </div>
@@ -213,18 +210,20 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
-          <div class="modal-header" style="background: #8506bd">
+          <div class="modal-header" style="background: #9e08e3">
             <h4 class="modal-title" style="color: white">Cập nhật !!</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: whitesmoke">
               &times;
             </button>
           </div>
-          <div class="modal-body" *ngIf="productEdit">
+          <div class="modal-body table-responsive" *ngIf="productEdit" >
             <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
-              <table>
+              <table class="table">
                 <tr>
-                  <th style="padding: 15px"> Tên sản phẩm:</th>
-                  <td><input type="text" id="productName" name="productName" formControlName="productName"/>
+                  <th style=";padding-top: 30px;padding-bottom: 0;padding-left: 30px"> Tên sản phẩm:</th>
+                  <th style=";padding-top: 20px;padding-bottom: 0;padding-left: 30px">
+                    <input type="text" id="productName" name="productName" style="color: black"
+                                                   formControlName="productName" class="form-control"/>
                     <br>
                     <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.required  &&
                   (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
@@ -238,17 +237,16 @@
                   (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
                     Tên sản phẩm tối đa 30 ký tự !!
                   </span>
-                  </td>
-
+                  </th>
                 </tr>
                 <tr>
-                  <th style="padding: 15px">Người đăng:</th>
-                  <th>{{productEdit.account.user.userName}}</th>
+                  <th style="padding: 30px">Người đăng:</th>
+                  <th style="padding: 30px">{{productEdit.account.user.userName}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 15px">Chủng loại:</th>
-                  <td>
-                    <select style="width: 100px;" id="category" name="category" formControlName="category">
+                  <th style="padding: 30px">Chủng loại:</th>
+                  <td style="padding: 20px">
+                    <select style="width: 100px" id="category" name="category" formControlName="category" class="custom-select">
                       <option [ngValue]="category.id" *ngFor="let category of categoryList">
                         {{category.categoryName}}
                       </option>
@@ -256,15 +254,15 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 15px">Giá khởi điểm:</th>
-                  <th>{{productEdit.price | currency :'VND':'symbol'}}</th>
+                  <th style="padding: 30px">Giá khởi điểm:</th>
+                  <th style="padding: 30px">{{productEdit.price | currency :'VND':'symbol'}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 15px">Bước giá:</th>
-                  <th>{{productEdit.priceStep | currency: 'VND':'symbol'}}</th>
+                  <th style="padding: 30px">Bước giá:</th>
+                  <th style="padding: 30px">{{productEdit.priceStep | currency: 'VND':'symbol'}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 15px">Hình ảnh:</th>
+                  <th style="padding: 30px">Hình ảnh:</th>
 
                   <td>
                     <div class="fileinputs">
@@ -273,8 +271,10 @@
                         <i class="fa fa-image fa-2x" style="color: #a303bb"></i>
                       </div>
                     </div>
+
+                    <div style="height: 120px;width: 420px;overflow-y: auto">
                       <div *ngFor="let image of listProductImage ; let i = index"
-                           style="margin-left: 0; display: inline-block" class="item">
+                           style="margin-left: 0; display: inline-block">
                       <span>
                         <i class="fa fa-trash delete-icon d-inline" (click)="deleteImage(i)"
                            style="color: red;cursor: pointer">
@@ -294,6 +294,7 @@
                         <img style="width: 150px;height: 100px;margin-right:5px;float: left"
                              src="{{imageUpdate.url}}">
                       </div>
+                    </div>
                     <div *ngIf="lengthOfImage > 5">
                       <p style="color: red">Chỉ tối đa 5 ảnh</p>
                     </div>
@@ -303,18 +304,19 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 15px">Thời gian:</th>
-                  <td>
-                    <select style="width: 100px;" id="auctionTime" name="auctionTime" formControlName="auctionTime">
+                  <th style="padding: 30px">Thời gian:</th>
+                  <th style="padding: 20px">
+                    <select style="width: 100px;" id="auctionTime" name="auctionTime"
+                            formControlName="auctionTime" class="custom-select">
                       <option value="60">60 phút</option>
                       <option value="120">120 phút</option>
                       <option value="180">180 phút</option>
                     </select>
-                  </td>
+                  </th>
                 </tr>
               </table>
               <input type="submit" class="btn btn-primary" value="Sửa"
-                     style="margin-left: 30%;margin-right: 10px"
+                     style="margin-left: 35%;margin-right: 30px"
                      [disabled]="!editForm.valid || this.lengthOfImage > 5 || this.lengthOfImage < 1">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" id="close">
             </form>

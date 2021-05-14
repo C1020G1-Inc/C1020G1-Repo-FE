@@ -8,6 +8,8 @@ import {ProductDto} from '../../../../model/product/product_dto';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {LoadingComponent} from '../loading/loading.component';
 
 @Component({
   selector: 'app-list-product-admin',
@@ -25,8 +27,8 @@ export class ListProductAdminComponent implements OnInit {
   // Biến dành cho search
   productName: string;
   userName: string;
-  productStatusId: number;
-  categoryId: number;
+  productStatusId = 0;
+  categoryId = 0;
 
   // Biến dành cho edit
   productEdit: Product;
@@ -44,7 +46,8 @@ export class ListProductAdminComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private formBuilder: FormBuilder,
-              private storage: AngularFireStorage) {
+              private storage: AngularFireStorage,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -83,12 +86,6 @@ export class ListProductAdminComponent implements OnInit {
   }
 
   doSearch() {
-    if (this.categoryId === undefined) {
-      this.categoryId = 0;
-    }
-    if (this.productStatusId === undefined) {
-      this.productStatusId = 0;
-    }
     this.productService.getProductBySearch(this.productName,
       this.categoryId, this.userName, this.productStatusId).subscribe(data => {
       this.productList = data;
@@ -122,6 +119,8 @@ export class ListProductAdminComponent implements OnInit {
 
 
   async updateProduct() {
+    document.getElementById('close').click();
+    this.openLoading();
     const productUpdate: Product = this.editForm.value;
     await this.addImageToFireBase(productUpdate);
 
@@ -134,7 +133,6 @@ export class ListProductAdminComponent implements OnInit {
       };
 
       this.productService.updateProduct(productDTO).subscribe(data2 => {
-        document.getElementById('close').click();
         this.ngOnInit();
       });
     });
@@ -204,6 +202,17 @@ export class ListProductAdminComponent implements OnInit {
         resolve(1);
       });
     });
+  }
+
+  openLoading() {
+    this.dialog.open(LoadingComponent, {
+      width: '500px',
+      height: '200px',
+      disableClose: true
+    });
+    setTimeout(() => {
+      this.dialog.closeAll();
+    }, 3000);
   }
 }
 
