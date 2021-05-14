@@ -19,4 +19,7 @@ import {NgxLoadingModule} from 'ngx-loading';
         NgxLoadingModule
     ]
 })
-export class AuctionModule { }
+export class AuctionModule {
+}
+
+
