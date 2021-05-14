@@ -51,9 +51,9 @@ export class RegisterComponent implements OnInit {
           this.wardList = dataWard.results;
           this.ward.setValue(this.wardList[0].ward_name);
           if (this.wardList === undefined || this.wardList.length === 0) {
-            this.address.setValue(this.district.value + '' + this.province.value);
+            this.address.setValue(this.district.value + ' ' + this.province.value);
           } else {
-            this.address.setValue(this.ward.value + ' ' + this.district.value + '' + this.province.value);
+            this.address.setValue(this.ward.value + ' ' + this.district.value + ' ' + this.province.value);
           }
         });
       });
@@ -237,7 +237,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.getAllWardByDistrict(districtId).subscribe(data => {
       this.wardList = data.results;
       if (this.wardList === undefined || this.wardList.length === 0) {
-        this.address.setValue(this.district.value + '' + this.province.value);
+        this.address.setValue(this.district.value + ' ' + this.province.value);
       } else {
         this.changeWard(this.wardList[0].ward_id);
       }
@@ -247,7 +247,7 @@ export class RegisterComponent implements OnInit {
   changeWard(wardId: number) {
     const wardSelect = this.wardList.find(e => e.ward_id === wardId);
     this.ward.setValue(wardSelect.ward_name);
-    this.address.setValue(this.ward.value + ' ' + this.district.value + '' + this.province.value);
+    this.address.setValue(this.ward.value + ' ' + this.district.value + ' ' + this.province.value);
   }
 
   get accountName() {
