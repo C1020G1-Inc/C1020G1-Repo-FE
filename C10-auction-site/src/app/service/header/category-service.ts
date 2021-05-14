@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AccountService } from './../authentication/account-service';
 import { Injectable } from '@angular/core';
 
 @Injectable({

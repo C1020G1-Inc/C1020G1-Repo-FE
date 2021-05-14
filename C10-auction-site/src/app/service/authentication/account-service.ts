@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 @Injectable({
     providedIn: 'root'
 })
+/**
+ * @author PhinNL
+ */
 export class AccountService {
     private options: any;
     private isLogout = false;
@@ -41,8 +44,8 @@ export class AccountService {
     }
 
     logout(): Observable<any> {
-        return this.http.put<Observable<any>>(this.baseURL + 'api/account/member/logout/' + this.tokenStorage.getAccount().accountId,
-            null, this.httpOptions);
+        return this.http.put<Observable<any>>(this.baseURL + 'api/account/guest/logout', this.tokenStorage.getAccount(),
+            this.httpOptions);
     }
 
     test(): Observable<any> {

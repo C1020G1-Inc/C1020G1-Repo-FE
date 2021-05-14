@@ -8,20 +8,19 @@ import { TokenStorageService } from './token-storage';
 })
 /**
  * @author PhinNL
- * auth guard for member page
+ * auth guard for admin page
  */
-export class AuthGuardService implements CanActivate {
+export class AdminAuthGuardService implements CanActivate {
 
   constructor(private router: Router,
               private tokenStorage: TokenStorageService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.tokenStorage.isLogged()) {
-      if (this.tokenStorage.getRoles()[0] === 'MEMBER'){
-        return true;
-      }
+        if (this.tokenStorage.getRoles()[0] === 'admin'){
+            return true;
+        }
     }
-
     this.router.navigateByUrl('/login');
     return false;
   }

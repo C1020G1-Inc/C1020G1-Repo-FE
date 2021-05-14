@@ -6,12 +6,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import JwtRequest from 'src/app/service/authentication/JwtRequest';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { JwtResponse } from 'src/app/service/authentication/JwtRespone';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
+/**
+ * @author PhinNL
+ * login
+ */
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   socialUser: SocialUser;
@@ -21,11 +27,13 @@ export class LoginComponent implements OnInit {
   constructor(private tokenStorage: TokenStorageService,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private authService: SocialAuthService) { }
+              private authService: SocialAuthService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Đăng nhập');
     if (this.tokenStorage.isLogged()) {
-      if (this.tokenStorage.getRoles()[0] === 'MEMBER'){
+      if (this.tokenStorage.getRoles()[0] === 'MEMBER') {
         this.router.navigateByUrl('/home');
       } else {
         this.router.navigateByUrl('/admin/product-management/list');
@@ -108,9 +116,7 @@ export class LoginComponent implements OnInit {
             this.tokenStorage.saveAccountStorage(req.account);
             this.router.navigateByUrl('/register');
           } else {
-            this.tokenStorage.saveTokenStorage(req.jwtToken);
-            this.tokenStorage.saveAccountStorage(req.account);
-            this.tokenStorage.saveRolesStorage(req.roles);
+            this.tokenStorage.saveData(req, true);
             window.location.reload();
           }
         },
