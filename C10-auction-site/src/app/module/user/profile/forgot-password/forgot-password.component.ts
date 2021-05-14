@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+import {MatDialog} from '@angular/material/dialog';
+import {LoadingComponent} from '../../../loading/loading/loading.component';
+import {ProductService} from "../../../../service/product/product.service";
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +13,50 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  constructor() { }
+  recoverForm: FormGroup;
+
+  notification: string;
+
+  checkSuccess: string;
+
+  constructor(private form: FormBuilder,
+              private accountService: ProductService,
+              private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
+    this.recoverForm = this.form.group({
+      accountEmail: ['', [Validators.required]]
+    });
+  }
+
+  onSubmit() {
+    this.accountService.recoverPage(this.recoverForm.get('accountEmail').value).subscribe(data => {
+        const notification = 'We have sent a new password to your Gmail';
+        this.openLoading(notification, 'success');
+
+      },
+      error => {
+        this.openLoading(error.error.text, 'false');
+
+      });
+  }
+
+
+  openLoading(notification, checkSuccess) {
+    this.dialog.open(LoadingComponent, {
+      width: '500px',
+      height: '200px',
+      disableClose: true
+    });
+    setTimeout(() => {
+      this.dialog.closeAll();
+      this.notification = notification;
+      this.checkSuccess = checkSuccess;
+    }, 1000);
+
+
+
   }
 
 }

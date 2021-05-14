@@ -1,1 +1,4 @@
 <router-outlet></router-outlet>
+<div *ngIf="account">
+  <app-user-chat *ngIf="account.accountRole === 'user'"></app-user-chat>
+</div>

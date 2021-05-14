@@ -23,6 +23,8 @@ import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-c
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
+import {ListProductEndAuctionComponent} from './module/user/home-page/list-product-home/list-product-end-auction/list-product-end-auction.component';
+import {ErrorComponent} from './module/error/error.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,7 @@ const routes: Routes = [
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
       {path: 'transactions', component: TransactionManagementModule},
+      {path: 'chat/:roomname', component: AdminChatComponent},
       {path: 'chat', component: AdminChatComponent},
     ]
   },
@@ -43,11 +46,16 @@ const routes: Routes = [
     path: 'profile',
     children: [
       {path: 'update', component: UpdateProfileComponent},
+      {path: '', component: ViewProfileComponent},
       {path: 'history-register', component: HistoryRegisterProductComponent},
       {path: 'history-auction', component: HistoryAuctionProductComponent},
-    ], component: ViewProfileComponent
+    ],
   },
-  {path: 'home', component: ListProductHomeComponent},
+  {
+    path: 'home',
+    children: [{path: 'end', component: ListProductEndAuctionComponent}],
+    component: ListProductHomeComponent
+  },
   {path: 'detail/:id', component: DetailProductComponent},
   {path: 'guide', component: GuideComponent},
   {
@@ -59,7 +67,8 @@ const routes: Routes = [
       {path: 'payment', component: AuctionPaymentComponent},
       {path: 'invoice', component: InvoiceComponent}
     ]
-  }
+  },
+  {path: '', component: ErrorComponent},
 ];
 
 @NgModule({
