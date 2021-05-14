@@ -14,4 +14,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
     CommonModule
   ]
 })
-export class AuctionModule { }
+export class AuctionModule {
+}
+
+
