@@ -25,3 +25,10 @@ body {
 .opa:hover {
   opacity: 1;
 }
+
+@media only screen and (max-width: 1195px) and (min-width: 995px) {
+  .label-res {
+    height: 48px !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
