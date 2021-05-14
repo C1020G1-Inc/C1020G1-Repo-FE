@@ -7,6 +7,7 @@ import {AddressService} from '../../../../service/address.service';
 import {OrderDTO} from '../../../../model/OrderDTO';
 import {OrderService} from '../../../../service/order.service';
 import {NgxLoadingComponent} from 'ngx-loading';
+import {Order} from '../../../../model/Order';
 
 declare var paypal;
 
@@ -21,6 +22,7 @@ export class AuctionPaymentComponent implements OnInit {
   totalInVND: number;
   totalInUSD: string;
   paymentForm: FormGroup;
+  order: Order;
   provinces: Array<Province>;
   districts: Array<District>;
   wards: Array<Ward>;
@@ -190,6 +192,7 @@ export class AuctionPaymentComponent implements OnInit {
 
     this.orderService.createOrder(orderDTO).subscribe(data => {
       console.log(data);
+      this.order = data;
     });
   }
 
