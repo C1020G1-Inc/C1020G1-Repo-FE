@@ -23,6 +23,7 @@
     "@fortawesome/angular-fontawesome": "^0.8.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "bad-words": "^3.0.4",
     "bootstrap": "^4.6.0",
     "emojionearea": "^3.0.0",
     "firebase": "^8.5.0",

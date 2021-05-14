@@ -29,8 +29,13 @@
               <p style="font-size: 17px">
                 {{comment.content}}
               </p>
-              <img *ngIf="comment.image" [src]="comment.image" style="height: 300px; width: auto;display: block"
-                   alt="hình ảnh">
+              <div class="click-zoom">
+                <label>
+                  <input type="checkbox">
+                  <img *ngIf="comment.image" [src]="comment.image" style="height: 300px; width: auto;display: block"
+                       alt="hình ảnh">
+                </label>
+              </div>
             </div>
           </div>
         </div>

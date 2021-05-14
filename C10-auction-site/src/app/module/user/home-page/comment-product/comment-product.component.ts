@@ -106,11 +106,16 @@ export class CommentProductComponent implements OnInit {
    * create comment
    */
   async createComment() {
+    // @ts-ignore
+    // tslint:disable-next-line:one-variable-per-declaration
+    const Filter = require('bad-words'),
+      filter = new Filter();
+    filter.addWords('Đụ', 'ma', 'cai lon', 'lon', 'cac');
     if (($('#myText').data('emojioneArea').getText() !== '')) {
       this.message = null;
       this.loading = true;
       await this.addImageToFireBase(this.fileImage);
-      this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
+      this.formComment.get('content').setValue(filter.clean($('#myText').data('emojioneArea').getText()));
       this.formComment.get('image').setValue(this.urlImage);
       this.commentService.createNewComment(this.formComment.value).subscribe(data => {
         this.loading = false;
@@ -146,6 +151,11 @@ export class CommentProductComponent implements OnInit {
    * edit comment
    */
   async editComment() {
+    // @ts-ignore
+    // tslint:disable-next-line:one-variable-per-declaration
+    const Filter = require('bad-words'),
+      filter = new Filter();
+    filter.addWords('Đụ', 'ma', 'cai lon', 'lon', 'cac');
     if ($('#editComment').data('emojioneArea').getText() !== '') {
       this.loadingEdit = true;
       this.messageEdit = null;
@@ -157,7 +167,7 @@ export class CommentProductComponent implements OnInit {
       } else if (this.urlImageEdit == null && this.urlImage != null) {
         this.formEditComment.get('image').setValue(this.urlImage);
       }
-      this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
+      this.formEditComment.get('content').setValue(filter.clean($('#editComment').data('emojioneArea').getText()));
       this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
         $('#editCommentModal').click();
         this.loadingEdit = false;
