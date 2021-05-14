@@ -9,9 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-product-home.component.css']
 })
 export class ListProductHomeComponent implements OnInit {
-
-  constructor() { }
+  http;
+  constructor(private accountService: AccountService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+  }
+
+  get token() {
+    return this.tokenStorage.getToken();
+  }
+
+  getHttpsOption() {
+    this.http = this.accountService.httpOptions;
   }
 }
