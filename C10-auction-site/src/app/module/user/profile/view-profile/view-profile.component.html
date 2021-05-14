@@ -1,2 +1,39 @@
-<p>view-profile works!</p>
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 ">
+      <div class="set-title" style="text-align: center">
+        <h2 style="color: blue" class="my-5">Thông tin thành viên</h2>
+      </div>
+      <table class="m-auto">
+        <tr>
+          <td><h5 class="mr-3">Họ và tên: </h5></td>
+          <td><h5>{{userLogin.userName}}</h5></td>
+        </tr>
+        <tr>
+          <td><h5>Email: </h5></td>
+          <td><h5>{{accountLogin.email}}</h5></td>
+        </tr>
+        <tr>
+          <td><h5>Ngày sinh: </h5></td>
+          <td><h5>{{userLogin.birthday | date: 'dd-MM-yyyy'}}</h5></td>
+        </tr>
+        <tr>
+          <td><h5>CMND: </h5></td>
+          <td><h5>{{userLogin.identity}}</h5></td>
+        </tr>
+        <tr>
+          <td><h5>SDT: </h5></td>
+          <td><h5>{{userLogin.phone}}</h5></td>
+        </tr>
+        <tr>
+          <td><h5>Địa chỉ: </h5></td>
+          <td><h5>{{userLogin.address}}</h5></td>
+        </tr>
+      </table>
+      <div class="d-flex justify-content-center align-items-center mt-3">
+        <a class="btn btn-warning" [routerLink]="['/profile/update', accountLogin.accountId]">Cập nhật</a>
+      </div>
+    </div>
+  </div>
+</div>
+

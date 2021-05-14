@@ -15529,6 +15529,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .main-panel {
+  background-color: #1a2035 !important;
   position: relative;
   float: right;
   width: calc(100% - 260px);
