@@ -1,0 +1,28 @@
+.product-carousel-price ins {
+  color: red;
+}
+
+p {
+  margin-top: 10px;
+  color: #5a88ca;
+}
+.single-shop-product {
+  text-align: center;
+}
+.nav-link{
+  margin-left: 80px;
+  font-size: 15px;
+  color: white;
+}
+.nav-link:hover{
+  background-color: #5a88ca;
+  color: white;
+}
+#search{
+  width: 230px;
+}
+.text-name-product{
+  height: 60px;
+}
+
+
