@@ -163,9 +163,193 @@
                 />
               </fieldset>
               <fieldset>
-                <div class="form-card">
-                  <h2 class="fs-title text-center">Tình trạng đơn hàng</h2>
-                  <h4>Phần này của Trần Hữu Kiên</h4>
+                <div class="container" id="pdfTable">
+
+                  <h4 class="text-left">
+                    Hình thức thanh toán:
+                  </h4>
+
+                  <div class="col-12">
+                    <div class="row border mb-3">
+                      <div class="col-6">
+                        <div class="d-flex h-100 justify-content-center align-items-center">
+                          <h5 class="m-0" *ngIf="order.methodPay == 0">
+                            Thanh toán khi nhận hàng
+                          </h5>
+                          <h5 class="m-0" *ngIf="order.methodPay == 1">
+                            Thanh toán qua Paypal
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h4 class="text-left">
+                      Hình thức giao hàng:
+                    </h4>
+
+                    <div class="col-12">
+                      <div class="row border mb-3">
+                        <div class="col-6">
+                          <div class="d-flex h-100 justify-content-center align-items-center">
+                            <h5 class="m-0">
+                              Giao hàng tiêu chuẩn - giao hàng tận nơi
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!--                    <div class="col-12 mb-3" style="background-color: wheat">-->
+                      <!--                      <div class="pt-2 pb-2">-->
+                      <!--                        <h5>-->
+                      <!--                          Để nhận sản phẩm đã thắng vui lòng chuyển khoản-->
+
+                      <!--                          <i class="text-danger">-->
+                      <!--                            11,050,000 VND-->
+                      <!--                          </i>-->
+
+                      <!--                          tới số tài khoản:-->
+
+                      <!--                          <i class="text-danger">-->
+                      <!--                            0123456789-->
+                      <!--                          </i>-->
+
+                      <!--                          ngân hàng-->
+
+                      <!--                          <i class="text-danger">-->
+                      <!--                            Vietcombank-->
+                      <!--                          </i>-->
+                      <!--                        </h5>-->
+                      <!--                        <h6>-->
+                      <!--                          Thời hạn để chuyển khoản trước khi bị thu hồi quyền được mua sản phẩm-->
+                      <!--                          đấu giá là-->
+                      <!--                          <i class="text-danger">-->
+                      <!--                            05/05/2021-->
+                      <!--                          </i>-->
+                      <!--                          ,sau thời hạn trên sản phẩm sẽ được trả về đơn vị cung cấp!-->
+                      <!--                        </h6>-->
+                      <!--                      </div>-->
+                      <!--                    </div>-->
+
+                      <h4 class="text-left">
+                        Chi tiết đơn hàng:
+                      </h4>
+
+                      <div class="row border mb-3">
+                        <div class="col-6">
+                          <div class="d-flex h-100 align-items-center">
+                            <h5 class="m-0">
+                              Đơn hàng: 0123456789
+                            </h5>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="">
+                            <div class="d-flex justify-content-end">
+                              <img src="../../../../../assets/img/1519959194921.png"
+                                   alt="Codegym"
+                                   style="max-height: 75px">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row border mb-3">
+                        <div class="col-6">
+                          <div class="text-left">
+                            <h3 class="m-0">
+                              Trần Hữu Kiên
+                            </h3>
+                            <p class="m-0">
+                              Địa chỉ: 463 Hải Phòng
+                            </p>
+                            <p class="m-0">
+                              Quốc Gia: Việt Nam
+                            </p>
+                            <p class="m-0">
+                              Tỉnh/Thành Phố: Đà Nẵng
+                            </p>
+                            <p class="m-0">
+                              Quận/Huyện: Thanh Khê
+                            </p>
+                            <p class="m-0">
+                              Số điện thoại: +84123456789
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="text-right">
+                            <h3 class="m-0">
+                              Công ty CodeGym
+                            </h3>
+                            <p class="m-0">
+                              Địa chỉ: 295 Nguyễn Tất Thành
+                            </p>
+                            <p class="m-0">
+                              Quốc Gia: Việt Nam
+                            </p>
+                            <p class="m-0">
+                              Tỉnh/Thành Phố: Đà Nẵng
+                            </p>
+                            <p class="m-0">
+                              Quận/Huyện: Hải Châu
+                            </p>
+                            <p class="m-0">
+                              Số điện thoại: +84123456789
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <table class="table text-center table-bordered">
+                          <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Tổng giá</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let product of products; let i = index">
+                            <th>
+                              <!--                            <img src="{{product.}}"-->
+                              <!--                                 alt="sản phẩm"-->
+                              <!--                                 style="max-height: 75px">-->
+                              {{product.productName}}
+                            </th>
+                            <td class="align-middle">{{product.quantity}}</td>
+                            <td class="align-middle">{{product.lastPrice}}</td>
+                            <td class="align-middle">{{product.lastPrice * product.quantity}}</td>
+                          </tr>
+                          <tr>
+                            <th colspan="2">Phí giao hàng</th>
+                            <td>50,000 VND</td>
+                          </tr>
+                          <tr>
+                            <th colspan="2" style="font-weight: bold">Tổng tiền</th>
+                            <td>{{totalInVND + 50000}} VND</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <input
+                    type="button"
+                    (click)="generatePdf('open')"
+                    name="previous"
+                    class="previous action-button-previous"
+                    style="width: 25%"
+                    value="In hóa đơn"
+                  />
+                  <input
+                    type="button"
+                    name="make_payment"
+                    class="next action-button"
+                    style="width: 40%"
+                    value="Quay lại lịch sử đấu giá"
+                  />
                 </div>
               </fieldset>
             </form>
