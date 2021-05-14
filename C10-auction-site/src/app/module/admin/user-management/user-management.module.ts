@@ -7,9 +7,12 @@ import { UserChartComponent } from './user-chart/user-chart.component';
 
 
 @NgModule({
-  declarations: [ListUserComponent, LockUserComponent, UserChartComponent],
-  imports: [
-    CommonModule
-  ]
+    declarations: [ListUserComponent, LockUserComponent, UserChartComponent],
+    exports: [
+        UserChartComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class UserManagementModule { }
