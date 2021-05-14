@@ -1,7 +1,4 @@
-import { TokenStorageService } from './../../../../service/authentication/token-storage';
-import { AccountService } from './../../../../service/authentication/account-service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-product-home',
@@ -9,17 +6,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-product-home.component.css']
 })
 export class ListProductHomeComponent implements OnInit {
-  http;
-  constructor(private accountService: AccountService, private tokenStorage: TokenStorageService) { }
+
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  get token() {
-    return this.tokenStorage.getToken();
-  }
-
-  getHttpsOption() {
-    this.http = this.accountService.httpOptions;
   }
 }
