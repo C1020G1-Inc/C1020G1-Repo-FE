@@ -84,8 +84,8 @@
                       <td>{{transaction.account.user.userName}}</td>
                       <td>{{transaction.product.productName}}</td>
                       <td>1</td>
-                      <td>{{transaction.auction.price}}</td>
-                      <td>{{transaction.auction.price*5/100}}</td>
+                      <td>{{transaction.auction.price | currency: 'VND': 'symbol'}}</td>
+                      <td>{{transaction.auction.price*5/100 | currency: 'VND': 'symbol'}}</td>
                       <td>{{transaction.status}}</td>
                       <td>
                         <a href="#exampleModal" data-toggle="modal" (click)="showDelete(transaction.transactionId)">
@@ -123,8 +123,8 @@
               <p class="my-3">Bạn có chắc chắn muốn xóa giao dịch này không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 80px">Hủy</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 80px" (click)="delete()">Đồng ý</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Hủy</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete()">Đồng ý</button>
             </div>
           </div>
         </div>
