@@ -2,7 +2,7 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
       <div class="logo"><a class="simple-text logo-normal">
-        Admin Page
+        Trang Quản Lý
       </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -33,17 +33,21 @@
                 <div class="card-body">
                   <div>
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tên sản phẩm:</span>
-                    <input placeholder="Nhập tên..." [(ngModel)]="productName" class="form-control" style="width: 200px;float: left;margin-right: 10px">
+                    <input placeholder="Nhập tên..." [(ngModel)]="productName" class="form-control"
+                           style="width: 200px;float: left;margin-right: 10px">
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Loại sản phẩm:</span>
-                    <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId" class="custom-select">
+                    <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId"
+                            class="custom-select">
                       <option value="0">Chọn Tất Cả</option>
                       <option value="1">Điện tử</option>
                       <option value="2">Dụng Cụ</option>
                     </select>
                     <span style="padding: 10px;color: white;float:left;margin-right: 10px">Người đăng:</span>
-                    <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName" style="width: 200px;float: left;margin-right: 10px" class="form-control">
+                    <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName"
+                           style="width: 200px;float: left;margin-right: 10px" class="form-control">
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tình trạng</span>
-                    <select style="width: 130px;float: left;height: 35px;margin-right: 10px" [(ngModel)]="productStatusId" class="custom-select">
+                    <select style="width: 130px;float: left;height: 35px;margin-right: 10px"
+                            [(ngModel)]="productStatusId" class="custom-select">
                       <option value="0">Chọn Tất Cả</option>
                       <option value="1">Chờ Duyệt</option>
                       <option value="2">Đang Đấu Giá</option>
@@ -56,7 +60,7 @@
                     <table class="table">
                       <thead class="text-primary" style="background-color: #00795f">
                       <th style="color: white">
-                        ID
+                        Mã sản phẩm
                       </th>
                       <th style="color: white">
                         Tên sản phẩm
@@ -155,7 +159,8 @@
         <form>
           <div class="modal-header" style="background: #9e08e3">
             <h4 class="modal-title" style="color: white">Duyệt sản phẩm</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">&times;
+            </button>
           </div>
           <div class="modal-body table-responsive">
             <table class="table">
@@ -183,10 +188,10 @@
                 <th style="padding: 30px">Hình ảnh:</th>
                 <th>
                   <div style="height: 120px;width: 420px;overflow-y: auto">
-                  <div *ngFor="let image of listProductImage" style="display: inline-block">
-                    <img style="width: 150px;height: 100px;margin:5px;float: left"
-                         src="{{image.image}}">
-                  </div>
+                    <div *ngFor="let image of listProductImage" style="display: inline-block">
+                      <img style="width: 150px;height: 100px;margin:5px;float: left"
+                           src="{{image.image}}">
+                    </div>
                   </div>
                 </th>
               </tr>
@@ -198,7 +203,8 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" style="margin-right: 35%;margin-left: 10px">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy"
+                   style="margin-right: 35%;margin-left: 10px">
           </div>
         </form>
       </div>
@@ -216,14 +222,14 @@
               &times;
             </button>
           </div>
-          <div class="modal-body table-responsive" *ngIf="productEdit" >
+          <div class="modal-body table-responsive" *ngIf="productEdit">
             <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
               <table class="table">
                 <tr>
                   <th style=";padding-top: 30px;padding-bottom: 0;padding-left: 30px"> Tên sản phẩm:</th>
                   <th style=";padding-top: 20px;padding-bottom: 0;padding-left: 30px">
                     <input type="text" id="productName" name="productName" style="color: black"
-                                                   formControlName="productName" class="form-control"/>
+                           formControlName="productName" class="form-control"/>
                     <br>
                     <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.required  &&
                   (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
@@ -246,7 +252,8 @@
                 <tr>
                   <th style="padding: 30px">Chủng loại:</th>
                   <td style="padding: 20px">
-                    <select style="width: 100px" id="category" name="category" formControlName="category" class="custom-select">
+                    <select style="width: 100px" id="category" name="category" formControlName="category"
+                            class="custom-select">
                       <option [ngValue]="category.id" *ngFor="let category of categoryList">
                         {{category.categoryName}}
                       </option>

@@ -96,6 +96,7 @@ export class ListProductAdminComponent implements OnInit {
     this.lengthOfImage = 0;
     this.listProductImage = new Array<any>();
     this.productImageUpdate = new Array<any>();
+    this.imageToUpFireBase = new Array<any>();
     this.productService.getProductById(productId).subscribe(data => {
       this.productDTO = data;
       console.log(this.productDTO);
@@ -141,6 +142,7 @@ export class ListProductAdminComponent implements OnInit {
   deleteImage(i: number) {
     this.listProductImage.splice(i, 1);
     this.lengthOfImage--;
+    console.log(this.listProductImage);
   }
 
   selectFile(event) {
@@ -167,6 +169,7 @@ export class ListProductAdminComponent implements OnInit {
           }
         }
       }
+      console.log(this.imageToUpFireBase);
     }
   }
 
@@ -197,6 +200,7 @@ export class ListProductAdminComponent implements OnInit {
                     resolve(1);
                   });
               })).subscribe();
+            console.log(this.listProductImage);
           }
         }))).then(() => {
         resolve(1);
