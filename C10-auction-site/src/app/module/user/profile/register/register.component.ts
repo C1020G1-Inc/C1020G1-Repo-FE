@@ -5,7 +5,7 @@ import { AccountService } from './../../../../service/authentication/account-ser
 import { User } from './../../../../model/User';
 import { TokenStorageService } from './../../../../service/authentication/token-storage';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Account } from 'src/app/model/Account';
 import { finalize, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -34,10 +34,11 @@ export class RegisterComponent implements OnInit {
   imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
   constructor(private tokenStorage: TokenStorageService, private accountService: AccountService,
               private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
-              private title: Title) { }
+              private title: Title, private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.title.setTitle('Đăng ký');
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
     if (this.tokenStorage.isLogged()) {
       this.router.navigateByUrl('/home');
     }
