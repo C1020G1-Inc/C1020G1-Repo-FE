@@ -237,6 +237,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.getAllWardByDistrict(districtId).subscribe(data => {
       this.wardList = data.results;
       if (this.wardList === undefined || this.wardList.length === 0) {
+        this.ward.setValue('not available');
         this.address.setValue(this.district.value + ' ' + this.province.value);
       } else {
         this.changeWard(this.wardList[0].ward_id);
