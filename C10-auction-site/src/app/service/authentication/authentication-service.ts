@@ -11,7 +11,10 @@ const httpOptions = {
 @Injectable({
     providedIn: 'root'
 })
-
+/**
+ * @author PhinNL
+ * login
+ */
 export class AuthenticationService {
     loginUrl = 'http://localhost:8080/login';
     baseUrl = 'http://localhost:8080/oauth/';

@@ -6,6 +6,10 @@ import { TokenStorageService } from './token-storage';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * @author PhinNL
+ * auth guard for member page
+ */
 export class AuthGuardService implements CanActivate {
 
   constructor(private router: Router,
@@ -13,7 +17,9 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.tokenStorage.isLogged()) {
-      return true;
+      if (this.tokenStorage.getRoles()[0] === 'MEMBER'){
+        return true;
+      }
     }
 
     this.router.navigateByUrl('/login');

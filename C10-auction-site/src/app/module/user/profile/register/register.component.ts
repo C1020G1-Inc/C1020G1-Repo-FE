@@ -11,12 +11,18 @@ import { finalize, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RegisDistrict, RegisProvince, RegisWard } from 'src/app/service/authentication/account-province';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
+/**
+ * @author PhinNL
+ * Register
+ */
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   minDate: Date;
@@ -27,9 +33,11 @@ export class RegisterComponent implements OnInit {
   wardList: RegisWard[] = [];
   imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
   constructor(private tokenStorage: TokenStorageService, private accountService: AccountService,
-              private router: Router, private storage: AngularFireStorage, private dialog: MatDialog) { }
+              private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Đăng ký');
     if (this.tokenStorage.isLogged()){
       this.router.navigateByUrl('/home');
     }

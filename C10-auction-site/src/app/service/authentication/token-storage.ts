@@ -19,12 +19,12 @@ export class TokenStorageService {
     }
 
     public saveTimeTokenLocal() {
-        const date = new Date(new Date().getTime() + (10 * 1000));
+        const date = new Date(new Date().getTime() + (((24 * 60 * 60) - 30) * 1000));
         window.localStorage.setItem('time', JSON.stringify(date.toJSON()));
     }
 
     public saveTimeTokenSession() {
-        const date = new Date(new Date().getTime() + (10 * 1000));
+        const date = new Date(new Date().getTime() + (((24 * 60 * 60) - 30) * 1000));
         window.sessionStorage.setItem('time', JSON.stringify(date.toJSON()));
     }
 

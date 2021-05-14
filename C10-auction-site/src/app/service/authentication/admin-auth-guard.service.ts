@@ -6,6 +6,10 @@ import { TokenStorageService } from './token-storage';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * @author PhinNL
+ * auth guard for admin page
+ */
 export class AdminAuthGuardService implements CanActivate {
 
   constructor(private router: Router,
