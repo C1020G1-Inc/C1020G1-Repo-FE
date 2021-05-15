@@ -25,17 +25,28 @@
       <div class="m-0" *ngFor="let chat of chats">
         <div class="m-0" *ngIf="chat.nickname === account.accountName">
           <div class="clearfix">
-            <p class="chat_msg_item chat_msg_item_user clearfix mb-0 mt-3">
+            <p class="chat_msg_item chat_msg_item_user clearfix mb-0 mt-3" *ngIf="chat.type === 'message'">
               {{chat.message}}</p>
+            <img class="chat_msg_item chat_msg_item_user clearfix mb-0 mt-3" style="width: 60%; height: 60%"
+                 *ngIf="chat.type === 'image'" src="{{chat.message}}">
           </div>
           <div><p class="status mr-4 mb-0">{{chat.date}}</p></div>
         </div>
         <div class="m-0" *ngIf="chat.nickname !== account.accountName">
-          <div class="chat_msg_item chat_msg_item_admin mb-0 mt-3">
+          <div class="chat_msg_item chat_msg_item_admin mb-0 mt-3" *ngIf="chat.type === 'message'">
             <div class="chat_avatar">
               <img src="http://res.cloudinary.com/dqvwa7vpe/image/upload/v1496415051/avatar_ma6vug.jpg"/>
             </div>
             {{chat.message}}
+          </div>
+          <div class="chat_msg_item chat_msg_item_admin mb-0 mt-3 p-0 bg-white" style="content: inherit" *ngIf="chat.type === 'image'" >
+            <div class="chat_avatar">
+              <img src="http://res.cloudinary.com/dqvwa7vpe/image/upload/v1496415051/avatar_ma6vug.jpg"/>
+            </div>
+            <img src="{{chat.message}}" class="custom-img" alt="" style="width: 60%; height: 60%">
+            <div *ngIf="loadImage" class="spinner-border text-black-50" style="margin-left: 5rem !important; text-align: center" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
           <div class="clearfix"></div>
           <div><p class="status2 ml-5 pl-3">{{chat.date}}</p></div>
@@ -43,9 +54,12 @@
       </div>
     </div>
     <div class="fab_field">
-      <form action="" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value)" style="width: 90%"
+      <form action="" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value, 'message')" style="width: 90%"
             class="m-auto">
-        <a id="fab_camera" class="fab mt-3"><i class="zmdi zmdi-image"></i></a>
+        <label id="fab_camera" class="fab mt-3" for="file-input">
+          <i class="zmdi zmdi-image"></i>
+          <input type="file" (change)="importImages($event)" id="file-input" multiple class="inputfile">
+        </label>
         <a id="fab_send" class="fab mt-3"><i class="zmdi zmdi-mail-send"></i></a>
         <input id="chatSend" name="chat_message" placeholder="Nhập tin nhắn..." formControlName="message"
                class="chat_field chat_message">

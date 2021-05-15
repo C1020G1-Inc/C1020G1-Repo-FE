@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
-import {Room} from '../model/temporary/room';
-import {Chat} from '../model/temporary/chat';
-import {Notification} from '../model/temporary/notification';
+import {Room} from '../../model/temporary/room';
+import {Chat} from '../../model/temporary/chat';
+import {Notification} from '../../model/temporary/notification';
 
 @Injectable({
   providedIn: 'root'

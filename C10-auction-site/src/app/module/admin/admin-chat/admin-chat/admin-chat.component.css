@@ -185,10 +185,8 @@
 
 .scroll {
   overflow: auto;
-  height: 610px;
-  margin-top: 70px;
   padding-top: 0 !important;
-
+  max-height: 694px;
 }
 
 .online,
@@ -246,6 +244,12 @@
     border-radius: 0.55rem 0.55rem 0 0
   }
 
+  .scroll {
+    overflow: auto;
+    padding-top: 0 !important;
+    height: 300px;
+  }
+
   .chat-app .chat-history {
     height: 300px;
     overflow-x: auto
@@ -258,6 +262,12 @@
     overflow-x: auto
   }
 
+  .scroll {
+    overflow: auto;
+    padding-top: 0 !important;
+    height: 600px;
+  }
+
   .chat-app .chat-history {
     height: 600px;
     overflow-x: auto
@@ -268,6 +278,12 @@
   .chat-app .chat-list {
     height: 480px;
     overflow-x: auto
+  }
+
+  .scroll {
+    overflow: auto;
+    padding-top: 0 !important;
+    height: calc(100vh - 350px);
   }
 
   .chat-app .chat-history {

@@ -1,3 +1,5 @@
+import { AdminAuthGuardService } from './service/authentication/admin-auth-guard.service';
+import { AuthGuardService } from './service/authentication/auth-guard.service';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AdminModule} from './module/admin/admin.module';
@@ -23,7 +25,7 @@ import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-c
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
-import {ErrorComponent} from './module/error/error.component';
+
 
 const routes: Routes = [
   {
@@ -36,7 +38,7 @@ const routes: Routes = [
       {path: 'transactions', component: TransactionManagementModule},
       {path: 'chat/:roomname', component: AdminChatComponent},
       {path: 'chat', component: AdminChatComponent},
-    ]
+    ], canActivate: [AdminAuthGuardService]
   },
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -48,7 +50,7 @@ const routes: Routes = [
       {path: '', component: ViewProfileComponent},
       {path: 'history-register', component: HistoryRegisterProductComponent},
       {path: 'history-auction', component: HistoryAuctionProductComponent},
-    ],
+    ], component: ViewProfileComponent, canActivate: [AuthGuardService]
   },
   {path: 'home', component: ListProductHomeComponent},
   {path: 'detail/:id', component: DetailProductComponent},
@@ -61,9 +63,9 @@ const routes: Routes = [
       {path: 'cart', component: AuctionCartComponent},
       {path: 'payment', component: AuctionPaymentComponent},
       {path: 'invoice', component: InvoiceComponent}
-    ]
-  },
-  {path: '', component: ErrorComponent},
+
+    ], canActivate: [AuthGuardService]
+  }
 ];
 
 @NgModule({

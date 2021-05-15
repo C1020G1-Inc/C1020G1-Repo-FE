@@ -1,13 +1,14 @@
-import {UserDTO} from './userDTO';
+
+import {User} from '../User';
 
 export class Room {
   roomName: string;
-  user: UserDTO;
+  user: User;
   newMess: number;
   key: string;
 
 
-  constructor(roomName: string, user: UserDTO, newMess: number) {
+  constructor(roomName: string, user: User, newMess: number) {
     this.roomName = roomName;
     this.user = user;
     this.newMess = newMess;

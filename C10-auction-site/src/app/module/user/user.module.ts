@@ -1,29 +1,29 @@
-import { NgModule } from '@angular/core';
+import { HeaderFooterModule } from './header-footer/header-footer.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { ProfileModule } from './profile/profile.module';
 import { AuctionModule } from './auction/auction.module';
 import { LoginModule } from './login/login.module';
 import { HomePageModule } from './home-page/home-page.module';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { NgModule } from '@angular/core';
 import {UserChatComponent} from './user-chat/user-chat/user-chat.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, UserChatComponent],
-  exports: [
-    UserChatComponent
-  ],
+  declarations: [UserChatComponent],
   imports: [
     CommonModule,
     ProfileModule,
     AuctionModule,
     LoginModule,
     HomePageModule,
+    MatDatepickerModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    HeaderFooterModule
+  ],
+  exports: [UserChatComponent]
 })
 export class UserModule { }

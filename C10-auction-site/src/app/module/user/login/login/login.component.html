@@ -1,1 +1,117 @@
-<p>login works!</p>
+<div class="container-fluid mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-6"
+            style="background: url('https://www.chilindo.com/assets/svgIcon/orangeLandingHeader.svg'); background-repeat: no-repeat;">
+        </div>
+        <div class="col-lg-4">
+            <div class="card opa">
+                <div class="card-header bg-transparent text-center">
+                    <img width="40px" height="40px" src="https://img.icons8.com/plasticine/2x/auction.png" alt="">
+                    <h4>Đăng Nhập</h4>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="formLogin" (ngSubmit)="login()">
+                        <div class="form-group">
+                            <label for="account">Tên đăng nhập</label>
+                            <div class="input-group">
+                                <input
+                                    [class.is-invalid]="accountName.invalid && (accountName.dirty || accountName.touched)"
+                                    [class.is-valid]="accountName.valid" type="text" formControlName="accountName"
+                                    id="account" class="form-control" placeholder="" aria-describedby="helpId">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div *ngIf="accountName.invalid && (accountName.dirty || accountName.touched)"
+                                    class="invalid-feedback">
+                                    <div *ngIf="accountName.errors.required">
+                                        <div class="text-danger" [hidden]="!accountName.errors.required">Tên đăng nhập
+                                            không được để trống!
+                                        </div>
+                                    </div>
+                                    <div *ngIf="accountName.errors.pattern">
+                                        <div class="text-danger" [hidden]="!accountName.errors.pattern">Tên đăng nhập
+                                            phải có ít nhất 8 kí tự, không bắt đầu bằng số, ít nhất 1 kí tự chữ và không
+                                            chứa các kí tự đặc
+                                            biệt!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <div class="input-group">
+                                <input type="password"
+                                    [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                                    [class.is-valid]="password.valid" formControlName="password" id="password"
+                                    class="form-control" placeholder="" aria-describedby="helpId">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div *ngIf="password.invalid && formLogin.touched" class="invalid-feedback">
+                                    <div *ngIf="password.errors.required">
+                                        <div class="text-danger" [hidden]="!password.errors.required">Mật khẩu không
+                                            được để trống!</div>
+                                    </div>
+                                    <div class="text-danger" [hidden]="!password.errors.pattern">Mật khẩu chứa ít nhất 8
+                                        kí tự, tối thiểu 1 chữ viết hoa và 1 số!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-lg-12">
+                                <div class="text-danger" *ngIf="!isCorrect">
+                                    Tên đăng nhập hoặc mật khẩu sai!
+                                </div>
+                                <div class="text-danger" *ngIf="isLocked">
+                                    Tài khoản {{accountNameZ}} đã bị khóa!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2 res">
+                            <div class="col-lg-6"><a href="/forgot-password" class="text-decoration-none ml-auto">Quên mật
+                                    khẩu</a>
+                            </div>
+                            <div class="col-lg-6">Chưa có tài khoản? <a href="/register"
+                                    class="text-decoration-none ml-auto">đăng kí</a></div>
+                        </div>
+                        <div class="form-group">
+                            <input formControlName="remmember" type="checkbox" id="remmember">
+                            <label for="remmember">Ghi nhớ</label>
+                        </div>
+                        <button type="submit" [disabled]="formLogin.invalid" class="btn btn-block btn-success">Đăng
+                            Nhập</button>
+                    </form>
+
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="text-center text-info">
+                                Hoặc Tiếp Tục Bằng
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 pr-1 pl-1 mt-1">
+                            <button (click)="signInWithFB()" class="btn btn-outline-primary btn-block">
+                                <i class="fab fa-facebook"></i>
+                                <span>Facebook</span>
+                            </button>
+                        </div>
+                        <div class="col-lg-6 pr-1 pl-1 mt-1">
+                            <button (click)="signInWithGoogle()" class="btn btn-outline-danger btn-block">
+                                <i class="fab fa-google-plus-g"></i>
+                                <span>Google</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
