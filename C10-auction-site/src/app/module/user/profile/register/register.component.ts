@@ -1,8 +1,5 @@
 
 import { Router } from '@angular/router';
-
-
-
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Account } from 'src/app/model/Account';
@@ -10,19 +7,25 @@ import { finalize, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RegisDistrict, RegisProvince, RegisWard } from 'src/app/service/authentication/account-province';
-import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import { Title } from '@angular/platform-browser';
+import {ChatService} from '../../../../service/chat/chat.service';
 import {AccountService} from '../../../../service/authentication/account-service';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
 import {User} from '../../../../model/User';
+import {Room} from '../../../../model/temporary/room';
 import {MatRegisDiaComponent} from '../../material/mat-regis-dia/mat-regis-dia.component';
 import {MatLoadingDiaComponent} from '../../material/mat-loading-dia/mat-loading-dia.component';
-import {ChatService} from '../../../../service/chat/chat.service';
-import {Room} from '../../../../model/temporary/room';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
+/**
+ * @author PhinNL
+ * Register
+ */
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   minDate: Date;
@@ -34,9 +37,14 @@ export class RegisterComponent implements OnInit {
   imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
   constructor(private tokenStorage: TokenStorageService, private accountService: AccountService,
               private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
-              private chatService: ChatService) { }
+              private chatService: ChatService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Đăng ký');
+    if (this.tokenStorage.isLogged()) {
+      this.router.navigateByUrl('/home');
+    }
     this.accountService.getAllProvince().subscribe(data => {
       this.provinceList = data.results;
       this.province.setValue(this.provinceList[0].province_name);
@@ -175,7 +183,7 @@ export class RegisterComponent implements OnInit {
       logoutTime: null,
       user: userNew
     };
-    //duong
+    // duong
     const room = new Room(this.accountName.value, userNew, 0);
     this.chatService.addNewRoom(room);
 
@@ -201,7 +209,8 @@ export class RegisterComponent implements OnInit {
             this.dialog.closeAll();
           });
         })
-      ).subscribe();
+      ).subscribe(() => { }, () => this.dialog.closeAll()
+      );
     }
   }
 
