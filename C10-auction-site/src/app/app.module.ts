@@ -9,10 +9,11 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
+import {LeftSideBarComponent} from './module/admin/left-side-bar/left-side-bar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,10 +4,12 @@ import { UserManagementModule } from './user-management/user-management.module';
 import { ProductManagementModule } from './product-management/product-management.module';
 import { TransactionManagementModule } from './transaction-management/transaction-management.module';
 import { AdminChatModule } from './admin-chat/admin-chat.module';
-import {ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [],
+  exports: [
+  ],
   imports: [
     CommonModule,
     UserManagementModule,
