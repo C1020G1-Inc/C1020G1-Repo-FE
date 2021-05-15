@@ -1,15 +1,15 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-// import jsPDF from 'jspdf';
-// import pdfMake from 'pdfmake/build/pdfmake';
-// import pdfFonts from 'pdfmake/build/vfs_fonts';
-// import html2canvas from 'html2canvas';
-//
-// pdfMake.vfs = pdfFonts.pdfMake.vfs;
-// import htmlToPdfMake from 'html-to-pdfmake';
-// import * as html2pdf from 'html2pdf.js';
-// import {Element} from '@angular/compiler';
-// import jsPDFInvoiceTemplate from 'jspdf-invoice-template';
-// import {style} from '@angular/animations';
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import html2canvas from 'html2canvas';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import htmlToPdfMake from 'html-to-pdfmake';
+import * as html2pdf from 'html2pdf.js';
+import {Element} from '@angular/compiler';
+import jsPDFInvoiceTemplate from 'jspdf-invoice-template';
+import {style} from '@angular/animations';
 
 @Component({
   selector: 'app-invoice',

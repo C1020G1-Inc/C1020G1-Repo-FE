@@ -12,6 +12,8 @@ import {Order} from '../../../../model/Order';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 declare var paypal;
 
 @Component({
@@ -285,7 +287,7 @@ export class AuctionPaymentComponent implements OnInit {
                             text: 'Thành phố Đà Nẵng'
                           },
                           {
-                            text: 'Số điện thoại: +84356109145'
+                            text: 'Số điện thoại: 0356109145'
                           }
                         ]
                       ]
@@ -324,17 +326,18 @@ export class AuctionPaymentComponent implements OnInit {
                           text: 'Địa chỉ: ' + this.order.address
                         },
                         {
-                          text: 'Phường/Xã: ' + this.order.ward.wardName
+                          text: this.order.ward.wardName
                         },
                         {
-                          text: 'Quận/Huyện: ' + this.order.ward.district.districtName
+                          text: this.order.ward.district.districtName
                         },
                         {
-                          text: 'Tỉnh/Thành phố: ' + this.order.ward.district.province.provinceName
+                          text: this.order.ward.district.province.provinceName
                         },
                         {
-                          text: 'Số điện thoại:' + this.order.phone
-                        }
+                          text: 'Số điện thoại: ' + this.order.phone
+                        },
+                        this.checkGuide()
                       ]
                     ]
                 }
@@ -405,7 +408,7 @@ export class AuctionPaymentComponent implements OnInit {
                             text: 'Email:',
                             bold: true
                           },
-                          ' support.auctionc1020g1@info.com'
+                          ' support.auction.c1020g1@info.com'
                         ]
                       },
                       {
@@ -450,34 +453,66 @@ export class AuctionPaymentComponent implements OnInit {
         body: [
           [
             {
+              margin: [0, 10, 0, 0],
               text: 'STT',
               style: 'header',
-              alignment: 'center'
+              alignment: 'center',
+              fillColor: '#a6a6a6'
             },
             {
+              margin: [0, 10, 0, 0],
               text: 'Mã sản phẩm',
               style: 'header',
-              alignment: 'center'
+              alignment: 'center',
+              fillColor: '#a6a6a6'
             },
             {
+              margin: [0, 10, 0, 0],
               text: 'Tên sản phẩm',
               style: 'header',
-              alignment: 'center'
+              alignment: 'center',
+              fillColor: '#a6a6a6'
             },
             {
+              margin: [0, 10, 0, 0],
               text: 'Số lượng',
               style: 'header',
-              alignment: 'center'
+              alignment: 'center',
+              fillColor: '#a6a6a6'
             },
             {
-              text: 'Giá',
-              style: 'header',
-              alignment: 'center'
+              columns: [
+                [
+                  {
+                    text: 'Giá',
+                    style: 'header',
+                    alignment: 'center'
+                  },
+                  {
+                    text: '(VND)',
+                    style: 'header',
+                    alignment: 'center'
+                  }
+                ]
+              ],
+              fillColor: '#a6a6a6'
             },
             {
-              text: 'Tổng giá',
-              style: 'header',
-              alignment: 'center'
+              columns: [
+                [
+                  {
+                    text: 'Tổng giá',
+                    style: 'header',
+                    alignment: 'center'
+                  },
+                  {
+                    text: '(VND)',
+                    style: 'header',
+                    alignment: 'center'
+                  }
+                ]
+              ],
+              fillColor: '#a6a6a6'
             },
           ],
           ...this.products.map((product, index) => {
@@ -498,38 +533,38 @@ export class AuctionPaymentComponent implements OnInit {
                 alignment: 'center'
               },
               {
-                text: product.price,
+                text: product.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
                 alignment: 'center'
               },
               {
-                text: product.price * product.quantity,
+                text: (product.price * product.quantity).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
                 alignment: 'center'
               }
             ];
           }),
           [
             {
-              text: 'Phí giao hàng',
+              text: 'Phí giao hàng (VND)',
               colSpan: 5,
               alignment: 'center',
               style: 'name'
             },
             {}, {}, {}, {},
             {
-              text: 50000,
+              text: '50,000',
               alignment: 'center'
             }
           ],
           [
             {
-              text: 'Tổng tiền',
+              text: 'Tổng tiền (VND)',
               colSpan: 5,
               alignment: 'center',
               style: 'name'
             },
             {}, {}, {}, {},
             {
-              text: this.totalInVND + 50000,
+              text: (this.totalInVND + 50000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
               alignment: 'center'
             }
           ]
@@ -543,12 +578,20 @@ export class AuctionPaymentComponent implements OnInit {
       return {
         text: 'Thanh toán khi nhận hàng',
         border: [false, false, false, true]
-      }
+      };
     } else {
       return {
         text: 'Thanh toán qua Paypal',
         border: [false, false, false, true]
-      }
+      };
+    }
+  }
+
+  checkGuide() {
+    if (this.order.guide) {
+      return {
+        text: 'Hướng dẫn giao hàng: ' + this.order.guide
+      };
     }
   }
 }
