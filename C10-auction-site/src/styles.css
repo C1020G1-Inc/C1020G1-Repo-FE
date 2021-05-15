@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.loading-dialog .mat-dialog-container {
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  overflow: inherit !important;
+}
