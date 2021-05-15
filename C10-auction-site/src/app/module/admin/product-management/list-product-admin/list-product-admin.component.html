@@ -90,7 +90,7 @@
                             Duyệt</a>
                         </td>
                         <td *ngIf="product.productStatus.id != 1">
-                          {{product.productStatus.statusName}}
+                          {{statusChange[product.productStatus.id]}}
                         </td>
                         <td *ngIf="product.productStatus.id == 1">
                           <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"

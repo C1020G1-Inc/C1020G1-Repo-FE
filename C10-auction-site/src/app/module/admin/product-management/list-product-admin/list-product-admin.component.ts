@@ -33,6 +33,12 @@ export class ListProductAdminComponent implements OnInit {
   // Biến dành cho edit
   productEdit: Product;
   categoryList = new Array<Category>();
+  statusChange = {
+    1 : 'Chờ Duyệt',
+    2 : 'Đang Đấu Giá',
+    3 : 'Chờ Thanh Toán',
+    4 : 'Hoàn Thành',
+  };
   editForm: FormGroup;
   // Ảnh có sẵn dùng để show màn hình
   listProductImage = new Array<ProductImage>();
@@ -52,7 +58,9 @@ export class ListProductAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllProduct();
-    this.productService.getAllCategory().subscribe(data => this.categoryList = data);
+    this.productService.getAllCategory().subscribe(data => {
+      this.categoryList = data;
+    });
     this.editForm = this.formBuilder.group({
       productId: [''],
       productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
