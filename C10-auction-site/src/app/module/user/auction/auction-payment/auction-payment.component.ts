@@ -11,12 +11,12 @@ import {Order} from '../../../../model/Order';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {AuctionBackendService} from '../../../../service/auction-bidding/auction-backend.service';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var paypal;
+declare const $: any;
 
 @Component({
   selector: 'app-auction-payment',
@@ -44,16 +44,19 @@ export class AuctionPaymentComponent implements OnInit {
   constructor(private addressService: AddressService,
               private orderService: OrderService,
               private tokenStorage: TokenStorageService) {
-    this.account = this.tokenStorage.getAccount();
-    this.totalInVND = orderService.totalInVND;
-    this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
-    this.products = orderService.products;
-    this.addressService.getAllProvinces().subscribe(data => {
-      this.provinces = data;
-    });
+
   }
 
   ngOnInit(): void {
+    this.account = this.tokenStorage.getAccount();
+    this.totalInVND = this.orderService.totalInVND;
+    this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
+    this.products = this.orderService.products;
+    this.addressService.getAllProvinces().subscribe(data => {
+      this.provinces = data;
+    });
+    console.log(this.products);
+    console.log(this.totalInVND);
     this.messagePayment = null;
     this.paymentForm = new FormGroup({
       address: new FormControl(null, Validators.required),

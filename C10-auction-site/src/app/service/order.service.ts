@@ -9,7 +9,7 @@ import {TokenStorageService} from './authentication/token-storage';
 })
 export class OrderService {
   private BASE_URL = 'http://localhost:8080/api/order';
-  totalInVND= 1000000;
+  totalInVND: number;
   products : Array<Product>;
   public httpOptions: any;
 
