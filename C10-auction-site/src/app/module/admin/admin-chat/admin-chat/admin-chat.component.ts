@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import firebase from 'firebase';
 import {Room} from '../../../../model/temporary/room';
 import {Notification} from '../../../../model/temporary/notification';
-import {ChatService} from '../../../../service/chat.service';
+import {ChatService} from '../../../../service/chat/chat.service';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {Account} from '../../../../model/Account';
 
 
 @Component({
@@ -18,13 +19,17 @@ export class AdminChatComponent implements OnInit {
   isLoadingResults = true;
   notifications = new Array<Notification>();
   year = new Date().getFullYear();
+  roomName: string;
+  account: Account;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private chatService: ChatService) {
+              private chatService: ChatService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit(): void {
-    this.nickname = localStorage.getItem('nickname');
+    this.account = this.tokenStorageService.getAccount();
+    this.nickname = this.tokenStorageService.getAccount().accountName;
     this.chatService.refRooms.on('value', resp => {
       this.rooms = this.chatService.snapshotToArray(resp);
       this.isLoadingResults = false;
@@ -38,13 +43,12 @@ export class AdminChatComponent implements OnInit {
 
 
   enterChatRoom(room: Room) {
+    this.chatService.readNewMess(room.key);
     for (const readNotification of this.notifications) {
       if (readNotification.chat.roomName === room.roomName) {
         this.chatService.readNoti(readNotification.key);
-        this.chatService.readNewMess(room.key);
       }
     }
-
-    this.router.navigate(['/admin/chat', room.roomName]);
+    this.roomName = room.roomName;
   }
 }

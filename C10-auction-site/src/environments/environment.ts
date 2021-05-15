@@ -4,17 +4,18 @@
 
 export const environment = {
   production: false,
-  firebaseConfig: {
-    apiKey: 'AIzaSyBCYgI0cCpFZwJXyckyvLHQ2qcb1QWKbek',
-    authDomain: 'fir-upload-image-a3404.firebaseapp.com',
-    projectId: 'fir-upload-image-a3404',
-    storageBucket: 'fir-upload-image-a3404.appspot.com',
-    messagingSenderId: '844992296891',
-    appId: '1:844992296891:web:67460da65523d580c5369e',
-    measurementId: 'G-TSLXKH63JT'
+  firebaseConfig : {
+    apiKey: 'AIzaSyAeEkA0jE_MBTI6MPbyEH52woIlrmVNYBg',
+    authDomain: 'c10auctionroom.firebaseapp.com',
+    databaseURL: 'https://c10auctionroom-default-rtdb.asia-southeast1.firebasedatabase.app',
+    projectId: 'c10auctionroom',
+    storageBucket: 'c10auctionroom.appspot.com',
+    messagingSenderId: '666650785329',
+    appId: '1:666650785329:web:67b70846f8184eea258710'
   }
 };
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

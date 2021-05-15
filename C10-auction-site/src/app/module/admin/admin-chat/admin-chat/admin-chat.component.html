@@ -117,16 +117,13 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="card chat-app">
-                      <div id="plist2" class="people-list">
+                      <div id="plist" class="people-list scroll">
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                           </div>
                           <input type="text" class="form-control" placeholder="Tìm Kiếm...">
                         </div>
-                      </div>
-
-                      <div id="plist" class="people-list scroll">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                           <li *ngIf="isLoadingResults">
                             <div class="spinner-border text-white" style="margin-left: 5rem !important;" role="status">
@@ -134,19 +131,26 @@
                             </div>
                           </li>
                           <li class="clearfix" *ngFor="let room of rooms" (click)="enterChatRoom(room)">
-                            <img src="{{room.user.userAvatar}}"
+                            <img *ngIf="room.user" src="{{room.user.avatar}}"
+                                 alt="avatar">
+                            <img *ngIf="!room.user"
+                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU"
                                  alt="avatar">
                             <div class="about">
-                              <div class="name">{{room.user.userName}}</div>
-                              <div class="status"><i class="fa fa-circle offline" ></i> 7 phút trước
+                              <div *ngIf="room.user" class="name">{{room.user.userName}}</div>
+                              <div *ngIf="!room.user" class="name">{{room.roomName}}</div>
+                              <div class="status" *ngIf="room.user"><i class="fa fa-circle online"></i> Thành Viên
+                              </div>
+                              <div class="status" *ngIf="!room.user"><i class="fa fa-circle offline"></i> Khách
                               </div>
                             </div>
-                            <span class="badge badge-danger float-right mt-3" *ngIf="room.newMess != 0">{{room.newMess}}</span>
+                            <span class="badge badge-danger float-right mt-3"
+                                  *ngIf="room.newMess != 0">{{room.newMess}}</span>
                           </li>
                         </ul>
                       </div>
                       <div class="chat-admin">
-                        <app-chat-room></app-chat-room>
+                        <app-chat-room [roomName]="roomName"></app-chat-room>
                       </div>
                     </div>
                   </div>
