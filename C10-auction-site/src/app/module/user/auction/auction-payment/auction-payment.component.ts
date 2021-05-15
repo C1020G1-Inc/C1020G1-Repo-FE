@@ -12,11 +12,12 @@ import {Order} from '../../../../model/Order';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {DynamicScriptLoaderServiceService} from '../../../../service/dynamic-script-loader-service.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare var paypal;
-declare const $: any;
+declare var $: any;
 
 @Component({
   selector: 'app-auction-payment',
@@ -43,11 +44,13 @@ export class AuctionPaymentComponent implements OnInit {
 
   constructor(private addressService: AddressService,
               private orderService: OrderService,
-              private tokenStorage: TokenStorageService) {
+              private tokenStorage: TokenStorageService,
+              private dynamicScriptLoader: DynamicScriptLoaderServiceService) {
 
   }
 
   ngOnInit(): void {
+    this.loadScripts();
     this.account = this.tokenStorage.getAccount();
     this.totalInVND = this.orderService.totalInVND;
     this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
@@ -70,6 +73,13 @@ export class AuctionPaymentComponent implements OnInit {
     });
 
     this.onPay();
+  }
+
+  private loadScripts() {
+    // You can load multiple scripts by just providing the key as argument into load method of the service
+    this.dynamicScriptLoader.load('paymentjs').then(data => {
+      // Script Loaded Successfully
+    }).catch(error => console.log(error));
   }
 
   onPay() {

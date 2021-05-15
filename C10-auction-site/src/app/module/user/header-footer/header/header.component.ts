@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
           for (const property in data) {
             if (data.hasOwnProperty(property)) {
               this.notifications.push(data[property]);
-              console.log(this.notifications);
             }
           }
         }
