@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AuctionBackendService} from '../../../../service/auction-backend.service';
+import {AuctionBackendService} from '../../../../service/auction-bidding/auction-backend.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {HistoryAuction, ProductDetail} from '../../../../model/auction-bidding.model';
 import {interval} from 'rxjs';
-import {FirebaseDatabaseService} from '../../../../service/firebase-database.service';
+import {FirebaseDatabaseService} from '../../../../service/auction-bidding/firebase-database.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {mergeMap} from 'rxjs/operators';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
 
 declare const $: any;
 
@@ -29,7 +30,6 @@ export class AuctionBiddingComponent implements OnInit {
   public currentStep: number;
   public currentWinner = '-';
   public isInProgress: boolean;
-  public accountId = 1;
   public isNewCart = false;
 
   constructor(public auctionBackendService: AuctionBackendService,
@@ -94,9 +94,6 @@ export class AuctionBiddingComponent implements OnInit {
       newPrice: new FormControl('', [Validators.required, this.confirmEmailValidator()])
     });
 
-    this.firebaseDatabaseService.getNotifyByAccount(this.accountId).subscribe(data => {
-      this.isNewCart = true;
-    });
   }
 
   submit() {
@@ -106,7 +103,9 @@ export class AuctionBiddingComponent implements OnInit {
       price: this.priceForm.controls.newPrice.value
     }).subscribe(() => {
       $('#toast-success').toast('show');
-      this.priceForm.controls.newPrice.setValue('');
+      this.priceForm = new FormGroup({
+        newPrice: new FormControl('', [Validators.required, this.confirmEmailValidator()])
+      });
     });
   }
 

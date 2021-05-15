@@ -36,20 +36,18 @@
       <table class="table" style="font-size: 12px">
         <thead>
         <tr class="table-light text-success">
-          <th scope="col">No</th>
           <th scope="col">Tên sản phẩm</th>
           <th scope="col">Tổng tiền</th>
         </tr>
         </thead>
         <tbody class="text-secondary">
         <tr *ngFor="let item of this.formChooseProduct.value; let i = index">
-          <td>{{i + 1}}</td>
           <td>{{this.getProductByTransactionId(this.formChooseProduct.value[i]).detailProductDTO.productName}}</td>
           <td>{{this.getProductByTransactionId(this.formChooseProduct.value[i]).detailProductDTO.price * 1.05 | number: '0.0'}}</td>
         </tr>
         <tr>
-          <td>Tổng tiền</td>
           <td></td>
+          <td>Tổng tiền</td>
           <td>{{this.getTotal()}}</td>
         </tr>
         </tbody>

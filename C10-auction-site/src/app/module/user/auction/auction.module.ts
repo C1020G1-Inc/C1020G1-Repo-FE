@@ -8,16 +8,20 @@ import {InvoiceComponent} from './invoice/invoice.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ActivatedRoute, ActivatedRouteSnapshot, RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ProfileModule} from '../profile/profile.module';
+import {UserModule} from '../user.module';
+import {HeaderFooterModule} from '../header-footer/header-footer.module';
 
 
 @NgModule({
   declarations: [AuctionRequestComponent, AuctionBiddingComponent, AuctionCartComponent, AuctionPaymentComponent, InvoiceComponent],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    RouterModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        RouterModule,
+        ReactiveFormsModule,
+        HeaderFooterModule,
+    ]
 })
 export class AuctionModule {
 }

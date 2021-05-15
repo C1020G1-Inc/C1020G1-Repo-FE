@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {TransactionDTO} from '../../../../model/auction-bidding.model';
-import {AuctionBackendService} from '../../../../service/auction-backend.service';
+import {AuctionBackendService} from '../../../../service/auction-bidding/auction-backend.service';
 import {mergeMap} from 'rxjs/operators';
-import {FirebaseDatabaseService} from '../../../../service/firebase-database.service';
+import {FirebaseDatabaseService} from '../../../../service/auction-bidding/firebase-database.service';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
 
 @Component({
   selector: 'app-auction-cart',
@@ -12,13 +13,14 @@ import {FormArray, FormControl, FormGroup} from '@angular/forms';
 })
 export class AuctionCartComponent implements OnInit {
 
-  public accountId = 1;
+  public accountId: number;
   public listTransaction: Array<TransactionDTO>;
   public endTime;
   public formChooseProduct = new FormArray([], this.atLeastOneCheckboxValidator());
 
   constructor(public auctionBackendService: AuctionBackendService,
-              public firebaseDatabaseService: FirebaseDatabaseService) {
+              public firebaseDatabaseService: FirebaseDatabaseService,
+              public tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit(): void {
@@ -27,6 +29,8 @@ export class AuctionCartComponent implements OnInit {
         this.listTransaction = data;
       }
     });
+
+    this.accountId = this.tokenStorageService.getAccount().accountId;
 
     this.firebaseDatabaseService.getNotifyByAccount(this.accountId)
       .pipe(mergeMap(() => this.auctionBackendService.getListTransaction()))
