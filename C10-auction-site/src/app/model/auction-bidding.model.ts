@@ -1,3 +1,5 @@
+import {Product} from './Product';
+
 export interface Category {
   id: number;
   categoryName: string;
@@ -56,10 +58,16 @@ export interface AuctionSubmit {
   price: number;
 }
 
+export interface ProductImage {
+  productImageId: number;
+  image : string;
+}
+
 export interface TransactionDTO {
   transactionId: number;
-  detailProductDTO: ProductDetail;
+  product: Product;
   status: string;
   transactionTime: Date;
   auction: AuctionDetail;
+  images: Array<ProductImage>;
 }

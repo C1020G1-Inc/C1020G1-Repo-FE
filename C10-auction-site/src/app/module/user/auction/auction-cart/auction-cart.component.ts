@@ -5,6 +5,8 @@ import {mergeMap} from 'rxjs/operators';
 import {FirebaseDatabaseService} from '../../../../service/auction-bidding/firebase-database.service';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {OrderService} from '../../../../service/order.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auction-cart',
@@ -20,7 +22,9 @@ export class AuctionCartComponent implements OnInit {
 
   constructor(public auctionBackendService: AuctionBackendService,
               public firebaseDatabaseService: FirebaseDatabaseService,
-              public tokenStorageService: TokenStorageService) {
+              public tokenStorageService: TokenStorageService,
+              public orderService: OrderService,
+              public router: Router) {
   }
 
   ngOnInit(): void {
@@ -53,7 +57,7 @@ export class AuctionCartComponent implements OnInit {
 
   checkArray(id: number, array) {
     for (const item of array) {
-      if (item === id) {
+      if (+item === id) {
         return true;
       }
     }
@@ -76,7 +80,6 @@ export class AuctionCartComponent implements OnInit {
         i++;
       });
     }
-    console.log(this.formChooseProduct);
   }
 
   getProductByTransactionId(transactionId): TransactionDTO {
@@ -93,8 +96,18 @@ export class AuctionCartComponent implements OnInit {
     let total = 0;
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.formChooseProduct.value.length; i++) {
-      total += this.getProductByTransactionId(this.formChooseProduct.value[i]).detailProductDTO.price * 1.05;
+      total += this.getProductByTransactionId(this.formChooseProduct.value[i]).product.price * 1.05;
     }
     return total;
+  }
+
+  gotoPayment() {
+    this.orderService.products = this.listTransaction
+      .filter(t => {
+        return this.checkArray(t.transactionId,this.formChooseProduct.value)
+      })
+      .map(t => t.product);
+    this.orderService.totalInVND = this.getTotal();
+    this.router.navigateByUrl("/auction/payment");
   }
 }
