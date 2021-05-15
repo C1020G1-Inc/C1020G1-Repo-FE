@@ -11,6 +11,8 @@ import {Order} from '../../../../model/Order';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {AuctionBackendService} from '../../../../service/auction-bidding/auction-backend.service';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -40,104 +42,12 @@ export class AuctionPaymentComponent implements OnInit {
   loading = false;
 
   constructor(private addressService: AddressService,
-              private orderService: OrderService) {
-    this.account = {
-      accountId: 1,
-      accountName: 'leechoncaao',
-      password: '12345',
-      email: 'lephuocthanhcao@gmail.com',
-      enable: true,
-      logoutTime: null,
-      user: {
-        userId: 1,
-        userName: 'Lê Phước Thanh Cao',
-        birthday: '1996-12-12T17:00:00.000+00:00',
-        phone: '0777542581',
-        identity: '1321322312',
-        avatar: '',
-        address: '41b Mai Lão Bạng'
-      }
-    };
-    this.totalInVND = 10000000;
+              private orderService: OrderService,
+              private tokenStorage: TokenStorageService) {
+    this.account = this.tokenStorage.getAccount();
+    this.totalInVND = orderService.totalInVND;
     this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
-    this.products = [
-      {
-        productId: 1,
-        productName: 'Iphone 12',
-        price: 2.0E7,
-        category: {
-          id: 2,
-          categoryName: 'smartphone'
-        },
-        priceStep: 200000.0,
-        serviceFee: 20000.0,
-        quantity: 2,
-        lastPrice: 2.5E7,
-        description: 'This is Iphone 12',
-        productStatus: {
-          id: 3,
-          statusName: 'purchasing'
-        },
-        registerTime: null,
-        auctionTime: null,
-        endTime: null,
-        account: {
-          accountId: 2,
-          accountName: 'paintc',
-          password: '12345',
-          email: 'paintc@gmail.com',
-          enable: true,
-          logoutTime: null,
-          user: {
-            userId: 2,
-            userName: 'Pain TC',
-            birthday: '1996-12-12T17:00:00.000+00:00',
-            phone: '0777542581',
-            identity: '1321322312',
-            avatar: null,
-            address: '123 Đống Đa'
-          }
-        }
-      },
-      {
-        productId: 2,
-        productName: 'Air Cleaner',
-        price: 8000000.0,
-        category: {
-          id: 3,
-          categoryName: 'electronic'
-        },
-        priceStep: 100000.0,
-        serviceFee: 15000.0,
-        quantity: 1,
-        lastPrice: 9000000.0,
-        description: 'This is Air Cleaner',
-        productStatus: {
-          id: 3,
-          statusName: 'purchasing'
-        },
-        registerTime: null,
-        auctionTime: null,
-        endTime: null,
-        account: {
-          accountId: 2,
-          accountName: 'paintc',
-          password: '12345',
-          email: 'paintc@gmail.com',
-          enable: true,
-          logoutTime: null,
-          user: {
-            userId: 2,
-            userName: 'Pain TC',
-            birthday: '1996-12-12T17:00:00.000+00:00',
-            phone: '0777542581',
-            identity: '1321322312',
-            avatar: null,
-            address: '123 Đống Đa'
-          }
-        }
-      }];
-
+    this.products = orderService.products;
     this.addressService.getAllProvinces().subscribe(data => {
       this.provinces = data;
     });

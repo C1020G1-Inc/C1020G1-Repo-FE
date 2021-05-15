@@ -7,7 +7,11 @@ import { AuctionPaymentComponent } from './auction-payment/auction-payment.compo
 import { InvoiceComponent } from './invoice/invoice.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxLoadingModule} from 'ngx-loading';
-
+import {HttpClientModule} from '@angular/common/http';
+import {ActivatedRoute, ActivatedRouteSnapshot, RouterModule} from '@angular/router';
+import {ProfileModule} from '../profile/profile.module';
+import {UserModule} from '../user.module';
+import {HeaderFooterModule} from '../header-footer/header-footer.module';
 
 
 @NgModule({
@@ -16,10 +20,12 @@ import {NgxLoadingModule} from 'ngx-loading';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        NgxLoadingModule
+        NgxLoadingModule,
+        HttpClientModule,
+        RouterModule,
+        HeaderFooterModule,
     ]
 })
 export class AuctionModule {
 }
-
 

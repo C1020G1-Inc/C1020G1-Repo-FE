@@ -1,7 +1,7 @@
 export class User {
   userId: number;
   userName: string;
-  birthday: string;
+  birthday: Date;
   phone: string;
   identity: string;
   avatar: string;

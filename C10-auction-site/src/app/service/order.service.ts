@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Product} from '../model/Product';
+import {TokenStorageService} from './authentication/token-storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
   private BASE_URL = 'http://localhost:8080/api/order';
+  totalInVND= 1000000;
+  products : Array<Product>;
+  public httpOptions: any;
 
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient,
+              public tokenStorage: TokenStorageService) {
+    this.httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json', Authorization: `Bearer ` + this.tokenStorage.getToken()})
+      , 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    };
   }
 
   /**
@@ -16,6 +26,6 @@ export class OrderService {
    * Add new order to db
    */
   public createOrder(orderDTO): Observable<any> {
-    return this.http.post(this.BASE_URL, orderDTO);
+    return this.http.post(this.BASE_URL, orderDTO, this.httpOptions);
   }
 }

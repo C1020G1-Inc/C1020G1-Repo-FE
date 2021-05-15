@@ -1,15 +1,21 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {District, Province, Ward} from '../model/Address';
+import {TokenStorageService} from './authentication/token-storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
   private BASE_URL = 'http://localhost:8080/api/address';
-
-  constructor(private http: HttpClient) {
+  public httpOptions : any;
+  constructor(public http: HttpClient,
+              public tokenStorage: TokenStorageService) {
+    this.httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json', Authorization: `Bearer ` + this.tokenStorage.getToken()})
+      , 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    };
   }
 
   /**
@@ -17,7 +23,7 @@ export class AddressService {
    * Get all provinces from db
    */
   public getAllProvinces(): Observable<any> {
-    return this.http.get(this.BASE_URL + '/' + 'province');
+    return this.http.get(this.BASE_URL + '/' + 'province', this.httpOptions);
   }
 
   /**
@@ -25,7 +31,7 @@ export class AddressService {
    * Get list districts by province_id from db
    */
   public getDistrictByProvince(provinceId): Observable<any> {
-    return this.http.get(this.BASE_URL + '/district/' + provinceId);
+    return this.http.get(this.BASE_URL + '/district/' + provinceId, this.httpOptions);
   }
 
   /**
@@ -33,6 +39,6 @@ export class AddressService {
    * Get list wards by district_id from db
    */
   public getWardByDistrict(districtId): Observable<any> {
-    return this.http.get(this.BASE_URL + '/ward/' + districtId);
+    return this.http.get(this.BASE_URL + '/ward/' + districtId, this.httpOptions);
   }
 }
