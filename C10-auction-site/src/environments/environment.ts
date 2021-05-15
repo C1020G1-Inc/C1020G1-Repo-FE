@@ -4,15 +4,14 @@
 
 export const environment = {
   production: false,
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  firebaseConfig: {
-    apiKey: 'AIzaSyCFblkK2n0ltXAIhK8pBPlqIXy-8cmJ6Fs',
-    authDomain: 'c10-auction.firebaseapp.com',
-    projectId: 'c10-auction',
-    storageBucket: 'c10-auction.appspot.com',
-    messagingSenderId: '158735927407',
-    appId: '1:158735927407:web:2f1f51d36a3a222ccaa59a',
-    measurementId: 'G-LT91X7051J'
+  firebaseConfig : {
+    apiKey: 'AIzaSyAeEkA0jE_MBTI6MPbyEH52woIlrmVNYBg',
+    authDomain: 'c10auctionroom.firebaseapp.com',
+    databaseURL: 'https://c10auctionroom-default-rtdb.asia-southeast1.firebasedatabase.app',
+    projectId: 'c10auctionroom',
+    storageBucket: 'c10auctionroom.appspot.com',
+    messagingSenderId: '666650785329',
+    appId: '1:666650785329:web:67b70846f8184eea258710'
   }
 };
 

@@ -6,13 +6,15 @@ import { TransactionManagementModule } from './transaction-management/transactio
 import { AdminChatModule } from './admin-chat/admin-chat.module';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    UserManagementModule,
-    ProductManagementModule,
-    TransactionManagementModule,
-    AdminChatModule,
-  ]
+    declarations: [],
+    exports: [
+    ],
+    imports: [
+        CommonModule,
+        UserManagementModule,
+        ProductManagementModule,
+        TransactionManagementModule,
+        AdminChatModule,
+    ]
 })
 export class AdminModule { }

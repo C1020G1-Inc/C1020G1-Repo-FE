@@ -1,8 +1,9 @@
-import { CategoryHeaderService } from './../../../service/header/category-service';
-import { TokenStorageService } from './../../../service/authentication/token-storage';
-import { AccountService } from './../../../service/authentication/account-service';
+
 import { Component, OnInit } from '@angular/core';
 import { Account } from 'src/app/model/Account';
+import {AccountService} from '../../../service/authentication/account-service';
+import {TokenStorageService} from '../../../service/authentication/token-storage';
+import {CategoryHeaderService} from '../../../service/header/category-service';
 
 @Component({
   selector: 'app-header',

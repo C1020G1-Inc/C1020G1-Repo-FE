@@ -183,7 +183,7 @@
                                 <div class="input-group">
                                     <input [class.is-invalid]="birthday.invalid && (birthday.dirty || birthday.touched)"
                                         [min]="minDate" [max]="maxDate" [class.is-valid]="birthday.valid"
-                                        formControlName="birthday" matInput [matDatepicker]="seStDt"
+                                        formControlName="birthday" id="date" matInput [matDatepicker]="seStDt"
                                         class="form-control" type="text">
                                     <mat-datepicker-toggle class="mat-tog" matSuffix [for]="seStDt">
                                     </mat-datepicker-toggle>

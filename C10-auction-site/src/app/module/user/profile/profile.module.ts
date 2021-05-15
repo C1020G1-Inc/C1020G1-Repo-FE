@@ -13,8 +13,13 @@ import { HeaderComponent } from '../header/header.component';
 
 
 @NgModule({
-  declarations: [ViewProfileComponent, UpdateProfileComponent, HistoryRegisterProductComponent,
-    HistoryAuctionProductComponent, RegisterComponent, ForgotPasswordComponent, HeaderComponent],
+  declarations: [ViewProfileComponent,
+    UpdateProfileComponent,
+    HistoryRegisterProductComponent,
+    HistoryAuctionProductComponent,
+    RegisterComponent,
+    ForgotPasswordComponent,
+    HeaderComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

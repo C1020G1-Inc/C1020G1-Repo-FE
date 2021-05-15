@@ -1,9 +1,8 @@
-import { MatLoadingDiaComponent } from './../../material/mat-loading-dia/mat-loading-dia.component';
-import { MatRegisDiaComponent } from './../../material/mat-regis-dia/mat-regis-dia.component';
+
 import { Router } from '@angular/router';
-import { AccountService } from './../../../../service/authentication/account-service';
-import { User } from './../../../../model/User';
-import { TokenStorageService } from './../../../../service/authentication/token-storage';
+
+
+
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Account } from 'src/app/model/Account';
@@ -11,6 +10,13 @@ import { finalize, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RegisDistrict, RegisProvince, RegisWard } from 'src/app/service/authentication/account-province';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {AccountService} from '../../../../service/authentication/account-service';
+import {User} from '../../../../model/User';
+import {MatRegisDiaComponent} from '../../material/mat-regis-dia/mat-regis-dia.component';
+import {MatLoadingDiaComponent} from '../../material/mat-loading-dia/mat-loading-dia.component';
+import {ChatService} from '../../../../service/chat/chat.service';
+import {Room} from '../../../../model/temporary/room';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +33,8 @@ export class RegisterComponent implements OnInit {
   wardList: RegisWard[] = [];
   imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
   constructor(private tokenStorage: TokenStorageService, private accountService: AccountService,
-              private router: Router, private storage: AngularFireStorage, private dialog: MatDialog) { }
+              private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
+              private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.accountService.getAllProvince().subscribe(data => {
@@ -168,6 +175,10 @@ export class RegisterComponent implements OnInit {
       logoutTime: null,
       user: userNew
     };
+    //duong
+    const room = new Room(this.accountName.value, userNew, 0);
+    this.chatService.addNewRoom(room);
+
     this.accountService.saveAccount(account).subscribe(data => {
       if (data !== null) {
         const config = new MatDialogConfig();

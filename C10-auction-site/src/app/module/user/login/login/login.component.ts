@@ -1,11 +1,13 @@
-import { AuthenticationService } from './../../../../service/authentication/authentication-service';
+
 import { Router } from '@angular/router';
-import { TokenStorageService } from './../../../../service/authentication/token-storage';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import JwtRequest from 'src/app/service/authentication/JwtRequest';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { JwtResponse } from 'src/app/service/authentication/JwtRespone';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {AuthenticationService} from '../../../../service/authentication/authentication-service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
               private authService: SocialAuthService) { }
 
   ngOnInit(): void {
+    this.tokenStorage.removeAccount();
     if (this.tokenStorage.isLogged()) {
       if (this.tokenStorage.getRoles()[0] === 'MEMBER'){
         this.router.navigateByUrl('/home');

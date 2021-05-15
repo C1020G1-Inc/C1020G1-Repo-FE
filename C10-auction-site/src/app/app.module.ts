@@ -5,13 +5,19 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { environment } from 'src/environments/environment';
+import {DatePipe} from '@angular/common';
+import { ErrorComponent } from './module/error/error.component';
+import {UserManagementModule} from './module/admin/user-management/user-management.module';
+import {UserModule} from './module/user/user.module';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +25,10 @@ import { environment } from 'src/environments/environment';
     SocialLoginModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    UserManagementModule,
+    UserModule,
+    AngularFireDatabaseModule,
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',
@@ -38,7 +47,7 @@ import { environment } from 'src/environments/environment';
         }
       ]
     } as SocialAuthServiceConfig,
-  }],
+  }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
