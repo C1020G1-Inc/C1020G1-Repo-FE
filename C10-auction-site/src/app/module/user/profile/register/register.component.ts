@@ -1,8 +1,7 @@
-
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Account } from 'src/app/model/Account';
+import {Account} from '../../../../model/Account';
 import { finalize, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -15,7 +14,6 @@ import {User} from '../../../../model/User';
 import {Room} from '../../../../model/room';
 import {MatRegisDiaComponent} from '../../material/mat-regis-dia/mat-regis-dia.component';
 import {MatLoadingDiaComponent} from '../../material/mat-loading-dia/mat-loading-dia.component';
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

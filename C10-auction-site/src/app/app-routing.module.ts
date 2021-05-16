@@ -26,6 +26,7 @@ import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auc
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat.component';
 import {ListProductEndAuctionComponent} from './module/user/home-page/list-product-home/list-product-end-auction/list-product-end-auction.component';
+import {ErrorComponent} from './module/error/error.component';
 const routes: Routes = [
   {
     path: 'admin',
@@ -68,7 +69,8 @@ const routes: Routes = [
       {path: 'invoice', component: InvoiceComponent}
 
     ], canActivate: [AuthGuardService]
-  }
+  },
+  {path: 'logout', component: ErrorComponent},
 ];
 
 @NgModule({

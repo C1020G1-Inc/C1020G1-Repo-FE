@@ -1,1 +1,211 @@
-<p>list-user works!</p>
+<div class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="azure" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+      <div class="logo"><a class="simple-text logo-normal">
+        Trang Quản Lý
+      </a></div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item  ">
+            <a class="nav-link" href="http://localhost:4200/admin/user-management/chart">
+              <i class="material-icons">insights</i>
+              <p>Thành viên truy cập</p>
+            </a>
+          </li>
+
+          <li class="nav-item active ">
+            <a class="nav-link" href="http://localhost:4200/admin/user-management/list">
+              <i class="material-icons">person_pin</i>
+              <p>Quản lý thành viên</p>
+            </a>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-10 row">
+
+
+              <div class="col-lg-4"><input type="text" class="form-control" placeholder="Tên" [(ngModel)]="userName"
+                                           style="color:white">
+              </div>
+              <div class="col-lg-4"><input type="text" class="form-control" placeholder="Địa chỉ"
+                                           [(ngModel)]="userAddress" style="color:white"></div>
+              <div class="col-lg-4"><input type="text" class="form-control" placeholder="Email" [(ngModel)]="userEmail"
+                                           style="color:white">
+              </div>
+            </div>
+
+            <div class="col-lg-2">
+              <button class="btn btn-default btn-round btn-just-icon" (click)="search()">
+                <i class="material-icons" style="background: #4CAF50">search</i>
+
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-success">
+                  <h3 class="card-title ">Người dùng</h3>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive" *ngIf="accountList.length != 0">
+                    <table class="table sortable">
+                      <thead class=" text-primary">
+                      <th>
+                        STT
+                      </th>
+                      <th>
+                        Tên
+                      </th>
+                      <th>
+                        Địa chỉ
+                      </th>
+                      <th>
+                        Email
+                      </th>
+                      <th>
+                        SĐT
+                      </th>
+                      <th>
+                        Lần đăng nhập gần nhất
+                      </th>
+                      <th>Khóa/Mở khóa</th>
+
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let account of accountList|paginate: {itemsPerPage: 5, currentPage: page}">
+                        <td>
+                          {{account.user.userId}}
+                        </td>
+                        <td>
+                          {{account.user.userName}}
+                        </td>
+                        <td>
+                          {{account.user.address}}
+                        </td>
+                        <td>
+                          {{account.email}}
+                        </td>
+                        <td>
+                          {{account.user.phone}}
+                        </td>
+                        <td>
+                          {{account.logoutTime|date}}
+                        </td>
+
+                        <td *ngIf=" account.enable==1 ">
+                          <button class="btn-success" data-toggle="modal"
+                                  data-target="#exampleModal" (click)="getIndex(account)">Khóa
+                          </button>
+
+                        </td>
+                        <td *ngIf=" account.enable==0 ">
+                          <button class="btn-success" data-toggle="modal"
+                                  data-target="#exampleModal2" (click)="getIndex(account)">Mở khóa
+                          </button>
+                        </td>
+                      </tr>
+
+                      <div class="modal fade" id="exampleModal" tabindex="-1"
+                           aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Khóa người dùng</h5>
+                              <button type="button" class="close" data-dismiss="modal"
+                                      aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body"
+                                 style="color: red; font-size: 20px; text-align: center">
+                              Bạn có muốn khóa người dùng {{userName}}?
+
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger"
+                                      data-dismiss="modal">Hủy
+                              </button>
+                              <button type="button" class="btn btn-warning"
+                                      data-dismiss="modal" (click)="lockUserById(userId)">
+                                Khóa
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="modal fade" id="exampleModal2" tabindex="-1"
+                           aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel2">Mở khóa người dùng</h5>
+                              <button type="button" class="close" data-dismiss="modal"
+                                      aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body"
+                                 style="color: red; font-size: 20px; text-align: center">
+                              Bạn có muốn mở khóa người dùng: {{userName}}?
+
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger"
+                                      data-dismiss="modal">Hủy
+                              </button>
+                              <button type="button" class="btn btn-warning"
+                                      data-dismiss="modal" (click)="unlockUserById(userId)">
+                                Mở khóa
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      </tbody>
+
+
+                    </table>
+                  </div>
+                  <div *ngIf="accountList.length == 0">
+                    <h2 style="text-align: center;padding: 10%" class="text-warning">Không tìm thấy thành viên !!!</h2>
+                  </div>
+                </div>
+              </div>
+              <pagination-controls previousLabel="Trước"
+                                   nextLabel="Sau" class="my-pagination" (pageChange)="page = $event"
+                                   style="float: right; color: white"></pagination-controls>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <footer class="footer">
+        <div class="container-fluid">
+          <nav class="float-left">
+
+          </nav>
+          <div class="copyright float-right" id="date">
+            , made with <i class="material-icons">favorite</i> by
+            <a href="#" target="_blank">C1020G1</a> for a better web.
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+</div>

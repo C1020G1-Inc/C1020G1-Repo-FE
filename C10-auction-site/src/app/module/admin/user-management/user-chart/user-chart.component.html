@@ -1,1 +1,99 @@
-<p>user-chart works!</p>
+<div class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="azure" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+      <div class="logo"><a class="simple-text logo-normal">
+        Trang Quản Lý
+      </a></div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item active ">
+            <a class="nav-link"  href="http://localhost:4200/admin/user-management/chart">
+              <i class="material-icons"></i>
+              <p>Thành viên truy cập</p>
+            </a>
+          </li>
+
+          <li class="nav-item  ">
+            <a class="nav-link" href="http://localhost:4200/admin/user-management/list">
+              <i class="material-icons"></i>
+              <p>Quản lý thành viên</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-success">
+                  <h4 class="card-title ">Thống kê</h4>
+                </div>
+                <div class="card-body">
+                  <label for="selectType" style="padding-right: 10px;float: left;margin-top: 5px">Thống kê
+                    theo: </label>
+                  <select id="selectType" style="padding: 0 10px 0 10px;margin-top:5px;float: left"
+                          [(ngModel)]="checkButton">
+                    <option value="showSelect">Tháng</option>
+                    <option value="hideSelect">Năm</option>
+                  </select>
+
+
+                  <label style="padding-left: 20px;padding-right:20px;margin-top:8px;float: left"
+                         class="month">Năm: </label>
+                  <select style="padding: 0 10px 0 10px;float: left;margin-top: 5px" class="month" [(ngModel)]="year">
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                  </select>
+
+                  <div id="hideSelect" class="showSelect" style="float: left;margin-top: 5px">
+                    <label style="padding-right: 10px;padding-left: 20px">Tháng: </label>
+                    <select style="padding: 0 10px 0 10px" [(ngModel)]="month">
+                      <option value="1">Tháng 1</option>
+                      <option value="2">Tháng 2</option>
+                      <option value="3">Tháng 3</option>
+                      <option value="4">Tháng 4</option>
+                      <option value="5">Tháng 5</option>
+                      <option value="6">Tháng 6</option>
+                      <option value="7">Tháng 7</option>
+                      <option value="8">Tháng 8</option>
+                      <option value="9">Tháng 9</option>
+                      <option value="10">Tháng 10</option>
+                      <option value="11">Tháng 11</option>
+                      <option value="12">Tháng 12</option>
+                    </select>
+                  </div>
+
+                  <input class="btn btn-primary" type="button"
+                         style="margin-left: 30px;margin-top: 0;padding: 10px 20px"
+                         value="Tìm kiếm" (click)="getChartByMonth()" *ngIf="checkButton == 'showSelect'">
+
+                  <input class="btn btn-primary" type="button"
+                         style="margin-left: 30px;margin-top: 0;padding: 10px 20px"
+                         value="Tìm kiếm" (click)="getChartByYear()" *ngIf="checkButton == 'hideSelect'">
+
+                  <div *ngIf="message == 1">
+                    <h5>Vui lòng chọn ngày tháng để thống kê</h5>
+                  </div>
+                  <div *ngIf="message == 2">
+                    <h3 style="text-align: center;color: orangered;padding: 10%">Không tìm thấy thành viên ở thời gian
+                      này</h3>
+                  </div>
+                  <canvas baseChart width="1000" height="300" *ngIf="message != 2"
+                          [datasets]="barChartData"
+                          [labels]="barChartLabels"
+                          [options]="barChartOptions"
+                          [legend]="barChartLegend"
+                          [chartType]="barChartType"
+                          [colors]="lineChartColor"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
