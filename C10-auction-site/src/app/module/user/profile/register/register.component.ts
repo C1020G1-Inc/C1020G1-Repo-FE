@@ -1,4 +1,3 @@
-
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ElementRef } from '@angular/core';
@@ -12,10 +11,9 @@ import {ChatService} from '../../../../service/chat/chat.service';
 import {AccountService} from '../../../../service/authentication/account-service';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
 import {User} from '../../../../model/User';
-import {Room} from '../../../../model/temporary/room';
+import {Room} from '../../../../model/room';
 import {MatRegisDiaComponent} from '../../material/mat-regis-dia/mat-regis-dia.component';
 import {MatLoadingDiaComponent} from '../../material/mat-loading-dia/mat-loading-dia.component';
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

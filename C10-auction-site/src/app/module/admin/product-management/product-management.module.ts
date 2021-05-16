@@ -5,20 +5,22 @@ import {ProductChartComponent} from './product-chart/product-chart.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ChartsModule} from 'ng2-charts';
-import {LoadingComponent} from './loading/loading.component';
 import {RouterModule} from '@angular/router';
-import {LeftSideBarComponent} from '../left-side-bar/left-side-bar.component';
+import {LeftSideBarModule} from '../left-side-bar/left-side-bar.module';
 
 
 @NgModule({
-  declarations: [ListProductAdminComponent, ProductChartComponent, LoadingComponent, LeftSideBarComponent],
+  declarations: [ListProductAdminComponent, ProductChartComponent,],
+  exports: [
+  ],
   imports: [
     CommonModule,
     FormsModule,
     NgxPaginationModule,
     ChartsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    LeftSideBarModule
   ]
 })
 export class ProductManagementModule {

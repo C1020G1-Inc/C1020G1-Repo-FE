@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import firebase from 'firebase';
-import {Chat} from '../../../../model/temporary/chat';
+import {Chat} from '../../../../model/chat';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import {Notification} from '../../../../model/temporary/notification';
-import {Room} from '../../../../model/temporary/room';
+import {Notification} from '../../../../model/notification';
+import {Room} from '../../../../model/room';
 import {ChatService} from '../../../../service/chat/chat.service';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
 import {Account} from '../../../../model/Account';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {AccountVisitor} from '../../../../model/temporary/account';
+import {AccountVisitor} from '../../../../model/account-visitor';
 
 
 @Component({
@@ -52,6 +52,10 @@ export class UserChatComponent implements OnInit {
       this.notifications = this.chatService.snapshotToArray(resp)
         .filter(x => x.isRead === false && x.chat.roomName === this.account.accountName);
     });
+
+    setTimeout(() => {
+      $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
+    }, 500);
   }
 
   toggleFab() {

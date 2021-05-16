@@ -1,14 +1,7 @@
+
 import {Account} from './Account';
-
-export class Category {
-  id: number;
-  categoryName: string;
-}
-
-export class ProductStatus {
-  id: number;
-  statusName: string;
-}
+import {Category} from './Category';
+import {ProductStatus} from './ProductStatus';
 
 export class Product {
   productId: number;
@@ -26,4 +19,3 @@ export class Product {
   endTime: string;
   account: Account;
 }
-

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Product} from '../model/product/product';
-import {applySourceSpanToExpressionIfNeeded} from '@angular/compiler/src/output/output_ast';
+
 import {ProductDto} from '../model/product/product_dto';
 import {TokenStorageService} from "./authentication/token-storage";
 

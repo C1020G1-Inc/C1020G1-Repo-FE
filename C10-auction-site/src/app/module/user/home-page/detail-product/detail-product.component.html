@@ -1,1 +1,98 @@
-<p>detail-product works!</p>
+<div id="body" *ngIf="productImage">
+  <div class="container-fluid" style="margin-top: 50px;">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="card" *ngIf="product">
+          <img  src="{{productImage[3].image}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{product.productName}}</h5>
+          </div>
+          <div class="card-body">
+            <button type="button" class="btn btn-success">Đấu Giá</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: {{product.productId}} </li>
+            <li class="list-group-item">Bắt Đầu: {{product.registerTime | date: 'dd/MM/yyyy HH:mm'}} </li>
+            <li class="list-group-item">Kết Thúc: {{product.endTime |date: 'dd/MM/yyyy HH:mm'}} </li>
+            <li class="list-group-item">Giá Gốc: {{product.price}} VND</li>
+            <li class="list-group-item">Mỗi Lần Tăng Giá Nhiều Nhất: {{product.priceStep}} VND</li>
+            <li class="list-group-item">Giá Đấu Giá : {{product.lastPrice}} VND</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div style="background: white">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Số Tiền</th>
+              <th scope="col">Thời Gian Đấu Giá</th>
+              <th scope="col">Thành Viên</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let a of auction |paginate : { itemsPerPage: 5 ,currentPage: p } ; let i = index  ">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{a.price}}</td>
+              <td>{{a.timeAuction |date: 'dd/MM/yyyy HH:mm'}}</td>
+              <td>{{a.account.accountName}}</td>
+            </tr>
+            </tbody>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h3 style="color: black">Hình Ảnh</h3>
+    <div class="row">
+      <div class="col-lg-10" style="margin-left: 100px">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img style="width: 300px ; height: 400px" src="{{productImage[0].image}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item ">
+              <img *ngIf="productImage[1]" style="width: 300px ; height: 400px" src="{{productImage[1].image}}"
+                   class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item ">
+              <img *ngIf="productImage[2]" style="width: 300px ; height: 400px" src="{{productImage[2].image}}"
+                   class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div>
+      <h3 style="margin-top: 20px ; color: black ">Chi Tiết Sản Phẩm</h3>
+      <ul style="color:black ">
+        <li>{{product.description}}</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top: 20px ; color: black ">Địa Chỉ Nhận Hàng</h3>
+      <ul style="color: black">
+        <li>Địa Chỉ Nhận Hàng : {{product.account.user.address}}</li>
+        <li>SĐT : {{product.account.user.phone}} </li>
+      </ul>
+      <h3 style="margin-top: 20px">Bình Luận</h3>
+      <app-comment-product></app-comment-product>
+    </div>
+  </div>
+</div>
+

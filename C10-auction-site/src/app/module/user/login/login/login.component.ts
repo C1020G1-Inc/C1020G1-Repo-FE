@@ -1,12 +1,6 @@
 
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-
-import { Component, OnInit } from '@angular/core';
-=======
-import { TokenStorageService } from './../../../../service/authentication/token-storage';
-import { Component, ElementRef, OnInit } from '@angular/core';
->>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
+import {Component, ElementRef, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import JwtRequest from 'src/app/service/authentication/JwtRequest';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';

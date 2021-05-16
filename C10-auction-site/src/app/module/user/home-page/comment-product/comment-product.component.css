@@ -1,0 +1,152 @@
+.img-custom {
+  height: 60px;
+  width: 50px;
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+.we-comet {
+  float: left;
+  width: 100%;
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.comet-avatar {
+  display: inline-block;
+  max-width: 36px;
+  vertical-align: top;
+  width: 36px;
+}
+
+.we-comment {
+  border-bottom: 1px solid #adb5bd;
+  display: inline-block;
+  padding-bottom: 15px;
+  padding-left: 17px;
+  position: relative;
+  vertical-align: top;
+  width: 92%;
+  margin-left: 7px;
+}
+
+.inline-itms {
+  display: inline-block;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.we-comet > li ul {
+  border-left: 2px solid #23d2e2;
+  list-style: outside none none;
+  margin-left: 20px;
+  margin-top: 20px;
+  padding-left: 15px;
+}
+
+.we-comet > li ul li {
+  margin-bottom: 20px;
+}
+
+.we-comet li a.showmore {
+  display: table;
+  font-size: 17px;
+  margin: 0 auto;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.we-comet > li ul li:last-child {
+  margin-bottom: 0;
+}
+
+.coment-head {
+  display: inline-block;
+  width: 100%;
+}
+
+.we-comment > h5 {
+  color: #515365;
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-right: 8px;
+  width: auto;
+  text-transform: capitalize;
+}
+
+.we-comment > p {
+  display: inline;
+  font-size: 17px;
+  line-height: 20px;
+  margin-bottom: 11px;
+  margin-top: 9px;
+  margin-left: 10px;
+}
+
+.inline-itms > a,
+.inline-itms > span {
+  display: inline-block;
+  font-size: 17px;
+  margin-right: 10px;
+  text-transform: capitalize;
+}
+
+.coment-head > span {
+  color: #999;
+  font-size: 12px;
+  padding-left: 10px;
+  display: inline-block;
+}
+
+li.post-comment .comet-avatar {
+  display: inline-block;
+  max-width: 30px;
+  vertical-align: top;
+  width: 30px;
+}
+
+li.post-comment .comet-button {
+  display: inline-block;
+  max-width: 50px;
+  vertical-align: top;
+  width: 45px;
+}
+
+.post-comt-box {
+  display: inline-block;
+  padding-left: 15px;
+  position: relative;
+  width: 90%;
+  margin-left: 5px;
+}
+
+label {
+  margin-bottom: -0.5rem;
+}
+
+.warningg {
+  position: relative;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  font-size: 17px;
+  margin-left: 10px;
+}
+
+.click-zoom input[type=checkbox] {
+  display: none
+}
+
+.click-zoom img {
+  transition: transform 0.25s ease;
+  cursor: zoom-in
+}
+
+.click-zoom input[type=checkbox]:checked~img {
+  transform: scale(2);
+  cursor: zoom-out;
+  margin: 155px;
+}

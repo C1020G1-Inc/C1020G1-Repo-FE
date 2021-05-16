@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Room} from '../../../../model/temporary/room';
-import {Notification} from '../../../../model/temporary/notification';
-import {ChatService} from '../../../../service/chat/chat.service';
-import {TokenStorageService} from '../../../../service/authentication/token-storage';
-import {Account} from '../../../../model/Account';
+import {Room} from '../../../model/room';
+import {Notification} from '../../../model/notification';
+import {ChatService} from '../../../service/chat/chat.service';
+import {TokenStorageService} from '../../../service/authentication/token-storage';
+import {Account} from '../../../model/Account';
 
 
 @Component({

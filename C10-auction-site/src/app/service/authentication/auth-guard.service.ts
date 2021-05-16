@@ -17,7 +17,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.tokenStorage.isLogged()) {
-      if (this.tokenStorage.getRoles()[0] === 'MEMBER'){
+      if (this.tokenStorage.getRoles().includes('MEMBER')){
         return true;
       }
     }

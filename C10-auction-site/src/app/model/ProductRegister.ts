@@ -1,4 +1,3 @@
-import {Data} from '@angular/router';
 import {ProductStatus} from './ProductStatus';
 
 export interface ProductRegister {

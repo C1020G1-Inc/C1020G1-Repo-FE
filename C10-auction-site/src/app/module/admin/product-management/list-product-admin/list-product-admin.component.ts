@@ -78,6 +78,7 @@ export class ListProductAdminComponent implements OnInit {
   getAllProduct() {
     this.productService.getAllProduct().subscribe(data => {
       this.productList = data;
+      console.log(data);
     });
   }
 

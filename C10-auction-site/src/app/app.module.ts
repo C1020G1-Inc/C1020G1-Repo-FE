@@ -1,61 +1,49 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-<<<<<<< HEAD
-import { HttpClientModule } from '@angular/common/http';
-import {DatePipe} from '@angular/common';
-import { ErrorComponent } from './module/error/error.component';
-import {UserManagementModule} from './module/admin/user-management/user-management.module';
-import {UserModule} from './module/user/user.module';
-import {AngularFireModule} from '@angular/fire';
-import {environment} from '../environments/environment';
-import {AngularFireDatabaseModule} from '@angular/fire/database';
-import {AngularFireStorageModule} from '@angular/fire/storage';
-import {UserChatComponent} from './module/user/user-chat/user-chat/user-chat.component';
-=======
+import {NgModule} from '@angular/core';
+import {AppComponent} from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from './app-routing.module';
+import {LoadingComponent} from './module/loading/loading/loading.component';
+import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularFireStorageModule} from '@angular/fire/storage';
+import {MatDialogModule} from '@angular/material/dialog';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDialogModule} from '@angular/material/dialog';
+import {UserManagementModule} from './module/admin/user-management/user-management.module';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserModule} from './module/user/user.module';
-import {ProfileModule} from './module/user/profile/profile.module';
-import {NgxLoadingModule} from 'ngx-loading';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
->>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
+import {NgxLoadingModule} from 'ngx-loading';
+import {ProfileModule} from './module/user/profile/profile.module';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
-<<<<<<< HEAD
-    ErrorComponent,
-=======
->>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    SocialLoginModule,
     HttpClientModule,
     AngularFireStorageModule,
     MatDialogModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-<<<<<<< HEAD
     AngularFireStorageModule,
     UserManagementModule,
     UserModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    NgxPaginationModule,
     AngularFireDatabaseModule,
-=======
     BrowserAnimationsModule,
     NgxLoadingModule.forRoot({}),
     AngularFireDatabaseModule,
     SocialLoginModule,
     UserModule,
-    ProfileModule
->>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
+    ProfileModule,
+    AppRoutingModule,
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',
@@ -77,4 +65,5 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
   }, DatePipe],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

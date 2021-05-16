@@ -24,11 +24,11 @@ import {AuctionRequestComponent} from './module/user/auction/auction-request/auc
 import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-cart.component';
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
-import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
 import {ListTransactionComponent} from './module/admin/transaction-management/list-transaction/list-transaction.component';
+import {AdminChatComponent} from './module/admin/admin-chat/admin-chat.component';
+import {ListProductEndAuctionComponent} from './module/user/home-page/list-product-home/list-product-end-auction/list-product-end-auction.component';
+import {ErrorComponent} from './module/error/error.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-
-
 
 const routes: Routes = [
   {
@@ -55,7 +55,11 @@ const routes: Routes = [
       {path: 'history-auction', component: HistoryAuctionProductComponent},
     ]
   },
-  {path: 'home', component: ListProductHomeComponent},
+  {
+    path: 'home',
+    children: [{path: 'end', component: ListProductEndAuctionComponent}],
+    component: ListProductHomeComponent
+  },
   {path: 'detail/:id', component: DetailProductComponent},
   {path: 'guide', component: GuideComponent},
   {
@@ -68,7 +72,8 @@ const routes: Routes = [
       {path: 'invoice', component: InvoiceComponent}
 
     ], canActivate: [AuthGuardService]
-  }
+  },
+  {path: 'logout', component: ErrorComponent},
 ];
 
 @NgModule({

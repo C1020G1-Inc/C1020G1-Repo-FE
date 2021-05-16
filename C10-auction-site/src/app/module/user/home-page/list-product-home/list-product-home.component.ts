@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ListProductAuctionService} from '../../../../service/product/list-product-auction.service';
+import {ProductImage} from '../../../../model/ProductImage';
 
 @Component({
   selector: 'app-list-product-home',
@@ -7,8 +9,69 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListProductHomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private listProductAuctionService: ListProductAuctionService) {
+  }
 
+  public listProduct = new Array<ProductImage>();
+  public page = 1;
+  public activeOne = 'active';
+  public activeTwo;
+  public activeThree;
+  public activeFour;
+  public activeFive;
+  public category = 0;
   ngOnInit(): void {
+    this.listProductAuctionService.showAllProductAuction(this.category).subscribe((data) => {
+      this.listProduct = data;
+    });
+  }
+
+  showByAll() {
+    this.activeOne = 'active';
+    this.activeTwo = '';
+    this.activeThree = '';
+    this.activeFour = '';
+    this.activeFive = '';
+    this.category = 0;
+    this.ngOnInit();
+  }
+
+  showByHouseHold() {
+    this.activeOne = '';
+    this.activeTwo = 'active';
+    this.activeThree = '';
+    this.activeFour = '';
+    this.activeFive = '';
+    this.category = 2;
+    this.ngOnInit();
+  }
+  showByTechnology() {
+    this.activeOne = '';
+    this.activeTwo = '';
+    this.activeThree = 'active';
+    this.activeFour = '';
+    this.activeFive = '';
+    this.category = 1;
+    this.ngOnInit();
+  }
+
+  showByHot() {
+    this.activeOne = '';
+    this.activeTwo = '';
+    this.activeThree = '';
+    this.activeFour = 'active';
+    this.activeFive = '';
+    this.category = 4;
+    this.ngOnInit();
+  }
+
+  showByOther() {
+    this.activeOne = '';
+    this.activeTwo = '';
+    this.activeThree = '';
+    this.activeFour = '';
+    this.activeFive = 'active';
+    this.category = 3;
+    this.ngOnInit();
   }
 }
