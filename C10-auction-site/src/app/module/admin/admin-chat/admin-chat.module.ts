@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminChatComponent } from './admin-chat/admin-chat.component';
+import { AdminChatComponent } from './admin-chat.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ChatRoomComponent} from './admin-chat/chat-room/chat-room.component';
+import {ChatRoomComponent} from './chat-room/chat-room.component';
 
 
 @NgModule({

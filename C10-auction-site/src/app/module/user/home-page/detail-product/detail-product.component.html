@@ -1,9 +1,9 @@
-<div id="body">
+<div id="body" *ngIf="productImage">
   <div class="container-fluid" style="margin-top: 50px;">
     <div class="row">
       <div class="col-lg-3">
-        <div class="card">
-          <img src="{{productImage[3].image}}" class="card-img-top" alt="...">
+        <div class="card" *ngIf="product">
+          <img  src="{{productImage[3].image}}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{product.productName}}</h5>
           </div>

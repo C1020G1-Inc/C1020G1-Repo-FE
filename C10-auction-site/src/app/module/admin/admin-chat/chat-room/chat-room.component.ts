@@ -2,11 +2,11 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import {User} from '../../../../../model/User';
-import {Chat} from '../../../../../model/temporary/chat';
-import {ChatService} from '../../../../../service/chat/chat.service';
-import {TokenStorageService} from '../../../../../service/authentication/token-storage';
-import {Notification} from '../../../../../model/temporary/notification';
+import {User} from '../../../../model/User';
+import {Chat} from '../../../../model/chat';
+import {ChatService} from '../../../../service/chat/chat.service';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {Notification} from '../../../../model/notification';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 

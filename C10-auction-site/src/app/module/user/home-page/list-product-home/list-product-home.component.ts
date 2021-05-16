@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ListProductAuctionService} from './list-product-auction.service';
+import {ListProductAuctionService} from '../../../../service/product/list-product-auction.service';
+import {ProductImage} from '../../../../model/ProductImage';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class ListProductHomeComponent implements OnInit {
   constructor(private listProductAuctionService: ListProductAuctionService) {
   }
 
-  public listProduct: [];
+  public listProduct = new Array<ProductImage>();
   public page = 1;
   public activeOne = 'active';
   public activeTwo;

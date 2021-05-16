@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Product} from '../../model/Product';
+import {Product} from '../../../../models/model/Product';
 import {ActivatedRoute} from '@angular/router';
-import {Auction} from '../../model/Auction';
-import {ProductImage} from '../../model/ProductImage';
+import {Auction} from '../../../../model/Auction';
+import {ProductImage} from '../../../../model/ProductImage';
 import {formatDate} from '@angular/common';
 import {ProductService} from '../../../../service/product/product.service';
 

@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Comment} from '../../models/Comment';
+import {Comment} from '../../model/Comment';
+import {AccountService} from '../authentication/account-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
   baseUrl = 'http://localhost:8080/api/comment';
+  options: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private accountService: AccountService) {
+    this.options = this.accountService.httpOptions;
   }
 
   /**
@@ -18,7 +21,7 @@ export class CommentService {
    *
    */
   findAllCommentByProductId(productId: number): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/product/' + productId);
+    return this.http.get<any>(this.baseUrl + '/product/' + productId, this.options);
   }
 
   /**
@@ -26,7 +29,7 @@ export class CommentService {
    * find comment by commentID
    */
   findCommentById(commentId: number): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/' + commentId);
+    return this.http.get<any>(this.baseUrl + '/' + commentId, this.options);
   }
 
   /**
@@ -34,7 +37,7 @@ export class CommentService {
    * create a new comment
    */
   createNewComment(comment: Comment): Observable<any> {
-    return this.http.post<any>(this.baseUrl, comment);
+    return this.http.post<any>(this.baseUrl, comment, this.options);
   }
 
   /**
@@ -42,7 +45,7 @@ export class CommentService {
    * update comment
    */
   updateComment(comment: Comment): Observable<any> {
-    return this.http.put(this.baseUrl + '/edit/' + comment.commentId, comment);
+    return this.http.put(this.baseUrl + '/edit/' + comment.commentId, comment, this.options);
   }
 
   /**
@@ -50,6 +53,6 @@ export class CommentService {
    * delete comment
    */
   deleteComment(commentId: number): Observable<any> {
-    return this.http.delete(this.baseUrl + '/delete/' + commentId);
+    return this.http.delete(this.baseUrl + '/delete/' + commentId, this.options);
   }
 }

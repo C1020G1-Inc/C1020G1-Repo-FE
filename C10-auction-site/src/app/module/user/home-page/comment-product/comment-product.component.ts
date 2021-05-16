@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CommentService} from '../../../../service/comment/comment.service';
 import {ActivatedRoute} from '@angular/router';
-import {Comment} from '../../../../models/Comment';
+import {Comment} from '../../../../model/Comment';
 import {User} from '../../../../models/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Account} from '../../../../models/Account';
@@ -9,6 +9,7 @@ import {ProductService} from '../../../../service/product/product.service';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {ngxLoadingAnimationTypes} from 'ngx-loading';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
 
 declare const $: any;
 
@@ -26,7 +27,7 @@ export class CommentProductComponent implements OnInit {
   loading = false;
   loadingEdit = false;
 
-  comments: Comment[];
+  comments = new Array<Comment>();
   user: User;
   formComment: FormGroup;
   account: Account;
@@ -40,20 +41,25 @@ export class CommentProductComponent implements OnInit {
   checkImageEdit = false;
   private urlImage: string;
   urlImageEdit: string;
+  isLogged: boolean;
 
   constructor(private commentService: CommentService,
               private productService: ProductService,
               private activatedRouter: ActivatedRoute,
               private formBuilder: FormBuilder,
               private formBuilders: FormBuilder,
-              public storage: AngularFireStorage) {
+              public storage: AngularFireStorage,
+              private tokenStorage: TokenStorageService) {
   }
 
   ngOnInit(): void {
+    this.isLogged = this.tokenStorage.isLogged();
     this.fileImage = [];
     this.fileImageEdit = [];
     const productId = this.activatedRouter.snapshot.params.id;
-    this.getAllCommentByProductId(productId);
+    if (this.isLogged) {
+      this.getAllCommentByProductId(productId);
+    }
     this.user = {
       userId: 2,
       userName: 'Hồng Sơn',

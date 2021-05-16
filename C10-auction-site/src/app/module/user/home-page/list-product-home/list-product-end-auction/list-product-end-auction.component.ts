@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ListProductAuctionService} from '../list-product-auction.service';
+import {ListProductAuctionService} from '../../../../../service/product/list-product-auction.service';
+import {ProductImage} from '../../../../../model/ProductImage';
 
 @Component({
   selector: 'app-list-product-end-auction',
@@ -11,7 +12,7 @@ export class ListProductEndAuctionComponent implements OnInit {
   constructor(private listProductAuctionService: ListProductAuctionService ) {
   }
 
-  public listProduct: [];
+  public listProduct = new Array<ProductImage>();
   public page = 1;
   public activeOne = 'active';
   public activeTwo;
@@ -22,7 +23,6 @@ export class ListProductEndAuctionComponent implements OnInit {
 
   ngOnInit(): void {
     this.listProductAuctionService.showAllProductEndAuction(this.category).subscribe((data) => {
-      console.log(data);
       this.listProduct = data;
     });
   }

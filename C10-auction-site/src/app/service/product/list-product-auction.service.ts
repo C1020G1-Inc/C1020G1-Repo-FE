@@ -7,7 +7,6 @@ import {Observable} from 'rxjs';
 })
 export class ListProductAuctionService {
   public API_PRODUCT = 'http://localhost:8080/api/product';
-
   constructor(private http: HttpClient) {
   }
 

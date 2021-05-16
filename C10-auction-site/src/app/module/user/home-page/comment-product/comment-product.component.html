@@ -1,5 +1,5 @@
 <p style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Có {{comments.length}} bình luận cho sản phẩm này</p>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="isLogged">
   <div class="row" style="background-color: whitesmoke">
     <ul class="we-comet" style="margin-top: 241px;border-top: 1px solid #adb5bd">
       <li *ngFor="let comment of comments" style="margin-top: 5px">

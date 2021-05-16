@@ -1,4 +1,4 @@
-import {Account} from './Account';
+import {Account} from '../models/Account';
 import {Product} from './Product';
 
 export class Comment {

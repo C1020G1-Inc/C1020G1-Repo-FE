@@ -2,7 +2,7 @@ import {Router} from '@angular/router';
 import {Account} from './../../model/Account';
 import {JwtResponse} from './JwtRespone';
 import {Injectable} from '@angular/core';
-import {AccountVisitor} from '../../model/temporary/account';
+import {AccountVisitor} from '../../model/account-visitor';
 
 const TOKEN_KEY = 'X4dr1vOeejA9pWEc7VuF';
 const ACCOUNT_KEY = 'SCisnPM9Obi0JnEGBTtK';

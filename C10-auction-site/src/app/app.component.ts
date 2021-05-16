@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {Account} from './model/Account';
 import firebase from 'firebase';
 import {TokenStorageService} from './service/authentication/token-storage';
-import {AccountVisitor} from './model/temporary/account';
+import {AccountVisitor} from './model/account-visitor';
 const config = {
   apiKey: 'AIzaSyAeEkA0jE_MBTI6MPbyEH52woIlrmVNYBg',
   authDomain: 'c10auctionroom.firebaseapp.com',

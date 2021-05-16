@@ -92,16 +92,16 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3 col-sm-6"
-           *ngFor="let product of listProduct| paginate: { itemsPerPage: 8, currentPage: page } ;">
-        <div class="single-shop-product" *ngIf="product.id !== null">
+           *ngFor="let productImage of listProduct| paginate: { itemsPerPage: 8, currentPage: page } ;">
+        <div class="single-shop-product" *ngIf="productImage.id !== null">
           <div class="product-upper">
-            <img [src]="product.image" alt="">
+            <img [src]="productImage.image" alt="">
           </div>
-          <h2 class="text-name-product"><a href="">{{product.product.productName}}</a></h2>
+          <h2 class="text-name-product"><a href="">{{productImage.product.productName}}</a></h2>
           <div class="product-carousel-price">
-            <ins>Giá: {{product.product.price | number}} (VNĐ)</ins>
+            <ins>Giá: {{productImage.product.price | number}} (VNĐ)</ins>
           </div>
-          <p> Thời gian còn lại {{product.product.registerTime | date: 'dd/mm/yyyy hh:mm:ss'}}</p>
+          <p> Thời gian còn lại {{productImage.product.registerTime | date: 'dd/mm/yyyy hh:mm:ss'}}</p>
           <div class="product-option-shop">
             <a class="add_to_cart_button rounded-pill" data-quantity="1" data-product_sku=""
                data-product_id="70"
