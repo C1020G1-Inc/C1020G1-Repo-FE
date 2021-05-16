@@ -94,7 +94,7 @@
                         </td>
                         <td *ngIf="product.productStatus.id == 1">
                           <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"
-                             href="#editProduct" data-toggle="modal" (click)="sendProductIdForForm(product.productId)">
+                             (click)="sendProductIdForForm(product.productId)" href="#editProduct" data-toggle="modal">
                             <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
                           </a>
                         </td>

@@ -63,7 +63,7 @@ export class ListProductAdminComponent implements OnInit {
     });
     this.editForm = this.formBuilder.group({
       productId: [''],
-      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       category: ['', [Validators.required]],
       price: [''],
       priceStep: [''],
@@ -86,6 +86,7 @@ export class ListProductAdminComponent implements OnInit {
   }
 
   sendProductIdForApprove(productId: number) {
+    console.log("abc")
     this.productService.getProductById(productId).subscribe(data => {
       this.productDTO = data;
       this.product = this.productDTO.product;
@@ -177,7 +178,6 @@ export class ListProductAdminComponent implements OnInit {
           }
         }
       }
-      console.log(this.imageToUpFireBase);
     }
   }
 

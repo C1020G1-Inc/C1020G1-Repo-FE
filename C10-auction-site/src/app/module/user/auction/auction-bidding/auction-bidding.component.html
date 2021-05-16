@@ -1,1 +1,197 @@
-<p>auction-bidding works!</p>
+<app-header></app-header>
+<div class="container-fluid p-lg-5" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <div class="row">
+    <div class="col-6 col-lg-4 ">
+      <div class="d-flex flex-column justify-content-between mb-2">
+        <div id="image-auction-carousel" class="carousel slide shadow-lg" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#image-auction-carousel"
+                *ngFor="let image of this.productDetail?.images; let i = index"
+                [attr.data-slide-to]="i" [ngClass]="(i == 0)?'active':null"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item align-content-center"
+                 *ngFor="let image of this.productDetail?.images; let i = index"
+                 [ngClass]="(i == 0)?'active':null">
+              <img
+                [src]=image.image
+                class="d-block w-100 img-fluid" alt="...">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#image-auction-carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#image-auction-carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        <div class="my-2" style="font-size: 15px" *ngIf="isInProgress">
+          <div id="countdown-timer" class="row ml-0 d-flex justify-content-center">
+            <div class="countdown text-light mr-1">{{this.day | number: '2.0-0'}}</div>
+            <div class="countdown-colon mr-1">:</div>
+            <div class="countdown text-light mr-1">{{this.hour | number: '2.0-0'}}</div>
+            <div class="countdown-colon mr-1">:</div>
+            <div class="countdown text-light mr-1">{{this.minute| number: '2.0-0'}}</div>
+            <div class="countdown-colon mr-1">:</div>
+            <div class="countdown text-light mr-1">{{this.second | number: '2.0-0'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-4">
+      <h1 class="mt-lg-5 text-dark font-weight-bolder"
+          style="font-size: 20px">{{this.productDetail?.productName}}</h1>
+      <p class="text-dark">Mã sản phẩm: SP-{{this.productDetail?.productId|number: '3.0-0'}}</p>
+      <div class="row mb-2" style="font-size: 17px">
+        <div class="col-12 col-lg-6">
+          <div><span class="badge badge-pill"
+                     [ngClass]="(this.isInProgress)? 'badge-success':'badge-danger'">{{this.isInProgress ? 'Đang đấu giá' : 'Kết thúc'}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2" style="font-size: 15px">
+        <div class="col-12">
+          <div class="text-warning ml-2" style="font-size: 25px; font-weight: bold">{{this.currentPrice|number: '.0'}}
+            đ
+          </div>
+        </div>
+      </div>
+      <div class="row" style="font-size: 15px">
+        <div class="col-12">
+          <div class="text-secondary">Thời điểm kết thúc:</div>
+          <div class="text-danger ml-2">{{this.auctionEndTime |date :"HH:mm:ss dd/MM/yyyy":"+0700"}}
+          </div>
+        </div>
+      </div>
+      <div class="my-2" style="font-size: 15px" *ngIf="isInProgress">
+        <div class="row mb-4" *ngIf="isInProgress">
+          <div class="col-12">
+            <div>
+              <span class="text-info font-weight-bold float-right"><i
+                class="fas fa-plus"></i> {{this.historyAuction?.currentStep |number:'.0'}} đ</span>
+            </div>
+            <form [formGroup]="priceForm" class="mb-2">
+              <div class="input-group">
+              <span class="input-group-btn">
+                <button type="button" class="quantity-left-minus btn btn-secondary" style="border-radius: 0"
+                        (click)="decreasePrice()"><i class="fas fa-backward"></i></button>
+              </span>
+                <input type="text" class="form-control" style="border-radius: 0"
+                       formControlName="newPrice">
+                <div class="input-group-append">
+                  <span class="input-group-text">đ</span>
+                </div>
+                <span class="input-group-btn">
+                <button type="button" class="quantity-right-plus btn btn-secondary" style="border-radius: 0"
+                        (click)="increasePrice()"><i class="fas fa-forward"></i></button>
+              </span>
+              </div>
+              <span class="text-danger" style="font-size: 12px"
+                    *ngIf="priceForm.controls.newPrice.errors?.required && (priceForm.controls.newPrice?.touched ||priceForm.controls.newPrice?.dirty)"><i
+                class="fa fa-exclamation-circle"></i><i> Mức giá không được để trống</i>
+            </span>
+              <span class="text-danger" style="font-size: 12px"
+                    *ngIf="!priceForm.controls.newPrice.errors?.required && priceForm.controls.newPrice.errors?.low_price && (priceForm.controls.newPrice?.touched ||priceForm.controls.newPrice?.dirty)"><i
+                class="fa fa-exclamation-circle"></i><i> Mức giá phải cao hơn giá hiện tại {{this.currentStep}} đ</i>
+            </span>
+              <span class="text-danger" style="font-size: 12px"
+                    *ngIf="!priceForm.controls.newPrice.errors?.required && priceForm.controls.newPrice.errors?.not_divide && (priceForm.controls.newPrice?.touched ||priceForm.controls.newPrice?.dirty)"><i
+                class="fa fa-exclamation-circle"></i><i> Mức giá phải là bội số của {{this.currentStep}} đ</i>
+            </span>
+            </form>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-block btn-success btn-lg" [disabled]="!priceForm.valid" (click)="submit()"><i
+              class="fa fa-gavel"></i> Đặt giá
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4" style="max-height: 400px; overflow-y: auto">
+      <table class="table shadow-sm" style="font-size: 10px;">
+        <thead class="text-success">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tài khoản</th>
+          <th scope="col">Mức giá</th>
+          <th scope="col">Thời gian đặt</th>
+        </tr>
+        </thead>
+        <tbody class="text-secondary">
+        <tr *ngFor="let auction of historyAuction?.auctions ; let i= index"
+            [ngClass]="(i == 0)? 'table-warning': ((i == 1||i ==2)?'table-success': '')">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{auction.accountName}} <i class="fas fa-trophy" *ngIf="i==0"></i></td>
+          <td>{{auction.price|number:'.0-0'}}</td>
+          <td>{{auction.timeAuction| date: 'HH:mm:ss dd/MM/yyyy': '+0700'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card w-100">
+      <div class="card-header">
+        Mô tả sản phẩm
+      </div>
+      <div class="card-body" style="font-size: 12px">
+        {{this.productDetail?.description}}
+      </div>
+    </div>
+    <div class="card w-100">
+      <div class="card-header">
+        Thông tin sản phẩm
+      </div>
+      <div class="card-body" style="font-size: 12px">
+        <p><strong>Người đăng sản phẩm:</strong> {{this.productDetail?.account.accountName}}</p>
+        <p><strong>Giá ban đầu:</strong> {{this.productDetail?.price}}</p>
+        <p><strong>Bắt đầu đấu giá:</strong> {{this.productDetail?.registerTime}}</p>
+        <p><strong>Thời gian đấu giá:</strong> {{this.productDetail?.auctionTime}}</p>
+        <p><strong>Loại sản phẩm:</strong> {{this.productDetail?.category.categoryName}}</p>
+        <p><strong>Bước giá ban đầu:</strong> {{this.productDetail?.priceStep}}</p>
+      </div>
+    </div>
+    <div class="card w-100">
+      <div class="card-header">
+        Điều khoản đấu giá
+      </div>
+      <div class="card-body" style="font-size: 12px">
+        <p>Người đấu giá phải đặt giá mới ít nhất bằng giá cũ cộng với bước giá và số tiền đặt phải
+          là bội số của bước giá</p>
+        <p>Bước gíá tính theo giá hiện tại theo các mức như sau:</p>
+        <ul>
+          <li>Dưới 20.000 -> bước giá 1000</li>
+          <li>Từ 20.000 đến 100.000 -> bước giá 5.000</li>
+          <li>Từ 100.000 đến 500.000 -> bước giá 10.000</li>
+          <li>Từ 500.000 đến 2.000.000 -> bước giá 20.000</li>
+          <li>Từ 2.000.000 đến 5.000.000 -> bước giá 50.000</li>
+          <li>Từ 5.000.000 đến 10.000.000 -> bước giá 100.000</li>
+          <li>Từ 10.000.000 đến 20.000.000 -> bước giá 200.000</li>
+          <li>Từ 20.000.000 đến 50.000.000 -> bước giá 500.000</li>
+          <li>Từ 50.000.000 đến 100.000.000 -> bước giá 1.000.000</li>
+          <li>Trên 100.000.000 -> bước giá 2.000.000</li>
+        </ul>
+        <p>Trong vòng 24h, người thắng cuộc phải thanh toán giá trị của món hàng. Sau 24h thì giao dịch cho sản
+          phẩm sẽ bị khóa</p>
+        <p>Quý khách hàng không được hủy giao dịch quá 3 lần</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+  <div id="toast-success" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+    <div class="toast-header bg-success">
+      <strong class="mr-auto text-light">C10-Auction</strong>
+      <button type="button" class="ml-2 mb-1 close text-light" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      Bạn đã đặt giá cho sản phẩm '{{this.productDetail?.productName}}'
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

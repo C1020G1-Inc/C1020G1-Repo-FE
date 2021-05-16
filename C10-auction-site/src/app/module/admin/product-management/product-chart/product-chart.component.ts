@@ -47,20 +47,23 @@ export class ProductChartComponent implements OnInit {
 
   getDefaultChart() {
     const yearSearch = new Date().getFullYear();
-    const monthSearch = new Date().getMonth();
-    this.productService.getProductByDate(monthSearch, yearSearch).subscribe(data => {
+    this.productService.getProductByDate(0, yearSearch).subscribe(data => {
+      if (data.length === 0){
+        this.message = 2;
+      }
       // tslint:disable-next-line:prefer-const
       let listProduct: Product[] = data;
-      for (let i = 1; i < 32; i++) {
-        // Sử dụng "i" để lấy 31 ngày của trục ngang và check số lượng sản phẩm từng ngày
+      this.barChartLabels = new Array<string>();
+      this.dataStatistic = new Array<number>();
+      for (let i = 1; i < 13; i++) {
+        // Sử dụng "i" để lấy 12 tháng của trục ngang và check số lượng sản phẩm từng tháng
         this.barChartLabels.push(i.toString());
         let count = 0;
-
-        // Vòng lặp danh sách sản phẩm để tính sản phẩm theo từng ngày
+        // Vòng lặp danh sách sản phẩm để tính sản phẩm theo từng tháng
         // tslint:disable-next-line:prefer-for-of
         for (let j = 0; j < listProduct.length; j++) {
           const date: Date = new Date(listProduct[j].endTime);
-          if (date.getDate() === i) {
+          if (date.getMonth() === (i - 1) ){
             count++;
           }
         }
@@ -123,10 +126,10 @@ export class ProductChartComponent implements OnInit {
           this.barChartLabels = new Array<string>();
           this.dataStatistic = new Array<number>();
           for (let i = 1; i < 13; i++) {
-            // Sử dụng "i" để lấy 31 ngày của trục ngang và check số lượng sản phẩm từng ngày
+            // Sử dụng "i" để lấy 12 tháng của trục ngang và check số lượng sản phẩm từng tháng
             this.barChartLabels.push(i.toString());
             let count = 0;
-            // Vòng lặp danh sách sản phẩm để tính sản phẩm theo từng ngày
+            // Vòng lặp danh sách sản phẩm để tính sản phẩm theo từng tháng
             // tslint:disable-next-line:prefer-for-of
             for (let j = 0; j < listProduct.length; j++) {
               const date: Date = new Date(listProduct[j].endTime);
