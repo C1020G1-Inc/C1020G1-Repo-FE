@@ -4,6 +4,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+<<<<<<< HEAD
 import { HttpClientModule } from '@angular/common/http';
 import {DatePipe} from '@angular/common';
 import { ErrorComponent } from './module/error/error.component';
@@ -14,22 +15,47 @@ import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {UserChatComponent} from './module/user/user-chat/user-chat/user-chat.component';
+=======
+import {HttpClientModule} from '@angular/common/http';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import {UserModule} from './module/user/user.module';
+import {ProfileModule} from './module/user/profile/profile.module';
+import {NgxLoadingModule} from 'ngx-loading';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+>>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
 
 @NgModule({
   declarations: [
     AppComponent,
+<<<<<<< HEAD
     ErrorComponent,
+=======
+>>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocialLoginModule,
     HttpClientModule,
+    AngularFireStorageModule,
+    MatDialogModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+<<<<<<< HEAD
     AngularFireStorageModule,
     UserManagementModule,
     UserModule,
     AngularFireDatabaseModule,
+=======
+    BrowserAnimationsModule,
+    NgxLoadingModule.forRoot({}),
+    AngularFireDatabaseModule,
+    SocialLoginModule,
+    UserModule,
+    ProfileModule
+>>>>>>> 8177de4638d0caa4f7d18ea55c3333224ffcd0d5
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',

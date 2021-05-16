@@ -1,1 +1,74 @@
-<p>auction-cart works!</p>
+<app-header></app-header>
+<div class="row bg-light  "  *ngIf="listTransaction?.length !== 0">
+  <div class="col-12 col-lg-8 p-5 bg-white rounded shadow-sm mb-5">
+    <div class="table-responsive">
+      <table class="table table-hover" style="font-size: 12px">
+        <thead>
+        <tr class="table-primary">
+          <th scope="col">STT</th>
+          <th scope="col">Hình ảnh</th>
+          <th scope="col">Sản phẩm</th>
+          <th scope="col">Mức giá</th>
+          <th scope="col">Phí dịch vụ</th>
+          <th scope="col">Thời hạn giao dịch</th>
+          <th scope="col">Chọn</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let transaction of listTransaction; let i = index">
+          <td>{{i + 1}}</td>
+          <td><img style="height: 45px; width: auto" [src]="transaction.images[0]?.image"></td>
+          <td>{{transaction.product?.productName}}</td>
+          <td>{{transaction.auction?.price |number: '0.0'}} VND</td>
+          <td>{{transaction.auction?.price * 5 / 100|number: '0.0'}} VND</td>
+          <td>{{transaction.transactionTime| date:'HH:mm:ss dd/MM/yyyy'}}</td>
+          <td><input type="checkbox"
+                     [value]="transaction.transactionId"
+                     [checked]="checkArray(transaction.transactionId, this.formChooseProduct.value)"
+                     (click)="onCheckboxChange($event)"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12 col-lg-4 p-5 bg-white rounded shadow-sm mb-5">
+    <div *ngIf="this.formChooseProduct.value.length > 0">
+      <p class="text-info text-center">Danh sách đã chọn</p>
+      <table class="table" style="font-size: 12px">
+        <thead>
+        <tr class="table-light text-success">
+          <th scope="col">Tên sản phẩm</th>
+          <th scope="col">Tổng tiền</th>
+        </tr>
+        </thead>
+        <tbody class="text-secondary">
+        <tr *ngFor="let item of this.formChooseProduct.value; let i = index">
+          <td>{{this.getProductByTransactionId(this.formChooseProduct.value[i]).product.productName}}</td>
+          <td>{{this.getProductByTransactionId(this.formChooseProduct.value[i]).product.price * 1.05 | number: '0.0'}}</td>
+        </tr>
+        <tr>
+          <td>Tổng tiền</td>
+          <td>{{this.getTotal()}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <button class="btn btn-lg btn-success" (click)="gotoPayment()"><i class="fas fa-cart-arrow-down"></i> Thanh toán ngay</button>
+      </div>
+    </div>
+    <div *ngIf="this.formChooseProduct.value.length === 0">
+      <div class="text-secondary" style="margin: auto">Vui lòng chọn sản phẩm để thanh toán</div>
+    </div>
+  </div>
+</div>
+<div *ngIf="listTransaction?.length === 0">
+  <div class="jumbotron jumbotron-fluid  bg-light">
+    <div class="container text-center">
+      <img width="300px" src="assets/img/cart/mascot@2x.png">
+      <hr>
+      <p>Không có sản phẩm trong giỏ hàng của bạn</p>
+      <a class="btn btn-outline-success" href="#" role="button"><i class="fas fa-gavel"></i> Tiếp tục đấu giá</a>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

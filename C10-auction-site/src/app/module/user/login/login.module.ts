@@ -1,9 +1,12 @@
 
+import { RouterModule } from '@angular/router';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HeaderFooterModule} from '../header-footer/header-footer.module';
 import {ProfileModule} from '../profile/profile.module';
 
 
@@ -13,7 +16,9 @@ import {ProfileModule} from '../profile/profile.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ProfileModule
+    ProfileModule,
+    HeaderFooterModule,
+    RouterModule
   ]
 })
 export class LoginModule { }

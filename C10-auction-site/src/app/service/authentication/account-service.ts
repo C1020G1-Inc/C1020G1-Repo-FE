@@ -1,10 +1,10 @@
+import { MatExpiredDiaComponent } from './../../module/user/material/mat-expired-dia/mat-expired-dia.component';
 import { Account } from 'src/app/model/Account';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage';
-import { User } from 'src/app/model/User';
-import { Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class AccountService {
     private options: any;
     private isLogout = false;
     baseURL = 'http://localhost:8080/';
-    constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
+    constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private dialog: MatDialog) {
         this.setOptions();
     }
 
@@ -35,7 +35,9 @@ export class AccountService {
                 this.logout().subscribe(() => {
                     this.tokenStorage.logOut();
                     this.setOptions();
-                    window.location.reload();
+                    const config = new MatDialogConfig();
+                    config.position = { top: '5%' };
+                    this.dialog.open(MatExpiredDiaComponent, config);
                 });
             }
             this.isLogout = false;

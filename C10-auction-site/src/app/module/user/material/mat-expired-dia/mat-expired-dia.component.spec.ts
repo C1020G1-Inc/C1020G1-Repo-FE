@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuctionPaymentComponent } from './auction-payment.component';
+import { MatExpiredDiaComponent } from './mat-expired-dia.component';
 
-describe('AuctionPaymentComponent', () => {
-  let component: AuctionPaymentComponent;
-  let fixture: ComponentFixture<AuctionPaymentComponent>;
+describe('MatExpiredDiaComponent', () => {
+  let component: MatExpiredDiaComponent;
+  let fixture: ComponentFixture<MatExpiredDiaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuctionPaymentComponent ]
+      declarations: [ MatExpiredDiaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuctionPaymentComponent);
+    fixture = TestBed.createComponent(MatExpiredDiaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

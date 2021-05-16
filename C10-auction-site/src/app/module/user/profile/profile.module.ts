@@ -9,6 +9,10 @@ import {HistoryAuctionProductComponent} from './history-auction-product/history-
 import {RegisterComponent} from './register/register.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {MaterialModule} from '../material/material.module';
+import {HeaderFooterModule} from '../header-footer/header-footer.module';
+import {RouterModule} from '@angular/router';
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [ViewProfileComponent, UpdateProfileComponent, HistoryRegisterProductComponent,
@@ -16,9 +20,15 @@ import {MaterialModule} from '../material/material.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    HeaderFooterModule,
+    RouterModule,
+    FormsModule
   ],
   exports: [
-  ]
+    HistoryRegisterProductComponent,
+    HistoryAuctionProductComponent
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {
+}

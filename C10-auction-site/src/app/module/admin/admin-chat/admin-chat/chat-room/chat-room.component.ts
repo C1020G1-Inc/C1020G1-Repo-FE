@@ -9,7 +9,6 @@ import {TokenStorageService} from '../../../../../service/authentication/token-s
 import {Notification} from '../../../../../model/temporary/notification';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {UserModule} from '../../../../user/user.module';
 
 @Component({
   selector: 'app-chat-room',

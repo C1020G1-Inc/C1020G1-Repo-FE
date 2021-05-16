@@ -1,1 +1,585 @@
-<p>invoice works!</p>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8"/>-->
+<!--  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+<!--  <title>Document</title>-->
+<!--  <link-->
+<!--    rel="stylesheet"-->
+<!--    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+<!--    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"-->
+<!--    crossorigin="anonymous"-->
+<!--  />-->
+<!--  <link-->
+<!--    rel="stylesheet"-->
+<!--    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"-->
+<!--  />-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--  <script-->
+<!--    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"-->
+<!--    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"-->
+<!--    crossorigin="anonymous"-->
+<!--  ></script>-->
+<!--  <script-->
+<!--    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"-->
+<!--    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"-->
+<!--    crossorigin="anonymous"-->
+<!--  ></script>-->
+<!--  <style>-->
+<!--    * {-->
+<!--      margin: 0;-->
+<!--      padding: 0;-->
+<!--    }-->
+
+<!--    html {-->
+<!--      height: 100%;-->
+<!--    }-->
+
+<!--    #grad1 {-->
+<!--      background-color: #9c27b0;-->
+<!--      background-image: linear-gradient(120deg, #ff4081, #81d4fa);-->
+<!--    }-->
+
+<!--    #msform {-->
+<!--      text-align: center;-->
+<!--      position: relative;-->
+<!--      margin-top: 20px;-->
+<!--    }-->
+
+<!--    #msform fieldset .form-card {-->
+<!--      background: white;-->
+<!--      border: 0 none;-->
+<!--      border-radius: 0px;-->
+<!--      box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);-->
+<!--      padding: 20px 40px 30px 40px;-->
+<!--      box-sizing: border-box;-->
+<!--      width: 94%;-->
+<!--      margin: 0 3% 20px 3%;-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    #msform fieldset {-->
+<!--      background: white;-->
+<!--      border: 0 none;-->
+<!--      border-radius: 0.5rem;-->
+<!--      box-sizing: border-box;-->
+<!--      width: 100%;-->
+<!--      margin: 0;-->
+<!--      padding-bottom: 20px;-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    #msform fieldset:not(:first-of-type) {-->
+<!--      display: none;-->
+<!--    }-->
+
+<!--    #msform fieldset .form-card {-->
+<!--      text-align: left;-->
+<!--      color: #9e9e9e;-->
+<!--    }-->
+
+<!--    #msform input,-->
+<!--    #msform select,-->
+<!--    #msform option,-->
+<!--    #msform textarea {-->
+<!--      padding: 0px 8px 4px 8px;-->
+<!--      border: none;-->
+<!--      border-bottom: 1px solid #ccc;-->
+<!--      border-radius: 0px;-->
+<!--      margin-bottom: 25px;-->
+<!--      margin-top: 2px;-->
+<!--      width: 100%;-->
+<!--      box-sizing: border-box;-->
+<!--      font-family: montserrat;-->
+<!--      color: #2c3e50;-->
+<!--      font-size: 16px;-->
+<!--      letter-spacing: 1px;-->
+<!--    }-->
+
+<!--    #msform select {-->
+<!--      padding-left: 4px;-->
+<!--    }-->
+
+<!--    #msform input[type="radio"] {-->
+<!--      width: 10%;-->
+<!--    }-->
+
+<!--    #msform label {-->
+<!--      color: #000000;-->
+<!--    }-->
+
+<!--    #msform input:focus,-->
+<!--    #msform select:focus,-->
+<!--    #msform option:focus,-->
+<!--    #msform textarea:focus {-->
+<!--      -moz-box-shadow: none !important;-->
+<!--      -webkit-box-shadow: none !important;-->
+<!--      box-shadow: none !important;-->
+<!--      border: none;-->
+<!--      font-weight: bold;-->
+<!--      border-bottom: 2px solid skyblue;-->
+<!--      outline-width: 0;-->
+<!--    }-->
+
+<!--    #msform .action-button {-->
+<!--      width: 100px;-->
+<!--      background: skyblue;-->
+<!--      font-weight: bold;-->
+<!--      color: white;-->
+<!--      border: 0 none;-->
+<!--      border-radius: 0px;-->
+<!--      cursor: pointer;-->
+<!--      padding: 10px 5px;-->
+<!--      margin: 10px 5px;-->
+<!--    }-->
+
+<!--    #msform .action-button:hover,-->
+<!--    #msform .action-button:focus {-->
+<!--      box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;-->
+<!--    }-->
+
+<!--    #msform .action-button-previous {-->
+<!--      width: 100px;-->
+<!--      background: #616161;-->
+<!--      font-weight: bold;-->
+<!--      color: white;-->
+<!--      border: 0 none;-->
+<!--      border-radius: 0px;-->
+<!--      cursor: pointer;-->
+<!--      padding: 10px 5px;-->
+<!--      margin: 10px 5px;-->
+<!--    }-->
+
+<!--    #msform .action-button-previous:hover,-->
+<!--    #msform .action-button-previous:focus {-->
+<!--      box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;-->
+<!--    }-->
+
+<!--    select.list-dt {-->
+<!--      border: none;-->
+<!--      outline: 0;-->
+<!--      border-bottom: 1px solid #ccc;-->
+<!--      padding: 2px 5px 3px 5px;-->
+<!--      margin: 2px;-->
+<!--    }-->
+
+<!--    select.list-dt:focus {-->
+<!--      border-bottom: 2px solid skyblue;-->
+<!--    }-->
+
+<!--    .card {-->
+<!--      z-index: 0;-->
+<!--      border: none;-->
+<!--      border-radius: 0.5rem;-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    .fs-title {-->
+<!--      font-size: 25px;-->
+<!--      color: #2c3e50;-->
+<!--      margin-bottom: 10px;-->
+<!--      font-weight: bold;-->
+<!--      text-align: left;-->
+<!--    }-->
+
+<!--    #progressbar {-->
+<!--      margin-bottom: 30px;-->
+<!--      overflow: hidden;-->
+<!--      color: lightgrey;-->
+<!--    }-->
+
+<!--    #progressbar .active {-->
+<!--      color: #000000;-->
+<!--    }-->
+
+<!--    #progressbar li {-->
+<!--      list-style-type: none;-->
+<!--      font-size: 12px;-->
+<!--      width: 25%;-->
+<!--      float: left;-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    #progressbar #delivery-address:before {-->
+<!--      font-family: FontAwesome;-->
+<!--      content: "\f124";-->
+<!--    }-->
+
+<!--    #progressbar #checkout-format:before {-->
+<!--      font-family: FontAwesome;-->
+<!--      content: "\f09d";-->
+<!--    }-->
+
+<!--    #progressbar #delivery-format-title:before {-->
+<!--      font-family: FontAwesome;-->
+<!--      content: "\f0d1";-->
+<!--    }-->
+
+<!--    #progressbar #confirm:before {-->
+<!--      font-family: FontAwesome;-->
+<!--      content: "\f00c";-->
+<!--    }-->
+
+<!--    #progressbar li:before {-->
+<!--      width: 50px;-->
+<!--      height: 50px;-->
+<!--      line-height: 45px;-->
+<!--      display: block;-->
+<!--      font-size: 18px;-->
+<!--      color: #ffffff;-->
+<!--      background: lightgray;-->
+<!--      border-radius: 50%;-->
+<!--      margin: 0 auto 10px auto;-->
+<!--      padding: 2px;-->
+<!--    }-->
+
+<!--    #progressbar li:after {-->
+<!--      content: "";-->
+<!--      width: 100%;-->
+<!--      height: 2px;-->
+<!--      background: lightgray;-->
+<!--      position: absolute;-->
+<!--      left: 0;-->
+<!--      top: 25px;-->
+<!--      z-index: -1;-->
+<!--    }-->
+
+<!--    #progressbar li.active:before,-->
+<!--    #progressbar li.active:after {-->
+<!--      background: skyblue;-->
+<!--    }-->
+
+<!--    .radio-group {-->
+<!--      position: relative;-->
+<!--      margin-bottom: 25px;-->
+<!--    }-->
+
+<!--    .radio {-->
+<!--      display: inline-block;-->
+<!--      width: 204px;-->
+<!--      height: 104px;-->
+<!--      border-radius: 0;-->
+<!--      background: lightblue;-->
+<!--      box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);-->
+<!--      box-sizing: border-box;-->
+<!--      margin: 8px 2px;-->
+<!--    }-->
+
+<!--    .fit-image {-->
+<!--      width: 100%;-->
+<!--      object-fit: cover;-->
+<!--    }-->
+
+<!--    td {-->
+
+<!--    }-->
+
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; MultiStep Form &ndash;&gt;-->
+<!--<div class="container-fluid" id="grad1">-->
+<!--  <div class="row justify-content-center mt-0">-->
+<!--    <div-->
+<!--      class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"-->
+<!--    >-->
+<!--      <div class="card px-0 pt-4 pb-0 mt-3 mb-3">-->
+<!--        <h2><strong>Thanh Toán</strong></h2>-->
+<!--        <div class="row">-->
+<!--          <div class="col-md-12 mx-0">-->
+<!--            <form id="msform">-->
+<!--              &lt;!&ndash; progressbar &ndash;&gt;-->
+<!--              <ul id="progressbar">-->
+<!--                <li id="delivery-address">-->
+<!--                  <strong>Địa chỉ gửi hàng</strong>-->
+<!--                </li>-->
+<!--                <li id="checkout-format">-->
+<!--                  <strong>Hình thức thanh toán</strong>-->
+<!--                </li>-->
+<!--                <li id="delivery-format-title">-->
+<!--                  <strong>Hình thức giao hàng</strong>-->
+<!--                </li>-->
+<!--                <li class="active" id="confirm">-->
+<!--                  <strong>Tình trạng đơn hàng</strong>-->
+<!--                </li>-->
+<!--              </ul>-->
+
+<!--              <div class="container" id="pdfTable">-->
+
+<!--                <h4 class="text-left">-->
+<!--                  Hình thức thanh toán:-->
+<!--                </h4>-->
+
+<!--                <div class="col-12">-->
+<!--                  <div class="row border mb-3">-->
+<!--                    <div class="col-6">-->
+<!--                      <div class="d-flex h-100 justify-content-center align-items-center">-->
+<!--                        <h5 class="m-0">-->
+<!--                          Chuyển khoản qua ngân hàng-->
+<!--                        </h5>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-6">-->
+<!--                      <div class="d-flex justify-content-center align-items-center">-->
+<!--                        <img src="../../../../../assets/img/a58cc628e6de269.jpg"-->
+<!--                             alt="Vietcombank"-->
+<!--                             style="max-height: 50px">-->
+<!--                        <h5 class="p-0 m-0">-->
+<!--                          Vietcombank-->
+<!--                        </h5>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="col-12 mb-3" style="background-color: wheat">-->
+<!--                    <div class="pt-2 pb-2">-->
+<!--                      <h5>-->
+<!--                        Để nhận sản phẩm đã thắng vui lòng chuyển khoản-->
+
+<!--                        <i class="text-danger">-->
+<!--                          11,050,000 VND-->
+<!--                        </i>-->
+
+<!--                        tới số tài khoản:-->
+
+<!--                        <i class="text-danger">-->
+<!--                          0123456789-->
+<!--                        </i>-->
+
+<!--                        ngân hàng-->
+
+<!--                        <i class="text-danger">-->
+<!--                          Vietcombank-->
+<!--                        </i>-->
+<!--                      </h5>-->
+<!--                      <h6>-->
+<!--                        Thời hạn để chuyển khoản trước khi bị thu hồi quyền được mua sản phẩm-->
+<!--                        đấu giá là-->
+<!--                        <i class="text-danger">-->
+<!--                          05/05/2021-->
+<!--                        </i>-->
+<!--                        ,sau thời hạn trên sản phẩm sẽ được trả về đơn vị cung cấp!-->
+<!--                      </h6>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <h4 class="text-left">-->
+<!--                    Chi tiết đơn hàng:-->
+<!--                  </h4>-->
+
+<!--                  <div class="row border mb-3">-->
+<!--                    <div class="col-6">-->
+<!--                      <div class="d-flex h-100 align-items-center">-->
+<!--                        <h5 class="m-0">-->
+<!--                          Đơn hàng: 0123456789-->
+<!--                        </h5>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-6">-->
+<!--                      <div class="">-->
+<!--                        <div class="d-flex justify-content-end">-->
+<!--                          <img src="../../../../../assets/img/1519959194921.png"-->
+<!--                               alt="Codegym"-->
+<!--                               style="max-height: 75px">-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="row border mb-3">-->
+<!--                    <div class="col-6">-->
+<!--                      <div class="text-left">-->
+<!--                        <h3 class="m-0">-->
+<!--                          Trần Hữu Kiên-->
+<!--                        </h3>-->
+<!--                        <p class="m-0">-->
+<!--                          Địa chỉ: 463 Hải Phòng-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Quốc Gia: Việt Nam-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Tỉnh/Thành Phố: Đà Nẵng-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Quận/Huyện: Thanh Khê-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Số điện thoại: +84123456789-->
+<!--                        </p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-6">-->
+<!--                      <div class="text-right">-->
+<!--                        <h3 class="m-0">-->
+<!--                          Công ty CodeGym-->
+<!--                        </h3>-->
+<!--                        <p class="m-0">-->
+<!--                          Địa chỉ: 295 Nguyễn Tất Thành-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Quốc Gia: Việt Nam-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Tỉnh/Thành Phố: Đà Nẵng-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Quận/Huyện: Hải Châu-->
+<!--                        </p>-->
+<!--                        <p class="m-0">-->
+<!--                          Số điện thoại: +84123456789-->
+<!--                        </p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div>-->
+<!--                    <table class="table text-center table-bordered">-->
+<!--                      <thead class="thead-dark">-->
+<!--                      <tr>-->
+<!--                        <th scope="col">Sản phẩm</th>-->
+<!--                        <th scope="col">Số lượng</th>-->
+<!--                        <th scope="col">Giá</th>-->
+<!--                      </tr>-->
+<!--                      </thead>-->
+<!--                      <tbody>-->
+<!--                      <tr>-->
+<!--                        <th>-->
+<!--                          <img src="../../../../../assets/img/dsc03049_copy_67c0b8c762244b6e9f102f2cd570b0f0_grande.jpg"-->
+<!--                               alt="sản phẩm"-->
+<!--                               style="max-height: 75px">-->
+<!--                          Máy tính xách tay-->
+<!--                        </th>-->
+<!--                        <td class="align-middle">1</td>-->
+<!--                        <td class="align-middle">10,000,000</td>-->
+<!--                      </tr>-->
+<!--                      <tr>-->
+<!--                        <th colspan="2" style="font-weight: bold">Giá sản phẩm trước thuế</th>-->
+<!--                        <td>10,000,000 VND</td>-->
+<!--                      </tr>-->
+<!--                      <tr>-->
+<!--                        <th colspan="2">Thuế (10%)</th>-->
+<!--                        <td>1,000,000 VND</td>-->
+<!--                      </tr>-->
+<!--                      <tr>-->
+<!--                        <th colspan="2">Phí giao hàng</th>-->
+<!--                        <td>50,000 VND</td>-->
+<!--                      </tr>-->
+<!--                      <tr>-->
+<!--                        <th colspan="2" style="font-weight: bold">Tổng tiền</th>-->
+<!--                        <td>11,050,000 VND</td>-->
+<!--                      </tr>-->
+<!--                      </tbody>-->
+<!--                    </table>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <input-->
+<!--                type="button"-->
+<!--                (click)="generatePdf('download')"-->
+<!--                name="previous"-->
+<!--                class="previous action-button-previous"-->
+<!--                style="width: 25%"-->
+<!--                value="In hóa đơn"-->
+<!--              />-->
+<!--              <input-->
+<!--                type="button"-->
+<!--                name="make_payment"-->
+<!--                class="next action-button"-->
+<!--                style="width: 40%"-->
+<!--                value="Quay lại lịch sử đấu giá"-->
+<!--              />-->
+<!--            </form>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--<script>-->
+<!--  $(document).ready(function () {-->
+<!--    var current_fs, next_fs, previous_fs; //fieldsets-->
+<!--    var opacity;-->
+
+<!--    $(".next").click(function () {-->
+<!--      current_fs = $(this).parent();-->
+<!--      next_fs = $(this).parent().next();-->
+
+<!--      //Add Class Active-->
+<!--      $("#progressbar li")-->
+<!--        .eq($("fieldset").index(next_fs))-->
+<!--        .addClass("active");-->
+
+<!--      //show the next fieldset-->
+<!--      next_fs.show();-->
+<!--      //hide the current fieldset with style-->
+<!--      current_fs.animate(-->
+<!--        {opacity: 0},-->
+<!--        {-->
+<!--          step: function (now) {-->
+<!--            // for making fielset appear animation-->
+<!--            opacity = 1 - now;-->
+
+<!--            current_fs.css({-->
+<!--              display: "none",-->
+<!--              position: "relative",-->
+<!--            });-->
+<!--            next_fs.css({opacity: opacity});-->
+<!--          },-->
+<!--          duration: 600,-->
+<!--        }-->
+<!--      );-->
+<!--    });-->
+
+<!--    $(".previous").click(function () {-->
+<!--      current_fs = $(this).parent();-->
+<!--      previous_fs = $(this).parent().prev();-->
+
+<!--      //Remove class active-->
+<!--      $("#progressbar li")-->
+<!--        .eq($("fieldset").index(current_fs))-->
+<!--        .removeClass("active");-->
+
+<!--      //show the previous fieldset-->
+<!--      previous_fs.show();-->
+
+<!--      //hide the current fieldset with style-->
+<!--      current_fs.animate(-->
+<!--        {opacity: 0},-->
+<!--        {-->
+<!--          step: function (now) {-->
+<!--            // for making fielset appear animation-->
+<!--            opacity = 1 - now;-->
+
+<!--            current_fs.css({-->
+<!--              display: "none",-->
+<!--              position: "relative",-->
+<!--            });-->
+<!--            previous_fs.css({opacity: opacity});-->
+<!--          },-->
+<!--          duration: 600,-->
+<!--        }-->
+<!--      );-->
+<!--    });-->
+
+<!--    $(".radio-group .radio").click(function () {-->
+<!--      $(this).parent().find(".radio").removeClass("selected");-->
+<!--      $(this).addClass("selected");-->
+<!--    });-->
+
+<!--    $(".submit").click(function () {-->
+<!--      return false;-->
+<!--    });-->
+
+<!--    $(function () {-->
+<!--      $("input[name=checkout-format]")-->
+<!--        .on("click init-post-format", function () {-->
+<!--          $("#credit-card").toggle($("#checkout-credit").prop("checked"));-->
+<!--        })-->
+<!--        .trigger("init-post-format");-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+<!--</html>-->

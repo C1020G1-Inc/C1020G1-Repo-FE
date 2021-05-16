@@ -25,6 +25,9 @@ import {AuctionCartComponent} from './module/user/auction/auction-cart/auction-c
 import {AuctionPaymentComponent} from './module/user/auction/auction-payment/auction-payment.component';
 import {InvoiceComponent} from './module/user/auction/invoice/invoice.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
+import {ListTransactionComponent} from './module/admin/transaction-management/list-transaction/list-transaction.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 
 const routes: Routes = [
@@ -36,7 +39,7 @@ const routes: Routes = [
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
       {path: 'transactions', component: TransactionManagementModule},
-      {path: 'chat/:roomname', component: AdminChatComponent},
+      {path: 'transactions', component: ListTransactionComponent},
       {path: 'chat', component: AdminChatComponent},
     ], canActivate: [AdminAuthGuardService]
   },
@@ -46,11 +49,11 @@ const routes: Routes = [
   {
     path: 'profile',
     children: [
-      {path: 'update', component: UpdateProfileComponent},
-      {path: '', component: ViewProfileComponent},
+      {path: 'view', component: ViewProfileComponent, canActivate: [AuthGuardService]},
+      {path: 'update/:id', component: UpdateProfileComponent},
       {path: 'history-register', component: HistoryRegisterProductComponent},
       {path: 'history-auction', component: HistoryAuctionProductComponent},
-    ], component: ViewProfileComponent, canActivate: [AuthGuardService]
+    ]
   },
   {path: 'home', component: ListProductHomeComponent},
   {path: 'detail/:id', component: DetailProductComponent},
@@ -69,7 +72,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), AdminModule, UserModule],
+  imports: [RouterModule.forRoot(routes), AdminModule, UserModule, RouterModule , NgxPaginationModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

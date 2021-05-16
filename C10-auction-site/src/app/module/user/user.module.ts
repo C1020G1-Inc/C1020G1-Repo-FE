@@ -5,10 +5,10 @@ import { ProfileModule } from './profile/profile.module';
 import { AuctionModule } from './auction/auction.module';
 import { LoginModule } from './login/login.module';
 import { HomePageModule } from './home-page/home-page.module';
+import {RouterModule} from "@angular/router";
 import { NgModule } from '@angular/core';
 import {UserChatComponent} from './user-chat/user-chat/user-chat.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 
 
 @NgModule({
@@ -19,6 +19,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     AuctionModule,
     LoginModule,
     HomePageModule,
+    RouterModule,
     MatDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
@@ -26,4 +27,5 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   ],
   exports: [UserChatComponent]
 })
-export class UserModule { }
+export class UserModule {
+}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateProfileComponent } from './update-profile.component';
+import { LeftSideBarComponent } from './left-side-bar.component';
 
-describe('UpdateProfileComponent', () => {
-  let component: UpdateProfileComponent;
-  let fixture: ComponentFixture<UpdateProfileComponent>;
+describe('LeftSideBarComponent', () => {
+  let component: LeftSideBarComponent;
+  let fixture: ComponentFixture<LeftSideBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateProfileComponent ]
+      declarations: [ LeftSideBarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpdateProfileComponent);
+    fixture = TestBed.createComponent(LeftSideBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
