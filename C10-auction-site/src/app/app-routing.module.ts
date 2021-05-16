@@ -1,3 +1,5 @@
+import { AdminAuthGuardService } from './service/authentication/admin-auth-guard.service';
+import { AuthGuardService } from './service/authentication/auth-guard.service';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AdminModule} from './module/admin/admin.module';
@@ -36,7 +38,7 @@ const routes: Routes = [
       {path: 'product-management/chart', component: ProductChartComponent},
       {path: 'transactions', component: ListTransactionComponent},
       {path: 'chat', component: AdminChatComponent},
-    ]
+    ], canActivate: [AdminAuthGuardService]
   },
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -44,7 +46,7 @@ const routes: Routes = [
   {
     path: 'profile',
     children: [
-      {path: 'view', component: ViewProfileComponent},
+      {path: 'view', component: ViewProfileComponent, canActivate: [AuthGuardService]},
       {path: 'update/:id', component: UpdateProfileComponent},
       {path: 'history-register', component: HistoryRegisterProductComponent},
       {path: 'history-auction', component: HistoryAuctionProductComponent},
@@ -61,12 +63,12 @@ const routes: Routes = [
       {path: 'cart', component: AuctionCartComponent},
       {path: 'payment', component: AuctionPaymentComponent},
       {path: 'invoice', component: InvoiceComponent}
-    ]
+    ], canActivate: [AuthGuardService]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), AdminModule, UserModule, NgxPaginationModule],
+  imports: [RouterModule.forRoot(routes), AdminModule, UserModule, RouterModule , NgxPaginationModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

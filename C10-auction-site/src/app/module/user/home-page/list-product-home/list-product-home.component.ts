@@ -11,5 +11,4 @@ export class ListProductHomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

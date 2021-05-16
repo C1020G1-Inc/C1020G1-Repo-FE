@@ -1,22 +1,17 @@
-import { NgModule } from '@angular/core';
+import { HeaderFooterModule } from './header-footer/header-footer.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { ProfileModule } from './profile/profile.module';
 import { UserChatModule } from './user-chat/user-chat.module';
 import { AuctionModule } from './auction/auction.module';
 import { LoginModule } from './login/login.module';
 import { HomePageModule } from './home-page/home-page.module';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import {RouterModule} from "@angular/router";
-
+import { NgModule } from '@angular/core';
 
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ProfileModule,
@@ -24,7 +19,12 @@ import {RouterModule} from "@angular/router";
     AuctionModule,
     LoginModule,
     HomePageModule,
-    RouterModule
-  ]
+    RouterModule,
+    MatDatepickerModule,
+    HeaderFooterModule
+  ],
+  exports: [
+  ],
 })
-export class UserModule { }
+export class UserModule {
+}

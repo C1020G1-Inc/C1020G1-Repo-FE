@@ -4,6 +4,9 @@ import {AccountService} from '../../../../service/account.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from "../../../../model/User";
 import {UserService} from "../../../../service/user.service";
+import {DatePipe} from "@angular/common";
+import {TokenStorageService} from "../../../../service/authentication/token-storage";
+import {Account} from "../../../../model/Account";
 
 @Component({
   selector: 'app-update-profile',
@@ -15,16 +18,20 @@ export class UpdateProfileComponent implements OnInit {
   public formEditUser: FormGroup;
   public accountId;
   public message: string;
+  public accountLogin: Account;
 
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
     public userService: UserService,
     public router: Router,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    public tokenService: TokenStorageService
   ) { }
 
   ngOnInit(): void {
+    this.accountLogin = this.tokenService.getAccount();
+
     this.formEditUser = this.formBuilder.group({
       userId: [''],
       userName: ['', [Validators.required, Validators.minLength(5)]],
@@ -40,6 +47,8 @@ export class UpdateProfileComponent implements OnInit {
       this.accountService.findAccount(this.accountId).subscribe(data1 => {
         this.formEditUser.patchValue(data1);
         this.formEditUser.patchValue(data1.user);
+        this.formEditUser.controls.birthday.setValue(data1.user.birthday = data1.user.birthday.slice(0,10))
+        console.log(this.formEditUser.value);
       });
     });
   }
@@ -47,8 +56,9 @@ export class UpdateProfileComponent implements OnInit {
   updateUser() {
     // console.log(this.formEditUser.value);
     this.userService.updateUser(this.accountId, this.formEditUser.value).subscribe(data => {
+      this.accountLogin.user = this.formEditUser.value;
+      this.tokenService.saveAccountStorage(this.accountLogin);
       this.message = 'Cập nhật thành công !!';
-      console.log(data);
     });
   }
 
