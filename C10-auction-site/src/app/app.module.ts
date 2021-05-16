@@ -4,10 +4,12 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {HttpClientModule} from '@angular/common/http';
+import {UserModule} from './module/user/user.module';
+import {ProfileModule} from './module/user/profile/profile.module';
 import {NgxLoadingModule} from 'ngx-loading';
 import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
@@ -24,6 +26,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     AngularFireDatabaseModule,
     SocialLoginModule,
     AngularFireStorageModule,
+    UserModule,
+    ProfileModule
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',

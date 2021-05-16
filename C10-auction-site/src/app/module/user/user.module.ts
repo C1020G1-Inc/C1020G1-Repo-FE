@@ -6,6 +6,7 @@ import { UserChatModule } from './user-chat/user-chat.module';
 import { AuctionModule } from './auction/auction.module';
 import { LoginModule } from './login/login.module';
 import { HomePageModule } from './home-page/home-page.module';
+import {RouterModule} from "@angular/router";
 import { NgModule } from '@angular/core';
 
 
@@ -18,8 +19,11 @@ import { NgModule } from '@angular/core';
     AuctionModule,
     LoginModule,
     HomePageModule,
+    RouterModule,
     MatDatepickerModule,
     HeaderFooterModule
+  ],
+  exports: [
   ],
 })
 export class UserModule {

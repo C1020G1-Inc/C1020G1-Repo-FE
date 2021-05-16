@@ -1,4 +1,3 @@
-import { UserModule } from './../user.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -10,7 +9,8 @@ import {RegisterComponent} from './register/register.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {MaterialModule} from '../material/material.module';
 import {HeaderFooterModule} from '../header-footer/header-footer.module';
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -21,9 +21,13 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     MaterialModule,
     HeaderFooterModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
-  ]
+    HistoryRegisterProductComponent,
+    HistoryAuctionProductComponent
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {
+}

@@ -17,7 +17,7 @@ export class AdminAuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.tokenStorage.isLogged()) {
-        if (this.tokenStorage.getRoles()[0] === 'admin'){
+        if (this.tokenStorage.getRoles().includes('ADMIN')){
             return true;
         }
     }
