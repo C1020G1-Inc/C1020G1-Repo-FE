@@ -1,1 +1,46 @@
-<p>history-auction-product works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="card card-plain">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title mt-0">Auction Item Registration History</h4>
+          <p class="card-category"> (Lịch sử đăng ký mặt hàng đấu giá)</p>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <tr class="table-warning">
+                <th>STT</th>
+                <th>Số đơn hàng</th>
+                <th>Tên sản phẩm</th>
+                <th>Thông tin sản phẩm</th>
+                <th>Giá đăng ký (VND)</th>
+                <th>Ngày đăng kí</th>
+                <th>Tình trạng</th>
+              </tr>
+              <tbody>
+              <tr *ngFor="let auction of productAuction , let i = index">
+                <td>{{i+1}}</td>
+                <td>{{auction.auctionId}}</td>
+                <td>{{auction.product.productName}}</td>
+                <td>{{auction.product.description}}</td>
+                <td>{{auction.product.price}}</td>
+                <td>{{auction.product.registerTime | date: 'dd/MM/yyyy'}}</td>
+                <td>{{auction.status}}</td>
+              </tr>
+
+              </tbody>
+            </table>
+            <br>
+            <div class="text-center" *ngIf="productAuction">
+              <span>Viewing {{productAuction.length}} of {{data.totalElements}} Items</span><br>
+              <i class="fas fa-chevron-circle-down " style="font-size: 150%; cursor: pointer" *ngIf="productAuction.length !== data.totalElements" (click)="loadMoreProduct()"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
