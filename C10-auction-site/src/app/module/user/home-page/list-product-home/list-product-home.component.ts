@@ -1,7 +1,4 @@
-import { TokenStorageService } from './../../../../service/authentication/token-storage';
-import { AccountService } from './../../../../service/authentication/account-service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-product-home',

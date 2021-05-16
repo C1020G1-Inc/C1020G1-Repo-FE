@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../../../../service/authentication/authentication-service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../../service/authentication/token-storage';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import JwtRequest from 'src/app/service/authentication/JwtRequest';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -28,10 +28,12 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private authenticationService: AuthenticationService,
               private authService: SocialAuthService,
-              private title: Title) { }
+              private title: Title,
+              private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.title.setTitle('Đăng nhập');
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
     if (this.tokenStorage.isLogged()) {
       if (this.tokenStorage.getRoles()[0] === 'MEMBER') {
         this.router.navigateByUrl('/home');

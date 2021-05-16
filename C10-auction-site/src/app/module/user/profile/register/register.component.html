@@ -272,34 +272,45 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="province"> Tỉnh/Thành phố <span class="text-danger">(*)</span></label>
+                                <div class="label-res">
+                                    <label for="province"> Tỉnh/Thành phố <span class="text-danger">(*)</span></label>
+                                </div>
                                 <div class="input-group">
-                                    <select [class.is-invalid]="province.invalid && (province.dirty || province.touched)"
-                                        [class.is-valid]="province.valid" id="province"
-                                        class="form-control" (change)="changeProvince($event.target.value)">
-                                        <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">{{provinces.province_name}}</option>
+                                    <select
+                                        [class.is-invalid]="province.invalid && (province.dirty || province.touched)"
+                                        [class.is-valid]="province.valid" id="province" class="form-control"
+                                        (change)="changeProvince($event.target.value)">
+                                        <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">
+                                            {{provinces.province_name}}</option>
                                     </select>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="province"> Quận/Huyện <span class="text-danger">(*)</span></label>
+                                <div class="label-res">
+                                    <label for="district"> Quận/Huyện <span class="text-danger">(*)</span></label>
+                                </div>
                                 <div class="input-group">
-                                    <select [class.is-invalid]="district.invalid && (district.dirty || district.touched)"
-                                        [class.is-valid]="district.valid" id="district"
-                                        class="form-control" (change)="changeDistrict($event.target.value)">
-                                        <option *ngFor="let districts of districtList" [value]="districts.district_id">{{districts.district_name}}</option>
+                                    <select
+                                        [class.is-invalid]="district.invalid && (district.dirty || district.touched)"
+                                        [class.is-valid]="district.valid" id="district" class="form-control"
+                                        (change)="changeDistrict($event.target.value)">
+                                        <option *ngFor="let districts of districtList" [value]="districts.district_id">
+                                            {{districts.district_name}}</option>
                                     </select>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="province"> Xã/Thị trấn <span class="text-danger">(*)</span></label>
+                                <div class="label-res">
+                                    <label for="ward"> Xã/Thị trấn <span class="text-danger">(*)</span></label>
+                                </div>
                                 <div class="input-group">
                                     <select [class.is-invalid]="ward.invalid && (ward.dirty || ward.touched)"
-                                        [class.is-valid]="ward.valid" id="ward"
-                                        class="form-control" (change)="changeWard($event.target.value)">
-                                        <option *ngFor="let wards of wardList" [value]="wards.ward_id">{{wards.ward_name}}</option>
+                                        [class.is-valid]="ward.valid" id="ward" class="form-control"
+                                        (change)="changeWard($event.target.value)">
+                                        <option *ngFor="let wards of wardList" [value]="wards.ward_id">
+                                            {{wards.ward_name}}</option>
                                     </select>
                                 </div>
                                 <div class="invalid-feedback"></div>
@@ -331,7 +342,7 @@
                                     kí</button>
                             </div>
                             <div class="col-lg-6 pl-1 pr-1 mb-1">
-                                <a href="/login" class="btn btn-primary btn-block">Quay về đăng nhập</a>
+                                <a routerLink="/login" class="btn btn-primary btn-block">Quay về đăng nhập</a>
                             </div>
                         </div>
                     </div>

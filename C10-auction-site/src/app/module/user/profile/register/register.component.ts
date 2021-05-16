@@ -5,7 +5,7 @@ import { AccountService } from './../../../../service/authentication/account-ser
 import { User } from './../../../../model/User';
 import { TokenStorageService } from './../../../../service/authentication/token-storage';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Account } from 'src/app/model/Account';
 import { finalize, map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -34,10 +34,11 @@ export class RegisterComponent implements OnInit {
   imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
   constructor(private tokenStorage: TokenStorageService, private accountService: AccountService,
               private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
-              private title: Title) { }
+              private title: Title, private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.title.setTitle('Đăng ký');
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
     if (this.tokenStorage.isLogged()) {
       this.router.navigateByUrl('/home');
     }
@@ -51,9 +52,9 @@ export class RegisterComponent implements OnInit {
           this.wardList = dataWard.results;
           this.ward.setValue(this.wardList[0].ward_name);
           if (this.wardList === undefined || this.wardList.length === 0) {
-            this.address.setValue(this.district.value + '' + this.province.value);
+            this.address.setValue(this.district.value + ' ' + this.province.value);
           } else {
-            this.address.setValue(this.ward.value + ' ' + this.district.value + '' + this.province.value);
+            this.address.setValue(this.ward.value + ' ' + this.district.value + ' ' + this.province.value);
           }
         });
       });
@@ -237,7 +238,8 @@ export class RegisterComponent implements OnInit {
     this.accountService.getAllWardByDistrict(districtId).subscribe(data => {
       this.wardList = data.results;
       if (this.wardList === undefined || this.wardList.length === 0) {
-        this.address.setValue(this.district.value + '' + this.province.value);
+        this.ward.setValue('not available');
+        this.address.setValue(this.district.value + ' ' + this.province.value);
       } else {
         this.changeWard(this.wardList[0].ward_id);
       }
@@ -247,7 +249,7 @@ export class RegisterComponent implements OnInit {
   changeWard(wardId: number) {
     const wardSelect = this.wardList.find(e => e.ward_id === wardId);
     this.ward.setValue(wardSelect.ward_name);
-    this.address.setValue(this.ward.value + ' ' + this.district.value + '' + this.province.value);
+    this.address.setValue(this.ward.value + ' ' + this.district.value + ' ' + this.province.value);
   }
 
   get accountName() {
