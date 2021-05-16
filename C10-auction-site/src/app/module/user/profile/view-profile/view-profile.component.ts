@@ -16,7 +16,7 @@ export class ViewProfileComponent implements OnInit {
     phone: '090512312',
     identity: '123456456',
     address: '123 Lê Độ',
-    avatar: 'qưeqwe'
+    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDW0KyDt8CcYUjbkzMHSiaA9csjcs4D7vyCM4Al7kf_VDzEGzpdZT_6OuEz3c1_y0HHfE&usqp=CAU'
   };
 
   accountLogin: Account = {

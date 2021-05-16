@@ -27,7 +27,7 @@ export class UpdateProfileComponent implements OnInit {
   ngOnInit(): void {
     this.formEditUser = this.formBuilder.group({
       userId: [''],
-      userName: ['', [Validators.required, Validators.minLength(5)]],
+      userName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email]],
       birthday: ['', [Validators.required]],
       identity: ['', [Validators.required, Validators.pattern('(\\d{9})|(\\d{12})')]],

@@ -19,6 +19,9 @@
           <div [hidden] ="!userName.errors?.minlength">
               Họ và tên quá ngắn !!
           </div>
+          <div [hidden] ="!userName.errors?.maxlength">
+            Họ và tên quá dài !!
+          </div>
         </div>
         <div class="form-group">
           <h5 for="email">Email: </h5>

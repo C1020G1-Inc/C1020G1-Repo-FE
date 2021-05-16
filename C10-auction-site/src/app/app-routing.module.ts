@@ -6,7 +6,6 @@ import {ListUserComponent} from './module/admin/user-management/list-user/list-u
 import {UserChartComponent} from './module/admin/user-management/user-chart/user-chart.component';
 import {ProductChartComponent} from './module/admin/product-management/product-chart/product-chart.component';
 import {ListProductAdminComponent} from './module/admin/product-management/list-product-admin/list-product-admin.component';
-import {TransactionManagementModule} from './module/admin/transaction-management/transaction-management.module';
 import {LoginComponent} from './module/user/login/login/login.component';
 import {RegisterComponent} from './module/user/profile/register/register.component';
 import {ForgotPasswordComponent} from './module/user/profile/forgot-password/forgot-password.component';
