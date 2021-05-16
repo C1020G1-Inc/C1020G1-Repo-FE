@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { ProfileModule } from './../profile/profile.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,6 +16,7 @@ import {HeaderFooterModule} from '../header-footer/header-footer.module';
     ReactiveFormsModule,
     ProfileModule,
     HeaderFooterModule
+    RouterModule
   ]
 })
 export class LoginModule { }

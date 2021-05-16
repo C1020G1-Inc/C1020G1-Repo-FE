@@ -7,10 +7,11 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRegisDiaComponent } from './mat-regis-dia/mat-regis-dia.component';
 import { MatLoadingDiaComponent } from './mat-loading-dia/mat-loading-dia.component';
+import { MatExpiredDiaComponent } from './mat-expired-dia/mat-expired-dia.component';
 
 
 @NgModule({
-    declarations: [MatRegisDiaComponent, MatLoadingDiaComponent],
+    declarations: [MatRegisDiaComponent, MatLoadingDiaComponent, MatExpiredDiaComponent],
     imports: [
         MatDatepickerModule,
         MatFormFieldModule,
@@ -28,7 +29,8 @@ import { MatLoadingDiaComponent } from './mat-loading-dia/mat-loading-dia.compon
     ],
     entryComponents: [
         MatRegisDiaComponent,
-        MatLoadingDiaComponent
+        MatLoadingDiaComponent,
+        MatExpiredDiaComponent
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'vi-VN' }

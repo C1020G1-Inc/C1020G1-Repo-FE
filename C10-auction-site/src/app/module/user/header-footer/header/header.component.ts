@@ -35,8 +35,11 @@ export class HeaderComponent implements OnInit {
         }
       });
   }
-
-
+  
+  /**
+   * @author PhinNL
+   * logout
+   */
   logout() {
     this.accountService.logout().subscribe(() => {
       this.tokenStorage.logOut();
@@ -44,10 +47,17 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * @author PhinNL
+   * get isLogged
+   */
   get isLogged() {
     return this.tokenStorage.isLogged();
   }
 
+  /**
+   * @author PhinNL
+   */
   get account(): Account {
     return this.tokenStorage.getAccount();
   }

@@ -10,6 +10,7 @@ import {RegisterComponent} from './register/register.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {MaterialModule} from '../material/material.module';
 import {HeaderFooterModule} from '../header-footer/header-footer.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -20,6 +21,9 @@ import {HeaderFooterModule} from '../header-footer/header-footer.module';
     ReactiveFormsModule,
     MaterialModule,
     HeaderFooterModule,
+    RouterModule
   ],
+  exports: [
+  ]
 })
 export class ProfileModule { }

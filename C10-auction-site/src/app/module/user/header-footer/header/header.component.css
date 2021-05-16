@@ -34,9 +34,7 @@
   color: rgb(238, 93, 26) !important;
 }
 
-
 @media only screen and (max-width: 968px) {
-
   .res div,
   .text-center-md {
     text-align: center !important;
@@ -92,6 +90,7 @@
   transition: all 0.2s;
 }
 
+
 .navbar-toggler.x .icon-bar + .icon-bar {
   margin-top: 4px;
 }
@@ -121,6 +120,7 @@
 .dropdown-menu {
   right: 0px;
   box-shadow: 0px 5px 7px -1px #c1c1c1;
+  padding-bottom: 0px;
   padding: 0px;
 }
 
@@ -148,9 +148,13 @@
   height: 13px;
 }
 
+
 .notification-box a:hover {
   color: rgb(238, 93, 26) !important;
   background-color: transparent !important;
 }
 
-
+.notification-box a:active {
+  color: rgb(238, 93, 26) !important;
+  background-color: transparent !important;
+}

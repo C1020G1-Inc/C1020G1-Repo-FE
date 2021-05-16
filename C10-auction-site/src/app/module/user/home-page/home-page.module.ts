@@ -1,3 +1,4 @@
+import { HeaderFooterModule } from './../header-footer/header-footer.module';
 import { ProfileModule } from './../profile/profile.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,8 @@ import { GuideComponent } from './guide/guide.component';
 @NgModule({
   declarations: [ListProductHomeComponent, DetailProductComponent, CommentProductComponent, GuideComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    HeaderFooterModule
   ]
 })
 export class HomePageModule { }
