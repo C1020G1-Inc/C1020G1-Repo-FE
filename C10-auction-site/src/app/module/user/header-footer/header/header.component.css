@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 .ul-footer li a {
   text-decoration: none !important;
 }
@@ -22,7 +26,7 @@
 
 .navbar .nav-item .dropdown-menu {
   margin-top: 0;
-  border-radius: .5 rem;
+  border-radius: .5rem;
 }
 
 .nav-item div a:hover,
@@ -30,12 +34,7 @@
   color: rgb(238, 93, 26) !important;
 }
 
-
-
-
-
 @media only screen and (max-width: 968px) {
-
   .res div,
   .text-center-md {
     text-align: center !important;
@@ -91,7 +90,8 @@
   transition: all 0.2s;
 }
 
-.navbar-toggler.x .icon-bar+.icon-bar {
+
+.navbar-toggler.x .icon-bar + .icon-bar {
   margin-top: 4px;
 }
 
@@ -113,7 +113,7 @@
 }
 
 .nav-pills .nav-link.active,
-.nav-pills .show>.nav-link {
+.nav-pills .show > .nav-link {
   background-color: #17A2B8;
 }
 
@@ -146,6 +146,12 @@
   border-radius: 50%;
   width: 13px;
   height: 13px;
+}
+
+
+.notification-box a:hover {
+  color: rgb(238, 93, 26) !important;
+  background-color: transparent !important;
 }
 
 .notification-box a:active {

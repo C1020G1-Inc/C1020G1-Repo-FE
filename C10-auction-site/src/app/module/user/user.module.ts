@@ -21,6 +21,6 @@ import { NgModule } from '@angular/core';
     MatDatepickerModule,
     HeaderFooterModule
   ],
-  exports: []
 })
-export class UserModule { }
+export class UserModule {
+}

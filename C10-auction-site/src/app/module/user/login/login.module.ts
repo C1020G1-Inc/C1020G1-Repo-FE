@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HeaderFooterModule} from '../header-footer/header-footer.module';
 
 
 
@@ -14,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     ProfileModule,
+    HeaderFooterModule
     RouterModule
   ]
 })
