@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "C10-auction-site"
+    }
+  },
+  "defaultProject": "C10-auction-site",
+  "cli": {
+    "analytics": "a55e5f44-fc92-4320-bbc6-d99ae3f2ba66"
+  }
 }

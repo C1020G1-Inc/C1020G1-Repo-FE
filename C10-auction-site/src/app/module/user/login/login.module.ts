@@ -15,7 +15,7 @@ import {HeaderFooterModule} from '../header-footer/header-footer.module';
     CommonModule,
     ReactiveFormsModule,
     ProfileModule,
-    HeaderFooterModule
+    HeaderFooterModule,
     RouterModule
   ]
 })
