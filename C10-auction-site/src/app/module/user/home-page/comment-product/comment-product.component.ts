@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {CommentService} from '../../../../service/comment/comment.service';
 import {ActivatedRoute} from '@angular/router';
 import {Comment} from '../../../../model/Comment';
-import {User} from '../../../../models/User';
+import {User} from '../../../../model/user';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Account} from '../../../../models/Account';
+import {Account} from '../../../../model/account';
 import {ProductService} from '../../../../service/product/product.service';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -63,7 +63,7 @@ export class CommentProductComponent implements OnInit {
     this.user = {
       userId: 2,
       userName: 'Hồng Sơn',
-      birthday: '1997-10-24',
+      birthday: null,
       phone: '0905353545',
       identity: 'xyz',
       avatar: 'https://scontent.fdad4-1.fna.fbcdn.net/v/t1.6435-9/117400169_1728001497348245_3122136719951140099_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=QXuObWvM7ZsAX_I-YbX&_nc_ht=scontent.fdad4-1.fna&oh=c901078c43897a8f10e1667e4bf9ddf4&oe=60BF0577',
@@ -75,8 +75,8 @@ export class CommentProductComponent implements OnInit {
       password: '123456',
       email: 'son@gmail.com',
       enable: true,
-      logoutTime: '',
-      user: this.user
+      logoutTime: null,
+      user: null
     };
     this.formComment = this.formBuilder.group({
       content: ['', [Validators.required]],

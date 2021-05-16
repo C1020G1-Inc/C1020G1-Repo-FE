@@ -1,6 +1,6 @@
 import {Category} from './Category';
 import {ProductStatus} from './ProductStatus';
-import {Account} from '../models/Account';
+import {Account} from './account';
 
 export class Product {
   productId: number;

@@ -1,4 +1,4 @@
-import {Account} from '../models/model/Account';
+import {Account} from './account';
 
 export interface Auction {
   auctionId: number ;
