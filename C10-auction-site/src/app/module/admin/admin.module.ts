@@ -5,8 +5,11 @@ import { ProductManagementModule } from './product-management/product-management
 import { TransactionManagementModule } from './transaction-management/transaction-management.module';
 import { AdminChatModule } from './admin-chat/admin-chat.module';
 
+
 @NgModule({
   declarations: [],
+  exports: [
+  ],
   imports: [
     CommonModule,
     UserManagementModule,

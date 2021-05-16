@@ -28,6 +28,7 @@ import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-cha
 import {ListTransactionComponent} from './module/admin/transaction-management/list-transaction/list-transaction.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
+
 const routes: Routes = [
   {
     path: 'admin',
@@ -36,6 +37,7 @@ const routes: Routes = [
       {path: 'user-management/chart', component: UserChartComponent},
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
+      {path: 'transactions', component: TransactionManagementModule},
       {path: 'transactions', component: ListTransactionComponent},
       {path: 'chat', component: AdminChatComponent},
     ], canActivate: [AdminAuthGuardService]

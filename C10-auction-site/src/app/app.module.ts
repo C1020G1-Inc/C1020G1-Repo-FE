@@ -5,27 +5,31 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
 import {UserModule} from './module/user/user.module';
 import {ProfileModule} from './module/user/profile/profile.module';
 import {NgxLoadingModule} from 'ngx-loading';
-import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxLoadingModule.forRoot({}),
+    AngularFireStorageModule,
+    MatDialogModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    BrowserAnimationsModule,
+    NgxLoadingModule.forRoot({}),
     AngularFireDatabaseModule,
     SocialLoginModule,
-    AngularFireStorageModule,
     UserModule,
     ProfileModule
   ],

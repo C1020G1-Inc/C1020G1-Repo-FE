@@ -1,1 +1,327 @@
-<p>list-product-admin works!</p>
+<div class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+      <div class="logo"><a class="simple-text logo-normal">
+        Trang Quản Lý
+      </a></div>
+     <app-left-side-bar>
+     </app-left-side-bar>
+    </div>
+    <div class="main-panel">
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Danh sách sản phẩm</h4>
+                </div>
+                <div class="card-body">
+                  <div>
+                    <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tên sản phẩm:</span>
+                    <input placeholder="Nhập tên..." [(ngModel)]="productName" class="form-control"
+                           style="width: 200px;float: left;margin-right: 10px">
+                    <span style="padding: 10px;color: white;float: left;margin-right: 10px">Loại sản phẩm:</span>
+                    <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId"
+                            class="custom-select">
+                      <option value="0">Chọn Tất Cả</option>
+                      <option value="1">Điện tử</option>
+                      <option value="2">Dụng Cụ</option>
+                    </select>
+                    <span style="padding: 10px;color: white;float:left;margin-right: 10px">Người đăng:</span>
+                    <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName"
+                           style="width: 200px;float: left;margin-right: 10px" class="form-control">
+                    <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tình trạng</span>
+                    <select style="width: 130px;float: left;height: 35px;margin-right: 10px"
+                            [(ngModel)]="productStatusId" class="custom-select">
+                      <option value="0">Chọn Tất Cả</option>
+                      <option value="1">Chờ Duyệt</option>
+                      <option value="2">Đang Đấu Giá</option>
+                      <option value="4">Hoàn Thành</option>
+                    </select>
+                    <input type="button" class="btn btn-primary" value="Tìm kiếm" (click)="doSearch()"
+                           style="margin-left: 3%;margin-top: 0">
+                  </div>
+                  <div class="table-responsive" *ngIf="productList.length != 0">
+                    <table class="table">
+                      <thead class="text-primary" style="background-color: #00795f">
+                      <th style="color: white">
+                        Mã sản phẩm
+                      </th>
+                      <th style="color: white">
+                        Tên sản phẩm
+                      </th>
+                      <th style="color: white">
+                        Chủng loại
+                      </th>
+                      <th style="color: white">
+                        Người Đăng
+                      </th>
+                      <th style="color: white">
+                        Giá khởi điểm
+                      </th>
+                      <th style="color: white">
+                        Tình trạng
+                      </th>
+                      <th style="color: white">
+                        Hành Động
+                      </th>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let product of productList | paginate: {itemsPerPage: 5, currentPage: page}">
+                        <td>
+                          {{product.productId}}
+                        </td>
+                        <td>
+                          {{product.productName}}
+                        </td>
+                        <td>
+                          {{product.category.categoryName}}
+                        </td>
+                        <td>
+                          {{product.account.user.userName}}
+                        </td>
+                        <td class="text-primary">
+                          {{product.price | currency:'VND':'symbol'}}
+                        </td>
+                        <td *ngIf="product.productStatus.id == 1">
+                          <a href="#acceptProduct" data-toggle="modal" class="text-danger"
+                             (click)="sendProductIdForApprove(product.productId)">Chưa
+                            Duyệt</a>
+                        </td>
+                        <td *ngIf="product.productStatus.id != 1">
+                          {{statusChange[product.productStatus.id]}}
+                        </td>
+                        <td *ngIf="product.productStatus.id == 1">
+                          <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"
+                             (click)="sendProductIdForForm(product.productId)" href="#editProduct" data-toggle="modal">
+                            <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div *ngIf="productList.length == 0">
+                    <h2 style="text-align: center;padding: 10%" class="text-warning">Không tìm thấy sản phẩm !!!</h2>
+                  </div>
+                </div>
+              </div>
+              <pagination-controls previousLabel="Trước"
+                                   nextLabel="Sau" class="my-pagination" (pageChange)="page = $event"
+                                   style="float: right"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h4 class="modal-title">Xóa sản phẩm</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc muốn xóa sản phẩm này?</p>
+            <h3 class="text-warning">Sau khi xóa sẽ không hoàn tác lại được.</h3>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-danger" value="Xóa">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="acceptProduct" class="modal fade" *ngIf="product">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header" style="background: #9e08e3">
+            <h4 class="modal-title" style="color: white">Duyệt sản phẩm</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">&times;
+            </button>
+          </div>
+          <div class="modal-body table-responsive">
+            <table class="table">
+              <tr>
+                <th style="padding: 30px">Tên sản phẩm:</th>
+                <th style="padding: 30px">{{product.productName}}</th>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Người đăng:</th>
+                <th style="padding: 30px">{{product.account.user.userName}}</th>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Chủng loại:</th>
+                <th style="padding: 30px">{{product.category.categoryName}}</th>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Giá khởi điểm:</th>
+                <th style="padding: 30px">{{product.price | currency:'VND':'symbol'}}</th>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Bước giá:</th>
+                <th style="padding: 30px">{{product.priceStep | currency:'VND':'symbol'}}</th>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Hình ảnh:</th>
+                <th>
+                  <div style="height: 120px;width: 420px;overflow-y: auto">
+                    <div *ngFor="let image of listProductImage" style="display: inline-block">
+                      <img style="width: 150px;height: 100px;margin:5px;float: left"
+                           src="{{image.image}}">
+                    </div>
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <th style="padding: 30px">Thời gian:</th>
+                <th style="padding: 30px">{{product.auctionTime}} phút</th>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Phản Hồi</button>
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy"
+                   style="margin-right: 27%;margin-left: 10px">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="editProduct" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header" style="background: #9e08e3">
+            <h4 class="modal-title" style="color: white">Cập nhật !!</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: whitesmoke">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body table-responsive" *ngIf="productEdit">
+            <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
+              <table class="table">
+                <tr>
+                  <th style=";padding-top: 30px;padding-bottom: 0;padding-left: 30px"> Tên sản phẩm:</th>
+                  <th style=";padding-top: 20px;padding-bottom: 0;padding-left: 30px">
+                    <input type="text" id="productName" name="productName" style="color: black"
+                           formControlName="productName" class="form-control"/>
+                    <br>
+                    <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.required  &&
+                  (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
+                    Vui lòng nhập tên sản phẩm !!
+                  </span>
+                    <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.minlength  &&
+                  (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
+                    Tên sản phẩm tối thiểu chứa 6 ký tự !!
+                  </span>
+                    <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.maxlength  &&
+                  (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
+                    Tên sản phẩm tối đa 30 ký tự !!
+                  </span>
+                  </th>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Người đăng:</th>
+                  <th style="padding: 30px">{{productEdit.account.user.userName}}</th>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Chủng loại:</th>
+                  <td style="padding: 20px">
+                    <select style="width: 100px" id="category" name="category" formControlName="category"
+                            class="custom-select">
+                      <option [ngValue]="category.id" *ngFor="let category of categoryList">
+                        {{category.categoryName}}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Giá khởi điểm:</th>
+                  <th style="padding: 30px">{{productEdit.price | currency :'VND':'symbol'}}</th>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Bước giá:</th>
+                  <th style="padding: 30px">{{productEdit.priceStep | currency: 'VND':'symbol'}}</th>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Hình ảnh:</th>
+
+                  <td>
+                    <div class="fileinputs">
+                      <input type="file" (change)="selectFile($event)" class="file" multiple/>
+                      <div class="fakefile">
+                        <i class="fa fa-image fa-2x" style="color: #a303bb"></i>
+                      </div>
+                    </div>
+
+                    <div style="height: 120px;width: 420px;overflow-y: auto">
+                      <div *ngFor="let image of listProductImage ; let i = index"
+                           style="margin-left: 0; display: inline-block">
+                      <span>
+                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteImage(i)"
+                           style="color: red;cursor: pointer">
+                        </i>
+                      </span>
+                        <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                             src="{{image.image}}">
+                      </div>
+
+                      <div *ngFor="let imageUpdate of productImageUpdate ; let i = index"
+                           style="margin-left: 0; display: inline-block">
+                      <span>
+                        <i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage($event)"
+                           [attr.data-index]="i" style="color: red;cursor: pointer">
+                        </i>
+                      </span>
+                        <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                             src="{{imageUpdate.url}}">
+                      </div>
+                    </div>
+                    <div *ngIf="lengthOfImage > 5">
+                      <p style="color: red">Chỉ tối đa 5 ảnh</p>
+                    </div>
+                    <div *ngIf="lengthOfImage < 1">
+                      <p style="color: red">Vui lòng chọn 1 ảnh</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="padding: 30px">Thời gian:</th>
+                  <th style="padding: 20px">
+                    <select style="width: 100px;" id="auctionTime" name="auctionTime"
+                            formControlName="auctionTime" class="custom-select">
+                      <option value="60">60 phút</option>
+                      <option value="120">120 phút</option>
+                      <option value="180">180 phút</option>
+                    </select>
+                  </th>
+                </tr>
+              </table>
+              <input type="submit" class="btn btn-primary" value="Sửa"
+                     style="margin-left: 35%;margin-right: 30px"
+                     [disabled]="!editForm.valid || this.lengthOfImage > 5 || this.lengthOfImage < 1">
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy" id="close">
+            </form>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--   Core JS Files   -->
+<script src="src/assets/js/core/jquery.min.js"></script>
+<script src="src/assets/js/core/popper.min.js"></script>
+<script src="src/assets/js/core/bootstrap-material-design.min.js"></script>

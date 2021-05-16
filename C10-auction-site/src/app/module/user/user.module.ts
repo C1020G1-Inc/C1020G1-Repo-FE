@@ -9,7 +9,6 @@ import { HomePageModule } from './home-page/home-page.module';
 import {RouterModule} from "@angular/router";
 import { NgModule } from '@angular/core';
 
-
 @NgModule({
   declarations: [],
   imports: [
