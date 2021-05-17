@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
+import {LoadingComponent} from '../../../../loading/loading/loading.component';
+import {MatDialog} from '@angular/material/dialog';
+import {interval} from 'rxjs';
 import {ListProductAuctionService} from '../../../../../service/product/list-product-auction.service';
-import {ProductImage} from '../../../../../model/ProductImage';
 
 @Component({
   selector: 'app-list-product-end-auction',
@@ -9,10 +12,11 @@ import {ProductImage} from '../../../../../model/ProductImage';
 })
 export class ListProductEndAuctionComponent implements OnInit {
 
-  constructor(private listProductAuctionService: ListProductAuctionService ) {
+  constructor(private listProductService: ListProductAuctionService,
+              private dialog: MatDialog) {
   }
 
-  public listProduct = new Array<ProductImage>();
+  public listProduct: [];
   public page = 1;
   public activeOne = 'active';
   public activeTwo;
@@ -20,13 +24,30 @@ export class ListProductEndAuctionComponent implements OnInit {
   public activeFour;
   public activeFive;
   public category = 0;
+  public checkListProduct;
 
   ngOnInit(): void {
-    this.listProductAuctionService.showAllProductEndAuction(this.category).subscribe((data) => {
-      this.listProduct = data;
+    this.openLoading();
+    const changeBySecond = interval(1000).subscribe(() => {
+      this.listProductService.showAllProductEndAuction(this.category).subscribe((data) => {
+        this.listProduct = data;
+        this.checkListProduct = this.listProduct.length !== 0;
+        if (this.checkListProduct === false){
+          this.dialog.closeAll();
+        }
+      });
     });
   }
-
+  openLoading() {
+    this.dialog.open(LoadingComponent, {
+      width: '500px',
+      height: '200px',
+      disableClose: true
+    });
+    setTimeout(() => {
+      this.dialog.closeAll();
+    }, 2000);
+  }
   showByAll() {
     this.activeOne = 'active';
     this.activeTwo = '';

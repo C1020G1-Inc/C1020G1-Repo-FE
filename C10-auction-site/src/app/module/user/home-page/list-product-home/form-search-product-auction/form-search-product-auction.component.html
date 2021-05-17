@@ -1,0 +1,33 @@
+<form class="container bg-light form-inline" *ngIf="formSearch" ngNoForm [formGroup]="formSearch" (ngSubmit)="search()">
+  <label for="search" class="text-dark ml-5 {{marginBottom}}">Nhập Tên Sản Phẩm:</label>
+  <input id="search" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}" type="search"
+         placeholder="Tên Sản Phẩm ..." formControlName="keySearch">
+  <select class="form-control rounded-pill ml-3 {{marginBottom}}" formControlName="category">
+    <option [value]="0">Tất Cả Danh Mục</option>
+    <option [value]="1">Gia Dụng</option>
+    <option [value]="2">Công Nghệ</option>
+    <option [value]="4">Hot</option>
+    <option [value]="3">Khác</option>
+  </select>
+  <select class="form-control rounded-pill ml-3 {{marginBottom}}" formControlName="priceRange">
+    <option [value]="0">Tất Cả Mọi Giá Tiền</option>
+    <option [value]="1">Từ 0 vnđ đến 500 nghìn vnđ</option>
+    <option [value]="2">Từ 500 nghìn vnd đến 2 triệu vnđ</option>
+    <option [value]="3">Từ 2 triệu vnd đến 10 triệu vnđ</option>
+    <option [value]="4">Từ 10 triệu vnd đến 50 triệu vnđ</option>
+    <option [value]="5">Lớn hơn 50 triệu</option>
+  </select>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="submit" [disabled]="formSearch.invalid" class="btn btn-warning rounded-pill ml-3 {{marginBottom}}"><i class="fa fa-search"></i> Tìm kiếm
+    </button>
+  </div>
+  <div *ngIf="keySearch.invalid && (keySearch.dirty||keySearch.touched)" class="text-danger">
+    <div [hidden]="!keySearch.errors.required" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+      Tìm kiếm không được bỏ trống !
+    </div>
+    <div [hidden]="!keySearch.errors.pattern" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+      Tìm kiếm không chứa kí tự đặc biệt !
+    </div>
+  </div>
+  <div class="text-danger mb-5 ml-5 mt-1 font-italic font-weight-bolder"><p>{{messageErrorSearch}}</p></div>
+</form>

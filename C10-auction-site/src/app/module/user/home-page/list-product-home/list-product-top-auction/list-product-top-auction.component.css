@@ -1,7 +1,5 @@
-/*@import "assets/css/owl.carousel.css";*/
-/*@import "assets/css/responsive.css";*/
-
 .product-carousel-price ins {
+  font-size: 17px;
   color: red;
 }
 
@@ -25,8 +23,12 @@ p {
   width: 230px;
 }
 .text-name-product{
+  font-size: 20px;
+  height: 80px;
+}
+.text-time{
+  color: red;
   font-size: 17px;
-  height: 60px;
 }
 .image-product{
   width: 180px;

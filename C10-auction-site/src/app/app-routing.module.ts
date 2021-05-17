@@ -8,7 +8,6 @@ import {ListUserComponent} from './module/admin/user-management/list-user/list-u
 import {UserChartComponent} from './module/admin/user-management/user-chart/user-chart.component';
 import {ProductChartComponent} from './module/admin/product-management/product-chart/product-chart.component';
 import {ListProductAdminComponent} from './module/admin/product-management/list-product-admin/list-product-admin.component';
-import {TransactionManagementModule} from './module/admin/transaction-management/transaction-management.module';
 import {LoginComponent} from './module/user/login/login/login.component';
 import {RegisterComponent} from './module/user/profile/register/register.component';
 import {ForgotPasswordComponent} from './module/user/profile/forgot-password/forgot-password.component';
@@ -29,6 +28,9 @@ import {AdminChatComponent} from './module/admin/admin-chat/admin-chat.component
 import {ListProductEndAuctionComponent} from './module/user/home-page/list-product-home/list-product-end-auction/list-product-end-auction.component';
 import {ErrorComponent} from './module/error/error.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {ListProductResultAuctionComponent} from './module/user/home-page/list-product-home/list-product-result-auction/list-product-result-auction.component';
+import {ListProductTopAuctionComponent} from './module/user/home-page/list-product-home/list-product-top-auction/list-product-top-auction.component';
+import {ResultSearchProductAuctionComponent} from './module/user/home-page/list-product-home/result-search-product-auction/result-search-product-auction.component';
 
 const routes: Routes = [
   {
@@ -56,8 +58,13 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    children: [{path: 'end', component: ListProductEndAuctionComponent}],
-    component: ListProductHomeComponent
+    children: [
+      {path: '', component: ListProductHomeComponent},
+      {path: 'end', component: ListProductEndAuctionComponent},
+      {path: 'result', component: ListProductResultAuctionComponent},
+      {path: 'top', component: ListProductTopAuctionComponent},
+      {path: 'search/result', component: ResultSearchProductAuctionComponent},
+    ],
   },
   {path: 'detail/:id', component: DetailProductComponent},
   {path: 'guide', component: GuideComponent},
