@@ -11,10 +11,23 @@ export class ListProductAuctionService {
   constructor(private http: HttpClient) {
   }
 
-  public showAllProductAuction(category: number): Observable<any> {
-    return this.http.get(this.API_PRODUCT + '/category/' + category);
+  public showAllProductAuction(categoryId: number): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/category/' + categoryId);
   }
-  public showAllProductEndAuction(category: number): Observable<any> {
-    return this.http.get(this.API_PRODUCT + '/end/category/' + category);
+
+  public showAllProductEndAuction(categoryId: number): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/end/category/' + categoryId);
+  }
+
+  public showAllProductResultAuction(categoryId: number): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/result/category/' + categoryId);
+  }
+
+  public showTop5ProductAuction(categoryId: number): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/top/category/' + categoryId);
+  }
+
+  public searchProductAuction(keySearch: string, categoryId: number, priceRange: number): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/search?keySearch=' + keySearch + '&&category=' + categoryId + '&&priceRange=' + priceRange);
   }
 }

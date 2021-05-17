@@ -1,18 +1,18 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {interval} from 'rxjs';
+import {ListProductAuctionService} from '../list-product-auction.service';
 import {MatDialog} from '@angular/material/dialog';
-import {LoadingComponent} from '../../../loading/loading/loading.component';
-import {ListProductAuctionService} from './list-product-auction.service';
+import {interval} from "rxjs";
+import {LoadingComponent} from "../../../../loading/loading/loading.component";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-list-product-home',
-  templateUrl: './list-product-home.component.html',
-  styleUrls: ['./list-product-home.component.css']
+  selector: 'app-list-product-top-auction',
+  templateUrl: './list-product-top-auction.component.html',
+  styleUrls: ['./list-product-top-auction.component.css']
 })
-export class ListProductHomeComponent implements OnInit {
+export class ListProductTopAuctionComponent implements OnInit {
 
-  constructor(private listProductAuctionService: ListProductAuctionService,
+  constructor(private listProductService: ListProductAuctionService,
               private cdref: ChangeDetectorRef,
               private dialog: MatDialog) {
   }
@@ -30,7 +30,8 @@ export class ListProductHomeComponent implements OnInit {
   ngOnInit(): void {
     this.openLoading();
     const changeBySecond = interval(1000).subscribe(() => {
-      this.listProductAuctionService.showAllProductAuction(this.category).subscribe((data) => {
+      this.listProductService.showTop5ProductAuction(this.category).subscribe((data) => {
+        console.log(data);
         this.listProduct = data;
         this.checkListProduct = this.listProduct.length !== 0;
         if (this.checkListProduct === false) {

@@ -1,19 +1,17 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {interval} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {LoadingComponent} from '../../../loading/loading/loading.component';
-import {ListProductAuctionService} from './list-product-auction.service';
+import {interval} from 'rxjs';
+import {LoadingComponent} from '../../../../loading/loading/loading.component';
+import {ListProductAuctionService} from "../list-product-auction.service";
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-list-product-home',
-  templateUrl: './list-product-home.component.html',
-  styleUrls: ['./list-product-home.component.css']
+  selector: 'app-list-product-result-auction',
+  templateUrl: './list-product-result-auction.component.html',
+  styleUrls: ['./list-product-result-auction.component.css']
 })
-export class ListProductHomeComponent implements OnInit {
+export class ListProductResultAuctionComponent implements OnInit {
 
-  constructor(private listProductAuctionService: ListProductAuctionService,
-              private cdref: ChangeDetectorRef,
+  constructor(private listProductService: ListProductAuctionService,
               private dialog: MatDialog) {
   }
 
@@ -30,29 +28,15 @@ export class ListProductHomeComponent implements OnInit {
   ngOnInit(): void {
     this.openLoading();
     const changeBySecond = interval(1000).subscribe(() => {
-      this.listProductAuctionService.showAllProductAuction(this.category).subscribe((data) => {
+      this.listProductService.showAllProductResultAuction(this.category).subscribe((data) => {
         this.listProduct = data;
         this.checkListProduct = this.listProduct.length !== 0;
-        if (this.checkListProduct === false) {
+        if (this.checkListProduct === false){
           this.dialog.closeAll();
         }
       });
     });
   }
-
-  getTimeRemain(date: string) {
-    return ((new Date(date).getTime() - new Date().getTime()) / 1000) % 86400;
-  }
-
-  getDayRemain(date: string) {
-    const timeDayRemain = (Math.floor(((new Date(date).getTime() - new Date().getTime()) / 1000) / 86400));
-    if (timeDayRemain > 0) {
-      return timeDayRemain + ' D';
-    } else {
-      return '';
-    }
-  }
-
   openLoading() {
     this.dialog.open(LoadingComponent, {
       width: '500px',
@@ -63,7 +47,6 @@ export class ListProductHomeComponent implements OnInit {
       this.dialog.closeAll();
     }, 2000);
   }
-
   showByAll() {
     this.activeOne = 'active';
     this.activeTwo = '';
@@ -112,10 +95,5 @@ export class ListProductHomeComponent implements OnInit {
     this.activeFive = 'active';
     this.category = 3;
     this.ngOnInit();
-  }
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngAfterContentChecked() {
-    this.cdref.detectChanges();
   }
 }

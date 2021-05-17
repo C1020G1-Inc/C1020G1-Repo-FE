@@ -9,16 +9,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link ml-5 text-info"><i class="fa fa-gavel"></i> Đang Đấu Giá</a>
+            <a class="nav-link ml-5" routerLink="/home"><i class="fa fa-gavel"></i> Đang Đấu Giá</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ml-5" routerLink="/home/end"><i class="fa fa-times-circle"></i> Đã Kết Thúc</a>
+            <a class="nav-link ml-5" routerLink="/home/end" ><i class="fa fa-times-circle"></i> Đã Kết Thúc</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ml-5" routerLink="/home/result"><i class="fa fa-calendar-o"></i> Kết Quả</a>
+            <a class="nav-link ml-5 text-info"><i class="fa fa-calendar-o"></i> Kết Quả</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ml-5" routerLink="/home/top"><i class="fa fa-bar-chart-o"></i> Top 5 Đấu Giá</a>
+            <a class="nav-link ml-5" routerLink="/home/top"><i class="fa fa-bar-chart-o"></i> Top Đấu Giá</a>
           </li>
         </ul>
       </div>
@@ -52,23 +52,16 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3 col-sm-6"
-           *ngFor="let product of listProduct | paginate: { itemsPerPage: 8, currentPage: page }; ">
-        <div class="single-shop-product" *ngIf="product.id !== null">
+           *ngFor="let product of listProduct| paginate: { itemsPerPage: 8, currentPage: page } ;">
+        <div class="single-shop-product" *ngIf="product.productId !== null">
           <div class="product-upper border border-info">
-            <img class="image-product" [src]="product.image" alt="">
+            <img class="image-product" [src]="product.productImage" alt="">
           </div>
-          <p class="text-name-product"><a href="">{{product.product.productName}}</a></p>
+          <h2 class="text-name-product"><a href="">{{product.productName}}</a></h2>
           <div class="product-carousel-price">
-            <ins>Giá Hiện Tại: <span style="color: red">{{product.product.lastPrice | number}} (VNĐ)</span></ins>
+            <ins>Giá Cuối Cùng: <span style="color: red">{{product.lastPrice | number}} (VNĐ)</span></ins>
           </div>
-          <p> Thời gian còn lại: <span class="text-time"><countdown
-            [config]="{leftTime:  getTimeRemain(product.product.endTime), format: getDayRemain(product.product.endTime)+' HH:mm:ss'}"></countdown></span>
-          </p>
-          <div class="product-option-shop">
-            <a class="add_to_cart_button rounded-pill" data-quantity="1" data-product_sku=""
-               data-product_id="70"
-               rel="nofollow" href="/canvas/shop/?add-to-cart=70">Đấu Giá</a>
-          </div>
+          <p> Người Thanh Toán: <span style="color: red">{{product.userName}}</span> </p>
         </div>
       </div>
       <div class="container" *ngIf="checkListProduct === false">

@@ -1,5 +1,37 @@
 <div class="container-fluid mt-2">
-  <app-form-search-product-auction></app-form-search-product-auction>
+  <form class="container bg-light form-inline" *ngIf="formSearch" ngNoForm [formGroup]="formSearch" (ngSubmit)="search()">
+    <label for="search" class="text-dark ml-5 {{marginBottom}}">Nhập Tên Sản Phẩm:</label>
+    <input id="search" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}" type="search"
+           placeholder="Tên Sản Phẩm ..." formControlName="keySearch">
+    <select class="form-control rounded-pill ml-3 {{marginBottom}}" formControlName="category">
+      <option [value]="0">Tất Cả Danh Mục</option>
+      <option [value]="1">Gia Dụng</option>
+      <option [value]="2">Công Nghệ</option>
+      <option [value]="4">Hot</option>
+      <option [value]="3">Khác</option>
+    </select>
+    <select class="form-control rounded-pill ml-3 {{marginBottom}}" formControlName="priceRange">
+      <option [value]="0">Tất Cả Mọi Giá Tiền</option>
+      <option [value]="1">Từ 0 vnđ đến 500 nghìn vnđ</option>
+      <option [value]="2">Từ 500 nghìn vnd đến 2 triệu vnđ</option>
+      <option [value]="3">Từ 2 triệu vnd đến 10 triệu vnđ</option>
+      <option [value]="4">Từ 10 triệu vnd đến 50 triệu vnđ</option>
+      <option [value]="5">Lớn hơn 50 triệu</option>
+    </select>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="submit" [disabled]="formSearch.invalid" class="btn btn-warning rounded-pill ml-3 {{marginBottom}}"><i class="fa fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+    <div *ngIf="keySearch.invalid && (keySearch.dirty||keySearch.touched)" class="text-danger">
+      <div [hidden]="!keySearch.errors.required" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+        Tìm kiếm không được bỏ trống !
+      </div>
+      <div [hidden]="!keySearch.errors.pattern" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+        Tìm kiếm không chứa kí tự đặc biệt !
+      </div>
+    </div>
+    <div class="text-danger mb-5 ml-5 mt-1 font-italic font-weight-bolder"><p>{{messageErrorSearch}}</p></div>
+  </form>
   <div class="container bg-light">
     <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -9,7 +41,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link ml-5 text-info"><i class="fa fa-gavel"></i> Đang Đấu Giá</a>
+            <a class="nav-link ml-5" routerLink="/home"><i class="fa fa-gavel"></i> Đang Đấu Giá</a>
           </li>
           <li class="nav-item">
             <a class="nav-link ml-5" routerLink="/home/end"><i class="fa fa-times-circle"></i> Đã Kết Thúc</a>
@@ -24,29 +56,6 @@
       </div>
     </nav>
   </div>
-  <div class="container bg-light">
-    <div class="btn-toolbar" role="group" aria-label="Basic example">
-      <button (click)="showByAll()" type="button" class="btn btn-warning rounded-pill ml-5 mb-2 {{activeOne}} mt-2"><i
-        class="fa fa-bars"></i>
-        Tất Cả
-      </button>
-      <button (click)="showByHouseHold()" type="button"
-              class="btn btn-warning rounded-pill ml-5 mb-2 {{activeTwo}} mt-2"><i
-        class="fa fa-plug"></i> Gia Dụng
-      </button>
-      <button (click)="showByTechnology()" type="button"
-              class="btn btn-warning rounded-pill ml-5 mb-2 {{activeThree}} mt-2">
-        <i class="fa fa-laptop"></i> Công Nghệ
-      </button>
-      <button (click)="showByHot()" type="button" class="btn btn-warning rounded-pill ml-5 mb-2 {{activeFour}} mt-2"><i
-        class="fa fa-fire"></i> Hot
-      </button>
-      <button (click)="showByOther()" type="button" class="btn btn-warning rounded-pill ml-5 mb-2 {{activeFive}} mt-2">
-        ...
-        Khác
-      </button>
-    </div>
-  </div>
 </div>
 <div class="container-fluid">
   <div class="container mt-5">
@@ -57,9 +66,9 @@
           <div class="product-upper border border-info">
             <img class="image-product" [src]="product.image" alt="">
           </div>
-          <p class="text-name-product"><a href="">{{product.product.productName}}</a></p>
+          <h2 class="text-name-product"><a href="">{{product.product.productName}}</a></h2>
           <div class="product-carousel-price">
-            <ins>Giá Hiện Tại: <span style="color: red">{{product.product.lastPrice | number}} (VNĐ)</span></ins>
+            <ins>Giá: {{product.product.lastPrice | number}} (VNĐ)</ins>
           </div>
           <p> Thời gian còn lại: <span class="text-time"><countdown
             [config]="{leftTime:  getTimeRemain(product.product.endTime), format: getDayRemain(product.product.endTime)+' HH:mm:ss'}"></countdown></span>

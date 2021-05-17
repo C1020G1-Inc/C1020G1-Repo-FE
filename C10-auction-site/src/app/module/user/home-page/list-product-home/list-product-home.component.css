@@ -1,36 +1,39 @@
-/*@import "assets/css/owl.carousel.css";*/
-/*@import "assets/css/responsive.css";*/
 
 .product-carousel-price ins {
-  color: red !important;
+  font-size: 17px;
+  color: red;
 }
 
 p {
   margin-top: 10px;
   color: #5a88ca;
 }
-
 .single-shop-product {
   text-align: center;
 }
-
-.nav-link {
+.nav-link{
   margin-left: 80px;
   font-size: 15px;
   color: white;
 }
-
-.nav-link:hover {
+.nav-link:hover{
   background-color: #5a88ca;
   color: white;
 }
-
-#search {
+#search{
   width: 230px;
 }
-
-.text-name-product {
-  height: 60px;
+.text-name-product{
+  font-size: 20px;
+  height: 80px;
+}
+.text-time{
+  color: red;
+  font-size: 17px;
+}
+.image-product{
+  width: 180px;
+  height: 150px;
 }
 
 /*
@@ -4058,6 +4061,12 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button {
 
 .fa-meanpath:before {
   content: "\f20c"
+}
+
+.btn-warning {
+  color: white;
+  background-color: #f0ad4e;
+  border-color: #eea236;
 }
 
 

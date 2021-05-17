@@ -25,6 +25,9 @@ import {InvoiceComponent} from './module/user/auction/invoice/invoice.component'
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat/admin-chat.component';
 import {ListProductEndAuctionComponent} from './module/user/home-page/list-product-home/list-product-end-auction/list-product-end-auction.component';
 import {ErrorComponent} from './module/error/error.component';
+import {ListProductResultAuctionComponent} from "./module/user/home-page/list-product-home/list-product-result-auction/list-product-result-auction.component";
+import {ListProductTopAuctionComponent} from "./module/user/home-page/list-product-home/list-product-top-auction/list-product-top-auction.component";
+import {ResultSearchProductAuctionComponent} from "./module/user/home-page/list-product-home/result-search-product-auction/result-search-product-auction.component";
 
 const routes: Routes = [
   {
@@ -53,8 +56,13 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    children: [{path: 'end', component: ListProductEndAuctionComponent}],
-    component: ListProductHomeComponent
+    children: [
+      {path: '', component: ListProductHomeComponent},
+      {path: 'end', component: ListProductEndAuctionComponent},
+      {path: 'result', component: ListProductResultAuctionComponent},
+      {path: 'top', component: ListProductTopAuctionComponent},
+      {path: 'search/result', component: ResultSearchProductAuctionComponent}
+    ],
   },
   {path: 'detail/:id', component: DetailProductComponent},
   {path: 'guide', component: GuideComponent},
