@@ -31,6 +31,12 @@ export class AuctionBiddingComponent implements OnInit {
   public currentWinner = '-';
   public isInProgress: boolean;
   public isNewCart = false;
+  public statusTranslate = {
+    1: "Chưa bắt đầu",
+    2: "Đang đấu giá",
+    3: "Kết thúc"
+  };
+  public status = 1;
 
   constructor(public auctionBackendService: AuctionBackendService,
               public activateRoute: ActivatedRoute,
@@ -51,21 +57,25 @@ export class AuctionBiddingComponent implements OnInit {
         this.currentPrice = (this.productDetail.lastPrice) ? this.productDetail.lastPrice : this.productDetail.price;
         this.currentStep = this.productDetail.priceStep;
         this.isInProgress = this.productDetail.productStatus.id === 2;
+        this.status = (this.productDetail.productStatus.id > 2) ? 3 : this.productDetail.productStatus.id;
       });
 
     const changeBySecond = interval(1000).subscribe(() => {
-      const time: Date = new Date();
-      const differentInTime = this.auctionEndTime.getTime() - time.getTime();
-      if (differentInTime > 0) {
-        this.day = Math.floor(differentInTime / (1000 * 60 * 60 * 24));
-        this.hour = Math.floor(differentInTime / (1000 * 60 * 60)) - this.day * 24;
-        this.minute = Math.floor(differentInTime / (1000 * 60)) - this.hour * 60 - this.day * 24 * 60;
-        this.second = Math.floor(differentInTime / 1000) - this.day * 24 * 60 * 60 - this.hour * 60 * 60 - this.minute * 60;
-        return;
+      if (this.status > 1) {
+        const time: Date = new Date();
+        const differentInTime = this.auctionEndTime.getTime() - time.getTime();
+        if (differentInTime > 0) {
+          this.day = Math.floor(differentInTime / (1000 * 60 * 60 * 24));
+          this.hour = Math.floor(differentInTime / (1000 * 60 * 60)) - this.day * 24;
+          this.minute = Math.floor(differentInTime / (1000 * 60)) - this.hour * 60 - this.day * 24 * 60;
+          this.second = Math.floor(differentInTime / 1000) - this.day * 24 * 60 * 60 - this.hour * 60 * 60 - this.minute * 60;
+          return;
+        }
+        this.isInProgress = false;
+        this.status = 3
+        changeBySecond.unsubscribe();
+        getListAuction.unsubscribe();
       }
-      this.isInProgress = false;
-      changeBySecond.unsubscribe();
-      getListAuction.unsubscribe();
     });
 
     this.auctionBackendService.getListAuction(this.productId).subscribe(data => {

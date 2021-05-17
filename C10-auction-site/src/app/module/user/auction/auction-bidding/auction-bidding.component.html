@@ -2,7 +2,7 @@
 <div class="container-fluid p-lg-5" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
   <div class="row">
     <div class="col-6 col-lg-4 ">
-      <div class="d-flex flex-column justify-content-between mb-2">
+      <div class="mb-2">
         <div id="image-auction-carousel" class="carousel slide shadow-lg" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#image-auction-carousel"
@@ -29,13 +29,13 @@
         </div>
         <div class="my-2" style="font-size: 15px" *ngIf="isInProgress">
           <div id="countdown-timer" class="row ml-0 d-flex justify-content-center">
-            <div class="countdown text-light mr-1">{{this.day | number: '2.0-0'}}</div>
-            <div class="countdown-colon mr-1">:</div>
-            <div class="countdown text-light mr-1">{{this.hour | number: '2.0-0'}}</div>
-            <div class="countdown-colon mr-1">:</div>
-            <div class="countdown text-light mr-1">{{this.minute| number: '2.0-0'}}</div>
-            <div class="countdown-colon mr-1">:</div>
-            <div class="countdown text-light mr-1">{{this.second | number: '2.0-0'}}</div>
+            <div class="countdown text-light mr-1" style="padding-top: 13px !important;"><p>{{this.day | number: '2.0-0'}}</p></div>
+            <div class="countdown-colon mr-1" style="padding-top: 13px !important;">:</div>
+            <div class="countdown text-light mr-1" style="padding-top: 13px !important;">{{this.hour | number: '2.0-0'}}</div>
+            <div class="countdown-colon mr-1" style="padding-top: 13px !important;">:</div>
+            <div class="countdown text-light mr-1" style="padding-top: 13px !important;">{{this.minute| number: '2.0-0'}}</div>
+            <div class="countdown-colon mr-1" style="padding-top: 13px !important;">:</div>
+            <div class="countdown text-light mr-1" style="padding-top: 13px !important;">{{this.second | number: '2.0-0'}}</div>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
       <div class="row mb-2" style="font-size: 17px">
         <div class="col-12 col-lg-6">
           <div><span class="badge badge-pill"
-                     [ngClass]="(this.isInProgress)? 'badge-success':'badge-danger'">{{this.isInProgress ? 'Đang đấu giá' : 'Kết thúc'}}</span>
+                     [ngClass]="(this.status > 2)? 'badge-danger':(this.status == 2)? 'badge-success':'badge-secondary'">{{this.statusTranslate[this.status]}}</span>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
       </div>
       <div class="row" style="font-size: 15px">
         <div class="col-12">
-          <div class="text-secondary">Thời điểm kết thúc:</div>
+          <div class="text-secondary" *ngIf="this.status > 1">Thời điểm kết thúc:</div>
           <div class="text-danger ml-2">{{this.auctionEndTime |date :"HH:mm:ss dd/MM/yyyy":"+0700"}}
           </div>
         </div>
@@ -146,12 +146,12 @@
         Thông tin sản phẩm
       </div>
       <div class="card-body" style="font-size: 12px">
-        <p><strong>Người đăng sản phẩm:</strong> {{this.productDetail?.account.accountName}}</p>
-        <p><strong>Giá ban đầu:</strong> {{this.productDetail?.price}}</p>
-        <p><strong>Bắt đầu đấu giá:</strong> {{this.productDetail?.registerTime}}</p>
-        <p><strong>Thời gian đấu giá:</strong> {{this.productDetail?.auctionTime}}</p>
-        <p><strong>Loại sản phẩm:</strong> {{this.productDetail?.category.categoryName}}</p>
-        <p><strong>Bước giá ban đầu:</strong> {{this.productDetail?.priceStep}}</p>
+        <p><strong>Người đăng sản phẩm: </strong>{{this.productDetail?.account.accountName}}</p>
+        <p><strong>Giá khởi điểm: </strong>{{this.productDetail?.price| number: '.0-2'}} đ</p>
+        <p><strong>Bắt đầu đấu giá: </strong>{{(this.productDetail?.registerTime != null)? (this.productDetail?.registerTime|date: 'HH:mm:ss dd/MM/yyyy'): '-'}}</p>
+        <p><strong>Thời gian đấu giá: </strong>{{this.productDetail?.auctionTime}} phút</p>
+        <p><strong>Loại sản phẩm: </strong>{{this.productDetail?.category.categoryName}}</p>
+        <p><strong>Bước giá ban đầu: </strong>{{this.productDetail?.priceStep | number: '.0-2'}} đ</p>
       </div>
     </div>
     <div class="card w-100">

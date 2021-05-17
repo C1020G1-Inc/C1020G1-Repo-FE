@@ -372,7 +372,7 @@ export class AuctionPaymentComponent implements OnInit {
   public getProduct() {
     return {
       table: {
-        widths: ['auto', 'auto', '*', 'auto', 'auto', 'auto'],
+        widths: ['auto', 'auto', '*', 'auto', 'auto'],
         body: [
           [
             {
@@ -401,23 +401,6 @@ export class AuctionPaymentComponent implements OnInit {
               text: 'Số lượng',
               style: 'header',
               alignment: 'center',
-              fillColor: '#a6a6a6'
-            },
-            {
-              columns: [
-                [
-                  {
-                    text: 'Giá',
-                    style: 'header',
-                    alignment: 'center'
-                  },
-                  {
-                    text: '(VND)',
-                    style: 'header',
-                    alignment: 'center'
-                  }
-                ]
-              ],
               fillColor: '#a6a6a6'
             },
             {
@@ -456,11 +439,7 @@ export class AuctionPaymentComponent implements OnInit {
                 alignment: 'center'
               },
               {
-                text: product.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
-                alignment: 'center'
-              },
-              {
-                text: (product.price * product.quantity).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
+                text: (product.price * 1.05).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
                 alignment: 'center'
               }
             ];
@@ -468,11 +447,11 @@ export class AuctionPaymentComponent implements OnInit {
           [
             {
               text: 'Phí giao hàng (VND)',
-              colSpan: 5,
+              colSpan: 4,
               alignment: 'center',
               style: 'name'
             },
-            {}, {}, {}, {},
+            {}, {}, {},
             {
               text: '50,000',
               alignment: 'center'
@@ -481,11 +460,11 @@ export class AuctionPaymentComponent implements OnInit {
           [
             {
               text: 'Tổng tiền (VND)',
-              colSpan: 5,
+              colSpan: 4,
               alignment: 'center',
               style: 'name'
             },
-            {}, {}, {}, {},
+            {}, {}, {},
             {
               text: (this.totalInVND + 50000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
               alignment: 'center'

@@ -118,6 +118,7 @@ ul li{
   -webkit-transition: all .2s ease-out;
   -webkit-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
+  visibility: hidden !important;
 }
 
 .chat_fullscreen {
@@ -162,9 +163,11 @@ ul li{
   opacity: 1;
   -webkit-animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
   animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
+  visibility: visible !important;
 }
 .is-hide{
-  opacity: 0
+  opacity: 0;
+  visibility: hidden !important;
 }
 
 .chat_option {

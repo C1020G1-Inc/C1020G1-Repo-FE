@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '../profile.service';
 import {ProductRegister} from '../../../../model/ProductRegister';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {Account} from '../../../../model/account';
 
 @Component({
   selector: 'app-history-register-product',
@@ -12,15 +14,24 @@ export class HistoryRegisterProductComponent implements OnInit {
   public product: ProductRegister;
   data;
   public pageNumber = 0;
+  account: Account
 
   constructor(
     private profileService: ProfileService,
+    private tokenStorage: TokenStorageService
   ) {
   }
 
+  ngOnInit(): void {
+    this.productRegister = null;
+    this.account = this.tokenStorage.getAccount();
+    this.getAllProductRegister();
+  }
+
   getAllProductRegister() {
-    this.profileService.getAllProductRegister(1, this.pageNumber).subscribe(data1 => {
+    this.profileService.getAllProductRegister(this.account.accountId, this.pageNumber).subscribe(data1 => {
       const listProduct = data1.content;
+      console.log(data1.content)
       this.data = data1;
       if (this.productRegister != null) {
         this.productRegister = this.productRegister.concat(listProduct);
@@ -28,11 +39,6 @@ export class HistoryRegisterProductComponent implements OnInit {
         this.productRegister = listProduct;
       }
     });
-  }
-
-  ngOnInit(): void {
-    this.productRegister = null;
-    this.getAllProductRegister();
   }
 
   loadMoreProduct() {

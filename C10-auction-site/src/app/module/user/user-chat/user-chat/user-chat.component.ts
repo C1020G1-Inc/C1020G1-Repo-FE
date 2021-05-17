@@ -12,6 +12,7 @@ import {Account} from '../../../../model/Account';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {AccountVisitor} from '../../../../model/account-visitor';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -29,12 +30,14 @@ export class UserChatComponent implements OnInit {
   loadImage: boolean;
   selectedImage: any;
   accountVisitor: AccountVisitor;
+  isDisplay: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private chatService: ChatService,
               private tokenStorageService: TokenStorageService,
-              public storage: AngularFireStorage) {
+              public storage: AngularFireStorage,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -174,7 +177,10 @@ export class UserChatComponent implements OnInit {
     for (const file of files) {
       const name = file.type.toString();
       if (!name.includes('image')) {
-        alert('Đây Không Phải Hình Ảnh');
+        this.snackBar.open('Đây không phải hình ảnh', 'X',
+          {
+            duration: 5000,
+          });
         return;
       }
     }

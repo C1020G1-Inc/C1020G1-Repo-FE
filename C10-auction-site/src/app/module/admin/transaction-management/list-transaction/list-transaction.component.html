@@ -1,70 +1,53 @@
 <div class="dark-edition">
-<div class="wrapper ">
-  <div class="sidebar" data-color="purple" data-background-color="black" data-image="./assets/img/sidebar-2.jpg">
-    <div class="logo">
-      <a href="#" class="simple-text logo-normal">
-        Trang Quản Lý
-      </a>
-    </div>
-    <div class="sidebar-wrapper">
-      <ul class="nav">
-        <li class="nav-item active  ">
-          <a class="nav-link" href="javascript:void(0)">
-            <i class="material-icons">dashboard</i>
-            <p>Quản lý giao dịch</p>
-          </a>
-        </li>
-        <!-- your sidebar here -->
-      </ul>
-    </div>
-  </div>
-  <div class="main-panel" >
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="container" id="myDIV" style="display: none" >
-                <div class="row mt-5">
-                  <div class="col">
-                    <label>Người đăng: </label>
-                    <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="namePost">
+  <div class="wrapper ">
+    <app-left-side-bar></app-left-side-bar>
+    <div class="main-panel" >
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="container" id="myDIV" style="display: none" >
+                  <div class="row mt-5">
+                    <div class="col">
+                      <label>Người đăng: </label>
+                      <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="namePost">
+                    </div>
+                    <div class="col">
+                      <label>Người mua: </label>
+                      <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="nameBuy">
+                    </div>
+                    <div class="col">
+                      <label>Tên sản phẩm: </label>
+                      <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="productName">
+                    </div>
+                    <div class="col">
+                      <label>Thành tiền: </label>
+                      <input type="text" class="form-control" placeholder="Nhập tiền..." [(ngModel)]="price">
+                    </div>
+                    <div class="col">
+                      <label>Tình trạng: </label>
+                      <select id="" class="form-control" [(ngModel)]="status">
+                        <option value="undefined">Tất cả</option>
+                        <option value="Thành công">Thành công</option>
+                        <option value="Thất bại">Thất bại</option>
+                      </select>
+                    </div>
                   </div>
-                  <div class="col">
-                    <label>Người mua: </label>
-                    <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="nameBuy">
-                  </div>
-                  <div class="col">
-                    <label>Tên sản phẩm: </label>
-                    <input type="text" class="form-control" placeholder="Nhập tên..." [(ngModel)]="productName">
-                  </div>
-                  <div class="col">
-                    <label>Thành tiền: </label>
-                    <input type="text" class="form-control" placeholder="Nhập tiền..." [(ngModel)]="price">
-                  </div>
-                  <div class="col">
-                    <label>Tình trạng: </label>
-                    <select id="" class="form-control" [(ngModel)]="status">
-                      <option value="undefined">Tất cả</option>
-                      <option value="Thành công">Thành công</option>
-                      <option value="Thất bại">Thất bại</option>
-                    </select>
+                  <div class="form-group d-flex justify-content-end mt-3 mr-3">
+                    <button class="btn btn-primary mr-3" type="submit" (click)="seach()" style="font-size: 1rem">Tìm kiếm</button>
                   </div>
                 </div>
-                <div class="form-group d-flex justify-content-end mt-3 mr-3">
-                  <button class="btn btn-primary mr-3" type="submit" (click)="seach()" style="font-size: 1rem">Tìm kiếm</button>
+                <div class="d-flex justify-content-end mr-5 mb-4">
+                  <button onclick="myFunctionSearch()" class="btn btn-primary"  data-ripple="" style="font-size: 1rem">Tìm kiếm nâng cao</button>
                 </div>
-              </div>
-              <div class="d-flex justify-content-end mr-5 mb-4">
-                <button onclick="myFunctionSearch()" class="btn btn-primary"  data-ripple="" style="font-size: 1rem">Tìm kiếm nâng cao</button>
-              </div>
-              <div class="card-header card-header-primary">
-                <h4 class="card-title ">Quản lý giao dịch</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Quản lý giao dịch</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
                       <th scope="col">Mã Giao Dịch</th>
                       <th scope="col">Thời gian đấu<br> giá thành công</th>
                       <th scope="col">Người đăng</th>
@@ -75,60 +58,64 @@
                       <th scope="col">Phí dịch vụ<br> (VND)</th>
                       <th scope="col">Tình trạng<br> giao dịch</th>
                       <th scope="col"></th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let transaction of listTransaction | paginate: { itemsPerPage: 5, currentPage: page }">
-                      <td>{{transaction.transactionId}}</td>
-                      <td>{{transaction.transactionTime | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                      <td>{{transaction.product.account.user.userName}}</td>
-                      <td>{{transaction.account.user.userName}}</td>
-                      <td>{{transaction.product.productName}}</td>
-                      <td>1</td>
-                      <td>{{transaction.auction.price | currency: 'VND': 'symbol'}}</td>
-                      <td>{{transaction.auction.price*5/100 | currency: 'VND': 'symbol'}}</td>
-                      <td>{{transaction.status}}</td>
-                      <td>
-                        <a href="#exampleModal" data-toggle="modal" (click)="showDelete(transaction.transactionId)">
-                          <i class="fa fa-trash fa-2x ml-5" style="color: orangered" title="Xóa"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-
-                <div>
-                <pagination-controls previousLabel="Trước"
-                                     nextLabel="Sau" class="my-pagination mr-5" (pageChange)="page = $event"
-                                     style="float: right">
-                </pagination-controls>
-                </div>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let transaction of listTransaction | paginate: { itemsPerPage: 5, currentPage: page }">
+                        <td>{{transaction.transactionId}}</td>
+                        <td>{{transaction.transactionTime | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td>{{transaction.product.account.user.userName}}</td>
+                        <td>{{transaction.account.user.userName}}</td>
+                        <td>{{transaction.product.productName}}</td>
+                        <td>1</td>
+                        <td>{{transaction.auction.price | currency: 'VND': 'symbol'}}</td>
+                        <td>{{transaction.auction.price*5/100 | currency: 'VND': 'symbol'}}</td>
+                        <td>{{transaction.status}}</td>
+                        <td>
+                          <a href="#exampleModal" data-toggle="modal" (click)="showDelete(transaction.transactionId)">
+                            <i class="fa fa-trash fa-2x ml-5" style="color: orangered" title="Xóa"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    <div *ngIf="listTransaction.length == 0" style="margin: auto">
+                      <h2 style="color: orangered" class="d-flex justify-content-center align-items-lg-center">
+                        Hiện tại chưa có giao dịch nào !!<i class="fa fa-frown-o" style="margin-left: 20px"></i>
+                      </h2>
+                    </div>
+                    <div>
+                      <pagination-controls *ngIf="!listTransaction"
+                                           previousLabel="Trước"
+                                           nextLabel="Sau" class="my-pagination mr-5" (pageChange)="page = $event"
+                                           style="float: right">
+                      </pagination-controls>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">XÓA GIAO DỊCH</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p class="my-3">Bạn có chắc chắn muốn xóa giao dịch này không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Hủy</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete()">Đồng ý</button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">XÓA GIAO DỊCH</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p class="my-3">Bạn có chắc chắn muốn xóa giao dịch này không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Hủy</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete()">Đồng ý</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
     <footer class="footer">
@@ -142,9 +129,7 @@
             </li>
           </ul>
         </nav>
-
       </div>
     </footer>
   </div>
 </div>
-

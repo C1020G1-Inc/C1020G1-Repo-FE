@@ -7,19 +7,18 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RegisDistrict, RegisProvince, RegisWard } from 'src/app/service/authentication/account-province';
 import { Title } from '@angular/platform-browser';
-import {ChatService} from '../../../../service/chat/chat.service';
-import {AccountService} from '../../../../service/authentication/account-service';
-import {TokenStorageService} from '../../../../service/authentication/token-storage';
-import {User} from '../../../../model/User';
-import {Room} from '../../../../model/room';
-import {MatRegisDiaComponent} from '../../material/mat-regis-dia/mat-regis-dia.component';
-import {MatLoadingDiaComponent} from '../../material/mat-loading-dia/mat-loading-dia.component';
+import { ChatService } from '../../../../service/chat/chat.service';
+import { AccountService } from '../../../../service/authentication/account-service';
+import { TokenStorageService } from '../../../../service/authentication/token-storage';
+import { User } from '../../../../model/User';
+import { Room } from '../../../../model/room';
+import { MatRegisDiaComponent } from '../../material/mat-regis-dia/mat-regis-dia.component';
+import { MatLoadingDiaComponent } from '../../material/mat-loading-dia/mat-loading-dia.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-
 /**
  * @author PhinNL
  * Register
@@ -37,8 +36,6 @@ export class RegisterComponent implements OnInit {
               private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
               private chatService: ChatService,
               private title: Title, private elementRef: ElementRef) { }
-
-
   ngOnInit(): void {
     this.title.setTitle('Đăng ký');
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
@@ -66,9 +63,9 @@ export class RegisterComponent implements OnInit {
     let username = '';
     const account = this.tokenStorage.getAccount();
     if (account !== null) {
-      email = account.email;
-      if (account.user !== null) {
-        username = account.user.userName;
+      email = account.email != undefined ? account.email : '';
+      if (account.user != undefined) {
+        username = account.user.userName != undefined ? account.user.userName : '';
       }
     }
     const now = new Date();
@@ -79,7 +76,7 @@ export class RegisterComponent implements OnInit {
         [this.accountNameDuplicateValidator.bind(this)]),
       userName: new FormControl(username, [Validators.required, this.nameValidator.bind(this)]),
       password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
-      this.checkpass.bind(this)]),
+        this.checkpass.bind(this)]),
       repassword: new FormControl('', [Validators.required, this.repasswordValidator.bind(this)]),
       email: new FormControl(email, [Validators.required, Validators.pattern('[a-zA-z]\\w{6,20}[@][a-zA-Z]{2,10}([.][a-zA-Z]{2,5}){1,2}')],
         [this.emailDuplicateValidator.bind(this)]),
@@ -95,7 +92,6 @@ export class RegisterComponent implements OnInit {
       ward: new FormControl('', [Validators.required])
     });
   }
-
   accountNameDuplicateValidator(control: FormControl) {
     return this.accountService.findAccountNameExist(control.value).pipe(
       map(data => {
@@ -106,7 +102,6 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
-
   emailDuplicateValidator(control: FormControl) {
     return this.accountService.findEmailExist(control.value).pipe(
       map(data => {
@@ -117,7 +112,6 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
-
   phoneDuplicateValidator(control: FormControl) {
     return this.accountService.findPhoneExist(control.value).pipe(
       map(data => {
@@ -128,7 +122,6 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
-
   identityDuplicateValidator(control: FormControl) {
     return this.accountService.findIdentityExist(control.value).pipe(
       map(data => {
@@ -139,7 +132,6 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
-
   checkpass(control: FormControl) {
     if (control.parent && this.repassword) {
       if (control.value !== this.repassword.value) {
@@ -150,7 +142,6 @@ export class RegisterComponent implements OnInit {
     }
     return null;
   }
-
   repasswordValidator(control: FormControl) {
     let password = '';
     if (control.parent) {
@@ -158,12 +149,10 @@ export class RegisterComponent implements OnInit {
     }
     return control.value === password ? null : { repassword: control.value };
   }
-
   nameValidator(control: FormControl) {
     return /^([\p{Lu}]|([\p{Lu}][\p{Ll}]{1,8}))(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$/u.test(control.value) ?
       null : { userName: control.value };
   }
-
   submit() {
     const userNew: User = {
       userId: null,
@@ -186,7 +175,6 @@ export class RegisterComponent implements OnInit {
     // duong
     const room = new Room(this.accountName.value, userNew, 0);
     this.chatService.addNewRoom(room);
-
     this.accountService.saveAccount(account).subscribe(data => {
       if (data !== null) {
         const config = new MatDialogConfig();
@@ -196,7 +184,6 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
   submitAvatar() {
     if (this.selectedImage !== null) {
       const filePath = `avatar/${this.selectedImage.name}/${new Date().getTime()}`;
@@ -213,7 +200,6 @@ export class RegisterComponent implements OnInit {
       );
     }
   }
-
   changeImage(event) {
     this.avatar.setValue('');
     this.dialog.open(MatLoadingDiaComponent, { panelClass: 'loading-dialog', position: { top: '0', left: '17%' }, disableClose: true });
@@ -227,7 +213,6 @@ export class RegisterComponent implements OnInit {
       this.dialog.closeAll();
     }
   }
-
   changeProvince(provinceId: number) {
     this.district.setValue('');
     const provinceSelect = this.provinceList.find(e => e.province_id === provinceId);
@@ -237,7 +222,6 @@ export class RegisterComponent implements OnInit {
       this.changeDistrict(this.districtList[0].district_id);
     });
   }
-
   changeDistrict(districtId: number) {
     this.ward.setValue('');
     const districtSelect = this.districtList.find(e => e.district_id === districtId);
@@ -252,13 +236,11 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
   changeWard(wardId: number) {
     const wardSelect = this.wardList.find(e => e.ward_id === wardId);
     this.ward.setValue(wardSelect.ward_name);
     this.address.setValue(this.ward.value + ' ' + this.district.value + ' ' + this.province.value);
   }
-
   get accountName() {
     return this.form.get('accountName');
   }

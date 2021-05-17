@@ -17,6 +17,7 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {NgxLoadingModule} from 'ngx-loading';
 import {ProfileModule} from './module/user/profile/profile.module';
 import {DatePipe} from '@angular/common';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {DatePipe} from '@angular/common';
     MatDialogModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
+    MatSnackBarModule,
     UserManagementModule,
     UserModule,
     BrowserAnimationsModule,

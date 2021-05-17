@@ -24,7 +24,7 @@ export class ProfileService {
   }
 
   getAllProductAuction(accountId, pageNumber: number): Observable<any> {
-    return this.http.get(this.API + '/product-auction/' + accountId + '?page=' + pageNumber, this.httpOptions);
+    return this.http.get(this.API + '/api/auction/product-auction/' + accountId + '?page=' + pageNumber, this.httpOptions);
   }
 
   getAllProductRegister(accountId, pageNumber: number): Observable<any> {
@@ -39,7 +39,4 @@ export class ProfileService {
     return this.http.put(this.API + '/product-register/update/' + price + '/' + description + '/' + id, null, this.httpOptions);
   }
 
-  // searchProductRegister(name, time, price): Observable<any>{
-  //   return this.http.get(this.API + '/product-register/search/' + name + '/' + time + '/' + price);
-  // }
 }

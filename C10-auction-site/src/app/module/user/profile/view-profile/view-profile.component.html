@@ -1,39 +1,70 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12 ">
-      <div class="set-title" style="text-align: center">
-        <h2 style="color: blue" class="my-5">Thông tin thành viên</h2>
+<div class="container bootstrap snippets bootdey mt-5">
+  <div class="panel-body inf-content">
+    <div class="row" *ngIf="userLogin">
+      <div class="col-md-4 mt-4 ml-3">
+        <img alt="" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" title="" class="img-thumbnail"
+             src="{{userLogin.avatar}}">
       </div>
-      <table class="m-auto">
-        <tr>
-          <td><h5 class="mr-3">Họ và tên: </h5></td>
-          <td><h5>{{userLogin.userName}}</h5></td>
-        </tr>
-        <tr>
-          <td><h5>Email: </h5></td>
-          <td><h5>{{accountLogin.email}}</h5></td>
-        </tr>
-        <tr>
-          <td><h5>Ngày sinh: </h5></td>
-          <td><h5>{{userLogin.birthday | date: 'dd-MM-yyyy'}}</h5></td>
-        </tr>
-        <tr>
-          <td><h5>CMND: </h5></td>
-          <td><h5>{{userLogin.identity}}</h5></td>
-        </tr>
-        <tr>
-          <td><h5>SDT: </h5></td>
-          <td><h5>{{userLogin.phone}}</h5></td>
-        </tr>
-        <tr>
-          <td><h5>Địa chỉ: </h5></td>
-          <td><h5>{{userLogin.address}}</h5></td>
-        </tr>
-      </table>
-      <div class="d-flex justify-content-center align-items-center mt-3">
-        <a class="btn btn-warning" [routerLink]="['/profile/update', accountLogin.accountId]">Cập nhật</a>
+      <div class="col-md-6 mt-3">
+        <h1><strong style="color: blue">Thông tin thành viên</strong><br></h1>
+        <div class="table-responsive">
+          <table class="table table-user-information">
+            <tbody>
+            <tr>
+              <td>
+                <strong>Họ và tên</strong>
+              </td>
+              <td class="text-primary">
+                {{userLogin.userName}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Email</strong>
+              </td>
+              <td class="text-primary">
+                {{accountLogin.email}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Ngày sinh</strong>
+              </td>
+              <td class="text-primary">
+                {{userLogin.birthday | date: 'dd/MM/yyyy' : '+0700'}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>CMND</strong>
+              </td>
+              <td class="text-primary">
+                {{userLogin.identity}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Số điện thoại</strong>
+              </td>
+              <td class="text-primary">
+                {{userLogin.phone}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Địa chỉ</strong>
+              </td>
+              <td class="text-primary">
+                {{userLogin.address}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center align-items-center mb-4">
+            <a class="btn btn-warning" [routerLink]="['/profile/update', accountLogin.accountId]">Cập nhật</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-

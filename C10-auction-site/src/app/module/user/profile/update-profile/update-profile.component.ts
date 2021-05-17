@@ -2,19 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../../../../service/account.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from "../../../../model/User";
 import {UserService} from "../../../../service/user.service";
-import {DatePipe} from "@angular/common";
 import {TokenStorageService} from "../../../../service/authentication/token-storage";
 import {Account} from "../../../../model/Account";
-
+import {Title} from "@angular/platform-browser";
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.component.html',
   styleUrls: ['./update-profile.component.css']
 })
 export class UpdateProfileComponent implements OnInit {
-
   public formEditUser: FormGroup;
   public accountId;
   public message: string;
@@ -26,12 +23,16 @@ export class UpdateProfileComponent implements OnInit {
     public userService: UserService,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public tokenService: TokenStorageService
-  ) { }
+    public tokenService: TokenStorageService,
+    private title: Title,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.accountLogin = this.tokenService.getAccount();
-
+    this.title.setTitle('Chỉnh sửa thông tin người dùng');
+    this.accountService.findAccount(this.tokenService.getAccount().accountId).subscribe(data => {
+      this.accountLogin = data;
+    });
     this.formEditUser = this.formBuilder.group({
       userId: [''],
       userName: ['', [Validators.required, Validators.minLength(5)]],
@@ -40,21 +41,25 @@ export class UpdateProfileComponent implements OnInit {
       identity: ['', [Validators.required, Validators.pattern('(\\d{9})|(\\d{12})')]],
       phone: ['', [Validators.required, Validators.pattern('(090|091|[(]84[)][+]90|[(]84[)][+]91)\\d{7}')]],
       address: ['', [Validators.required, Validators.minLength(5)]],
+      avatar: [''],
     })
-
     this.activatedRoute.params.subscribe(data => {
       this.accountId = data.id;
       this.accountService.findAccount(this.accountId).subscribe(data1 => {
         this.formEditUser.patchValue(data1);
         this.formEditUser.patchValue(data1.user);
-        this.formEditUser.controls.birthday.setValue(data1.user.birthday = data1.user.birthday.slice(0,10))
+        // format dữ liệu từ DB lên Client
+        this.formEditUser.controls.birthday.setValue(
+          data1.user.birthday = new Date(new Date(data1.user.birthday).getTime() + 7 * 60 * 60 * 1000).toISOString().slice(0, 10));
         console.log(this.formEditUser.value);
       });
     });
   }
 
   updateUser() {
-    // console.log(this.formEditUser.value);
+    if (this.accountLogin.email != this.formEditUser.value.email) {
+      this.accountService.updateEmail(this.accountLogin.email, this.formEditUser.value.email).subscribe();
+    }
     this.userService.updateUser(this.accountId, this.formEditUser.value).subscribe(data => {
       this.accountLogin.user = this.formEditUser.value;
       this.tokenService.saveAccountStorage(this.accountLogin);
@@ -62,24 +67,27 @@ export class UpdateProfileComponent implements OnInit {
     });
   }
 
-  get userName(){
+  get userName() {
     return this.formEditUser.get('userName');
   }
-  get email(){
+
+  get email() {
     return this.formEditUser.get('email');
   }
-  get birthday(){
+
+  get birthday() {
     return this.formEditUser.get('birthday');
   }
-  get identity(){
+
+  get identity() {
     return this.formEditUser.get('identity');
   }
-  get phone(){
+
+  get phone() {
     return this.formEditUser.get('phone');
   }
-  get address(){
+
+  get address() {
     return this.formEditUser.get('address');
   }
-
-
 }

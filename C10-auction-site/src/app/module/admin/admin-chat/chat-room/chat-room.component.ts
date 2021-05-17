@@ -9,6 +9,7 @@ import {TokenStorageService} from '../../../../service/authentication/token-stor
 import {Notification} from '../../../../model/notification';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-chat-room',
@@ -28,6 +29,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   urlImg: string;
   loadImage: boolean;
   role: string;
+  notifications = new Array<Notification>();
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -35,7 +37,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               public datepipe: DatePipe,
               private chatService: ChatService,
               private tokenStorageService: TokenStorageService,
-              public storage: AngularFireStorage) {
+              public storage: AngularFireStorage,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnChanges(): void {
@@ -61,11 +64,17 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         this.chats = this.chatService.snapshotToArray(resp).filter(x => x.roomName === this.roomName);
         this.setTimeForChat();
       });
+
       this.chatService.refRooms.orderByChild('roomName').equalTo(this.roomName).on('child_added', (resp2: any) => {
         this.user = resp2.val().user;
       });
-      if (!this.user){
-        this.user =  {
+
+      this.chatService.getNotiOfUser().on('child_added', (resp: any) => {
+        this.notifications = this.chatService.snapshotToArray(resp).filter(x => x.roomName === this.roomName);
+      });
+
+      if (!this.user) {
+        this.user = {
           address: '',
           avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU',
           birthday: undefined,
@@ -124,8 +133,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   }
 
-  readNoti() {
-    // firebase.database().ref('notifications/').child()
+  readAllNoti() {
+    for (const readNotification of this.notifications) {
+      this.chatService.readNoti(readNotification.key);
+    }
   }
 
   importImages($event) {
@@ -133,7 +144,13 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     for (const file of files) {
       const name = file.type.toString();
       if (!name.includes('image')) {
-        alert('Đây Không Phải Hình Ảnh');
+
+        this.snackBar.open('Đây không phải hình ảnh', 'X',
+        {
+          duration: 5000,
+        }
+      )
+        ;
         return;
       }
     }

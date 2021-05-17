@@ -31,29 +31,25 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.openLoading('!!! Chúng tôi vừa gửi cho bạn mật khẩu mới qua email!!');
     this.accountService.recoverPage(this.recoverForm.get('accountEmail').value).subscribe(data => {
-        const notification = 'We have sent a new password to your Gmail';
-        this.openLoading(notification, 'success');
-
+        this.checkSuccess = 'success';
+        this.dialog.closeAll();
       },
       error => {
-        this.openLoading(error.error.text, 'false');
+        this.checkSuccess = 'false';
 
       });
   }
 
 
-  openLoading(notification, checkSuccess) {
+  openLoading(notification) {
+    this.notification = notification
     this.dialog.open(LoadingComponent, {
       width: '500px',
       height: '200px',
       disableClose: true
     });
-    setTimeout(() => {
-      this.dialog.closeAll();
-      this.notification = notification;
-      this.checkSuccess = checkSuccess;
-    }, 1000);
   }
 
 }

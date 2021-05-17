@@ -1,4 +1,7 @@
-<p style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Có {{comments.length}} bình luận cho sản phẩm này</p>
+
+  <p *ngIf="comments" style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Có {{comments.length}} bình luận cho sản phẩm này</p>
+  <!--new-->
+  <p *ngIf="!comments" style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Hãy là người đầu tiên bình luận về sản phẩm này</p>
 <div class="container-fluid" >
   <div class="row" style="background-color: whitesmoke">
     <ul class="we-comet" style="margin-top: 241px;border-top: 1px solid #adb5bd">
@@ -126,7 +129,7 @@
             <input formControlName="image" hidden>
             <input formControlName="account" hidden>
             <input formControlName="product" hidden>
-            <input class="form-control comment-input emojiEdit" id="editComment"
+            <input class="form-control comment-input" id="editComment"
                    formControlName="content" placeholder="Nhập bình luận của bạn"/>
             <div *ngIf="checkImageEdit">
               <img [src]="fileImageEdit[0].url" style="margin-top: 5px; height: 120px; width: auto">

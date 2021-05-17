@@ -7,7 +7,7 @@ import {TokenStorageService} from "./authentication/token-storage";
   providedIn: 'root'
 })
 export class AccountService {
-  public API_URL = 'http://localhost:8080';
+  public API_URL = 'http://localhost:8080/api/account';
   public httpOptions: any;
 
   constructor(public httpClient: HttpClient,

@@ -6,7 +6,7 @@ import {User} from '../../../../model/user';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Account} from '../../../../model/account';
 import {ProductService} from '../../../../service/product/product.service';
-import {filter, finalize} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {ngxLoadingAnimationTypes} from 'ngx-loading';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
@@ -42,6 +42,7 @@ export class CommentProductComponent implements OnInit {
   private urlImage: string;
   urlImageEdit: string;
   isLogged: boolean;
+  length: number;
 
   constructor(private commentService: CommentService,
               private productService: ProductService,
@@ -79,6 +80,7 @@ export class CommentProductComponent implements OnInit {
       product: [''],
       account: ['']
     });
+    this.emoji();
   }
 
   /**
@@ -88,6 +90,21 @@ export class CommentProductComponent implements OnInit {
   getAllCommentByProductId(productId: number) {
     this.commentService.findAllCommentByProductId(productId).subscribe(data => {
       this.comments = data;
+
+    });
+  }
+
+  emoji() {
+    $(document).ready(function () {
+      $('#myText').emojioneArea({
+        search: false,
+        pickerPosition: 'top'
+      });
+
+      $('#editComment').emojioneArea({
+        search: false,
+        pickerPosition: 'right'
+      });
     });
   }
 

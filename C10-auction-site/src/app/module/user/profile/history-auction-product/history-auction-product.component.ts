@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuctionProduct} from '../../../../model/AuctionProduct';
 import {ProfileService} from '../profile.service';
+import {TokenStorageService} from '../../../../service/authentication/token-storage';
+import {Account} from '../../../../model/account';
 
 @Component({
   selector: 'app-history-auction-product',
@@ -11,10 +13,12 @@ export class HistoryAuctionProductComponent implements OnInit {
   public productAuction: AuctionProduct[];
   data;
   public pageNumber = 0;
-  constructor(private profileService: ProfileService) { }
+  account: Account
+  constructor(private profileService: ProfileService,
+              private tokenStorage: TokenStorageService) { }
 
   getAllProduct(){
-    this.profileService.getAllProductAuction(1, this.pageNumber).subscribe( data1 => {
+    this.profileService.getAllProductAuction(this.account.accountId, this.pageNumber).subscribe( data1 => {
       const listAuction = data1.content;
       this.data = data1;
       if (this.productAuction != null){
@@ -26,6 +30,7 @@ export class HistoryAuctionProductComponent implements OnInit {
   }
   ngOnInit(): void {
     this.productAuction = null;
+    this.account = this.tokenStorage.getAccount();
     this.getAllProduct();
   }
   loadMoreProduct() {

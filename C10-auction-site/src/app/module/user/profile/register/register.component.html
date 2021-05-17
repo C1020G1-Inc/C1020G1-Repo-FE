@@ -1,354 +1,367 @@
 <div class="container-fluid mt-5 mb-5">
-    <div class="row">
-        <div class="col-lg-6"
-            style="background: url('https://www.chilindo.com/assets/svgIcon/blueLandingHeader.svg'); background-repeat: no-repeat;">
+  <div class="row">
+    <div class="col-lg-6"
+         style="background: url('https://www.chilindo.com/assets/svgIcon/blueLandingHeader.svg'); background-repeat: no-repeat;">
+      <div class="row mt-5 pt-5 mb-5">
+        <div class="col-lg-2 res-1"></div>
+        <div class="col-lg-10 res-2">
+          <h1 style="color: #005884;">
+            C10Auction
+          </h1>
+          <h3 class="mt-2">
+            C10Auction là trang web đấu giá uy tín nhất tại Việt Nam.<br>
+            Đăng ký để tham gia đấu giá.<br>
+            Hướng dẫn chi tiết <a class="link text-decoration-none" routerLink="/guide"> Hướng dẫn</a>.
+          </h3>
         </div>
-        <div class="col-lg-5">
-            <form [formGroup]="form" (ngSubmit)="submit()">
-                <div class="card opa">
-                    <div class="card-header bg-transparent text-center">
-                        <img width="40px" height="40px" src="https://img.icons8.com/plasticine/2x/auction.png" alt="">
-                        <h4>Đăng Kí Tài Khoản Mới</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-12 text-center">
-                                <input accept=".jpg,.png" (change)="changeImage($event)" id="avatar" type="file" hidden>
-                                <div class="text-center d-inline-block avatar">
-                                    <img id="avt" style="border-radius: 50%" width="90px" height="90px" [src]="imgSrc"
-                                        alt="">
-                                    <i onclick="document.getElementById('avatar').click()"
-                                        title="Click to change avatar"
-                                        class="fa fa-camera position-relative right-50"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="accountName">Tên đăng nhập <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input id="accountName"
-                                        [class.is-invalid]="accountName.invalid && (accountName.dirty || accountName.touched)"
-                                        [class.is-valid]="accountName.valid" formControlName="accountName" type="text"
-                                        class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="accountName.invalid && (accountName.dirty || accountName.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="accountName.errors.required">
-                                            <div class="text-danger" [hidden]="!accountName.errors.required">Tên đăng
-                                                nhập
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="accountName.errors.pattern">
-                                            <div class="text-danger" [hidden]="!accountName.errors.pattern">Tên đăng
-                                                nhập
-                                                phải có ít nhất 8 kí tự, không bắt đầu bằng số, ít nhất 1 kí tự chữ và
-                                                không chứa các kí tự đặc
-                                                biệt!</div>
-                                        </div>
-                                        <div *ngIf="accountName.errors.accountDuplicate">
-                                            <div class="text-danger" [hidden]="!accountName.errors.accountDuplicate">Tên
-                                                đăng nhập đã tồn tại!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="fullname">Họ và tên <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input id="fullname"
-                                        [class.is-invalid]="userName.invalid && (userName.dirty || userName.touched)"
-                                        [class.is-valid]="userName.valid" formControlName="userName" type="text"
-                                        class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="userName.errors.required">
-                                            <div class="text-danger" [hidden]="!userName.errors.required">Họ tên
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="userName.errors.pattern">
-                                            <div class="text-danger" [hidden]="!userName.errors.pattern">Vui lòng sử
-                                                dụng
-                                                tên thật!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="password">Mật khẩu <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input id="password"
-                                        [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
-                                        [class.is-valid]="password.valid" formControlName="password" type="password"
-                                        class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-lock" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="password.invalid && (password.dirty || password.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="password.errors.required">
-                                            <div class="text-danger" [hidden]="!password.errors.required">Mật khẩu
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="password.errors.pattern">
-                                            <div class="text-danger" [hidden]="!password.errors.pattern">Mật khẩu chứa
-                                                ít nhất 8
-                                                kí tự, tối thiểu 1 chữ viết hoa và 1 số!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="passwordConfirm">Nhập lại mật khẩu <span
-                                        class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input id="passwordConfirm"
-                                        [class.is-invalid]="repassword.invalid && (repassword.dirty || repassword.touched)"
-                                        [class.is-valid]="repassword.valid && repassword.touched"
-                                        formControlName="repassword" type="password" class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-lock" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="repassword.invalid && (repassword.dirty || repassword.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="repassword.errors.required">
-                                            <div class="text-danger" [hidden]="!repassword.errors.required">Mật khẩu
-                                                nhập lại
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="repassword.errors.repassword">
-                                            <div class="text-danger" [hidden]="!repassword.errors.repassword">Mật khẩu
-                                                nhập lại phải giống với mật khẩu!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="invalid-feedback">no</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="email">Email <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input id="email"
-                                        [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
-                                        [class.is-valid]="email.valid" formControlName="email" type="text"
-                                        class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="email.errors.required">
-                                            <div class="text-danger" [hidden]="!email.errors.required">Email
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="email.errors.pattern">
-                                            <div class="text-danger" [hidden]="!email.errors.pattern">Vui lòng sử dụng
-                                                email thật!</div>
-                                        </div>
-                                        <div *ngIf="email.errors.emailDuplicate">
-                                            <div class="text-danger" [hidden]="!email.errors.emailDuplicate">Email này
-                                                đã tồn tại!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="date">Ngày Sinh <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input [class.is-invalid]="birthday.invalid && (birthday.dirty || birthday.touched)"
-                                        [min]="minDate" [max]="maxDate" [class.is-valid]="birthday.valid"
-                                        formControlName="birthday" id="date" matInput [matDatepicker]="seStDt"
-                                        class="form-control" type="text">
-                                    <mat-datepicker-toggle class="mat-tog" matSuffix [for]="seStDt">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #seStDt></mat-datepicker>
-                                    <div *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="birthday.errors.required">
-                                            <div class="text-danger" [hidden]="!birthday.errors.required">Ngày sinh
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="birthday.errors.matDatepickerMin">
-                                            <div class="text-danger" [hidden]="!birthday.errors.matDatepickerMin">
-                                                Phải nhỏ hơn 100
-                                                tuổi!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="birthday.errors.matDatepickerMax">
-                                            <div class="text-danger" [hidden]="!birthday.errors.matDatepickerMax">Phải
-                                                lớn hơn
-                                                16
-                                                tuổi!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="phone">Số điện thoại <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input [class.is-invalid]="phone.invalid && (phone.dirty || phone.touched)"
-                                        [class.is-valid]="phone.valid" formControlName="phone" id="phone" type="text"
-                                        class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-phone" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="phone.errors.required">
-                                            <div class="text-danger" [hidden]="!phone.errors.required">Số điện thoại
-                                                không được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="phone.errors.pattern">
-                                            <div class="text-danger" [hidden]="!phone.errors.pattern">Vui lòng sử dụng
-                                                số điện thoại thật!</div>
-                                        </div>
-                                        <div *ngIf="phone.errors.phoneDuplicate">
-                                            <div class="text-danger" [hidden]="!phone.errors.phoneDuplicate">Số điện
-                                                thoại này đã tồn tại!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="identity">CMND <span class="text-danger">(*)</span></label>
-                                <div class="input-group">
-                                    <input [class.is-invalid]="identity.invalid && (identity.dirty || identity.touched)"
-                                        [class.is-valid]="identity.valid" formControlName="identity" id="identity"
-                                        type="text" class="form-control">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="far fa-address-card" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="identity.invalid && (identity.dirty || identity.touched)"
-                                        class="invalid-feedback">
-                                        <div *ngIf="identity.errors.required">
-                                            <div class="text-danger" [hidden]="!identity.errors.required">Số CMND không
-                                                được để trống!
-                                            </div>
-                                        </div>
-                                        <div *ngIf="identity.errors.pattern">
-                                            <div class="text-danger" [hidden]="!identity.errors.pattern">Vui lòng sử
-                                                dụng số CMND thật!</div>
-                                        </div>
-                                        <div *ngIf="identity.errors.identityDuplicate">
-                                            <div class="text-danger" [hidden]="!identity.errors.identityDuplicate">Số
-                                                CMND này đã tồn tại!</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <div class="label-res">
-                                    <label for="province"> Tỉnh/Thành phố <span class="text-danger">(*)</span></label>
-                                </div>
-                                <div class="input-group">
-                                    <select
-                                        [class.is-invalid]="province.invalid && (province.dirty || province.touched)"
-                                        [class.is-valid]="province.valid" id="province" class="form-control"
-                                        (change)="changeProvince($event.target.value)">
-                                        <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">
-                                            {{provinces.province_name}}</option>
-                                    </select>
-                                </div>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class="label-res">
-                                    <label for="district"> Quận/Huyện <span class="text-danger">(*)</span></label>
-                                </div>
-                                <div class="input-group">
-                                    <select
-                                        [class.is-invalid]="district.invalid && (district.dirty || district.touched)"
-                                        [class.is-valid]="district.valid" id="district" class="form-control"
-                                        (change)="changeDistrict($event.target.value)">
-                                        <option *ngFor="let districts of districtList" [value]="districts.district_id">
-                                            {{districts.district_name}}</option>
-                                    </select>
-                                </div>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class="label-res">
-                                    <label for="ward"> Xã/Thị trấn <span class="text-danger">(*)</span></label>
-                                </div>
-                                <div class="input-group">
-                                    <select [class.is-invalid]="ward.invalid && (ward.dirty || ward.touched)"
-                                        [class.is-valid]="ward.valid" id="ward" class="form-control"
-                                        (change)="changeWard($event.target.value)">
-                                        <option *ngFor="let wards of wardList" [value]="wards.ward_id">
-                                            {{wards.ward_name}}</option>
-                                    </select>
-                                </div>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-floating">
-                                <label for="floatingTextarea2">Điều khoản sử dụng dịch vụ <span
-                                        class="text-danger">(*)</span>
-                                    <span class="text-danger" style="font-size: 12px"><i>Hãy đọc và đồng ý với điều
-                                            khoản sử dụng dịch vụ để đăng kí tài khoản</i></span>
-                                </label>
-                                <textarea class="form-control" id="floatingTextarea2" style="height: 100px" readonly>C10Auction cung cấp các dịch vụ theo Điều khoản dịch vụ này. Truy cập hoặc đăng ký tài khoản trong hệ thống của chúng tôi bằng bất kỳ cách nào có nghĩa là bạn đồng ý và cam kết tuân thủ nghiêm ngặt Điều khoản dịch vụ này. Chúng tôi có quyền sửa đổi nội dung của Điều khoản dịch vụ theo quyết định của mình mà không cần thông báo trước cho người dùng. Bằng cách tiếp tục sử dụng trang web của chúng tôi, người dùng tự động đồng ý với nội dung mới của Điều khoản dịch vụ đã sửa đổi.
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="form-row mt-3">
-                            <div class="form-group">
-                                <input formControlName="checkbox" id="check" type="checkbox">
-                                <label for="check">Tôi đã đọc và đồng ý các điều khoản trên
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-transparent">
-                        <div class="row">
-                            <div class="col-lg-6 pl-1 pr-1 mb-1">
-                                <button [disabled]="form.invalid" type="submit" class="btn btn-success btn-block">Đăng
-                                    kí</button>
-                            </div>
-                            <div class="col-lg-6 pl-1 pr-1 mb-1">
-                                <a routerLink="/login" class="btn btn-primary btn-block">Quay về đăng nhập</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-1"></div>
+      </div>
     </div>
+    <div class="col-lg-5">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="card opa">
+          <div class="card-header bg-transparent text-center">
+            <img width="40px" height="40px" src="https://img.icons8.com/plasticine/2x/auction.png" alt="">
+            <h4>Đăng Kí Tài Khoản Mới</h4>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-md-12 text-center">
+                <input accept=".jpg,.png" (change)="changeImage($event)" id="avatar" type="file" hidden>
+                <div class="text-center d-inline-block avatar">
+                  <img id="avt" style="border-radius: 50%" width="90px" height="90px" [src]="imgSrc"
+                       alt="">
+                  <i onclick="document.getElementById('avatar').click()"
+                     title="Click to change avatar"
+                     class="fa fa-camera position-relative right-50"></i>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="accountName">Tên đăng nhập <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input id="accountName"
+                         [class.is-invalid]="accountName.invalid && (accountName.dirty || accountName.touched)"
+                         [class.is-valid]="accountName.valid" formControlName="accountName" type="text"
+                         class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="accountName.invalid && (accountName.dirty || accountName.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="accountName.errors.required">
+                      <div class="text-danger" [hidden]="!accountName.errors.required">Tên đăng
+                        nhập
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="accountName.errors.pattern">
+                      <div class="text-danger" [hidden]="!accountName.errors.pattern">Tên đăng
+                        nhập
+                        phải có ít nhất 8 kí tự, không bắt đầu bằng số, ít nhất 1 kí tự chữ và
+                        không chứa các kí tự đặc
+                        biệt!</div>
+                    </div>
+                    <div *ngIf="accountName.errors.accountDuplicate">
+                      <div class="text-danger" [hidden]="!accountName.errors.accountDuplicate">Tên
+                        đăng nhập đã tồn tại!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="fullname">Họ và tên <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input id="fullname"
+                         [class.is-invalid]="userName.invalid && (userName.dirty || userName.touched)"
+                         [class.is-valid]="userName.valid" formControlName="userName" type="text"
+                         class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="userName.errors.required">
+                      <div class="text-danger" [hidden]="!userName.errors.required">Họ tên
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="userName.errors.pattern">
+                      <div class="text-danger" [hidden]="!userName.errors.pattern">Vui lòng sử
+                        dụng
+                        tên thật!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="password">Mật khẩu <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input id="password"
+                         [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                         [class.is-valid]="password.valid" formControlName="password" type="password"
+                         class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-lock" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="password.errors.required">
+                      <div class="text-danger" [hidden]="!password.errors.required">Mật khẩu
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="password.errors.pattern">
+                      <div class="text-danger" [hidden]="!password.errors.pattern">Mật khẩu chứa
+                        ít nhất 8
+                        kí tự, tối thiểu 1 chữ viết hoa,thường và 1 số!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="passwordConfirm">Nhập lại mật khẩu <span
+                  class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input id="passwordConfirm"
+                         [class.is-invalid]="repassword.invalid && (repassword.dirty || repassword.touched)"
+                         [class.is-valid]="repassword.valid && repassword.touched"
+                         formControlName="repassword" type="password" class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-lock" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="repassword.invalid && (repassword.dirty || repassword.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="repassword.errors.required">
+                      <div class="text-danger" [hidden]="!repassword.errors.required">Mật khẩu
+                        nhập lại
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="repassword.errors.repassword">
+                      <div class="text-danger" [hidden]="!repassword.errors.repassword">Mật khẩu
+                        nhập lại phải giống với mật khẩu!</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="invalid-feedback">no</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="email">Email <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input id="email"
+                         [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                         [class.is-valid]="email.valid" formControlName="email" type="text"
+                         class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="email.errors.required">
+                      <div class="text-danger" [hidden]="!email.errors.required">Email
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="email.errors.pattern">
+                      <div class="text-danger" [hidden]="!email.errors.pattern">Vui lòng sử dụng
+                        email thật!</div>
+                    </div>
+                    <div *ngIf="email.errors.emailDuplicate">
+                      <div class="text-danger" [hidden]="!email.errors.emailDuplicate">Email này
+                        đã tồn tại!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="date">Ngày Sinh <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input [class.is-invalid]="birthday.invalid && (birthday.dirty || birthday.touched)"
+                         [min]="minDate" [max]="maxDate" [class.is-valid]="birthday.valid"
+                         formControlName="birthday" id="date" matInput [matDatepicker]="seStDt"
+                         class="form-control" type="text">
+                  <mat-datepicker-toggle class="mat-tog" matSuffix [for]="seStDt">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #seStDt></mat-datepicker>
+                  <div *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="birthday.errors.required">
+                      <div class="text-danger" [hidden]="!birthday.errors.required">Ngày sinh
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="birthday.errors.matDatepickerMin">
+                      <div class="text-danger" [hidden]="!birthday.errors.matDatepickerMin">
+                        Phải nhỏ hơn 100
+                        tuổi!
+                      </div>
+                    </div>
+                    <div *ngIf="birthday.errors.matDatepickerMax">
+                      <div class="text-danger" [hidden]="!birthday.errors.matDatepickerMax">Phải
+                        lớn hơn
+                        16
+                        tuổi!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phone">Số điện thoại <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input [class.is-invalid]="phone.invalid && (phone.dirty || phone.touched)"
+                         [class.is-valid]="phone.valid" formControlName="phone" id="phone" type="text"
+                         class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-phone" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="phone.errors.required">
+                      <div class="text-danger" [hidden]="!phone.errors.required">Số điện thoại
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="phone.errors.pattern">
+                      <div class="text-danger" [hidden]="!phone.errors.pattern">Vui lòng sử dụng
+                        số điện thoại thật!</div>
+                    </div>
+                    <div *ngIf="phone.errors.phoneDuplicate">
+                      <div class="text-danger" [hidden]="!phone.errors.phoneDuplicate">Số điện
+                        thoại này đã tồn tại!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="identity">CMND <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input [class.is-invalid]="identity.invalid && (identity.dirty || identity.touched)"
+                         [class.is-valid]="identity.valid" formControlName="identity" id="identity"
+                         type="text" class="form-control">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="far fa-address-card" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="identity.invalid && (identity.dirty || identity.touched)"
+                       class="invalid-feedback">
+                    <div *ngIf="identity.errors.required">
+                      <div class="text-danger" [hidden]="!identity.errors.required">Số CMND không
+                        được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="identity.errors.pattern">
+                      <div class="text-danger" [hidden]="!identity.errors.pattern">Vui lòng sử
+                        dụng số CMND thật!</div>
+                    </div>
+                    <div *ngIf="identity.errors.identityDuplicate">
+                      <div class="text-danger" [hidden]="!identity.errors.identityDuplicate">Số
+                        CMND này đã tồn tại!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <div class="label-res">
+                  <label for="province"> Tỉnh/Thành phố <span class="text-danger">(*)</span></label>
+                </div>
+                <div class="input-group">
+                  <select
+                    [class.is-invalid]="province.invalid && (province.dirty || province.touched)"
+                    [class.is-valid]="province.valid" id="province" class="form-control"
+                    (change)="changeProvince($event.target.value)">
+                    <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">
+                      {{provinces.province_name}}</option>
+                  </select>
+                </div>
+                <div class="invalid-feedback"></div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="label-res">
+                  <label for="district"> Quận/Huyện <span class="text-danger">(*)</span></label>
+                </div>
+                <div class="input-group">
+                  <select
+                    [class.is-invalid]="district.invalid && (district.dirty || district.touched)"
+                    [class.is-valid]="district.valid" id="district" class="form-control"
+                    (change)="changeDistrict($event.target.value)">
+                    <option *ngFor="let districts of districtList" [value]="districts.district_id">
+                      {{districts.district_name}}</option>
+                  </select>
+                </div>
+                <div class="invalid-feedback"></div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="label-res">
+                  <label for="ward"> Xã/Thị trấn <span class="text-danger">(*)</span></label>
+                </div>
+                <div class="input-group">
+                  <select [class.is-invalid]="ward.invalid && (ward.dirty || ward.touched)"
+                          [class.is-valid]="ward.valid" id="ward" class="form-control"
+                          (change)="changeWard($event.target.value)">
+                    <option *ngFor="let wards of wardList" [value]="wards.ward_id">
+                      {{wards.ward_name}}</option>
+                  </select>
+                </div>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-floating">
+                <label for="floatingTextarea2">Điều khoản sử dụng dịch vụ <span
+                  class="text-danger">(*)</span>
+                  <span class="text-danger" style="font-size: 12px"><i>Hãy đọc và đồng ý với điều
+                                            khoản sử dụng dịch vụ để đăng kí tài khoản</i></span>
+                </label>
+                <textarea class="form-control" id="floatingTextarea2" style="height: 100px" readonly>C10Auction cung cấp các dịch vụ theo Điều khoản dịch vụ này. Truy cập hoặc đăng ký tài khoản trong hệ thống của chúng tôi bằng bất kỳ cách nào có nghĩa là bạn đồng ý và cam kết tuân thủ nghiêm ngặt Điều khoản dịch vụ này. Chúng tôi có quyền sửa đổi nội dung của Điều khoản dịch vụ theo quyết định của mình mà không cần thông báo trước cho người dùng. Bằng cách tiếp tục sử dụng trang web của chúng tôi, người dùng tự động đồng ý với nội dung mới của Điều khoản dịch vụ đã sửa đổi.
+                                </textarea>
+              </div>
+            </div>
+            <div class="form-row mt-3">
+              <div class="form-group">
+                <input formControlName="checkbox" id="check" type="checkbox">
+                <label for="check">Tôi đã đọc và đồng ý các điều khoản trên
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent">
+            <div class="row">
+              <div class="col-lg-6 pl-1 pr-1 mb-1">
+                <button [disabled]="form.invalid" type="submit" class="btn btn-success btn-block">Đăng
+                  kí</button>
+              </div>
+              <div class="col-lg-6 pl-1 pr-1 mb-1">
+                <a routerLink="/login" class="btn btn-primary btn-block">Quay về đăng nhập</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
 </div>

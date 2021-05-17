@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
-  <div class="chat-history" (scroll)="readNoti()">
+  <div class="chat-history" (scroll)="readAllNoti()">
     <ul class="m-b-0">
       <li class="clearfix" *ngFor="let chat of chats">
         <div class="message-data text-right" *ngIf="chat.nickname === roomName">

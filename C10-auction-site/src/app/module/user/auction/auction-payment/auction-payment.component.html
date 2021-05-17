@@ -242,7 +242,6 @@
                         <tr>
                           <th class="p-1 col-5 align-middle">Sản phẩm</th>
                           <th class="p-1 align-middle">Số lượng</th>
-                          <th class="p-1 align-middle">Giá (VND)</th>
                           <th class="p-1 align-middle">Tổng giá (VND)</th>
                         </tr>
                         </thead>
@@ -252,15 +251,14 @@
                             {{product.productName}}
                           </td>
                           <td class="align-middle">{{product.quantity}}</td>
-                          <td class="align-middle">{{product.lastPrice | number}}</td>
-                          <td class="align-middle">{{(product.lastPrice * product.quantity) | number}}</td>
+                          <td class="align-middle">{{(product.lastPrice * 1.05) | number}}</td>
                         </tr>
                         <tr>
-                          <th colspan="3">Phí giao hàng (VND)</th>
+                          <th colspan="2">Phí giao hàng (VND)</th>
                           <td>50,000</td>
                         </tr>
                         <tr>
-                          <th colspan="3" style="font-weight: bold">Tổng tiền (VND)</th>
+                          <th colspan="2" style="font-weight: bold">Tổng tiền (VND)</th>
                           <td>{{(totalInVND + 50000) | number}}</td>
                         </tr>
                         </tbody>

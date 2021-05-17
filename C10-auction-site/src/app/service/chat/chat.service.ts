@@ -9,10 +9,6 @@ import {Notification} from '../../model/notification';
 })
 export class ChatService {
 
-  refRooms = firebase.database().ref('rooms/');
-  refNoti = firebase.database().ref('notifications/');
-  refChats = firebase.database().ref('chats/');
-
   constructor() { }
 
   snapshotToArray = (snapshot: any) => {
@@ -27,12 +23,21 @@ export class ChatService {
     return returnArr;
   }
 
-  getNotiOfUser(){
-   return this.refNoti.orderByChild('role').equalTo('user');
+
+  get refRooms() {
+    return firebase.database().ref('rooms/');
   }
 
-  getNotiOfAdmin(){
-    return this.refNoti.orderByChild('role').equalTo('admin');
+  get refNoti() {
+    return firebase.database().ref('notifications-admin/');
+  }
+
+  get refChats() {
+    return firebase.database().ref('chats/');
+  }
+
+  getNotiOfUser(){
+   return this.refNoti.orderByChild('role').equalTo('user');
   }
 
   readNoti(key){

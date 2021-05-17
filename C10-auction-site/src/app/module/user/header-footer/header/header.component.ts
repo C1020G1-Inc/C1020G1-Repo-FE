@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
           this.notifications = [];
           for (const property in data) {
             if (data.hasOwnProperty(property)) {
+              data[property].key = property;
               this.notifications.push(data[property]);
             }
           }
@@ -65,5 +66,12 @@ export class HeaderComponent implements OnInit {
 
   request() {
     this.accountService.test().subscribe(data => console.log(data));
+  }
+
+  /**
+   * @author PhucPT
+   */
+  deleteNotification(key){
+    this.firebaseDatabaseService.deleteNotification(key, this.account.accountId).then();
   }
 }
