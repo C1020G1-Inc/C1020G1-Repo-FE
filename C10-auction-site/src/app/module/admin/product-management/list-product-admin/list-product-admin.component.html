@@ -15,7 +15,7 @@
                   <div>
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tên sản phẩm:</span>
                     <input placeholder="Nhập tên..." [(ngModel)]="productName" class="form-control"
-                           style="width: 200px;float: left;margin-right: 10px">
+                           style="width: 150px;float: left;margin-right: 10px">
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Loại sản phẩm:</span>
                     <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId"
                             class="custom-select">
@@ -25,7 +25,7 @@
                     </select>
                     <span style="padding: 10px;color: white;float:left;margin-right: 10px">Người đăng:</span>
                     <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName"
-                           style="width: 200px;float: left;margin-right: 10px" class="form-control">
+                           style="width: 150px;float: left;margin-right: 10px" class="form-control">
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tình trạng</span>
                     <select style="width: 130px;float: left;height: 35px;margin-right: 10px"
                             [(ngModel)]="productStatusId" class="custom-select">
@@ -35,7 +35,7 @@
                       <option value="4">Hoàn Thành</option>
                     </select>
                     <input type="button" class="btn btn-primary" value="Tìm kiếm" (click)="doSearch()"
-                           style="margin-left: 3%;margin-top: 0">
+                           style="margin-left: 1%;margin-top: 0;margin-bottom: 10px">
                   </div>
                   <div class="table-responsive" *ngIf="productList.length != 0">
                     <table class="table">
@@ -90,7 +90,7 @@
                         <td *ngIf="product.productStatus.id == 1">
                           <a style="cursor: pointer;margin-left: 7%;margin-right: 2%"
                              (click)="sendProductIdForForm(product.productId)" href="#editProduct" data-toggle="modal">
-                            <i class="fa fa-pencil fa-2x" title="Cập nhật"></i>
+                            <i class="fa fa-pencil-square-o fa-2x"></i>
                           </a>
                         </td>
                       </tr>
@@ -113,20 +113,22 @@
   </div>
 
 
-  <div id="deleteModal" class="modal fade">
+  <div id="confirmModal" class="modal fade" *ngIf="productConfirm">
     <div class="modal-dialog">
       <div class="modal-content">
         <form>
-          <div class="modal-header">
-            <h4 class="modal-title">Xóa sản phẩm</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-header" style="background: #9e08e3">
+            <h4 class="modal-title" style="color: white">Phản hồi khách hàng</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">&times;</button>
           </div>
           <div class="modal-body">
-            <p>Bạn có chắc muốn xóa sản phẩm này?</p>
-            <h3 class="text-warning">Sau khi xóa sẽ không hoàn tác lại được.</h3>
+            <h5 class="text-warning">Nội dung phản hồi</h5>
+            <h5>Sản phẩm: {{productConfirm.productName}}</h5>
+            <h5>Người đăng: {{productConfirm.account.user.userName}}</h5>
+            <textarea rows="8" cols="55" name="message" [(ngModel)]="confirmContent"></textarea>
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-danger" value="Xóa">
+            <input type="submit" class="btn btn-danger" value="Gửi" (click)="sendConfirm()" [disabled]="!confirmContent">
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
           </div>
         </form>
@@ -184,7 +186,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal">Phản Hồi</button>
+            <a class="btn btn-primary" data-toggle="modal" href="#confirmModal" data-dismiss="modal" (click)="sendProductToConfirm(product)">Phản Hồi</a>
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy"
                    style="margin-right: 27%;margin-left: 10px">
           </div>
@@ -234,7 +236,7 @@
                 <tr>
                   <th style="padding: 30px">Chủng loại:</th>
                   <td style="padding: 20px">
-                    <select style="width: 100px" id="category" name="category" formControlName="category"
+                    <select style="width: 130px" id="category" name="category" formControlName="category"
                             class="custom-select">
                       <option [ngValue]="category.id" *ngFor="let category of categoryList">
                         {{category.categoryName}}
@@ -293,13 +295,13 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Thời gian:</th>
+                  <th style="padding: 30px">Thời gian đấu giá:</th>
                   <th style="padding: 20px">
-                    <select style="width: 100px;" id="auctionTime" name="auctionTime"
+                    <select style="width: 130px;" id="auctionTime" name="auctionTime"
                             formControlName="auctionTime" class="custom-select">
-                      <option value="60">60 phút</option>
-                      <option value="120">120 phút</option>
-                      <option value="180">180 phút</option>
+                      <option value="5">5 phút</option>
+                      <option value="15">15 phút</option>
+                      <option value="30">30 phút</option>
                     </select>
                   </th>
                 </tr>

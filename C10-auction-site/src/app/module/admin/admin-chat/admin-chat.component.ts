@@ -43,6 +43,7 @@ export class AdminChatComponent implements OnInit {
 
 
   enterChatRoom(room: Room) {
+    console.log(room);
     this.chatService.readNewMess(room.key);
     for (const readNotification of this.notifications) {
       if (readNotification.chat.roomName === room.roomName) {

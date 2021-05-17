@@ -34,7 +34,6 @@ export class ForgotPasswordComponent implements OnInit {
     this.accountService.recoverPage(this.recoverForm.get('accountEmail').value).subscribe(data => {
         const notification = 'We have sent a new password to your Gmail';
         this.openLoading(notification, 'success');
-
       },
       error => {
         this.openLoading(error.error.text, 'false');
