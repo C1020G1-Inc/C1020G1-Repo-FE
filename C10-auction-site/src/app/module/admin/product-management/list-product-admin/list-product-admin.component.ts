@@ -10,6 +10,7 @@ import {finalize} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {LoadingComponent} from '../loading/loading.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-product-admin',
@@ -34,10 +35,10 @@ export class ListProductAdminComponent implements OnInit {
   productEdit: Product;
   categoryList = new Array<Category>();
   statusChange = {
-    1 : 'Chờ Duyệt',
-    2 : 'Đang Đấu Giá',
-    3 : 'Chờ Thanh Toán',
-    4 : 'Hoàn Thành',
+    1: 'Chờ Duyệt',
+    2: 'Đang Đấu Giá',
+    3: 'Chờ Thanh Toán',
+    4: 'Hoàn Thành',
   };
   editForm: FormGroup;
   // Ảnh có sẵn dùng để show màn hình
@@ -49,6 +50,12 @@ export class ListProductAdminComponent implements OnInit {
   // file ảnh update dùng để up lên firebase.
   imageToUpFireBase = new Array<any>();
   lengthOfImage;
+  notification;
+
+  // Biến dành cho confirm
+  productConfirm: Product;
+  accountEmailConfirm: string;
+  confirmContent: string;
 
   constructor(private productService: ProductService,
               private formBuilder: FormBuilder,
@@ -225,7 +232,44 @@ export class ListProductAdminComponent implements OnInit {
     });
     setTimeout(() => {
       this.dialog.closeAll();
+      this.showSuccessAlert();
     }, 3000);
+  }
+
+  showSuccessAlert() {
+    Swal.fire('Chỉnh sửa thành công!', '', 'success')
+  }
+
+  sendProductToConfirm(product: Product) {
+    this.confirmContent = '';
+    this.productConfirm = product;
+  }
+
+  sendConfirm() {
+
+    this.openLoadingSendConFirm();
+
+    const accountEmail = this.productConfirm.account.email;
+    const confirmContent = this.confirmContent;
+    const userName = this.productConfirm.account.user.userName;
+
+    this.productService.sendConfirm(accountEmail, confirmContent, userName).subscribe()
+  }
+
+  openLoadingSendConFirm() {
+    this.dialog.open(LoadingComponent, {
+      width: '500px',
+      height: '200px',
+      disableClose: true
+    });
+    setTimeout(() => {
+      this.dialog.closeAll();
+      this.showSendMailAlert();
+    }, 3000);
+  }
+
+  showSendMailAlert() {
+    Swal.fire('Gửi mail phản hồi thành công !', '', 'success')
   }
 }
 

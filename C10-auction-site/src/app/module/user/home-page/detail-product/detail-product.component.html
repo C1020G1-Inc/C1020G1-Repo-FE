@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-3">
         <div class="card" *ngIf="product">
-          <img  src="{{productImage[3].image}}" class="card-img-top" alt="...">
+          <img src="{{productImage[3].image}}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{product.productName}}</h5>
           </div>
@@ -78,20 +78,26 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div>
-      <h3 style="margin-top: 20px ; color: black ">Chi Tiết Sản Phẩm</h3>
-      <ul style="color:black ">
-        <li>{{product.description}}</li>
-      </ul>
-    </div>
-    <div>
-      <h3 style="margin-top: 20px ; color: black ">Địa Chỉ Nhận Hàng</h3>
-      <ul style="color: black">
-        <li>Địa Chỉ Nhận Hàng : {{product.account.user.address}}</li>
-        <li>SĐT : {{product.account.user.phone}} </li>
-      </ul>
-      <h3 style="margin-top: 20px">Bình Luận</h3>
-      <app-comment-product></app-comment-product>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <h3 style="margin-top: 20px ; color: black ">Chi Tiết Sản Phẩm</h3>
+          <ul style="color:black ">
+            <li>{{product.description}}</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="margin-top: 20px ; color: black ">Địa Chỉ Nhận Hàng</h3>
+          <ul style="color: black">
+            <li>Địa Chỉ Nhận Hàng : {{product.account.user.address}}</li>
+            <li>SĐT : {{product.account.user.phone}} </li>
+          </ul>
+          <h3 style="margin-top: 20px">Bình Luận</h3>
+          <ul style="position: absolute;width: 100%;margin-left: -37px;">
+            <app-comment-product></app-comment-product>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

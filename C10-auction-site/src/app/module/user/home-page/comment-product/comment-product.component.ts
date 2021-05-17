@@ -136,6 +136,8 @@ export class CommentProductComponent implements OnInit {
    * send form edit to screen
    */
   sendFormEdit(commentId: number) {
+    this.fileImage = [];
+    this.check = false;
     this.commentService.findCommentById(commentId).subscribe(data => {
       this.formEditComment.get('commentId').setValue(data.commentId);
       this.formEditComment.get('content').setValue(data.content);

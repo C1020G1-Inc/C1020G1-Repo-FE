@@ -1,10 +1,56 @@
-
-  <p *ngIf="comments" style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Có {{comments.length}} bình luận cho sản phẩm này</p>
-  <!--new-->
-  <p *ngIf="!comments" style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Hãy là người đầu tiên bình luận về sản phẩm này</p>
-<div class="container-fluid" >
+<div *ngIf="comments">
+  <p style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Có {{comments.length}} bình luận cho sản phẩm này</p>
+</div>
+<div *ngIf="!comments">
+  <p style="color: #0a6ebd; font-size: 17px; font-weight: bolder">Hãy là người bình luận đầu tiên cho sản phẩm này</p>
+</div>
+<div class="container-fluid">
+  <ngx-loading [show]="loading" [config]="config">
+  </ngx-loading>
   <div class="row" style="background-color: whitesmoke">
-    <ul class="we-comet" style="margin-top: 241px;border-top: 1px solid #adb5bd">
+    <ul class="we-comet" style="margin-top: 10px; margin-bottom: 10px">
+      <form [formGroup]="formComment">
+        <li class="post-comment">
+          <div class="comet-avatar" style="margin-right: 10px; margin-top: 2px">
+            <a href="#" target="_blank">
+              <img src="{{account.user.avatar}}" class="img-custom"/>
+            </a>
+          </div>
+          <div class="post-comt-box">
+            <input formControlName="image" hidden>
+            <input formControlName="account" hidden>
+            <input formControlName="product" hidden>
+            <label>
+              <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên"></i>
+              <input type="file" id="upload_file" name="upload_file[]" (change)="importImages($event)" hidden/>
+            </label>
+            <span *ngIf="message != null" class="warningg alert-danger" role="alert">
+              {{this.message}}
+            </span>
+            <span *ngIf="messageEdit == 'Không được để trống nội dung trong lúc chỉnh sửa!!'"
+                  class="warningg alert-danger" role="alert">
+              {{this.messageEdit}}
+            </span>
+            <textarea formControlName="content" class="form-control emoji" id="myText"
+                      placeholder="Nhập bình luận của bạn"></textarea>
+
+          </div>
+          <button class="btn btn-primary comet-button" style="margin-top: 24px; margin-left: 5px"
+                  (click)="createComment()">
+            <i class="fa fa-paper-plane" aria-hidden="true" title="Gửi"></i>
+          </button>
+        </li>
+      </form>
+      <div *ngIf="check" class="d-inline-block" style="max-height:120px; margin-left: 61px">
+        <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage()"></i></span>
+        <img *ngIf="check" [src]="fileImage[0].url" style="height: 120px; width: auto; float: left">
+      </div>
+    </ul>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row" style="background-color: whitesmoke">
+    <ul class="we-comet" style="border-top: 1px solid #adb5bd">
       <li *ngFor="let comment of comments" style="margin-top: 5px">
         <div>
           <div class="comet-avatar">
@@ -44,47 +90,6 @@
         </div>
       </li>
     </ul>
-
-    <ul class="we-comet" style="margin-top: 10px; margin-bottom: 10px; position: absolute;" *ngIf="isLogged">
-      <ngx-loading [show]="loading" [config]="config">
-      </ngx-loading>
-      <form [formGroup]="formComment">
-        <li class="post-comment">
-          <div class="comet-avatar" style="margin-right: 10px; margin-top: 2px">
-            <a href="#" target="_blank">
-              <img src="{{account.user.avatar}}" class="img-custom"/>
-            </a>
-          </div>
-          <div class="post-comt-box">
-            <input formControlName="image" hidden>
-            <input formControlName="account" hidden>
-            <input formControlName="product" hidden>
-            <label>
-              <i class="fa fa-camera-retro fa-lg" aria-hidden="true" title="Tải ảnh lên"></i>
-              <input type="file" id="upload_file" name="upload_file[]" (change)="importImages($event)" hidden/>
-            </label>
-            <span *ngIf="message != null" class="warningg alert-danger" role="alert">
-              {{this.message}}
-            </span>
-            <span *ngIf="messageEdit == 'Không được để trống nội dung trong lúc chỉnh sửa!!'"
-                  class="warningg alert-danger" role="alert">
-              {{this.messageEdit}}
-            </span>
-            <textarea formControlName="content" class="form-control emoji" id="myText"
-                      placeholder="Nhập bình luận của bạn"></textarea>
-
-          </div>
-          <button class="btn btn-primary comet-button" style="margin-top: 24px; margin-left: 5px"
-                  (click)="createComment()">
-            <i class="fa fa-paper-plane" aria-hidden="true" title="Gửi"></i>
-          </button>
-        </li>
-      </form>
-      <div *ngIf="check" class="d-inline-block" style="max-height:120px; margin-left: 61px">
-        <span><i class="fa fa-trash delete-icon d-inline" (click)="deleteUpdateImage()"></i></span>
-        <img [src]="fileImage[0].url" style="height: 120px; width: auto; float: left">
-      </div>
-    </ul>
   </div>
 </div>
 
@@ -96,10 +101,10 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog">
-    <ngx-loading [show]="loadingEdit" [config]="config">
-    </ngx-loading>
-    <div class="modal-content">
+  <div class="modal-dialog" >
+    <div class="modal-content" style="overflow: visible !important;">
+      <ngx-loading [show]="loadingEdit" [config]="config">
+      </ngx-loading>
       <div class="modal-header">
         <h5 class="modal-title">Chỉnh sửa bình luận</h5>
         <button
@@ -115,7 +120,7 @@
         <div class="form-group" style="margin-top: 0; margin-bottom: 0">
           <div style="display: block">
           <span *ngIf="messageEdit != null" class="alert alert-danger" role="alert">
-              {{this.messageEdit}}
+              <small>{{this.messageEdit}}</small>
           </span>
           </div>
           <div style="display: block; margin-top: 12px; margin-bottom: -14px">
@@ -129,7 +134,7 @@
             <input formControlName="image" hidden>
             <input formControlName="account" hidden>
             <input formControlName="product" hidden>
-            <input class="form-control comment-input" id="editComment"
+            <input class="form-control comment-input emojiEdit" id="editComment"
                    formControlName="content" placeholder="Nhập bình luận của bạn"/>
             <div *ngIf="checkImageEdit">
               <img [src]="fileImageEdit[0].url" style="margin-top: 5px; height: 120px; width: auto">
@@ -156,7 +161,7 @@
 <!-- modal delete comment -->
 <div id="deleteCommentModal" class="modal fade">
   <div class="modal-dialog modal-confirm">
-    <div class="modal-content">
+    <div class="modal-content" style="overflow: visible !important;">
       <div class="modal-header" style="text-align: center">
         <h5 class="modal-title">Xóa Bình Luận</h5>
         <button

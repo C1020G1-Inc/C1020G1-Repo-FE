@@ -61,4 +61,11 @@ export class ProductService {
   updateProduct(productDTO: ProductDto): Observable<any>{
     return this.httpClient.put('http://localhost:8080/api/account/admin/edit_product' , productDTO,this.httpOptions);
   }
+
+  sendConfirm(accountEmail , confirmContent , userName): Observable<any>{
+    console.log(userName);
+    return this.httpClient.get('http://localhost:8080/api/account/admin/confirm?accountEmail=' + accountEmail + '' +
+      '&confirmContent=' + confirmContent + '' +
+      '&userName=' + userName,this.httpOptions)
+  }
 }
