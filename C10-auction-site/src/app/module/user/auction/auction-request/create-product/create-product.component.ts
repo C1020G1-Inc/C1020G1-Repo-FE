@@ -21,7 +21,6 @@ export class CreateProductComponent implements OnInit {
 
   constructor(
     private createService: CreateServiceService,
-    // private activatedRoute: ActivatedRoute
   ) {
   }
 
@@ -47,10 +46,6 @@ export class CreateProductComponent implements OnInit {
       this.category = category;
     });
   }
-
-  // cancel() {
-  //   location.reload();
-  // }
 
   submit(createProduct: FormGroup) {
     this.createService.createProduct(this.createProduct.value).subscribe(data => {
