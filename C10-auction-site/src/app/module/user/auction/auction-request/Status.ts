@@ -1,5 +1,5 @@
 export class Status {
-  public statusId: number;
+  public id: number;
   public statusName: string;
 
 }

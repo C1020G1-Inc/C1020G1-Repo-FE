@@ -26,7 +26,7 @@ export class CreateServiceService {
 
   public createProduct(product:Product): Observable<Product>{
     product.productStatus = {
-      statusId: 1,
+      id: 1,
       statusName: "pending"
     };
     product.registerTime = new Date();
