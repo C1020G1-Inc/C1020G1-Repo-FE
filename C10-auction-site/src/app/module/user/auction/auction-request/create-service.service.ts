@@ -16,15 +16,21 @@ export class CreateServiceService {
   constructor(private httpClient: HttpClient) {
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
-      , 'Access-Control-Allow-Origin': 'localhost:8080', 'Access-Control-Allow-Methods': '*'
+      , 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*'
     };
   }
 
-  public getCategory(): Observable<Category> {
-    return this.httpClient.get<Category>(this.API_URL + '/category');
+  public getCategory(): Observable<Product> {
+    return this.httpClient.get<Product>(this.API_URL + '/category');
   }
 
-  public createProduct(product): Observable<Product>{
-    return this.httpClient.post<Product>(this.API_URL + '/create', product);
+  public createProduct(product:Product): Observable<Product>{
+    product.productStatus = {
+      statusId: 1,
+      statusName: "pending"
+    };
+    product.registerTime = new Date();
+    console.log(product);
+    return this.httpClient.post<Product>(this.API_URL+"/create", product);
   }
 }
