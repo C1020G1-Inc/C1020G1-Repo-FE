@@ -8,9 +8,12 @@ import { GuideComponent } from './guide/guide.component';
 
 
 @NgModule({
-  declarations: [ListProductHomeComponent, DetailProductComponent, CommentProductComponent, GuideComponent],
-  imports: [
-    CommonModule
-  ]
+    declarations: [ListProductHomeComponent, DetailProductComponent, CommentProductComponent, GuideComponent],
+    exports: [
+        GuideComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class HomePageModule { }
