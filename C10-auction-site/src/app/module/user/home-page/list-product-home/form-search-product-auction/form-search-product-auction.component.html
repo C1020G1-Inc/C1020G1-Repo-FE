@@ -1,4 +1,4 @@
-<form class="container bg-light form-inline" *ngIf="formSearch" ngNoForm [formGroup]="formSearch" (ngSubmit)="search()">
+<form class="container bg-light form-inline " *ngIf="formSearch" ngNoForm [formGroup]="formSearch" (ngSubmit)="search()">
   <label for="search" class="text-dark ml-5 {{marginBottom}}">Nhập Tên Sản Phẩm:</label>
   <input (input)="checkForm()" id="search" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}" type="search"
          placeholder="Tên Sản Phẩm ..." formControlName="keySearch">

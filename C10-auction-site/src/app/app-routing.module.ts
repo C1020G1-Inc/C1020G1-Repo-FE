@@ -32,6 +32,7 @@ import {ListProductResultAuctionComponent} from './module/user/home-page/list-pr
 import {ListProductTopAuctionComponent} from './module/user/home-page/list-product-home/list-product-top-auction/list-product-top-auction.component';
 import {ResultSearchProductAuctionComponent} from './module/user/home-page/list-product-home/result-search-product-auction/result-search-product-auction.component';
 import {ProductChartDonutComponent} from './module/admin/product-management/product-chart-donut/product-chart-donut.component';
+import {HomePageModule} from './module/user/home-page/home-page.module';
 
 const routes: Routes = [
   {
@@ -81,7 +82,7 @@ const routes: Routes = [
 
     ], canActivate: [AuthGuardService]
   },
-  {path: 'logout', component: ErrorComponent},
+  {path: '', component: ListProductHomeComponent},
 ];
 
 @NgModule({
