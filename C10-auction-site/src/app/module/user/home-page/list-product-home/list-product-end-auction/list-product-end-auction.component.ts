@@ -4,6 +4,7 @@ import {LoadingComponent} from '../../../../loading/loading/loading.component';
 import {MatDialog} from '@angular/material/dialog';
 import {interval} from 'rxjs';
 import {ListProductAuctionService} from '../../../../../service/product/list-product-auction.service';
+import {ProductImage} from '../../../../../model/ProductImage';
 
 @Component({
   selector: 'app-list-product-end-auction',
@@ -16,7 +17,7 @@ export class ListProductEndAuctionComponent implements OnInit {
               private dialog: MatDialog) {
   }
 
-  public listProduct: [];
+  public listProduct = new Array<ProductImage>();
   public page = 1;
   public activeOne = 'active';
   public activeTwo;

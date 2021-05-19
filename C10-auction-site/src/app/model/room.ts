@@ -6,7 +6,7 @@ export class Room {
   user: User;
   newMess: number;
   key: string;
-
+  active: boolean;
 
   constructor(roomName: string, user: User, newMess: number) {
     this.roomName = roomName;

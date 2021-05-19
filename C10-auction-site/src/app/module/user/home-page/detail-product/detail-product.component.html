@@ -79,21 +79,27 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-12 p-0">
         <div>
           <h3 style="margin-top: 20px ; color: black ">Chi Tiết Sản Phẩm</h3>
           <ul style="color:black ">
             <li>{{product.description}}</li>
           </ul>
-        </div>
-        <div>
-          <h3 style="margin-top: 20px ; color: black ">Địa Chỉ Nhận Hàng</h3>
+          <h3 style="margin-top: 20px ; color: black ">Thông Tin Liên Lạc</h3>
           <ul style="color: black">
-            <li>Địa Chỉ Nhận Hàng : {{product.account.user.address}}</li>
+            <li>Địa Chỉ Cửa Hàng : {{product.account.user.address}}</li>
             <li>SĐT : {{product.account.user.phone}} </li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 p-0">
+        <div>
           <h3 style="margin-top: 20px">Bình Luận</h3>
-          <ul style="position: absolute;width: 100%;margin-left: -37px;">
+          <ul style="width: 100%;margin: 0;padding-right: 20px; padding-left: 0">
             <app-comment-product></app-comment-product>
           </ul>
         </div>

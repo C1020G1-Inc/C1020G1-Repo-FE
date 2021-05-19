@@ -1,7 +1,9 @@
 <div class="container-fluid mt-2">
-  <form class="container bg-light form-inline" *ngIf="formSearch" ngNoForm [formGroup]="formSearch" (ngSubmit)="search()">
+  <form class="container bg-light form-inline" *ngIf="formSearch" ngNoForm [formGroup]="formSearch"
+        (ngSubmit)="search()">
     <label for="search" class="text-dark ml-5 {{marginBottom}}">Nhập Tên Sản Phẩm:</label>
-    <input id="search" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}" type="search"
+    <input id="search" (input)="checkForm()" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}"
+           type="search"
            placeholder="Tên Sản Phẩm ..." formControlName="keySearch">
     <select class="form-control rounded-pill ml-3 {{marginBottom}}" formControlName="category">
       <option [value]="0">Tất Cả Danh Mục</option>
@@ -19,18 +21,24 @@
       <option [value]="5">Lớn hơn 50 triệu</option>
     </select>
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="submit" [disabled]="formSearch.invalid" class="btn btn-warning rounded-pill ml-3 {{marginBottom}}"><i class="fa fa-search"></i> Tìm kiếm
+      <button type="submit" class="btn btn-warning rounded-pill ml-3 {{marginBottom}}">
+        <i class="fa fa-search"></i> Tìm kiếm
       </button>
     </div>
     <div *ngIf="keySearch.invalid && (keySearch.dirty||keySearch.touched)" class="text-danger">
-      <div [hidden]="!keySearch.errors.required" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+      <div *ngIf="keySearch.errors.required && checkValidate === true"
+           class="text-danger font-italic font-weight-bolder mb-5 ml-5">
         Tìm kiếm không được bỏ trống !
       </div>
-      <div [hidden]="!keySearch.errors.pattern" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+      <div *ngIf="keySearch.errors.pattern && checkValidate === true && !keySearch.errors.maxlength"
+           class="text-danger font-italic font-weight-bolder mb-5 ml-5">
         Tìm kiếm không chứa kí tự đặc biệt !
       </div>
+      <div *ngIf="keySearch.errors.maxlength && checkValidate === true"
+           class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+        Bạn đã nhập quá kí tự tìm kiếm !
+      </div>
     </div>
-    <div class="text-danger mb-5 ml-5 mt-1 font-italic font-weight-bolder"><p>{{messageErrorSearch}}</p></div>
   </form>
   <div class="container bg-light">
     <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary">
@@ -61,22 +69,22 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3 col-sm-6"
-           *ngFor="let product of listProduct | paginate: { itemsPerPage: 8, currentPage: page }; ">
-        <div class="single-shop-product" *ngIf="product.id !== null">
+           *ngFor="let productImage of listProduct | paginate: { itemsPerPage: 16, currentPage: page }; ">
+        <div class="single-shop-product" *ngIf="productImage.id !== null">
           <div class="product-upper border border-info">
-            <img class="image-product" [src]="product.image" alt="">
+            <img class="image-product" [src]="productImage.image" alt="">
           </div>
-          <h2 class="text-name-product"><a href="">{{product.product.productName}}</a></h2>
+          <h2 class="text-name-product"><a href="">{{productImage.product.productName}}</a></h2>
           <div class="product-carousel-price">
-            <ins>Giá Hiện Tại: <span style="color: red">{{product.product.lastPrice | number}}</span> (VNĐ)</ins>
+            <ins>Giá Hiện Tại: <span style="color: red">{{productImage.product.lastPrice | number}}</span> (VNĐ)</ins>
           </div>
           <p> Thời gian còn lại: <span class="text-time"><countdown
-            [config]="{leftTime:  getTimeRemain(product.product.endTime), format: getDayRemain(product.product.endTime)+' HH:mm:ss'}"></countdown></span>
+            [config]="{leftTime:  getTimeRemain(productImage.product.registerTime,productImage.product.auctionTime), format: getDayRemain(productImage.product.registerTime, productImage.product.auctionTime)+' HH:mm:ss'}"></countdown></span>
           </p>
           <div class="product-option-shop">
             <a class="add_to_cart_button rounded-pill" data-quantity="1" data-product_sku=""
                data-product_id="70"
-               rel="nofollow" href="/canvas/shop/?add-to-cart=70">Đấu Giá</a>
+               rel="nofollow" [routerLink]="['/auction/bidding', productImage.product.productId]">Đấu Giá</a>
           </div>
         </div>
       </div>
@@ -86,6 +94,6 @@
     </div>
   </div>
   <div class="container mb-5" *ngIf="checkListProduct === true ">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    <pagination-controls maxSize="4" nextLabel="Sau" previousLabel="Trước" (pageChange)="page = $event"></pagination-controls>
   </div>
 </div>

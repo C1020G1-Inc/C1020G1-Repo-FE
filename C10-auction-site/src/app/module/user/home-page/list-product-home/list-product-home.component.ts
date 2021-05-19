@@ -3,6 +3,7 @@ import {interval} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {LoadingComponent} from '../../../loading/loading/loading.component';
 import {ListProductAuctionService} from '../../../../service/product/list-product-auction.service';
+import {ProductImage} from '../../../../model/ProductImage';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ListProductHomeComponent implements OnInit {
               private dialog: MatDialog) {
   }
 
-  public listProduct: [];
+  public listProduct = new Array<ProductImage>();
   public page = 1;
   public activeOne = 'active';
   public activeTwo;
@@ -41,14 +42,15 @@ export class ListProductHomeComponent implements OnInit {
     });
   }
 
-  getTimeRemain(date: string) {
-    return ((new Date(date).getTime() - new Date().getTime()) / 1000) % 86400;
+  getTimeRemain(date: string, auctionTime: number) {
+    const auctionTimeMilisecond = auctionTime * 60 * 1000;
+    return (((new Date(date).getTime() + auctionTimeMilisecond) - new Date().getTime()) / 1000) % 86400;
   }
-
-  getDayRemain(date: string) {
-    const timeDayRemain = (Math.floor(((new Date(date).getTime() - new Date().getTime()) / 1000) / 86400));
+  getDayRemain(date: string, auctionTime: number) {
+    const auctionTimeMilisecond = auctionTime * 60 * 1000;
+    const timeDayRemain = (Math.floor((((new Date(date).getTime() + auctionTimeMilisecond) - new Date().getTime()) / 1000) / 86400));
     if (timeDayRemain > 0) {
-      return timeDayRemain + ' D';
+      return timeDayRemain + 'N';
     } else {
       return '';
     }

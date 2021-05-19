@@ -74,4 +74,11 @@ export class HeaderComponent implements OnInit {
   deleteNotification(key){
     this.firebaseDatabaseService.deleteNotification(key, this.account.accountId).then();
   }
+
+  /**
+   * @author: PhinNl
+   */
+  get isAdmin() {
+    return this.tokenStorage.getRoles().includes('ADMIN');
+  }
 }

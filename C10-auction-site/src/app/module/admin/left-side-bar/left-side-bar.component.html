@@ -8,17 +8,32 @@
         <ul class="nav">
 
           <li class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" href="./dashboard.html">
+            <a class="nav-link" routerLink="/admin/transactions">
               <i class="material-icons">dashboard</i>
               <p>Quản Lý Giao Dịch</p>
             </a>
           </li>
 
-          <li class="nav-item " [routerLinkActive]="['active']">
-            <a class="nav-link" routerLink="/admin/product-management/chart">
-              <i class="fa fa-line-chart"></i>
-              <p>Thống Kê</p>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" style="cursor: pointer" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <i class="fa fa-area-chart"></i>
+              <p>Thống Kê Sản Phẩm</p>
             </a>
+            <div class="collapse" id="collapseExample" routerLink="/admin/product-management/chart">
+              <div class="card card-body" style="padding: 0 10px 0 10px ; margin-top: 10px;margin-bottom: 10px">
+                <a class="nav-link" routerLink="/admin/product-management/chart">
+                  <i class="fa fa-line-chart"></i>
+                  <p>Thống kê theo số lượng</p>
+                </a>
+              </div>
+
+              <div class="card card-body" style="padding: 0 10px 0 10px;margin-top: 10px;margin-bottom: 10px">
+                <a class="nav-link" routerLink="/admin/product-management/chart/donut">
+                  <i class="fa fa-pie-chart"></i>
+                  <p>Thống kê theo chủng loại</p>
+                </a>
+              </div>
+            </div>
           </li>
           <li class="nav-item " [routerLinkActive]="['active']">
             <a class="nav-link" routerLink="/admin/product-management/list">
@@ -32,10 +47,17 @@
               <p>Tư Vấn</p>
             </a>
           </li>
-          <li class="nav-item " [routerLinkActive]="['active']">
-            <a class="nav-link" href="./notifications.html">
-              <i class="material-icons">notifications</i>
-              <p>Thông Báo</p>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link"  routerLink="/admin/user-management/chart">
+              <i class="material-icons">insights</i>
+              <p>Thành viên truy cập</p>
+            </a>
+          </li>
+
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="/admin/user-management/list">
+              <i class="material-icons">person_pin</i>
+              <p>Quản lý thành viên</p>
             </a>
           </li>
         </ul>

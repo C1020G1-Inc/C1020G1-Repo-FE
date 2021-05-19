@@ -1,2 +1,5 @@
+
+<app-header *ngIf="!isAdminPage"></app-header>
 <router-outlet></router-outlet>
 <app-user-chat *ngIf="!role.includes('ADMIN')"></app-user-chat>
+<app-footer *ngIf="!isAdminPage"></app-footer>

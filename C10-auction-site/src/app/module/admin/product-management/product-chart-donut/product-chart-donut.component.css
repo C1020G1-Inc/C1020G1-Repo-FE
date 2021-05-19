@@ -2327,7 +2327,7 @@ pre code {
   padding: 0.4375rem 0;
   font-size: 1rem;
   line-height: 1.5;
-  color: #ffffff;
+  color: #495057;
   background-color: rgba(0, 0, 0, 0);
   background-clip: padding-box;
   border: 1px solid #d2d2d2;
@@ -2342,7 +2342,7 @@ pre code {
 }
 
 .form-control:focus {
-  color: #ffffff;
+  color: #495057;
   background-color: rgba(0, 0, 0, 0);
   border-color: #9acffa;
   outline: 0;
@@ -2350,13 +2350,13 @@ pre code {
 }
 
 .form-control::placeholder {
-  color: #ffffff;
+  color: #6c757d;
   opacity: 1;
 }
 
 .form-control:disabled,
 .form-control[readonly] {
-  background-color: #ffffff;
+  background-color: #e9ecef;
   opacity: 1;
 }
 
@@ -2861,18 +2861,16 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  color: #ffffff;
+  background-color: #2196f3;
+  border-color: #2196f3;
   box-shadow: none;
-  border-radius: .25rem;
 }
 
 .btn-primary:hover {
-  color: #fff;
-  background-color: #0069d9;
-  border-color:#0062cc;
-
+  color: #ffffff;
+  background-color: #0c83e2;
+  border-color: #0c7cd5;
 }
 
 .btn-primary:focus,
@@ -3058,18 +3056,16 @@ fieldset:disabled a.btn {
 }
 
 .btn-danger {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
+  color: #ffffff;
+  background-color: #f44336;
+  border-color: #f44336;
   box-shadow: none;
-  border-radius:.25rem;
-
 }
 
 .btn-danger:hover {
-  color: #fff;
-  background-color: #c82333;
-  border-color: #bd2130;
+  color: #ffffff;
+  background-color: #f22112;
+  border-color: #ea1c0d;
 }
 
 .btn-danger:focus,
@@ -3367,11 +3363,10 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-danger {
-  color: #dc3545;
+  color: #f44336;
   background-color: transparent;
   background-image: none;
-  border-color: #dc3545;
-  border-radius:.25rem
+  border-color: #f44336;
 }
 
 .btn-outline-danger:hover {
@@ -9916,18 +9911,15 @@ a.text-dark:focus {
 
 .btn.btn-danger {
   color: #fff;
-  background-color: #dc3545;
-  border-color:  #dc3545;
+  background-color: #f44336;
+  border-color: #f44336;
   box-shadow: 0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12);
-  border-radius:.25rem
-
 }
 
 .btn.btn-danger:hover {
   color: #fff;
-  background-color: #c82333;
-  border-color: #bd2130;
-
+  background-color: #f33527;
+  border-color: #e11b0c;
 }
 
 .btn.btn-danger:focus,
@@ -15026,7 +15018,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   margin-top: -10px;
   margin-left: -10px;
   pointer-events: none;
-  background-color: #ff6713;
+  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 100%;
   opacity: 0;
   transform: scale(1);
@@ -15151,7 +15143,6 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   position: relative;
   top: 0;
   height: 100vh;
-  background-color: #1a2035 !important;
 }
 
 .sidebar {
@@ -19561,7 +19552,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .dark-edition {
-  background-color: #1a2035 !important;
+  background-color: #1a2035;
 }
 
 .dark-edition .btn,

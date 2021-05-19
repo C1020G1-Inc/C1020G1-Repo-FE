@@ -70,7 +70,7 @@ export class ListProductAdminComponent implements OnInit {
     });
     this.editForm = this.formBuilder.group({
       productId: [''],
-      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      productName: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(70)]],
       category: ['', [Validators.required]],
       price: [''],
       priceStep: [''],
@@ -94,7 +94,6 @@ export class ListProductAdminComponent implements OnInit {
   }
 
   sendProductIdForApprove(productId: number) {
-    console.log("abc")
     this.productService.getProductById(productId).subscribe(data => {
       this.productDTO = data;
       this.product = this.productDTO.product;
@@ -116,8 +115,6 @@ export class ListProductAdminComponent implements OnInit {
     this.imageToUpFireBase = new Array<any>();
     this.productService.getProductById(productId).subscribe(data => {
       this.productDTO = data;
-      console.log(this.productDTO);
-
       this.productEdit = this.productDTO.product;
       this.listProductImage = this.productDTO.productImageList;
       this.lengthOfImage = this.listProductImage.length;
@@ -154,12 +151,14 @@ export class ListProductAdminComponent implements OnInit {
         this.ngOnInit();
       });
     });
+    const confirmContent = "Chúng tôi đã có chỉnh sửa 1 số thông tin sản phẩm của bạn , vui lòng kiểm tra lại !!!"
+    this.productService.sendConfirm(this.productEdit.account.email, confirmContent,
+      this.productEdit.account.user.userName).subscribe()
   }
 
   deleteImage(i: number) {
     this.listProductImage.splice(i, 1);
     this.lengthOfImage--;
-    console.log(this.listProductImage);
   }
 
   selectFile(event) {
@@ -216,7 +215,6 @@ export class ListProductAdminComponent implements OnInit {
                     resolve(1);
                   });
               })).subscribe();
-            console.log(this.listProductImage);
           }
         }))).then(() => {
         resolve(1);

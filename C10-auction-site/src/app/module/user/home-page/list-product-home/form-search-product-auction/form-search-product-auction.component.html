@@ -1,6 +1,6 @@
 <form class="container bg-light form-inline" *ngIf="formSearch" ngNoForm [formGroup]="formSearch" (ngSubmit)="search()">
   <label for="search" class="text-dark ml-5 {{marginBottom}}">Nhập Tên Sản Phẩm:</label>
-  <input id="search" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}" type="search"
+  <input (input)="checkForm()" id="search" class="form-control ml-3 rounded-pill search pr-3 {{marginBottom}}" type="search"
          placeholder="Tên Sản Phẩm ..." formControlName="keySearch">
   <select class="form-control rounded-pill ml-3 {{marginBottom}}" formControlName="category">
     <option [value]="0">Tất Cả Danh Mục</option>
@@ -18,15 +18,18 @@
     <option [value]="5">Lớn hơn 50 triệu</option>
   </select>
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="submit" [disabled]="formSearch.invalid" class="btn btn-warning rounded-pill ml-3 {{marginBottom}}"><i class="fa fa-search"></i> Tìm kiếm
+    <button type="submit"  class="btn btn-warning rounded-pill ml-3 {{marginBottom}}"><i class="fa fa-search"></i> Tìm kiếm
     </button>
   </div>
   <div *ngIf="keySearch.invalid && (keySearch.dirty||keySearch.touched)" class="text-danger">
-    <div [hidden]="!keySearch.errors.required" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+    <div *ngIf="keySearch.errors.required && checkValidate === true" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
       Tìm kiếm không được bỏ trống !
     </div>
-    <div [hidden]="!keySearch.errors.pattern" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+    <div *ngIf="keySearch.errors.pattern && checkValidate === true && !keySearch.errors.maxlength" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
       Tìm kiếm không chứa kí tự đặc biệt !
+    </div>
+    <div *ngIf="keySearch.errors.maxlength && checkValidate === true" class="text-danger font-italic font-weight-bolder mb-5 ml-5">
+      Bạn đã nhập quá kí tự tìm kiếm !
     </div>
   </div>
   <div class="text-danger mb-5 ml-5 mt-1 font-italic font-weight-bolder"><p>{{messageErrorSearch}}</p></div>

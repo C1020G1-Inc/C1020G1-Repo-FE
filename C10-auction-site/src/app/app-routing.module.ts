@@ -31,6 +31,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {ListProductResultAuctionComponent} from './module/user/home-page/list-product-home/list-product-result-auction/list-product-result-auction.component';
 import {ListProductTopAuctionComponent} from './module/user/home-page/list-product-home/list-product-top-auction/list-product-top-auction.component';
 import {ResultSearchProductAuctionComponent} from './module/user/home-page/list-product-home/result-search-product-auction/result-search-product-auction.component';
+import {ProductChartDonutComponent} from './module/admin/product-management/product-chart-donut/product-chart-donut.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
       {path: 'user-management/chart', component: UserChartComponent},
       {path: 'product-management/list', component: ListProductAdminComponent},
       {path: 'product-management/chart', component: ProductChartComponent},
+      {path: 'product-management/chart/donut', component: ProductChartDonutComponent},
       {path: 'transactions', component: ListTransactionComponent},
       {path: 'chat', component: AdminChatComponent},
     ], canActivate: [AdminAuthGuardService]

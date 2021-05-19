@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LockUserComponent } from './lock-user.component';
+import { ProductChartDonutComponent } from './product-chart-donut.component';
 
-describe('LockUserComponent', () => {
-  let component: LockUserComponent;
-  let fixture: ComponentFixture<LockUserComponent>;
+describe('ProductChartDonutComponent', () => {
+  let component: ProductChartDonutComponent;
+  let fixture: ComponentFixture<ProductChartDonutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LockUserComponent ]
+      declarations: [ ProductChartDonutComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LockUserComponent);
+    fixture = TestBed.createComponent(ProductChartDonutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

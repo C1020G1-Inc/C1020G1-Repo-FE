@@ -19,12 +19,15 @@ import { MatLoadingDiaComponent } from '../../material/mat-loading-dia/mat-loadi
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 /**
  * @author PhinNL
  * Register
  */
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+  code: string = '';
+  message: string = '';
   minDate: Date;
   maxDate: Date;
   selectedImage: any;
@@ -36,6 +39,8 @@ export class RegisterComponent implements OnInit {
               private router: Router, private storage: AngularFireStorage, private dialog: MatDialog,
               private chatService: ChatService,
               private title: Title, private elementRef: ElementRef) { }
+
+
   ngOnInit(): void {
     this.title.setTitle('Đăng ký');
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
@@ -80,6 +85,7 @@ export class RegisterComponent implements OnInit {
       repassword: new FormControl('', [Validators.required, this.repasswordValidator.bind(this)]),
       email: new FormControl(email, [Validators.required, Validators.pattern('[a-zA-z]\\w{6,20}[@][a-zA-Z]{2,10}([.][a-zA-Z]{2,5}){1,2}')],
         [this.emailDuplicateValidator.bind(this)]),
+      confirmCode: new FormControl('', [Validators.required, this.confirmCode.bind(this)]),
       birthday: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required, Validators.pattern('(0|84)\\d{9}')], [this.phoneDuplicateValidator.bind(this)]),
       identity: new FormControl('', [Validators.required, Validators.pattern('\\d{9}(\\d{3})?')],
@@ -92,6 +98,33 @@ export class RegisterComponent implements OnInit {
       ward: new FormControl('', [Validators.required])
     });
   }
+
+  confirmCode(control: FormControl) {
+    if (this.code === control.value) {
+      this.message = '';
+      return null;
+    }
+    return { code: control.value };
+  }
+
+  sendEmail() {
+    if (this.email.valid) {
+      this.dialog.open(MatLoadingDiaComponent, { panelClass: 'loading-dialog', position: { top: '0', left: '17%' }, disableClose: true });
+      this.accountService.getCodeConfirm(this.email.value).subscribe(data => {
+        this.code = data.jwtToken;
+        this.message = 'Đã gửi mã xác nhận đến email!';
+        console.log(this.code);
+        this.confirmCodeForm.setErrors({ code: '' });
+        this.dialog.closeAll();
+      },() => {
+        this.message = 'Đã có lỗi xảy ra!';
+        this.dialog.closeAll();
+      });
+    } else {
+      this.message = 'Vui lòng nhập đúng email ròi nhấn gửi mã!';
+    }
+  }
+
   accountNameDuplicateValidator(control: FormControl) {
     return this.accountService.findAccountNameExist(control.value).pipe(
       map(data => {
@@ -102,7 +135,11 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
+
   emailDuplicateValidator(control: FormControl) {
+    if (this.form){
+      this.confirmCodeForm.setErrors({ code: '' });
+    }
     return this.accountService.findEmailExist(control.value).pipe(
       map(data => {
         if (data.emailDuplicate !== null) {
@@ -112,6 +149,7 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
+
   phoneDuplicateValidator(control: FormControl) {
     return this.accountService.findPhoneExist(control.value).pipe(
       map(data => {
@@ -122,6 +160,7 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
+
   identityDuplicateValidator(control: FormControl) {
     return this.accountService.findIdentityExist(control.value).pipe(
       map(data => {
@@ -132,6 +171,7 @@ export class RegisterComponent implements OnInit {
       })
     );
   }
+
   checkpass(control: FormControl) {
     if (control.parent && this.repassword) {
       if (control.value !== this.repassword.value) {
@@ -142,6 +182,7 @@ export class RegisterComponent implements OnInit {
     }
     return null;
   }
+
   repasswordValidator(control: FormControl) {
     let password = '';
     if (control.parent) {
@@ -149,10 +190,12 @@ export class RegisterComponent implements OnInit {
     }
     return control.value === password ? null : { repassword: control.value };
   }
+
   nameValidator(control: FormControl) {
     return /^([\p{Lu}]|([\p{Lu}][\p{Ll}]{1,8}))(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$/u.test(control.value) ?
       null : { userName: control.value };
   }
+
   submit() {
     const userNew: User = {
       userId: null,
@@ -175,15 +218,21 @@ export class RegisterComponent implements OnInit {
     // duong
     const room = new Room(this.accountName.value, userNew, 0);
     this.chatService.addNewRoom(room);
+
     this.accountService.saveAccount(account).subscribe(data => {
       if (data !== null) {
         const config = new MatDialogConfig();
         config.position = { top: '5%' };
         this.dialog.open(MatRegisDiaComponent, config);
         this.form.reset();
+        this.code = '';
+        this.imgSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU';
+        this.selectedImage = null;
+        this.message = '';
       }
     });
   }
+
   submitAvatar() {
     if (this.selectedImage !== null) {
       const filePath = `avatar/${this.selectedImage.name}/${new Date().getTime()}`;
@@ -200,6 +249,7 @@ export class RegisterComponent implements OnInit {
       );
     }
   }
+
   changeImage(event) {
     this.avatar.setValue('');
     this.dialog.open(MatLoadingDiaComponent, { panelClass: 'loading-dialog', position: { top: '0', left: '17%' }, disableClose: true });
@@ -213,6 +263,7 @@ export class RegisterComponent implements OnInit {
       this.dialog.closeAll();
     }
   }
+
   changeProvince(provinceId: number) {
     this.district.setValue('');
     const provinceSelect = this.provinceList.find(e => e.province_id === provinceId);
@@ -222,6 +273,7 @@ export class RegisterComponent implements OnInit {
       this.changeDistrict(this.districtList[0].district_id);
     });
   }
+
   changeDistrict(districtId: number) {
     this.ward.setValue('');
     const districtSelect = this.districtList.find(e => e.district_id === districtId);
@@ -236,11 +288,41 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
+
   changeWard(wardId: number) {
     const wardSelect = this.wardList.find(e => e.ward_id === wardId);
     this.ward.setValue(wardSelect.ward_name);
     this.address.setValue(this.ward.value + ' ' + this.district.value + ' ' + this.province.value);
   }
+
+  show() {
+    if ($('.show').hasClass('fa-eye')) {
+      $('.show').removeClass('fa-eye');
+      $('.show').addClass('fa-eye-slash');
+      $('.password').attr('type', 'text');
+    } else {
+      $('.show').addClass('fa-eye');
+      $('.show').removeClass('fa-eye-slash');
+      $('.password').attr('type', 'password');
+    }
+  }
+
+  changeShow() {
+    let value = '';
+    if ($('#password').val() === '') {
+      value = $('#passwordConfirm').val() as string;
+    } else {
+      value = $('#password').val() as string;
+    }
+    if (value != '') {
+      $('.show').css('visibility', 'visible');
+      $('.password').css('padding-right', '3.5rem');
+    } else {
+      $('.show').css('visibility', 'hidden');
+      $('.password').css('padding-right', '.75rem');
+    }
+  }
+
   get accountName() {
     return this.form.get('accountName');
   }
@@ -279,5 +361,8 @@ export class RegisterComponent implements OnInit {
   }
   get avatar() {
     return this.form.get('avatar');
+  }
+  get confirmCodeForm() {
+    return this.form.get('confirmCode');
   }
 }

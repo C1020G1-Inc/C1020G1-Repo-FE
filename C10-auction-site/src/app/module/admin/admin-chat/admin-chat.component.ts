@@ -5,7 +5,6 @@ import {Notification} from '../../../model/notification';
 import {ChatService} from '../../../service/chat/chat.service';
 import {TokenStorageService} from '../../../service/authentication/token-storage';
 import {Account} from '../../../model/Account';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -38,6 +37,12 @@ export class AdminChatComponent implements OnInit {
       this.rooms = this.chatService.snapshotToArray(resp);
       this.tempRooms = this.rooms;
       this.isLoadingResults = false;
+      for (const roomFB of this.rooms) {
+        if (roomFB.active){
+          this.roomName = roomFB.roomName;
+          break;
+        }
+      }
     });
 
     this.chatService.getNotiOfUser().on('value' , (resp: any) => {
@@ -48,11 +53,18 @@ export class AdminChatComponent implements OnInit {
 
 
   enterChatRoom(room: Room) {
-    console.log(room);
     this.chatService.readNewMess(room.key);
     for (const readNotification of this.notifications) {
       if (readNotification.chat.roomName === room.roomName) {
         this.chatService.readNoti(readNotification.key);
+      }
+    }
+    for (const roomFB of this.rooms) {
+      if (roomFB.key === room.key) {
+        this.chatService.refRooms.child(roomFB.key).child('active').set(true)
+      }
+       else {
+        this.chatService.refRooms.child(roomFB.key).child('active').set(false)
       }
     }
     this.roomName = room.roomName;
@@ -63,7 +75,19 @@ export class AdminChatComponent implements OnInit {
       this.searchValue = '';
       this.rooms = this.tempRooms;
     }
-    this.rooms = this.rooms.filter(x => x.roomName.includes(this.searchValue))
+    let tempt = new Array<Room>();
+    for (const room of this.rooms) {
+      if (room.user){
+        if (room.user.userName.includes(this.searchValue)) {
+          tempt.push(room);
+        }
+      } else {
+        if (room.roomName.includes(this.searchValue)) {
+          tempt.push(room);
+        }
+      }
+    }
+    this.rooms = tempt;
     this.searchValue = '';
   }
 }

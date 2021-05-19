@@ -1,5 +1,5 @@
 <!-- MultiStep Form -->
-<div class="container-fluid" id="grad1">
+<div class="container-fluid vh-100" id="grad1">
   <div class="row justify-content-center mt-0">
     <div
       class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"
@@ -70,6 +70,11 @@
                         *ngIf="paymentForm.get('phone').hasError('pattern')"><i
                     class="fa fa-exclamation-circle"></i><i> Định dạng không đúng (10 số, bắt đầu bằng 0)</i>
                   </span>
+                  <span *ngIf="checkConfirmCode" id="message-confirm-code" style="margin-bottom: 5px">Mã xác nhận đã được gửi về số điện thoại này. Vui lòng xác nhận</span>
+                  <br>
+                  <button (click)="onCheckConfirm()" id="confirm-code" style="width: 30%;height: 30px; border: none" *ngIf="paymentForm.get('phone').value && paymentForm.get('phone').valid">Gửi mã xác nhận</button>
+                  <input style="width: 70%" *ngIf="paymentForm.get('phone').value && paymentForm.get('phone').valid" type="text" placeholder="Mã xác nhận" (change)="isConfirmCode()">
+                  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true }"></ngx-loading>
                   <textarea
                     cols="30"
                     rows="5"
@@ -84,7 +89,7 @@
                   class="next action-button"
                   value="Tiếp theo"
                   id="test"
-                  [disabled]="!paymentForm.valid"
+                  [disabled]="!paymentForm.valid || !confirmCode"
                 />
               </fieldset>
 
@@ -120,7 +125,6 @@
               <fieldset>
                 <div class="form-card">
                   <h2 class="fs-title">Hình thức thanh toán</h2>
-
                   <input
                     type="radio"
                     id="non-credit"
@@ -142,9 +146,45 @@
                   />
                   <label for="checkout-credit"
                   >Thanh toán bằng ví điện tử (Paypal)</label
-                  >
+                  ><br>
                   <div #paypal style="width: 35%; margin-left: 10%; display: none" id="paypal-button"></div>
                   <h5 style="margin-left: 10%; color: #7b0c32" *ngIf="messagePayment">{{messagePayment}}</h5>
+                  <input
+                    type="radio"
+                    id="terminal-credit"
+                    value="0"
+                    (click)="onCheck2()"
+                  />
+                  <label for="terminal-credit">Thanh toán bằng thẻ nội địa</label
+                  ><br>
+                  <div id="terminal-credit-form" style="margin-left: 10%; display: none">
+                    <label class="pay">Tên chủ thẻ*</label>
+                    <input type="text" name="holdername" placeholder="" />
+                    <div class="row">
+                      <div class="col-9">
+                        <label class="pay">Số thẻ*</label>
+                        <input type="text" name="cardno" placeholder="" />
+                      </div>
+                      <div class="col-3">
+                        <label class="pay">CVC*</label>
+                        <input
+                          type="password"
+                          name="cvcpwd"
+                          placeholder="***"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-3">
+                        <label class="pay">Ngày hết hạn*</label>
+                      </div>
+                      <div class="col-9">
+                        <input type="number" placeholder="tháng">
+                        <input type="number" placeholder="năm">
+                      </div>
+                    </div>
+                  </div>
+
                   <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true }"></ngx-loading>
                 </div>
                 <input
@@ -168,74 +208,71 @@
 
               <fieldset>
                 <div class="form-card" style="color: black" *ngIf="order">
-                  <h4 class="text-left pb-2">
+                  <h4 class="text-left pb-2 fs-title">
                     Hình thức thanh toán:
                   </h4>
-
                   <div class="row border mb-3" style="background-color: wheat">
                     <div class="col-6 pt-2 pb-2 pl-1">
                       <div class="d-flex h-100 justify-content-start align-items-center">
-                        <h5 class="m-0" *ngIf="order.methodPay == 0">
+                        <h5 class="m-0" style="font-family: montserrat,serif; font-weight: normal" *ngIf="order.methodPay == 0">
                           Thanh toán khi nhận hàng
                         </h5>
-                        <h5 class="m-0" *ngIf="order.methodPay == 1">
+                        <h5 class="m-0" style="font-family: montserrat,serif; font-weight: normal" *ngIf="order.methodPay == 1">
                           Thanh toán qua Paypal
                         </h5>
                       </div>
                     </div>
                   </div>
-
-                  <h4 class="text-left pb-2">
+                  <h4 class="text-left pb-2 fs-title">
                     Hình thức giao hàng:
                   </h4>
-
                   <div class="row border mb-3" style="background-color: wheat">
                     <div class="col-10 pt-2 pb-2 pl-1">
                       <div class="d-flex h-100 justify-content-start align-items-center">
-                        <h5 class="m-0">
+                        <h5 class="m-0" style="font-family: montserrat,serif; font-weight: normal">
                           Giao hàng tiêu chuẩn - giao hàng tận nơi
                         </h5>
                       </div>
                     </div>
                   </div>
-
                   <div class="col-12">
-
-                    <h4 class="text-left pb-2">
-                      Chi tiết đơn hàng: {{order.orderId}}
+                    <h4 class="text-left pb-2 fs-title">
+                      Chi tiết đơn hàng số: {{order.orderId}}
                     </h4>
-
-                    <div class="row border mb-3" style="background-color: wheat">
+                    <div class="row mb-3">
                       <div class="col-12">
-                        <div class="text-left">
-                          <p class="m-0 pl-1">
-                            Người nhận: {{order.userName}}
+                        <div class="text-left mb-3 border" style="background-color: wheat">
+                          <p class="m-0 pl-2 pb-2 pt-2" style="font-family: montserrat,serif; font-weight: normal">
+                            <i class="fas fa-user-alt"></i> Người nhận: {{order.userName}}
                           </p>
-                          <p class="m-0 pl-1">
-                            Địa chỉ: {{order.address}}
+                          <p class="m-0 pl-2 pb-2" style="font-family: montserrat,serif; font-weight: normal">
+                            <i class="fas fa-phone"></i> Số điện thoại: {{order.phone}}
                           </p>
-                          <p class="m-0 pl-1">
-                            {{order.ward.wardName}}
+                          <p class="m-0 pl-2 pb-2" style="font-family: montserrat,serif; font-weight: normal">
+                            <i class="far fa-envelope"></i> Email: {{order.userEmail}}
                           </p>
-                          <p class="m-0 pl-1">
-                            {{order.ward.district.districtName}}
+                        </div>
+                        <div class="border" style="background-color: wheat">
+                          <p class="m-0 pl-2 text-left pb-2 pt-2" style="font-family: montserrat,serif; font-weight: normal">
+                            <i class="fas fa-map-marked-alt"></i> Địa chỉ: {{order.address}}
                           </p>
-                          <p class="m-0 pl-1">
-                            {{order.ward.district.province.provinceName}}
-                          </p>
-                          <p class="m-0 pl-1">
-                            Số điện thoại: {{order.phone}}
-                          </p>
-                          <p class="m-0 pl-1">
-                            Email: {{order.userEmail}}
-                          </p>
-                          <p class="m-0 pl-1" *ngIf="order.guide">
-                            Hướng dẫn giao hàng: {{order.guide}}
+                          <div class="row pb-2">
+                            <p class="col m-0 pl-2 text-left" style="font-family: montserrat,serif; font-weight: normal">
+                              <i class="fas fa-bookmark"></i> {{order.ward.wardName}}
+                            </p>
+                            <p class="col m-0 text-center" style="font-family: montserrat,serif; font-weight: normal">
+                              <i class="fas fa-bookmark"></i> {{order.ward.district.districtName}}
+                            </p>
+                            <p class="col m-0 pr-2 text-right" style="font-family: montserrat,serif; font-weight: normal">
+                              <i class="fas fa-bookmark"></i> {{order.ward.district.province.provinceName}}
+                            </p>
+                          </div>
+                          <p class="m-0 pl-2 text-left pb-2" style="font-family: montserrat,serif; font-weight: normal" *ngIf="order.guide">
+                            <i class="fas fa-map-marker-alt"></i> Hướng dẫn giao hàng: {{order.guide}}
                           </p>
                         </div>
                       </div>
                     </div>
-
                     <div>
                       <table class="table text-center table-bordered">
                         <thead class="thead-dark">
@@ -278,7 +315,6 @@
                   class="action-button"
                   style="width: 40%"
                   value="Quay lại lịch sử đấu giá"
-                  routerLink="/profile/history-auction"
                 />
               </fieldset>
             </form>

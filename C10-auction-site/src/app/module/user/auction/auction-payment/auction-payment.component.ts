@@ -37,6 +37,8 @@ export class AuctionPaymentComponent implements OnInit {
   messagePayment: string;
   isChecked1 = true;
   isChecked2 = false;
+  checkConfirmCode = false;
+  confirmCode = false;
   @ViewChild('paypal', {static: true}) paypalElement: ElementRef;
   // for loading process
   @ViewChild('ngxLoading', {static: false}) ngxLoadingComponent: NgxLoadingComponent;
@@ -50,7 +52,6 @@ export class AuctionPaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadScripts();
     this.account = this.tokenStorage.getAccount();
     this.totalInVND = this.orderService.totalInVND;
     this.totalInUSD = (this.totalInVND / 22000).toFixed(2);
@@ -71,7 +72,7 @@ export class AuctionPaymentComponent implements OnInit {
       userEmail: new FormControl({value: this.account.email, disabled: true}),
       ward: new FormControl(null, Validators.required)
     });
-
+    this.loadScripts();
     this.onPay();
   }
 
@@ -146,6 +147,20 @@ export class AuctionPaymentComponent implements OnInit {
   onCheck1() {
     this.isChecked1 = true;
     this.isChecked2 = false;
+  }
+
+  onCheckConfirm() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      this.checkConfirmCode = true;
+      console.log(this.checkConfirmCode);
+    }, 2000);
+
+  }
+
+  isConfirmCode(){
+    this.confirmCode = true;
   }
 
   /**
@@ -496,4 +511,6 @@ export class AuctionPaymentComponent implements OnInit {
       };
     }
   }
+
+
 }

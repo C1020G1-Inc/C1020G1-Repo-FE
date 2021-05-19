@@ -27,7 +27,7 @@
           <span> Đấu Giá </span>
         </a>
       </li>
-      <li class="nav-item dropdown" *ngIf="isLogged">
+      <li class="nav-item dropdown" *ngIf="isLogged && !isAdmin">
         <a class="nav-link dropdown-toggle cursor" id="navbarDropdownMenuLink" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-history"></i>
@@ -50,8 +50,8 @@
           <span> Hướng dẫn </span>
         </a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
-        <a class="nav-link" routerLink="/auction/cart">
+      <li class="nav-item" *ngIf="isLogged && !isAdmin">
+        <a class="nav-link" href="http://localhost:4200/auction/cart">
           <i class="fas fa-cart-plus"></i>
           <span> Giỏ Hàng </span>
         </a>
@@ -63,7 +63,7 @@
           <span> {{account.user.userName}} </span>
         </a>
         <div class="dropdown-menu text-center-md dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/profile/view">
+          <a class="dropdown-item" routerLink="/profile/view" *ngIf="!isAdmin">
             <i class="fas fa-user"></i>
             <span> Cá nhân </span>
           </a>
@@ -79,7 +79,7 @@
           <span> Đăng Nhập </span>
         </a>
       </li>
-      <li class="nav-item dropdown" *ngIf="isLogged">
+      <li class="nav-item dropdown" *ngIf="isLogged && !isAdmin">
         <a class="nav-link text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-bell"></i>

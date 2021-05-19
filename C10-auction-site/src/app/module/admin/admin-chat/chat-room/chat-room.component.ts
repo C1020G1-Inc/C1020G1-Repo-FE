@@ -25,8 +25,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   message = '';
   user: User;
   chats = new Array<Chat>();
-  selectedImage: any;
-  urlImg: string;
+  selectedImages = [];
+  tempFile = [];
   loadImage: boolean;
   role: string;
   notifications = new Array<Notification>();
@@ -48,21 +48,20 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.chatForm = this.formBuilder.group({
-      message: [null, Validators.required]
+      message: [null, [Validators.required,Validators.maxLength(1000)]]
     });
 
     this.nickname = this.tokenStorageService.getAccount().accountName;
     this.getData();
-    setTimeout(() => {
-      $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
-    }, 500);
   }
 
   getData() {
     if (this.roomName) {
       this.chatService.refChats.on('value', resp => {
         this.chats = this.chatService.snapshotToArray(resp).filter(x => x.roomName === this.roomName);
-        this.setTimeForChat();
+        // this.setTimeForChat();
+        $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+
       });
 
       this.chatService.refRooms.orderByChild('roomName').equalTo(this.roomName).on('child_added', (resp2: any) => {
@@ -91,6 +90,14 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   onFormSubmit(form: any, type: string) {
+    if (this.chatForm.get('message').errors?.maxlength) {
+      this.snackBar.open('Tin nhắn bạn nhập quá dài', 'X',
+        {
+          duration: 5000,
+        });
+      return;
+    }
+    this.addImageToFireBase()
     if (form.message) {
       const chat = form;
       chat.roomName = this.roomName;
@@ -108,30 +115,30 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }
   }
 
-  private setTimeForChat() {
-    const currentDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
-    for (const chat of this.chats) {
-      const minute = (Date.parse(currentDate) - Date.parse(chat.date)) / (1000 * 60);
-      if (minute < 1) {
-        chat.date = 'vừa xong';
-        return;
-      } else if (minute > 1 && minute < 60) {
-        chat.date = Math.round(minute) + ' phút trước';
-        return;
-      }
-      const hour = minute / 60;
-
-      if (hour < 2) {
-        chat.date = Math.round(hour) + ' giờ trước';
-      } else if (hour > 2 && hour < 24) {
-        chat.date = Math.round(hour) + ' giờ trước';
-      } else {
-        chat.date = chat.date.slice(0, 10);
-      }
-
-    }
-
-  }
+  // private setTimeForChat() {
+  //   const currentDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+  //   for (const chat of this.chats) {
+  //     const minute = (Date.parse(currentDate) - Date.parse(chat.date)) / (1000 * 60);
+  //     if (minute < 1) {
+  //       chat.date = 'vừa xong';
+  //       return;
+  //     } else if (minute > 1 && minute < 60) {
+  //       chat.date = Math.round(minute) + ' phút trước';
+  //       return;
+  //     }
+  //     const hour = minute / 60;
+  //
+  //     if (hour < 2) {
+  //       chat.date = Math.round(hour) + ' giờ trước';
+  //     } else if (hour > 2 && hour < 24) {
+  //       chat.date = Math.round(hour) + ' giờ trước';
+  //     } else {
+  //       chat.date = chat.date.slice(0, 10);
+  //     }
+  //
+  //   }
+  //
+  // }
 
   readAllNoti() {
     for (const readNotification of this.notifications) {
@@ -150,32 +157,61 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           duration: 5000,
         }
       )
-        ;
         return;
       }
     }
-    this.loadImage = true;
-    setTimeout(() => {
-      $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
-    }, 500);
-    if ($event.target.files && $event.target.files[0]) {
-      this.selectedImage = $event.target.files[0];
-      this.addImageToFireBase();
+
+    if (files) {
+      for (let file of files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedImages.push({url: e.target.result, file: file})
+        };
+        reader.readAsDataURL(file);
+      }
     }
+    $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
   }
 
   addImageToFireBase() {
-    if (this.selectedImage !== null) {
-      const filePath = `avatar/${this.selectedImage.name}/${new Date().getTime()}`;
-      const fileRef = this.storage.ref(filePath);
-      this.storage.upload(filePath, this.selectedImage).snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(url => {
-            this.chatForm.get('message').setValue(url);
-            this.onFormSubmit(this.chatForm.value, 'image');
-          });
-        })
-      ).subscribe();
+    this.tempFile = this.selectedImages;
+    this.selectedImages = [];
+    return new Promise(resolve => {
+      Promise.all(this.tempFile.map(file =>
+        new Promise((resolve) => {
+          this.loadImage = true;
+          const name = file.file.name;
+            const fileRef = this.storage.ref(name);
+            this.storage.upload(name, file.file).snapshotChanges().pipe(
+              finalize(() => {
+                fileRef.getDownloadURL()
+                  .subscribe((url) => {
+                    let chat = new Chat();
+                    chat.message = url;
+                    chat.roomName = this.roomName;
+                    chat.nickname = this.nickname;
+                    chat.date = new Date();
+                    chat.type = 'image';
+                    this.chatService.refChats.push().set(chat).then(data => {
+                      this.loadImage = false;
+                      $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+                    });
+                    resolve(1);
+                  });
+              })).subscribe();
+        }))).then(() => {
+        resolve(1)
+      });
+    });
+  }
+
+  deleteUpdateImage($event) {
+    if (this.selectedImages.length === 1) {
+      this.selectedImages = [];
+      return;
     }
+    let index = $event.target.attributes['data-index'].value;
+    this.selectedImages = this.selectedImages.slice(0, index).concat(this.selectedImages.slice(index + 1, this.selectedImages.length));
+
   }
 }

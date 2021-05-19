@@ -68,4 +68,16 @@ export class ProductService {
       '&confirmContent=' + confirmContent + '' +
       '&userName=' + userName,this.httpOptions)
   }
+
+  getProductByDateForDonut(daySearch, monthSearch, yearSearch): Observable<any> {
+    if (daySearch === undefined){
+      daySearch = 0;
+    }
+    if (monthSearch === undefined){
+      monthSearch = 0;
+    }
+    return this.httpClient.get('http://localhost:8080/api/account/admin/statistic/donut?daySearch=' + daySearch + '' +
+      '&monthSearch=' + monthSearch + '' +
+      '&yearSearch=' + yearSearch, this.httpOptions);
+  }
 }

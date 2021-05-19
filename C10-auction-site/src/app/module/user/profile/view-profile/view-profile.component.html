@@ -1,9 +1,17 @@
-<div class="container bootstrap snippets bootdey mt-5">
+<div class="container bootstrap snippets bootdey mt-5 mb-5">
   <div class="panel-body inf-content">
     <div class="row" *ngIf="userLogin">
       <div class="col-md-4 mt-4 ml-3">
-        <img alt="" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" title="" class="img-thumbnail"
-             src="{{userLogin.avatar}}">
+<!--        <img alt="" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" title="" class="img-thumbnail"-->
+<!--             src="{{userLogin.avatar}}">-->
+        <input accept=".jpg,.png" (change)="changeImage($event)" id="avatar" type="file" hidden>
+        <div class="text-center d-inline-block avatar">
+          <img id="avt" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" [src]="avatar"
+               alt="">
+          <i onclick="document.getElementById('avatar').click()"
+             title="Click to change avatar"
+             class="fa fa-camera position-relative right-50"></i>
+        </div>
       </div>
       <div class="col-md-6 mt-3">
         <h1><strong style="color: blue">Thông tin thành viên</strong><br></h1>

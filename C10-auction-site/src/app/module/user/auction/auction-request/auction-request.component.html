@@ -1,1 +1,155 @@
-<p>auction-request works!</p>
+<style>
+  .custom-file-label::after {
+    content: "Tìm kiếm" !important;
+  }
+  /*.ul-footer li a {*/
+  /*  text-decoration: none !important;*/
+  /*}*/
+</style>
+<section>
+  <div class="gap2 gray-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row merged20" id="page-contents">
+            <div class="col-lg-12">
+              <div class="central-meta">
+                <div class="about">
+                  <div class="tab-content">
+                    <div class="set-title">
+                      <h2><strong style="color: blue; font-weight: bold">Đăng sản phẩm</strong></h2>
+                      <h5>Sản phẩm của bạn sau khi đăng lên sẽ được admin duyệt trước khi có thể đăng bán</h5>
+                    </div>
+                    <div class="stg-form-area">
+                      <form class="c-form" [formGroup]="createProduct" (ngSubmit)="submit(createProduct)">
+                        <div >
+                          <label>Tên sản phẩm
+                            <input placeholder="Nồi cơm điện, Chảo chống dính, ..."
+                                   class="form-control" formControlName="productName"
+                                   type="text" maxLength="100">
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.productName.errors?.required && createProduct.controls.productName.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Tên sản phẩm không được để trống</i>
+                        </div>
+                        <div>
+                          <label>Chủng loại
+                            <select class="btn btn-light form-control" formControlName="category" >
+                              <option *ngFor="let type of category" [ngValue]="type">
+                                {{type['categoryName']}}</option>
+                            </select>
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.category.errors?.required && createProduct.controls.category.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Phải chọn một chủng loại</i>
+                        </div>
+                        <div>
+                          <label>Số lượng sản phẩm
+                            <input placeholder="1, 2, 3, ..."
+                                   class="form-control" formControlName="quantity"
+                                   type="number">
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.quantity.errors?.required && createProduct.controls.quantity.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Số lượng sản phẩm không được để trống</i>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.quantity.errors?.min">
+                          <i class="fa fa-exclamation-circle"></i><i>Số lượng sản phẩm không phải lớn hơn hoặc bằng 1</i>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.quantity.errors?.max">
+                          <i class="fa fa-exclamation-circle"></i><i>Số lượng sản phẩm không phải nhỏ hơn hoặc bằng 999 </i>
+                        </div>
+                        <div>
+                          <label>Giá khởi điểm
+                            <input placeholder="200.000đ" type="number"
+                                   class="form-control" formControlName="price"
+                            >
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.price.errors?.required && createProduct.controls.price.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Giá khởi điểm không được để trống</i>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.price.errors?.min">
+                          <i class="fa fa-exclamation-circle"></i><i>Giá khởi điểm nhỏ nhất là 1000đ</i>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.price.errors?.max">
+                          <i class="fa fa-exclamation-circle"></i><i>Giá khởi điểm lớn nhất là 999.999.999đ</i>
+                        </div>
+                        <div>
+                          <label>Bước giá
+                            <input placeholder="20.000đ" type="number"
+                                   class="form-control" formControlName="priceStep"
+                            >
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.priceStep.errors?.required && createProduct.controls.priceStep.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Bước giá không được để trống</i>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.priceStep.errors?.min">
+                          <i class="fa fa-exclamation-circle"></i><i>Bước giá nhỏ nhất là 1000đ</i>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.priceStep.errors?.max">
+                          <i class="fa fa-exclamation-circle"></i><i>Bước giá nhỏ nhất là 99.999.999đ</i>
+                        </div>
+                        <div>
+                          <label>
+                            Thời gian đấu giá
+                            <select class="btn btn-light form-control" formControlName="auctionTime">
+                              <option [ngValue]="5">5 phút</option>
+                              <option [ngValue]="15">15 phút</option>
+                              <option [ngValue]="30">30 phút</option>
+                            </select>
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.auctionTime.errors?.required && createProduct.controls.auctionTime.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Phải chọn thời gian đấu giá</i>
+                        </div>
+                        <!--                        <div>-->
+                        <!--                          <label>Ảnh sản phẩm-->
+                        <!--                            <input type="file">-->
+                        <!--                          </label>-->
+                        <!--                        </div>-->
+                        <div>
+                          <label>Thông tin chi tiết
+                            <textarea placeholder="Tình trạng sản phẩm, hình thức bên ngoài"
+                                      class="form-control" formControlName="description" maxlength="500">
+                            </textarea>
+                          </label>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="createProduct.controls.description.errors?.required && createProduct.controls.description.touched">
+                          <i class="fa fa-exclamation-circle"></i><i>Thông tin chi tiết không được để trống</i>
+                        </div>
+                        <div>
+                          <input type="hidden" class="form-control" formControlName="registerTime"/>
+                        </div>
+                        <div>
+                        </div>
+                        <div>
+                          <button data-ripple="" type="button" class="btn btn-warning float-lg-right" onClick="history.go(0)" value="Refresh">Huỷ</button>
+                          <button data-ripple="" type="submit" class="btn btn-success float-lg-right">Đăng</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

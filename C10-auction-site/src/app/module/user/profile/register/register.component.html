@@ -102,11 +102,14 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="password">Mật khẩu <span class="text-danger">(*)</span></label>
+                <i class="fas fa-eye position-relative show float-right"
+                   style="cursor:pointer;z-index: 100000; right: 73px; top: 41px;visibility: hidden;"
+                   (click)="show()"></i>
                 <div class="input-group">
                   <input id="password"
                          [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
                          [class.is-valid]="password.valid" formControlName="password" type="password"
-                         class="form-control">
+                         (keyup)="changeShow()" class="form-control password">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="fa fa-lock" aria-hidden="true"></i>
@@ -130,11 +133,15 @@
               <div class="form-group col-md-6">
                 <label for="passwordConfirm">Nhập lại mật khẩu <span
                   class="text-danger">(*)</span></label>
+                <i class="fas fa-eye position-relative show float-right"
+                   style="cursor:pointer;z-index: 100000; right: 73px; top: 41px;visibility: hidden;"
+                   (click)="show()"></i>
                 <div class="input-group">
                   <input id="passwordConfirm"
-                         [class.is-invalid]="repassword.invalid && (repassword.dirty || repassword.touched)"
+                         [class.is-invalid]="repassword.invalid && (password.dirty || password.touched)"
                          [class.is-valid]="repassword.valid && repassword.touched"
-                         formControlName="repassword" type="password" class="form-control">
+                         (keyup)="changeShow()" formControlName="repassword"
+                         type="password" class="form-control password">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="fa fa-lock" aria-hidden="true"></i>
@@ -158,7 +165,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-6">
                 <label for="email">Email <span class="text-danger">(*)</span></label>
                 <div class="input-group">
                   <input id="email"
@@ -185,6 +192,32 @@
                       <div class="text-danger" [hidden]="!email.errors.emailDuplicate">Email này
                         đã tồn tại!</div>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="confirmCode">Mã xác nhận <span class="text-danger">(*)</span></label>
+                <div class="input-group">
+                  <input id="confirmCode"
+                         [class.is-invalid]="confirmCodeForm.invalid && (confirmCodeForm.dirty || confirmCodeForm.touched)"
+                         [class.is-valid]="confirmCodeForm.valid" formControlName="confirmCode" type="text"
+                         class="form-control">
+                  <div class="input-group-append" *ngIf="confirmCodeForm.invalid">
+                    <button class="btn btn-warning cursor" (click)="sendEmail()">{{code === '' ? 'Gửi' : 'Gửi lại'}}</button>
+                  </div>
+                  <div *ngIf="confirmCodeForm.invalid && (confirmCodeForm.dirty || confirmCodeForm.touched) && message === ''"
+                       class="invalid-feedback">
+                    <div *ngIf="confirmCodeForm.errors.required">
+                      <div class="text-danger" [hidden]="!confirmCodeForm.errors.required">Mã xác nhận
+                        không được để trống!
+                      </div>
+                    </div>
+                    <div *ngIf="confirmCodeForm.errors.code">
+                      <div class="text-danger" [hidden]="!confirmCodeForm.errors.code">Mã xác nhận sai!</div>
+                    </div>
+                  </div>
+                  <div style="width:100%">
+                    <small class="text-danger">{{message}}</small>
                   </div>
                 </div>
               </div>
@@ -289,44 +322,36 @@
                   <label for="province"> Tỉnh/Thành phố <span class="text-danger">(*)</span></label>
                 </div>
                 <div class="input-group">
-                  <select
-                    [class.is-invalid]="province.invalid && (province.dirty || province.touched)"
-                    [class.is-valid]="province.valid" id="province" class="form-control"
-                    (change)="changeProvince($event.target.value)">
+                  <select id="province" class="form-control"
+                          (change)="changeProvince($event.target.value)">
                     <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">
                       {{provinces.province_name}}</option>
                   </select>
                 </div>
-                <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-md-4">
                 <div class="label-res">
                   <label for="district"> Quận/Huyện <span class="text-danger">(*)</span></label>
                 </div>
                 <div class="input-group">
-                  <select
-                    [class.is-invalid]="district.invalid && (district.dirty || district.touched)"
-                    [class.is-valid]="district.valid" id="district" class="form-control"
-                    (change)="changeDistrict($event.target.value)">
+                  <select id="district" class="form-control"
+                          (change)="changeDistrict($event.target.value)">
                     <option *ngFor="let districts of districtList" [value]="districts.district_id">
                       {{districts.district_name}}</option>
                   </select>
                 </div>
-                <div class="invalid-feedback"></div>
               </div>
               <div class="form-group col-md-4">
                 <div class="label-res">
                   <label for="ward"> Xã/Thị trấn <span class="text-danger">(*)</span></label>
                 </div>
                 <div class="input-group">
-                  <select [class.is-invalid]="ward.invalid && (ward.dirty || ward.touched)"
-                          [class.is-valid]="ward.valid" id="ward" class="form-control"
+                  <select id="ward" class="form-control"
                           (change)="changeWard($event.target.value)">
                     <option *ngFor="let wards of wardList" [value]="wards.ward_id">
                       {{wards.ward_name}}</option>
                   </select>
                 </div>
-                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="form-row">

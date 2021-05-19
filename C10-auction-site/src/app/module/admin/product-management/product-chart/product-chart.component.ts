@@ -14,6 +14,13 @@ export class ProductChartComponent implements OnInit {
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    legend: {
+      display: true,
+      labels: {
+        fontSize: 17,
+        fontColor: 'white',
+      }
+    }
   };
 
   public barChartLabels = new Array<string>();

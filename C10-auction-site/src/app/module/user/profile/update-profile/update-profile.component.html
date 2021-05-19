@@ -1,14 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col-lg-12 ">
-      <form [formGroup]="formEditUser" (ngSubmit)="updateUser()">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <form [formGroup]="formEditUser">
         <h1 style="color: blue; text-align: center" class="mt-3">Chỉnh sửa thông tin cá nhân</h1>
         <h2 *ngIf="message" style="color: lawngreen">{{message}}</h2>
         <div class="form-group">
           <div>
             <input type="hidden" class="form-control" formControlName="userId">
           </div>
-          <h5 for="userName">Họ và tên: </h5>
+          <h3 for="userName">Họ và tên: </h3>
           <input type="text" class="form-control" id="userName" name="userName" formControlName="userName">
         </div>
         <div class="alert alert-danger"
@@ -19,9 +20,15 @@
           <div [hidden] ="!userName.errors?.minlength">
             Họ và tên quá ngắn !!
           </div>
+          <div [hidden] ="!userName.errors?.maxlength">
+            Họ và tên quá dài !!
+          </div>
+          <div [hidden] ="!nameValidator.bind(this)">
+            Họ và tên không chứa số hoặc kí tự đặc biệt !!
+          </div>
         </div>
         <div class="form-group">
-          <h5 for="email">Email: </h5>
+          <h3 for="email">Email: </h3>
           <input type="text" class="form-control" id="email" name="email" formControlName="email">
         </div>
         <div class="alert alert-danger"
@@ -29,13 +36,17 @@
           <div [hidden] ="!email.errors?.required">
             Vui lòng nhập email !!
           </div>
+          <div [hidden] ="!email.errors?.maxlength">
+            Email quá dài !!
+          </div>
           <div [hidden] ="!email.errors?.email">
             Email phải đúng định dạng abc@abc.abc !!
           </div>
         </div>
         <div class="form-group">
-          <h5 for="birthday">Ngày sinh: </h5>
-          <input type="date" class="form-control" id="birthday" name="birthday" formControlName="birthday"  >
+          <h3 for="birthday">Ngày sinh: </h3>
+          <input type="date" class="form-control" data-date="" data-date-format="DD/MM/YYYY" id="birthday" name="birthday" formControlName="birthday"
+                 placeholder="dd-MM-yyyy">
         </div>
         <div class="alert alert-danger"
              *ngIf="!birthday.valid && (birthday.dirty || birthday.touched)">
@@ -43,49 +54,88 @@
             Vui lòng nhập Ngày sinh !!
           </div>
         </div>
-        <div class="form-group">
-          <h5 for="identity">CMND: </h5>
-          <input type="text" class="form-control" id="identity" name="identity" formControlName="identity">
-        </div>
-        <div class="alert alert-danger"
-             *ngIf="!identity.valid && (identity.dirty || identity.touched)">
-          <div [hidden] ="!identity.errors?.required">
-            Vui lòng nhập email !!
+        <div class="row">
+          <div class="col">
+            <h3 for="identity">CMND: </h3>
+            <input type="text" class="form-control" id="identity" name="identity" formControlName="identity">
           </div>
-          <div [hidden] ="!identity.errors?.pattern">
-            CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX X(0-9) !!
+          <div class="alert alert-danger col-lg-4"
+               *ngIf="!identity.valid && (identity.dirty || identity.touched)">
+            <div [hidden] ="!identity.errors?.required">
+              Vui lòng nhập email !!
+            </div>
+            <div [hidden] ="!identity.errors?.pattern">
+              CMND phải đúng định dạng XXXXXXXXX - X(0-9) !!
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <h5 for="phone">Số điện thoại: </h5>
-          <input type="text" class="form-control" id="phone" name="phone" formControlName="phone">
-        </div>
-        <div class="alert alert-danger"
-             *ngIf="!phone.valid && (phone.dirty || phone.touched)">
-          <div [hidden] ="!phone.errors?.required">
-            Vui lòng nhập SDT !!
+          <div class="col">
+            <h3 for="phone">Số điện thoại: </h3>
+            <input type="text" class="form-control" id="phone" name="phone" formControlName="phone">
           </div>
-          <div [hidden] ="!phone.errors?.pattern">
-            SDT phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx X(0-9) !!
-          </div>
-        </div>
-        <div class="form-group">
-          <h5 for="address">Địa chỉ: </h5>
-          <input type="text" class="form-control" id="address" name="address" formControlName="address">
-        </div>
-        <div class="alert alert-danger"
-             *ngIf="!address.valid && (address.dirty || address.touched)">
-          <div [hidden] ="!address.errors?.required">
-            Vui lòng nhập địa chỉ !!
-          </div>
-          <div [hidden] ="!address.errors?.minlength">
-            Địa chỉ quá ngắn !!
+          <div class="alert alert-danger col-lg-4"
+               *ngIf="!phone.valid && (phone.dirty || phone.touched)">
+            <div [hidden] ="!phone.errors?.required">
+              Vui lòng nhập SDT !!
+            </div>
+            <div [hidden] ="!phone.errors?.pattern">
+              SDT phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx X(0-9) !!
+            </div>
           </div>
         </div>
-        <div class="d-flex justify-content-center align-items-center">
-          <button class="btn btn-success mr-3" [disabled]="!formEditUser.valid" type="submit" style="width: 100px">Lưu</button>
+        <div class="form-row mt-2">
+          <div class="form-group col-md-4">
+            <div class="label-res">
+              <h3 for="province"> Tỉnh/Thành phố:</h3>
+            </div>
+            <div class="form-group">
+              <select
+                [hidden]="!province.invalid && (province.dirty || province.touched)"
+                *ngIf="province.valid" id="province" class="form-control"
+                (change)="changeProvince($event.target.value)">
+                <option *ngFor="let provinces of provinceList" [value]="provinces.province_id">
+                  {{provinces.province_name}}</option>
+              </select>
+            </div>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="label-res">
+              <h3 for="district"> Quận/Huyện: </h3>
+            </div>
+            <div class="input-group">
+              <select
+                [hidden] ="!district.invalid && (district.dirty || district.touched)"
+                *ngIf="district.valid" id="district" class="form-control"
+                (change)="changeDistrict($event.target.value)">
+                <option *ngFor="let districts of districtList" [value]="districts.district_id">
+                  {{districts.district_name}}</option>
+              </select>
+            </div>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="label-res">
+              <h3 for="ward"> Xã/Thị trấn: </h3>
+            </div>
+            <div class="input-group">
+              <select
+                [hidden] ="!ward.invalid && (ward.dirty || ward.touched)"
+                *ngIf = "ward.valid" id="ward" class="form-control"
+                (change)="changeWard($event.target.value)">
+                <option *ngFor="let wards of wardList" [value]="wards.ward_id">
+                  {{wards.ward_name}}</option>
+              </select>
+            </div>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center mt-2 mb-4">
+          <button class="btn btn-success mr-3" [disabled]="!formEditUser.valid" (click)="updateUser()" style="width: 80px">Lưu</button>
+          <button class="btn btn-danger" style="width: 80px" (click)="resetForm()">Hủy</button>
         </div>
       </form>
     </div>
+    <div class="col-lg-2"></div>
   </div>
 </div>
+

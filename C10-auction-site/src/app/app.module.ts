@@ -18,35 +18,38 @@ import {NgxLoadingModule} from 'ngx-loading';
 import {ProfileModule} from './module/user/profile/profile.module';
 import {DatePipe} from '@angular/common';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {HeaderFooterModule} from './module/user/header-footer/header-footer.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadingComponent
   ],
-  imports: [
-    BrowserModule,
-    SocialLoginModule,
-    HttpClientModule,
-    AngularFireStorageModule,
-    MatDialogModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule,
-    MatSnackBarModule,
-    UserManagementModule,
-    UserModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    NgxPaginationModule,
-    AngularFireDatabaseModule,
-    BrowserAnimationsModule,
-    NgxLoadingModule.forRoot({}),
-    AngularFireDatabaseModule,
-    SocialLoginModule,
-    UserModule,
-    ProfileModule,
-    AppRoutingModule,
-  ],
+    imports: [
+        BrowserModule,
+        SocialLoginModule,
+        HttpClientModule,
+        AngularFireStorageModule,
+        MatDialogModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireStorageModule,
+        MatSnackBarModule,
+        UserManagementModule,
+        UserModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        NgxPaginationModule,
+        AngularFireDatabaseModule,
+        BrowserAnimationsModule,
+        NgxLoadingModule.forRoot({}),
+        AngularFireDatabaseModule,
+        SocialLoginModule,
+        UserModule,
+        ProfileModule,
+        AppRoutingModule,
+        HeaderFooterModule,
+    ],
   providers: [{
     provide: 'SocialAuthServiceConfig',
     useValue: {

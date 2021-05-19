@@ -52,31 +52,32 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3 col-sm-6"
-           *ngFor="let product of listProduct | paginate: { itemsPerPage: 8, currentPage: page }; ">
-        <div class="single-shop-product" *ngIf="product.id !== null">
+           *ngFor="let productImage of listProduct | paginate: { itemsPerPage: 16, currentPage: page }; ">
+        <div class="single-shop-product" *ngIf="productImage.id !== null">
           <div class="product-upper border border-info">
-            <img class="image-product" [src]="product.image" alt="">
+            <img class="image-product" [src]="productImage.image" alt="">
           </div>
-          <p class="text-name-product"><a href="">{{product.product.productName}}</a></p>
+          <p class="text-name-product"><a href="">{{productImage.product.productName}}</a></p>
           <div class="product-carousel-price">
-            <ins>Giá Hiện Tại: <span style="color: red">{{product.product.lastPrice | number}} (VNĐ)</span></ins>
+            <ins *ngIf="productImage.product.lastPrice">Giá Hiện Tại: <span style="color: red">{{productImage.product.lastPrice | number}} (VNĐ)</span></ins>
+            <ins *ngIf="!productImage.product.lastPrice">Giá Hiện Tại: <span style="color: red">{{productImage.product.price | number}} (VNĐ)</span></ins>
           </div>
           <p> Thời gian còn lại: <span class="text-time"><countdown
-            [config]="{leftTime:  getTimeRemain(product.product.endTime), format: getDayRemain(product.product.endTime)+' HH:mm:ss'}"></countdown></span>
+            [config]="{leftTime:  getTimeRemain(productImage.product.registerTime,productImage.product.auctionTime), format: getDayRemain(productImage.product.registerTime, productImage.product.auctionTime)+' HH:mm:ss'}"></countdown></span>
           </p>
           <div class="product-option-shop">
             <a class="add_to_cart_button rounded-pill" data-quantity="1" data-product_sku=""
                data-product_id="70"
-               rel="nofollow" href="/canvas/shop/?add-to-cart=70">Đấu Giá</a>
+               rel="nofollow" [routerLink]="['/auction/bidding', productImage.product.productId]">Đấu Giá</a>
           </div>
         </div>
       </div>
-      <div class="container" *ngIf="checkListProduct === false">
+      <div class="container " style="height: 500px" *ngIf="checkListProduct === false">
         <div class="text-danger text-center">Không có sản phẩm để hiển thị.</div>
       </div>
     </div>
   </div>
   <div class="container mb-5" *ngIf="checkListProduct === true ">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    <pagination-controls maxSize="4" nextLabel="Sau" previousLabel="Trước" (pageChange)="page = $event"></pagination-controls>
   </div>
 </div>

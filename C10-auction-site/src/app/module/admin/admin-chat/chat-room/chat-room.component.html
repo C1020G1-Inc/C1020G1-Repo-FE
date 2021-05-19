@@ -4,19 +4,13 @@
       <div class="col-lg-6" *ngIf="user">
         <a href="" data-toggle="modal"
            data-target="#view_info">
-          <img  src="{{user.avatar}}"
+          <img src="{{user.avatar}}"
                alt="avatar">
         </a>
         <div class="chat-about">
           <h6 class="m-b-0">{{user.userName}}</h6>
           <small>{{role}}</small>
         </div>
-      </div>
-      <div class="col-lg-6 hidden-sm text-right">
-        <label class="btn btn-outline-primary" for="file-input">
-          <i class="fa fa-image"></i>
-          <input type="file" (change)="importImages($event)" id="file-input" multiple class="inputfile">
-        </label>
       </div>
     </div>
   </div>
@@ -33,7 +27,8 @@
         </div>
         <div class="float-right" *ngIf="chat.nickname === roomName && chat.type === 'image'">
           <div *ngIf="chat.nickname === roomName && chat.type === 'image'">
-            <img class="message other-message float-right" style="width: 20%;height: 20%;" src="{{chat.message}}" alt="">
+            <img class="message other-message float-right" style="width: 20%;height: 20%;" src="{{chat.message}}"
+                 alt="">
           </div>
         </div>
         <div class="message-data" *ngIf="chat.nickname !== roomName">
@@ -45,8 +40,8 @@
           <img class="message my-message" style="width: 20%;height: 20%;" src="{{chat.message}}" alt="">
         </div>
       </li>
-      <li>
-        <div *ngIf="loadImage" class="message my-message">
+      <li *ngIf="loadImage">
+        <div class="message my-message">
           <div class="spinner-border" style="text-align: center" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -57,15 +52,34 @@
   <div class="chat-message clearfix">
     <div class="input-group mb-0">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fa fa-send"></i></span>
+        <span class="input-group-text" (click)="onFormSubmit(chatForm.value, 'message')"><i
+          class="fa fa-send"></i></span>
       </div>
-      <form action="" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value, 'message')" style="width: 90%">
+      <form action="" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value, 'message')" style="width: 80%">
         <input type="text" class="form-control m-0 text-white" formControlName="message"
                placeholder="Nhập tin nhắn...">
       </form>
+      <div class="input-group-prepend text-right" style="margin-left: 10px">
+        <label class="btn btn-outline-primary" for="file-input">
+          <i class="fa fa-image"></i>
+          <input type="file" (change)="importImages($event)" id="file-input" multiple class="inputfile">
+        </label>
+      </div>
+      <div style="overflow: auto; height: 100px" *ngIf="selectedImages.length !== 0">
+        <div *ngFor="let file of selectedImages; let i = index" class="d-inline-block" style="margin: 0; overflow: auto">
+          <span><i class="fa fa-close delete-icon d-inline" (click)="deleteUpdateImage($event)"
+                   [attr.data-index]="i"></i></span>
+          <img [src]="file.url" style="margin:3px; height: 100px; width: auto; float: left">
+        </div>
+      </div>
     </div>
   </div>
 </div>
 <div class="chat-admin" *ngIf="!roomName">
-  <p class="custom-p">Select a thread or start a new conversation</p>
+  <div class="chat-header-admin clearfix border-0"></div>
+  <div class="chat-history border-0">
+    <p class="custom-p">Select a thread or start a new conversation</p>
+  </div>
+  <div class="chat-message clearfix border-0"></div>
+
 </div>

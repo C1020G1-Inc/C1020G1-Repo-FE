@@ -1,29 +1,6 @@
 <div class="dark-edition">
   <div class="wrapper ">
-    <div class="sidebar" data-color="azure" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
-      <div class="logo"><a class="simple-text logo-normal">
-        Trang Quản Lý
-      </a></div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="nav-item  ">
-            <a class="nav-link" href="http://localhost:4200/admin/user-management/chart">
-              <i class="material-icons">insights</i>
-              <p>Thành viên truy cập</p>
-            </a>
-          </li>
-
-          <li class="nav-item active ">
-            <a class="nav-link" href="http://localhost:4200/admin/user-management/list">
-              <i class="material-icons">person_pin</i>
-              <p>Quản lý thành viên</p>
-            </a>
-          </li>
-
-
-        </ul>
-      </div>
-    </div>
+    <app-left-side-bar></app-left-side-bar>
     <div class="main-panel">
       <div class="content">
         <div class="container-fluid">
@@ -56,8 +33,8 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" *ngIf="accountList.length != 0">
-                    <table class="table sortable">
-                      <thead class=" text-primary">
+                    <table class="table sortable" style="text-align: center">
+                      <thead class=" text-info">
                       <th>
                         STT
                       </th>
@@ -73,42 +50,43 @@
                       <th>
                         SĐT
                       </th>
-                      <th>
+                      <th >
                         Lần đăng nhập gần nhất
                       </th>
-                      <th>Khóa/Mở khóa</th>
+                      <th >Khóa/Mở khóa</th>
 
                       </thead>
-                      <tbody>
-                      <tr *ngFor="let account of accountList|paginate: {itemsPerPage: 5, currentPage: page}">
-                        <td>
-                          {{account.user.userId}}
+                      <tbody style="color:white">
+                      <tr *ngFor="let user of accountList|paginate: {itemsPerPage: 5, currentPage: page}"  >
+                        <td  style="color:white">
+                          {{user.user.userId}}
                         </td>
-                        <td>
-                          {{account.user.userName}}
+                        <td style="color:white">
+                          {{user.user.userName}}
                         </td>
-                        <td>
-                          {{account.user.address}}
+                        <td style="color:white">
+                          {{user.user.address}}
                         </td>
-                        <td>
-                          {{account.email}}
+                        <td style="color:white">
+                          {{user.email}}
                         </td>
-                        <td>
-                          {{account.user.phone}}
+                        <td style="color:white">
+                          {{user.user.phone}}
                         </td>
-                        <td>
-                          {{account.logoutTime|date}}
+                        <td style="color:white">
+                          {{user.logoutTime|date}}
                         </td>
 
-                        <td *ngIf=" account.enable==1 ">
-                          <button class="btn-success" data-toggle="modal"
-                                  data-target="#exampleModal" (click)="getIndex(account)">Khóa
+                        <td *ngIf=" user.enable==1 ">
+                          <button class="  btn-danger" data-toggle="modal"
+                                  data-target="#exampleModal" (click)="getIndex(user)">
+                            Khóa
                           </button>
 
                         </td>
-                        <td *ngIf=" account.enable==0 ">
-                          <button class="btn-success" data-toggle="modal"
-                                  data-target="#exampleModal2" (click)="getIndex(account)">Mở khóa
+                        <td *ngIf=" user.enable==0 ">
+                          <button class="btn-primary" data-toggle="modal"
+                                  data-target="#exampleModal2" (click)="getIndex(user)">Mở khóa
                           </button>
                         </td>
                       </tr>
@@ -186,26 +164,12 @@
               </div>
               <pagination-controls previousLabel="Trước"
                                    nextLabel="Sau" class="my-pagination" (pageChange)="page = $event"
-                                   style="float: right; color: white"></pagination-controls>
+                                   style="float: right; color: orangered"></pagination-controls>
             </div>
 
           </div>
         </div>
       </div>
-
-
-      <footer class="footer">
-        <div class="container-fluid">
-          <nav class="float-left">
-
-          </nav>
-          <div class="copyright float-right" id="date">
-            , made with <i class="material-icons">favorite</i> by
-            <a href="#" target="_blank">C1020G1</a> for a better web.
-          </div>
-        </div>
-      </footer>
-
     </div>
   </div>
 </div>

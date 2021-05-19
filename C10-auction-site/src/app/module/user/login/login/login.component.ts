@@ -82,19 +82,19 @@ export class LoginComponent implements OnInit {
       this.socialUser = data;
       const tokenGoogle = new JwtResponse(this.socialUser.idToken);
       this.authenticationService.google(tokenGoogle).subscribe(req => {
-        if (req !== null) {
-          if (req.jwtToken === null) {
-            this.accountNameZ = req.account.accountName;
-            this.isLocked = true;
-          } else if (req.jwtToken === '') {
-            this.tokenStorage.saveAccountStorage(req.account);
-            this.router.navigateByUrl('/register');
-          } else {
-            this.tokenStorage.saveData(req, true);
-            window.location.reload();
+          if (req !== null) {
+            if (req.jwtToken === null) {
+              this.accountNameZ = req.account.accountName;
+              this.isLocked = true;
+            } else if (req.jwtToken === '') {
+              this.tokenStorage.saveAccountStorage(req.account);
+              this.router.navigateByUrl('/register');
+            } else {
+              this.tokenStorage.saveData(req, true);
+              window.location.reload();
+            }
           }
-        }
-      },
+        },
         error => {
           this.logout();
         });
@@ -112,24 +112,46 @@ export class LoginComponent implements OnInit {
         this.socialUser = data;
         const tokenFacebook = new JwtResponse(this.socialUser.authToken);
         this.authenticationService.facebook(tokenFacebook).subscribe(req => {
-          if (req.jwtToken === null) {
-            this.accountNameZ = req.account.accountName;
-            this.isLocked = true;
-          } else if (req.jwtToken === '') {
-            this.tokenStorage.saveAccountStorage(req.account);
-            this.router.navigateByUrl('/register');
-          } else {
-            this.tokenStorage.saveData(req, true);
-            window.location.reload();
-          }
-        },
+            if (req.jwtToken === null) {
+              this.accountNameZ = req.account.accountName;
+              this.isLocked = true;
+            } else if (req.jwtToken === '') {
+              this.tokenStorage.saveAccountStorage(req.account);
+              this.router.navigateByUrl('/register');
+            } else {
+              this.tokenStorage.saveData(req, true);
+              window.location.reload();
+            }
+          },
           error => {
             this.logout();
           }
         );
       }).catch(
-        err => { }
-      );
+      err => { }
+    );
+  }
+
+  show() {
+    if ($('.show').hasClass('fa-eye')) {
+      $('.show').removeClass('fa-eye');
+      $('.show').addClass('fa-eye-slash');
+      $('.password').attr('type', 'text');
+    } else {
+      $('.show').addClass('fa-eye');
+      $('.show').removeClass('fa-eye-slash');
+      $('.password').attr('type', 'password');
+    }
+  }
+
+  changeShow(value: string){
+    if (value != ''){
+      $('.show').css('visibility','visible');
+      $('.password').css('padding-right','3.5rem');
+    } else {
+      $('.show').css('visibility','hidden');
+      $('.password').css('padding-right','.75rem');
+    }
   }
 
   get remember() {

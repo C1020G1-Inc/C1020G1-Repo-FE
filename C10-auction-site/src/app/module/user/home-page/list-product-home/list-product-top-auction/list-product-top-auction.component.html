@@ -61,22 +61,22 @@
         <th scope="col" class="text-center text-info">Đấu Giá</th>
       </tr>
       </thead>
-      <tbody class="border border-dark" *ngFor="let product of listProduct, let i = index" [attr.data-index]="i">
+      <tbody class="border border-dark" *ngFor="let productImage of listProduct, let i = index" [attr.data-index]="i">
       <tr>
         <td class="border border-dark"><p class="text-top-product text-center" style="color: red">Top {{i+1}}
           <p></td>
-        <td class="border border-dark"><p class="text-top-product text-center"><a>{{product.productName}}</a></p></td>
-        <td class="text-center border border-dark"><img class="image-product border border-info" [src]="product.productImage"></td>
-        <td class="border border-dark"><p class="text-top-product text-center" style="color: red">{{product.productLastPrice | number}}(VNĐ)</p></td>
+        <td class="border border-dark"><p class="text-top-product text-center"><a>{{productImage.productName}}</a></p></td>
+        <td class="text-center border border-dark"><img class="image-product border border-info" [src]="productImage.productImage"></td>
+        <td class="border border-dark"><p class="text-top-product text-center" style="color: red">{{productImage.productLastPrice | number}}(VNĐ)</p></td>
         <td class="border border-dark"><p class="text-center text-top-product" style="color: red">
           <countdown
-            [config]="{leftTime:  getTimeRemain(product.productEndTime), format: getDayRemain(product.productEndTime)+' HH:mm:ss'}"></countdown></p>
+            [config]="{leftTime:  getTimeRemain(productImage.product.registerTime,productImage.product.auctionTime), format: getDayRemain(productImage.product.registerTime, productImage.product.auctionTime)+' HH:mm:ss'}"></countdown></p>
         </td>
         <td class="border border-info">
-          <div class="product-option-shop text-center">
+          <div class="product-option-shop">
             <a class="add_to_cart_button rounded-pill" data-quantity="1" data-product_sku=""
                data-product_id="70"
-               rel="nofollow">Đấu Giá</a>
+               rel="nofollow" [routerLink]="['/auction/bidding', productImage.product.productId]">Đấu Giá</a>
           </div>
         </td>
       </tr>

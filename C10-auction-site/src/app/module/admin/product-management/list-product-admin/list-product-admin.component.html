@@ -1,7 +1,7 @@
 <div class="dark-edition">
   <div class="wrapper ">
-     <app-left-side-bar>
-     </app-left-side-bar>
+    <app-left-side-bar>
+    </app-left-side-bar>
     <div class="main-panel">
       <div class="content">
         <div class="container-fluid">
@@ -20,8 +20,10 @@
                     <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId"
                             class="custom-select">
                       <option value="0">Chọn Tất Cả</option>
-                      <option value="1">Điện tử</option>
-                      <option value="2">Dụng Cụ</option>
+                      <option value="1">Điện thoại</option>
+                      <option value="2">Máy tính</option>
+                      <option value="3">Máy móc</option>
+                      <option value="4">Xe</option>
                     </select>
                     <span style="padding: 10px;color: white;float:left;margin-right: 10px">Người đăng:</span>
                     <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName"
@@ -30,9 +32,9 @@
                     <select style="width: 130px;float: left;height: 35px;margin-right: 10px"
                             [(ngModel)]="productStatusId" class="custom-select">
                       <option value="0">Chọn Tất Cả</option>
-                      <option value="1">Chờ Duyệt</option>
+                      <option value="1">Chưa Duyệt</option>
                       <option value="2">Đang Đấu Giá</option>
-                      <option value="4">Hoàn Thành</option>
+                      <option value="3">Chờ Thanh Toán</option>
                     </select>
                     <input type="button" class="btn btn-primary" value="Tìm kiếm" (click)="doSearch()"
                            style="margin-left: 1%;margin-top: 0;margin-bottom: 10px">
@@ -53,7 +55,7 @@
                         Người Đăng
                       </th>
                       <th style="color: white">
-                        Giá khởi điểm
+                        Giá khởi điểm (VNĐ)
                       </th>
                       <th style="color: white">
                         Tình trạng
@@ -64,20 +66,20 @@
                       </thead>
                       <tbody>
                       <tr *ngFor="let product of productList | paginate: {itemsPerPage: 5, currentPage: page}">
-                        <td>
+                        <td style="color: white">
                           {{product.productId}}
                         </td>
-                        <td>
-                          {{product.productName}}
+                        <td class="hover-to-link">
+                          <a href="http://localhost:4200/detail/{{product.productId}}">{{product.productName}}</a>
                         </td>
-                        <td>
+                        <td style="color: white">
                           {{product.category.categoryName}}
                         </td>
-                        <td>
+                        <td style="color: white">
                           {{product.account.user.userName}}
                         </td>
                         <td class="text-primary">
-                          {{product.price | currency:'VND':'symbol'}}
+                          {{product.price | currency:'':''}}
                         </td>
                         <td *ngIf="product.productStatus.id == 1">
                           <a href="#acceptProduct" data-toggle="modal" class="text-danger"
@@ -128,7 +130,7 @@
             <textarea rows="8" cols="55" name="message" [(ngModel)]="confirmContent"></textarea>
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-danger" value="Gửi" (click)="sendConfirm()" [disabled]="!confirmContent">
+            <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Gửi" (click)="sendConfirm()" [disabled]="!confirmContent">
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
           </div>
         </form>
@@ -160,12 +162,12 @@
                 <th style="padding: 30px">{{product.category.categoryName}}</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Giá khởi điểm:</th>
-                <th style="padding: 30px">{{product.price | currency:'VND':'symbol'}}</th>
+                <th style="padding: 30px">Khởi điểm (VNĐ):</th>
+                <th style="padding: 30px">{{product.price | currency : '' : ''}}</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Bước giá:</th>
-                <th style="padding: 30px">{{product.priceStep | currency:'VND':'symbol'}}</th>
+                <th style="padding: 30px">Bước giá (VNĐ):</th>
+                <th style="padding: 30px">{{product.priceStep | currency : '' : ''}}</th>
               </tr>
               <tr>
                 <th style="padding: 30px">Hình ảnh:</th>
@@ -225,7 +227,7 @@
                   </span>
                     <span style="color: red;font-size: 12px" *ngIf="editForm.controls.productName.errors?.maxlength  &&
                   (editForm.controls.productName?.touched ||editForm.controls.productName?.dirty)">
-                    Tên sản phẩm tối đa 30 ký tự !!
+                    Tên sản phẩm tối đa 70 ký tự !!
                   </span>
                   </th>
                 </tr>
@@ -245,12 +247,12 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Giá khởi điểm:</th>
-                  <th style="padding: 30px">{{productEdit.price | currency :'VND':'symbol'}}</th>
+                  <th style="padding: 30px">Khởi điểm (VNĐ):</th>
+                  <th style="padding: 30px">{{productEdit.price | currency : '' : ''}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Bước giá:</th>
-                  <th style="padding: 30px">{{productEdit.priceStep | currency: 'VND':'symbol'}}</th>
+                  <th style="padding: 30px">Bước giá (VNĐ):</th>
+                  <th style="padding: 30px">{{productEdit.priceStep | currency : '' : ''}}</th>
                 </tr>
                 <tr>
                   <th style="padding: 30px">Hình ảnh:</th>
@@ -317,8 +319,3 @@
     </div>
   </div>
 </div>
-
-<!--   Core JS Files   -->
-<script src="src/assets/js/core/jquery.min.js"></script>
-<script src="src/assets/js/core/popper.min.js"></script>
-<script src="src/assets/js/core/bootstrap-material-design.min.js"></script>

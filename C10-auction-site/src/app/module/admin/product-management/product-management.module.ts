@@ -7,10 +7,11 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {ChartsModule} from 'ng2-charts';
 import {RouterModule} from '@angular/router';
 import {LeftSideBarModule} from '../left-side-bar/left-side-bar.module';
+import { ProductChartDonutComponent } from './product-chart-donut/product-chart-donut.component';
 
 
 @NgModule({
-  declarations: [ListProductAdminComponent, ProductChartComponent,],
+  declarations: [ListProductAdminComponent, ProductChartComponent, ProductChartDonutComponent,],
   exports: [
   ],
   imports: [

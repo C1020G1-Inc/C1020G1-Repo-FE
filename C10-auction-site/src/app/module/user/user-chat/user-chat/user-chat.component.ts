@@ -28,7 +28,8 @@ export class UserChatComponent implements OnInit {
   room: Room;
   notifications = new Array<Notification>();
   loadImage: boolean;
-  selectedImage: any;
+  selectedImages = [];
+  tempFile = [];
   accountVisitor: AccountVisitor;
   isDisplay: boolean;
 
@@ -43,13 +44,13 @@ export class UserChatComponent implements OnInit {
   ngOnInit(): void {
     this.hideChat(0);
     this.chatForm = this.formBuilder.group({
-      message: [null, Validators.required]
+      message: [null, [Validators.required, Validators.maxLength(10000)]]
     });
     this.account = this.tokenStorageService.getAccount();
     this.accountVisitor = this.tokenStorageService.getAccountVisitor();
     this.chatService.refChats.on('value', resp => {
       this.chats = this.chatService.snapshotToArray(resp).filter(x => x.roomName === this.account.accountName);
-      this.setTimeForChat();
+      // this.setTimeForChat();
     });
     this.chatService.refNoti.orderByChild('role').equalTo('admin').on('value', (resp: any) => {
       this.notifications = this.chatService.snapshotToArray(resp)
@@ -94,6 +95,15 @@ export class UserChatComponent implements OnInit {
             }
           });
         }
+        if (this.account) {
+          this.chatService.refRooms.orderByChild('roomName').equalTo(this.account.accountName).on('value', (resp: any) => {
+            if (!resp.exists()) {
+              const room = new Room(this.account.accountName, this.account.user, 0);
+              this.chatService.addNewRoom(room);
+            }
+          });
+        }
+        $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
         break;
     }
   }
@@ -116,31 +126,42 @@ export class UserChatComponent implements OnInit {
     }
   }
 
-  private setTimeForChat() {
-    const currentDate = Date.parse(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
-    for (const chat of this.chats) {
-      const minute = (currentDate - Date.parse(chat.date)) / (1000 * 60);
-      if (minute < 1) {
-        chat.date = 'vừa xong';
-      } else if (minute > 1 && minute < 60) {
-        chat.date = Math.round(minute) + ' phút trước';
-        return;
-      }
-      const hour = minute / 60;
-
-      if (hour < 2) {
-        chat.date = Math.round(hour) + ' giờ trước';
-      } else if (hour > 2 && hour < 24) {
-        chat.date = Math.round(hour) + ' giờ trước';
-      } else {
-        chat.date = chat.date.slice(0, 10);
-      }
-
-    }
-  }
+  // private setTimeForChat() {
+  //   const currentDate = Date.parse(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
+  //   for (const chat of this.chats) {
+  //     const minute = (currentDate) / (1000 * 60);
+  //     if (minute < 1) {
+  //       chat.date = 'vừa xong';
+  //     } else if (minute > 1 && minute < 60) {
+  //       chat.date = Math.round(minute) + ' phút trước';
+  //       return;
+  //     }
+  //     const hour = minute / 60;
+  //
+  //     if (hour < 2) {
+  //       chat.date = Math.round(hour) + ' giờ trước';
+  //     } else if (hour > 2 && hour < 24) {
+  //       chat.date = Math.round(hour) + ' giờ trước';
+  //     } else {
+  //       chat.date = chat.date.slice(0, 10);
+  //     }
+  //
+  //   }
+  // }
 
 
   onFormSubmit(form: any, type: string) {
+    this.tempFile = this.selectedImages;
+    this.selectedImages = [];
+    this.loadImage = true;
+    if (this.chatForm.get('message').errors?.maxlength) {
+      this.snackBar.open('Tin nhắn bạn nhập quá dài', 'X',
+        {
+          duration: 5000,
+        });
+      return;
+    }
+    this.addImageToFireBase();
     if (form.message) {
       const chat = form;
       chat.roomName = this.account.accountName;
@@ -149,7 +170,6 @@ export class UserChatComponent implements OnInit {
       chat.type = type;
 
       this.chatService.refChats.push().set(chat).then(data => {
-        this.loadImage = false;
         $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
       });
       let notification: Notification;
@@ -177,35 +197,63 @@ export class UserChatComponent implements OnInit {
     for (const file of files) {
       const name = file.type.toString();
       if (!name.includes('image')) {
+
         this.snackBar.open('Đây không phải hình ảnh', 'X',
           {
             duration: 5000,
-          });
+          }
+        )
         return;
       }
     }
-    this.loadImage = true;
-    setTimeout(() => {
-      $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
-    }, 500);
-    if ($event.target.files && $event.target.files[0]) {
-      this.selectedImage = $event.target.files[0];
-      this.addImageToFireBase();
+
+    if (files) {
+      for (let file of files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedImages.push({url: e.target.result, file: file})
+        };
+        reader.readAsDataURL(file);
+      }
     }
+    $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
   }
 
-  private addImageToFireBase() {
-    if (this.selectedImage !== null) {
-      const filePath = `avatar/${this.selectedImage.name}/${new Date().getTime()}`;
-      const fileRef = this.storage.ref(filePath);
-      this.storage.upload(filePath, this.selectedImage).snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(url => {
-            this.chatForm.get('message').setValue(url);
-            this.onFormSubmit(this.chatForm.value, 'image');
-          });
-        })
-      ).subscribe();
-    }
+  addImageToFireBase() {
+    return new Promise(resolve => {
+      Promise.all(this.tempFile.map(file =>
+        new Promise((resolve) => {
+          this.loadImage = true;
+          console.log(this.loadImage)
+          const name = file.file.name;
+          const fileRef = this.storage.ref(name);
+          this.storage.upload(name, file.file).snapshotChanges().pipe(
+            finalize(() => {
+              fileRef.getDownloadURL()
+                .subscribe((url) => {
+                  let chat = new Chat();
+                  chat.message = url;
+                  chat.roomName = this.account.accountName;
+                  chat.nickname = this.account.accountName;
+                  chat.date = new Date();
+                  chat.type = 'image';
+                  this.chatService.refChats.push().set(chat).then(data => {
+                    this.loadImage = false;
+                    console.log(this.loadImage)
+                    $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
+                  });
+                  resolve(1);
+                });
+            })).subscribe();
+        }))).then(() => {
+        resolve(1)
+      });
+    });
+  }
+
+  deleteUpdateImage($event) {
+    let index = $event.target.attributes['data-index'].value;
+    this.selectedImages = this.selectedImages.slice(0, index).concat(this.selectedImages.slice(index + 1, this.selectedImages.length));
+
   }
 }

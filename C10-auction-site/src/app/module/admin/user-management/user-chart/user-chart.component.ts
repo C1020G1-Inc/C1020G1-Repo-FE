@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Color} from 'ng2-charts';
 import {UserService} from '../../../../service/user.service';
-import {Account} from '../../../../model/account';
+import {Account} from "../../../../model/account";
 
 @Component({
   selector: 'app-user-chart',
@@ -12,22 +12,36 @@ export class UserChartComponent implements OnInit {
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    beginAtZero: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          stepSize: 1
+        }
+      }]
+    },
+    legend: {
+      display: true,
+      labels: {
+        fontSize: 17,
+        fontColor: 'white',
+      }
+    }
   };
-
   public barChartLabels = new Array<string>();
   public barChartType = 'line';
   public barChartLegend = true;
   public dataStatistic = new Array<number>();
   public lineChartColor: Color[] = [
     {
-      borderColor: 'rgba(255,103,19,0.6)',
-      backgroundColor: 'rgba(255,255,255,0.38)'
+      borderWidth: 1,
+      borderColor: 'rgb(255,255,255)',
+      backgroundColor: 'rgb(255,127,49)'
     }
   ];
   barChartData = [
-    {data: [], label: 'Số lượng thành viên'}
-  ];
-
+    {data: [], label: 'Số lượng thành viên'},
+];
   public month;
   public year;
   public message;
@@ -62,19 +76,19 @@ export class UserChartComponent implements OnInit {
         this.dataStatistic.push(count);
       }
       this.barChartData = [
-        {data: this.dataStatistic , label: 'Số lượng thành viên'}
+        {data: this.dataStatistic, label: 'Số lượng thành viên'}
       ];
     });
   }
+
   getChartByMonth() {
     if (this.month === undefined || this.year === undefined) {
       this.message = 1;
     } else {
       this.userService.getUserByDate(this.month, this.year).subscribe(data => {
-        if (data.length === 0){
+        if (data.length === 0) {
           this.message = 2;
-        }
-        else {
+        } else {
           // tslint:disable-next-line:prefer-const
           let listUser: Account[] = data;
           this.barChartLabels = new Array<string>();
@@ -108,10 +122,9 @@ export class UserChartComponent implements OnInit {
       this.message = 1;
     } else {
       this.userService.getUserByDate(this.month, this.year).subscribe(data => {
-        if (data.length === 0){
+        if (data.length === 0) {
           this.message = 2;
-        }
-        else {
+        } else {
           // tslint:disable-next-line:prefer-const
           let listUser: Account[] = data;
           this.barChartLabels = new Array<string>();
@@ -124,7 +137,7 @@ export class UserChartComponent implements OnInit {
             // tslint:disable-next-line:prefer-for-of
             for (let j = 0; j < listUser.length; j++) {
               const date: Date = new Date(listUser[j].logoutTime);
-              if (date.getMonth() === (i - 1) ){
+              if (date.getMonth() === (i - 1)) {
                 count++;
               }
             }

@@ -52,7 +52,7 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3 col-sm-6"
-           *ngFor="let product of listProduct| paginate: { itemsPerPage: 8, currentPage: page } ;">
+           *ngFor="let product of listProduct| paginate: { itemsPerPage: 16, currentPage: page } ;">
         <div class="single-shop-product" *ngIf="product.id !== null">
           <div class="product-upper border border-info">
             <img class="image-product" [src]="product.image" alt="">
@@ -70,7 +70,7 @@
     </div>
   </div>
   <div class="container mb-5" *ngIf="checkListProduct === true ">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    <pagination-controls maxSize="4" nextLabel="Sau" previousLabel="Trước" (pageChange)="page = $event"></pagination-controls>
   </div>
 </div>
 

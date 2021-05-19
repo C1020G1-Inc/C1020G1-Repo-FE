@@ -1,8 +1,6 @@
-
 j2(document).ready(function() {
   var current_fs, next_fs, previous_fs; //fieldsets
   var opacity;
-
   $('.next').click(function() {
     current_fs = $(this).parent();
     next_fs = $(this).parent().next();
@@ -64,21 +62,37 @@ j2(document).ready(function() {
     );
   });
 
-  $('.radio-group .radio').click(function() {
-    $(this).parent().find('.radio').removeClass('selected');
-    $(this).addClass('selected');
-  });
+  // $('.radio-group .radio').click(function() {
+  //   $(this).parent().find('.radio').removeClass('selected');
+  //   $(this).addClass('selected');
+  // });
 
   $('.submit').click(function() {
     return false;
   });
 
   $('input[type="radio"]').click(function() {
-    if ($(this).attr('id') === 'checkout-credit') {
-      $('#paypal-button').show();
-    } else {
+    if($(this).attr('id') === 'non-credit'){
+      $("#non-credit").prop("checked", true);
+      $("#checkout-credit").prop("checked", false);
+      $("#terminal-credit").prop("checked", false);
       $('#paypal-button').hide();
-    }
+      $('#terminal-credit-form').hide();
+    }else if ($(this).attr('id') === 'checkout-credit') {
+      $("#checkout-credit").prop("checked", true);
+      $("#non-credit").prop("checked", false);
+      $("#terminal-credit").prop("checked", false);
+
+      $('#paypal-button').show();
+      $('#terminal-credit-form').hide();
+    } else{
+      $("#checkout-credit").prop("checked", false);
+      $("#non-credit").prop("checked", false);
+      $("#terminal-credit").prop("checked", true);
+
+      $('#paypal-button').hide();
+      $('#terminal-credit-form').show();
+    };
   });
 
 });

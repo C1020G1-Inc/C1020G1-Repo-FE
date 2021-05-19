@@ -41,7 +41,7 @@ export class AuctionCartComponent implements OnInit {
       .subscribe(data => {
         if (data != null) {
           this.listTransaction = data;
-          this.listTransaction.map(t => t.transactionTime = new Date(new Date(t.transactionTime).getTime() + 10 * 60 * 1000));
+          this.listTransaction.map(t => t.transactionTime = new Date(new Date(t.transactionTime).getTime() + 5 * 60 * 1000));
         }
       });
   }
@@ -96,7 +96,7 @@ export class AuctionCartComponent implements OnInit {
     let total = 0;
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.formChooseProduct.value.length; i++) {
-      total += this.getProductByTransactionId(this.formChooseProduct.value[i]).product.price * 1.05;
+      total += this.getProductByTransactionId(this.formChooseProduct.value[i]).product.lastPrice * 1.05;
     }
     return total;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Product} from '../../../../model/Product';
 import {ActivatedRoute} from '@angular/router';
 import {Auction} from '../../../../model/Auction';
@@ -22,8 +22,14 @@ export class DetailProductComponent implements OnInit {
 
   constructor(
     public productService: ProductService ,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdref: ChangeDetectorRef
   ) {this.todaysDataTime = formatDate(this.today , 'dd/MM/yyyy hh:mm:ss a' , 'en-US' , '+0700');
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
   }
 
   ngOnInit(): void {
@@ -40,4 +46,15 @@ export class DetailProductComponent implements OnInit {
     });
   }
 
+  // getTimeRemain(date) {
+  //   return ((new Date(date).getTime() - new Date().getTime()) / 1000) % 86400;
+  // }
+  // getDayRemain(date) {
+  //   const day = Math.floor(((new Date(date).getTime() - new Date().getTime()) / 1000) / 86400);
+  //   if (day > 0) {
+  //     return day + ' N ';
+  //   } else {
+  //     return '';
+  //   }
+  // }
 }

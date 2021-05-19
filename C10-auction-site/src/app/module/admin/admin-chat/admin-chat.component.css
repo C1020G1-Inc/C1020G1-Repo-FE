@@ -183,10 +183,10 @@
   padding: 20px
 }
 
-.scroll {
+.chat-list {
   overflow: auto;
   padding-top: 0 !important;
-  max-height: 694px;
+  height: 550px !important;
 }
 
 .online,
@@ -244,10 +244,10 @@
     border-radius: 0.55rem 0.55rem 0 0
   }
 
-  .scroll {
+  .chat-list {
     overflow: auto;
     padding-top: 0 !important;
-    height: 300px;
+    height: 150px;
   }
 
   .chat-app .chat-history {
@@ -262,10 +262,10 @@
     overflow-x: auto
   }
 
-  .scroll {
+  .chat-list {
     overflow: auto;
     padding-top: 0 !important;
-    height: 600px;
+    height: 300px;
   }
 
   .chat-app .chat-history {
@@ -276,11 +276,11 @@
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
   .chat-app .chat-list {
-    height: 480px;
+    height: 300px;
     overflow-x: auto
   }
 
-  .scroll {
+  .chat-list {
     overflow: auto;
     padding-top: 0 !important;
     height: calc(100vh - 350px);
@@ -19861,7 +19861,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .dark-edition {
-  background-color: #1a2035;
+  background-color: #1a2035 !important;
 }
 
 .dark-edition .btn,

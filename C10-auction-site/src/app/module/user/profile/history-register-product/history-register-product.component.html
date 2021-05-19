@@ -28,7 +28,7 @@
                   <td>{{items.registerTime| date: 'dd/MM/yyyy'}}</td>
                   <td>{{items.productStatus.statusName}}</td>
 
-                  <td *ngIf="items.productStatus.id != 6">
+                  <td *ngIf="items.productStatus.id == 1">
                     <button class="btn btn-danger" type="submit" data-ripple="" data-toggle="modal" data-target="#exampleModal" (click)="product=items">Huỷ</button></td>
                   <td *ngIf="items.productStatus.id == 6"><button class="btn btn-warning" type="submit" data-ripple="" data-toggle="modal" data-target="#exampleModal1"(click)="product=items">Đăng lại</button></td>
 
@@ -61,7 +61,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="my-3">Bạn có chắc chắn muốn huỷ đăng kí mặt hàng này không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
+        <p class="my-3">Bạn có chắc chắn muốn huỷ đăng kí mặt hàng {{product.productName}} không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 80px">Hủy</button>

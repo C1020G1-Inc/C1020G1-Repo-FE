@@ -5,8 +5,6 @@ import {HistoryAuction, ProductDetail} from '../../../../model/auction-bidding.m
 import {interval} from 'rxjs';
 import {FirebaseDatabaseService} from '../../../../service/auction-bidding/firebase-database.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {mergeMap} from 'rxjs/operators';
-import {TokenStorageService} from '../../../../service/authentication/token-storage';
 
 declare const $: any;
 
@@ -101,7 +99,7 @@ export class AuctionBiddingComponent implements OnInit {
     });
 
     this.priceForm = new FormGroup({
-      newPrice: new FormControl('', [Validators.required, this.confirmEmailValidator()])
+      newPrice: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+$"), this.confirmEmailValidator()])
     });
 
   }
@@ -114,7 +112,7 @@ export class AuctionBiddingComponent implements OnInit {
     }).subscribe(() => {
       $('#toast-success').toast('show');
       this.priceForm = new FormGroup({
-        newPrice: new FormControl('', [Validators.required, this.confirmEmailValidator()])
+        newPrice: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+$") , this.confirmEmailValidator()])
       });
     });
   }

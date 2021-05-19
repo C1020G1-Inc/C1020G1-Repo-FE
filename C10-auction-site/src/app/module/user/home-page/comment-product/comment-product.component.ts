@@ -113,21 +113,26 @@ export class CommentProductComponent implements OnInit {
    * create comment
    */
   async createComment() {
-    if (($('#myText').data('emojioneArea').getText() !== '')) {
-      this.message = null;
-      this.loading = true;
-      await this.addImageToFireBase(this.fileImage);
-      this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
-      this.formComment.get('image').setValue(this.urlImage);
-      this.commentService.createNewComment(this.formComment.value).subscribe(data => {
-        this.loading = false;
-        $('#myText').data('emojioneArea').setText('');
-        this.ngOnInit();
-        this.fileImage = [];
-        this.check = false;
-      });
+    if (($('#myText').data('emojioneArea').getText().trim() !== '')) {
+      if ($('#myText').data('emojioneArea').getText().length <= 100) {
+        this.message = null;
+        this.loading = true;
+        await this.addImageToFireBase(this.fileImage);
+        this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
+        this.formComment.get('image').setValue(this.urlImage);
+        this.commentService.createNewComment(this.formComment.value).subscribe(data => {
+          this.loading = false;
+          $('#myText').data('emojioneArea').setText('');
+          this.ngOnInit();
+          this.fileImage = [];
+          this.check = false;
+        });
+      } else {
+        this.message = 'Nội dung không được quá 100 kí tự!!';
+      }
     } else {
       this.message = 'Không được để trống nội dung!!';
+      $('#myText').data('emojioneArea').setText('');
     }
   }
 
@@ -136,7 +141,10 @@ export class CommentProductComponent implements OnInit {
    * send form edit to screen
    */
   sendFormEdit(commentId: number) {
+    this.messageEdit = null;
+    this.checkImageEdit = false;
     this.fileImage = [];
+    this.fileImageEdit = [];
     this.check = false;
     this.commentService.findCommentById(commentId).subscribe(data => {
       this.formEditComment.get('commentId').setValue(data.commentId);
@@ -155,27 +163,32 @@ export class CommentProductComponent implements OnInit {
    * edit comment
    */
   async editComment() {
-    if ($('#editComment').data('emojioneArea').getText() !== '') {
-      this.loadingEdit = true;
-      this.messageEdit = null;
-      await this.addImageToFireBase(this.fileImageEdit);
-      if (this.urlImageEdit == null && this.urlImage == null) {
-        this.formEditComment.get('image').setValue(null);
-      } else if (this.urlImageEdit != null && this.urlImage == null) {
-        this.formEditComment.get('image').setValue(this.urlImageEdit);
-      } else if (this.urlImageEdit == null && this.urlImage != null) {
-        this.formEditComment.get('image').setValue(this.urlImage);
+    if ($('#editComment').data('emojioneArea').getText().trim() !== '') {
+      if ($('#editComment').data('emojioneArea').getText().length <= 100) {
+        this.loadingEdit = true;
+        this.messageEdit = null;
+        await this.addImageToFireBase(this.fileImageEdit);
+        if (this.urlImageEdit == null && this.urlImage == null) {
+          this.formEditComment.get('image').setValue(null);
+        } else if (this.urlImageEdit != null && this.urlImage == null) {
+          this.formEditComment.get('image').setValue(this.urlImageEdit);
+        } else if (this.urlImageEdit == null && this.urlImage != null) {
+          this.formEditComment.get('image').setValue(this.urlImage);
+        }
+        this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
+        this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
+          $('#editCommentModal').click();
+          this.loadingEdit = false;
+          $('#editComment').data('emojioneArea').setText('');
+          this.ngOnInit();
+          this.checkImageEdit = false;
+        });
+      } else {
+        this.messageEdit = "Nội dung không được quá 100 kí tự!!"
       }
-      this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
-      this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
-        $('#editCommentModal').click();
-        this.loadingEdit = false;
-        $('#editComment').data('emojioneArea').setText('');
-        this.ngOnInit();
-        this.checkImageEdit = false;
-      });
     } else {
       this.messageEdit = 'Không được để trống nội dung trong lúc chỉnh sửa!!';
+      $('#editComment').data('emojioneArea').setText('');
     }
   }
 
@@ -340,7 +353,10 @@ export class CommentProductComponent implements OnInit {
    * get check validate in screen edit
    */
   getCheck() {
+    this.message = null;
     this.messageEdit = null;
+    this.fileImageEdit = null;
+    this.checkImageEdit = false;
   }
 }
 
