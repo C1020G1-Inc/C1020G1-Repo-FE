@@ -454,7 +454,7 @@ export class AuctionPaymentComponent implements OnInit {
                 alignment: 'center'
               },
               {
-                text: (product.price * 1.05).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
+                text: (product.lastPrice * 1.05).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'),
                 alignment: 'center'
               }
             ];
