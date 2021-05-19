@@ -40,7 +40,7 @@ export class ResultSearchProductAuctionComponent implements OnInit {
     this.categoryList = this.formSearch.value.category;
     this.priceList = this.formSearch.value.priceRange;
     console.log(this.searchList + this.priceList + this.categoryList);
-    const changeBySecond = interval(1000).subscribe(() => {
+    const changeBySecond = interval(60000).subscribe(() => {
       this.listProductService.searchProductAuction(this.searchList,
         this.categoryList, this.priceList).subscribe((data) => {
         this.listProduct = data;

@@ -215,14 +215,15 @@ export class RegisterComponent implements OnInit {
       logoutTime: null,
       user: userNew
     };
-    // duong
-    const room = new Room(this.accountName.value, userNew, 0);
-    this.chatService.addNewRoom(room);
+
 
     this.accountService.saveAccount(account).subscribe(data => {
       if (data !== null) {
         const config = new MatDialogConfig();
         config.position = { top: '5%' };
+        // duong
+        const room = new Room(this.accountName.value, userNew, 0);
+        this.chatService.addNewRoom(room);
         this.dialog.open(MatRegisDiaComponent, config);
         this.form.reset();
         this.code = '';

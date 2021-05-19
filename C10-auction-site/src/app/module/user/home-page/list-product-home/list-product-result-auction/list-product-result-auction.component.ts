@@ -29,7 +29,7 @@ export class ListProductResultAuctionComponent implements OnInit {
 
   ngOnInit(): void {
     this.openLoading();
-    const changeBySecond = interval(1000).subscribe(() => {
+    const changeBySecond = interval(60000).subscribe(() => {
       this.listProductService.showAllProductResultAuction(this.category).subscribe((data) => {
         this.listProduct = data;
         this.checkListProduct = this.listProduct.length !== 0;

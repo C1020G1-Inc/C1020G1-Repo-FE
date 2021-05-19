@@ -25,7 +25,7 @@
                 <td>{{auction.auctionId}}</td>
                 <td>{{auction.product.productName}}</td>
                 <td>{{auction.product.description}}</td>
-                <td>{{auction.product.price}}</td>
+                <td>{{auction.product.price | currency : '' : ''}}</td>
                 <td>{{auction.product.registerTime | date: 'dd/MM/yyyy'}}</td>
                 <td>{{auction.status}}</td>
               </tr>

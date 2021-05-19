@@ -203,7 +203,7 @@
                          [class.is-valid]="confirmCodeForm.valid" formControlName="confirmCode" type="text"
                          class="form-control">
                   <div class="input-group-append" *ngIf="confirmCodeForm.invalid">
-                    <button class="btn btn-warning cursor" (click)="sendEmail()">{{code === '' ? 'Gửi' : 'Gửi lại'}}</button>
+                    <a class="btn btn-warning cursor" (click)="sendEmail()">{{code === '' ? 'Gửi' : 'Gửi lại'}}</a>
                   </div>
                   <div *ngIf="confirmCodeForm.invalid && (confirmCodeForm.dirty || confirmCodeForm.touched) && message === ''"
                        class="invalid-feedback">

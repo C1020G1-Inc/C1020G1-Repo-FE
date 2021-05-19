@@ -75,10 +75,8 @@ export class UpdateProfileComponent implements OnInit {
       this.accountService.findAccount(this.accountId).subscribe(data1 => {
         this.formEditUser.patchValue(data1);
         this.formEditUser.patchValue(data1.user);
-        // format dữ liệu từ DB lên Client
-        data1.user.birthday = new Date(new Date(data1.user.birthday).getTime() + 7*60*60*1000)
-        const dateSendingToServer = new DatePipe('en-US').transform(data1.user.birthday, 'dd/MM/yyyy')
-        this.formEditUser.controls.birthday.setValue(dateSendingToServer);
+        this.formEditUser.controls.birthday.setValue
+        (data1.user.birthday = new Date(new Date(data1.user.birthday).getTime() + 7*60*60*1000).toISOString().slice(0,10));
         console.log(this.formEditUser.value);
       });
     });
