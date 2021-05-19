@@ -58,11 +58,11 @@ export class CommentProductComponent implements OnInit {
     this.fileImage = [];
     this.fileImageEdit = [];
     const productId = this.activatedRouter.snapshot.params.id;
+    this.getAllCommentByProductId(productId);
     if (this.isLogged) {
-      this.getAllCommentByProductId(productId);
+      this.account = this.tokenStorage.getAccount();
+      this.user = this.account.user;
     }
-    this.account = this.tokenStorage.getAccount();
-    this.user = this.account.user;
     this.formComment = this.formBuilder.group({
       content: ['', [Validators.required]],
       image: [''],
@@ -90,7 +90,7 @@ export class CommentProductComponent implements OnInit {
   getAllCommentByProductId(productId: number) {
     this.commentService.findAllCommentByProductId(productId).subscribe(data => {
       this.comments = data;
-
+      console.log(data)
     });
   }
 

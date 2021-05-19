@@ -23,14 +23,13 @@ export class DetailProductComponent implements OnInit {
   constructor(
     public productService: ProductService ,
     private activatedRoute: ActivatedRoute,
-    private cdref: ChangeDetectorRef
   ) {this.todaysDataTime = formatDate(this.today , 'dd/MM/yyyy hh:mm:ss a' , 'en-US' , '+0700');
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
-  ngAfterContentChecked() {
-    this.cdref.detectChanges();
-  }
+  // ngAfterContentChecked() {
+  //   this.cdref.detectChanges();
+  // }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params.id;

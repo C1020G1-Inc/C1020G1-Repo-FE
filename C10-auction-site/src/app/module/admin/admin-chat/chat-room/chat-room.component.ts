@@ -107,6 +107,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       this.chatService.refChats.push().set(chat).then(data => {
         this.loadImage = false;
         $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+
       });
 
       const notification = new Notification(chat, false, 'admin', this.user.userName, this.user.avatar);

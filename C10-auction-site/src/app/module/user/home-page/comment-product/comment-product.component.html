@@ -7,12 +7,12 @@
     <p style="color: #0788bd; font-size: 17px; font-weight: bolder">"Hãy là người bình luận đầu tiên cho sản phẩm
       này"</p>
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid" *ngIf="isLogged">
     <div class="row" style="background-color: whitesmoke">
       <ngx-loading [show]="loading" [config]="config">
       </ngx-loading>
       <ul class="we-comet" style="margin-top: 10px; margin-bottom: 10px">
-        <form [formGroup]="formComment">
+        <form [formGroup]="formComment" *ngIf="isLogged">
           <li class="post-comment">
             <div class="comet-avatar" style="margin-right: 10px; margin-top: 2px">
               <a href="#" target="_blank">
@@ -68,7 +68,8 @@
               <span style="float:right; font-size: 13px">
               <p>{{comment.commentTime| date: 'dd/MM/yyyy hh:mm a'}}</p>
             </span>
-              <span *ngIf="comment.account.user.userId == user.userId" style="float:right; margin-right: 10px">
+              <div *ngIf="user">
+                <span *ngIf="comment.account.user.userId == user.userId" style="float:right; margin-right: 10px">
               <i style="color: #17d0ff; margin-right: 5px" class="fa fa-edit fa-lg" aria-hidden="true"
                  data-toggle="modal" data-target="#editCommentModal" title="Chỉnh sửa"
                  (click)="sendFormEdit(comment.commentId)"></i>
@@ -77,6 +78,7 @@
                  data-toggle="modal" data-target="#deleteCommentModal" title="Xóa"
                  (click)="getCommentIdToDelete(comment.commentId)"></i>
             </span>
+              </div>
               <div style="display: block; margin-left: 20px">
                 <p style="font-size: 19px">
                   {{comment.content}}

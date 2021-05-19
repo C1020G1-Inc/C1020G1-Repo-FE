@@ -9,10 +9,8 @@ import {AccountService} from '../authentication/account-service';
 })
 export class CommentService {
   baseUrl = 'http://localhost:8080/api/comment';
-  options: any;
 
   constructor(private http: HttpClient, private accountService: AccountService) {
-    this.options = this.accountService.httpOptions;
   }
 
   /**
@@ -21,7 +19,7 @@ export class CommentService {
    *
    */
   findAllCommentByProductId(productId: number): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/product/' + productId, this.options);
+    return this.http.get<any>(this.baseUrl + '/product/' + productId);
   }
 
   /**
@@ -29,7 +27,7 @@ export class CommentService {
    * find comment by commentID
    */
   findCommentById(commentId: number): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/' + commentId, this.options);
+    return this.http.get<any>(this.baseUrl + '/' + commentId, this.accountService.httpOptions);
   }
 
   /**
@@ -37,7 +35,7 @@ export class CommentService {
    * create a new comment
    */
   createNewComment(comment: Comment): Observable<any> {
-    return this.http.post<any>(this.baseUrl, comment, this.options);
+    return this.http.post<any>(this.baseUrl, comment, this.accountService.httpOptions);
   }
 
   /**
@@ -45,7 +43,7 @@ export class CommentService {
    * update comment
    */
   updateComment(comment: Comment): Observable<any> {
-    return this.http.put(this.baseUrl + '/edit/' + comment.commentId, comment, this.options);
+    return this.http.put(this.baseUrl + '/edit/' + comment.commentId, comment, this.accountService.httpOptions);
   }
 
   /**
@@ -53,6 +51,6 @@ export class CommentService {
    * delete comment
    */
   deleteComment(commentId: number): Observable<any> {
-    return this.http.delete(this.baseUrl + '/delete/' + commentId, this.options);
+    return this.http.delete(this.baseUrl + '/delete/' + commentId, this.accountService.httpOptions);
   }
 }

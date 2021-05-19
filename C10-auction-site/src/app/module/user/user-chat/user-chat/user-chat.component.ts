@@ -153,7 +153,6 @@ export class UserChatComponent implements OnInit {
   onFormSubmit(form: any, type: string) {
     this.tempFile = this.selectedImages;
     this.selectedImages = [];
-    this.loadImage = true;
     if (this.chatForm.get('message').errors?.maxlength) {
       this.snackBar.open('Tin nhắn bạn nhập quá dài', 'X',
         {

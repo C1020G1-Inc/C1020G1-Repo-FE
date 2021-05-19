@@ -31,7 +31,7 @@ export class ListProductHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.openLoading();
-    const changeBySecond = interval(1000).subscribe(() => {
+    const changeBySecond = interval(1000*60*10).subscribe(() => {
       this.listProductAuctionService.showAllProductAuction(this.category).subscribe((data) => {
         this.listProduct = data;
         this.checkListProduct = this.listProduct.length !== 0;
