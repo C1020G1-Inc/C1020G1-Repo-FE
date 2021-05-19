@@ -10,9 +10,7 @@ import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {ngxLoadingAnimationTypes} from 'ngx-loading';
 import {TokenStorageService} from '../../../../service/authentication/token-storage';
-
 declare const $: any;
-
 @Component({
   selector: 'app-comment-product',
   templateUrl: './comment-product.component.html',
@@ -26,7 +24,6 @@ export class CommentProductComponent implements OnInit {
   };
   loading = false;
   loadingEdit = false;
-
   comments = new Array<Comment>();
   user: User;
   formComment: FormGroup;
@@ -43,7 +40,6 @@ export class CommentProductComponent implements OnInit {
   urlImageEdit: string;
   isLogged: boolean;
   length: number;
-
   constructor(private commentService: CommentService,
               private productService: ProductService,
               private activatedRouter: ActivatedRoute,
@@ -52,7 +48,6 @@ export class CommentProductComponent implements OnInit {
               public storage: AngularFireStorage,
               private tokenStorage: TokenStorageService) {
   }
-
   ngOnInit(): void {
     this.isLogged = this.tokenStorage.isLogged();
     this.fileImage = [];
@@ -82,7 +77,6 @@ export class CommentProductComponent implements OnInit {
     });
     this.emoji();
   }
-
   /**
    * Author : SonPH
    * find all comment by productId
@@ -90,35 +84,31 @@ export class CommentProductComponent implements OnInit {
   getAllCommentByProductId(productId: number) {
     this.commentService.findAllCommentByProductId(productId).subscribe(data => {
       this.comments = data;
-
     });
   }
-
   emoji() {
     $(document).ready(function () {
       $('#myText').emojioneArea({
         search: false,
         pickerPosition: 'top'
       });
-
       $('#editComment').emojioneArea({
         search: false,
         pickerPosition: 'right'
       });
     });
   }
-
   /**
    * Author : SonPH
    * create comment
    */
   async createComment() {
     if (($('#myText').data('emojioneArea').getText().trim() !== '')) {
-      if ($('#myText').data('emojioneArea').getText().length <= 100) {
+      if ($('#myText').data('emojioneArea').getText().trim().length <= 100) {
         this.message = null;
         this.loading = true;
         await this.addImageToFireBase(this.fileImage);
-        this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText());
+        this.formComment.get('content').setValue($('#myText').data('emojioneArea').getText().trim());
         this.formComment.get('image').setValue(this.urlImage);
         this.commentService.createNewComment(this.formComment.value).subscribe(data => {
           this.loading = false;
@@ -135,7 +125,6 @@ export class CommentProductComponent implements OnInit {
       $('#myText').data('emojioneArea').setText('');
     }
   }
-
   /**
    * Author : SonPH
    * send form edit to screen
@@ -157,14 +146,13 @@ export class CommentProductComponent implements OnInit {
       $('#editComment').data('emojioneArea').setText(data.content);
     });
   }
-
   /**
    * Author : SonPH
    * edit comment
    */
   async editComment() {
     if ($('#editComment').data('emojioneArea').getText().trim() !== '') {
-      if ($('#editComment').data('emojioneArea').getText().length <= 100) {
+      if ($('#editComment').data('emojioneArea').getText().trim().length <= 100) {
         this.loadingEdit = true;
         this.messageEdit = null;
         await this.addImageToFireBase(this.fileImageEdit);
@@ -175,8 +163,9 @@ export class CommentProductComponent implements OnInit {
         } else if (this.urlImageEdit == null && this.urlImage != null) {
           this.formEditComment.get('image').setValue(this.urlImage);
         }
-        this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText());
+        this.formEditComment.get('content').setValue($('#editComment').data('emojioneArea').getText().trim());
         this.commentService.updateComment(this.formEditComment.value).subscribe(data => {
+          this.message = null;
           $('#editCommentModal').click();
           this.loadingEdit = false;
           $('#editComment').data('emojioneArea').setText('');
@@ -188,10 +177,9 @@ export class CommentProductComponent implements OnInit {
       }
     } else {
       this.messageEdit = 'Không được để trống nội dung trong lúc chỉnh sửa!!';
-      $('#editComment').data('emojioneArea').setText('');
+      $('#editComment').data('emojioneArea').setText(this.formEditComment.get('content').value);
     }
   }
-
   /**
    * Author : SonPH
    *  get commentId from screen
@@ -199,7 +187,6 @@ export class CommentProductComponent implements OnInit {
   getCommentIdToDelete(commentId: number) {
     this.idDeleteComment = commentId;
   }
-
   /**
    * Author : SonPH
    * delete comment
@@ -209,7 +196,6 @@ export class CommentProductComponent implements OnInit {
       this.ngOnInit();
     });
   }
-
   /**
    * Author : SonPH
    * import image to screen and validate image
@@ -248,7 +234,6 @@ export class CommentProductComponent implements OnInit {
       return this.message = 'Chỉ được chọn một ảnh!!';
     }
   }
-
   /**
    * Author : SonPH
    * delete image in screen
@@ -257,7 +242,6 @@ export class CommentProductComponent implements OnInit {
     this.fileImage = [];
     this.check = false;
   }
-
   /**
    * Author : SonPH
    * add image to firebase
@@ -285,15 +269,12 @@ export class CommentProductComponent implements OnInit {
       });
     });
   }
-
   get content() {
     return this.formComment.get('content');
   }
-
   get contentEdit() {
     return this.formEditComment.get('content');
   }
-
   /**
    * Author : SonPH
    * delete image in screen edit
@@ -301,7 +282,6 @@ export class CommentProductComponent implements OnInit {
   deleteImageEdit() {
     this.urlImageEdit = null;
   }
-
   /**
    * Author : SonPH
    * import image in screen edit
@@ -347,7 +327,6 @@ export class CommentProductComponent implements OnInit {
       return this.messageEdit = 'Bình luận này đã có ảnh, vui lòng xóa để thay đổi ảnh khác!!';
     }
   }
-
   /**
    * Author : SonPH
    * get check validate in screen edit
@@ -359,4 +338,3 @@ export class CommentProductComponent implements OnInit {
     this.checkImageEdit = false;
   }
 }
-

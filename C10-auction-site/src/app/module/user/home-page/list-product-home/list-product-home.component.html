@@ -57,7 +57,7 @@
           <div class="product-upper border border-info">
             <img class="image-product" [src]="productImage.image" alt="">
           </div>
-          <p class="text-name-product"><a href="">{{productImage.product.productName}}</a></p>
+          <p class="text-name-product"><a routerLink="/detail/{{productImage.product.productId}}">{{productImage.product.productName}}</a></p>
           <div class="product-carousel-price">
             <ins *ngIf="productImage.product.lastPrice">Giá Hiện Tại: <span style="color: red">{{productImage.product.lastPrice | number}} (VNĐ)</span></ins>
             <ins *ngIf="!productImage.product.lastPrice">Giá Hiện Tại: <span style="color: red">{{productImage.product.price | number}} (VNĐ)</span></ins>

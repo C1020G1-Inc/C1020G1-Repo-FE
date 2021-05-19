@@ -13,15 +13,12 @@ import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {AccountVisitor} from '../../../../model/account-visitor';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
-
 @Component({
   selector: 'app-user-chat',
   templateUrl: './user-chat.component.html',
   styleUrls: ['./user-chat.component.css']
 })
 export class UserChatComponent implements OnInit {
-
   chats = new Array<Chat>();
   account: Account;
   chatForm: FormGroup;
@@ -32,7 +29,6 @@ export class UserChatComponent implements OnInit {
   tempFile = [];
   accountVisitor: AccountVisitor;
   isDisplay: boolean;
-
   constructor(private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private chatService: ChatService,
@@ -40,7 +36,6 @@ export class UserChatComponent implements OnInit {
               public storage: AngularFireStorage,
               private snackBar: MatSnackBar) {
   }
-
   ngOnInit(): void {
     this.hideChat(0);
     this.chatForm = this.formBuilder.group({
@@ -56,12 +51,10 @@ export class UserChatComponent implements OnInit {
       this.notifications = this.chatService.snapshotToArray(resp)
         .filter(x => x.isRead === false && x.chat.roomName === this.account.accountName);
     });
-
     setTimeout(() => {
       $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
     }, 500);
   }
-
   toggleFab() {
     $('.prime').toggleClass('zmdi-comment-outline');
     $('.prime').toggleClass('zmdi-close');
@@ -71,7 +64,6 @@ export class UserChatComponent implements OnInit {
     $('.chat').toggleClass('is-visible');
     $('.fab').toggleClass('is-visible');
   }
-
   hideChat(hide) {
     switch (hide) {
       case 0:
@@ -107,7 +99,6 @@ export class UserChatComponent implements OnInit {
         break;
     }
   }
-
   fullscreen() {
     $('.fullscreen').toggleClass('zmdi-window-maximize');
     $('.fullscreen').toggleClass('zmdi-window-restore');
@@ -119,13 +110,11 @@ export class UserChatComponent implements OnInit {
     $('.fab_field').toggleClass('fab_field2');
     $('.chat_converse').toggleClass('chat_converse2');
   }
-
   readAllNoti() {
     for (const readNotification of this.notifications) {
       this.chatService.readNoti(readNotification.key);
     }
   }
-
   // private setTimeForChat() {
   //   const currentDate = Date.parse(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
   //   for (const chat of this.chats) {
@@ -148,12 +137,9 @@ export class UserChatComponent implements OnInit {
   //
   //   }
   // }
-
-
   onFormSubmit(form: any, type: string) {
     this.tempFile = this.selectedImages;
     this.selectedImages = [];
-    this.loadImage = true;
     if (this.chatForm.get('message').errors?.maxlength) {
       this.snackBar.open('Tin nhắn bạn nhập quá dài', 'X',
         {
@@ -168,7 +154,6 @@ export class UserChatComponent implements OnInit {
       chat.nickname = this.account.accountName;
       chat.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
       chat.type = type;
-
       this.chatService.refChats.push().set(chat).then(data => {
         $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
       });
@@ -180,24 +165,20 @@ export class UserChatComponent implements OnInit {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIaDVphQLEDiL6PDlQULiIyHHt_s8eeBdCiw&usqp=CAU');
       }
       this.chatService.addNewNoti(notification);
-
       this.chatService.refRooms.orderByChild('roomName').equalTo(chat.roomName).on('child_added', (resp: any) => {
         this.room = resp.val();
         this.room.key = resp.key;
         this.room.newMess++;
         firebase.database().ref('rooms').child(this.room.key).child('newMess').set(this.room.newMess++);
       });
-
       this.chatForm.reset();
     }
   }
-
   importImages($event) {
     const files = $event.target.files;
     for (const file of files) {
       const name = file.type.toString();
       if (!name.includes('image')) {
-
         this.snackBar.open('Đây không phải hình ảnh', 'X',
           {
             duration: 5000,
@@ -206,7 +187,6 @@ export class UserChatComponent implements OnInit {
         return;
       }
     }
-
     if (files) {
       for (let file of files) {
         let reader = new FileReader();
@@ -218,7 +198,6 @@ export class UserChatComponent implements OnInit {
     }
     $('#chat_converse').scrollTop($('#chat_converse')[0].scrollHeight);
   }
-
   addImageToFireBase() {
     return new Promise(resolve => {
       Promise.all(this.tempFile.map(file =>
@@ -250,10 +229,8 @@ export class UserChatComponent implements OnInit {
       });
     });
   }
-
   deleteUpdateImage($event) {
     let index = $event.target.attributes['data-index'].value;
     this.selectedImages = this.selectedImages.slice(0, index).concat(this.selectedImages.slice(index + 1, this.selectedImages.length));
-
   }
 }

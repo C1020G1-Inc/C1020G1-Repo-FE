@@ -11,6 +11,14 @@ import {Account} from '../../../../model/account';
 })
 export class HistoryRegisterProductComponent implements OnInit {
   public productRegister: ProductRegister[];
+  statusChange = {
+    1: 'Chờ Duyệt',
+    2: 'Đang Đấu Giá',
+    3: 'Chờ Thanh Toán',
+    4: 'Hoàn Thành',
+    5: 'Thất Bại',
+    6: 'Hủy đăng ký'
+  };
   public product: ProductRegister;
   data;
   public pageNumber = 0;
