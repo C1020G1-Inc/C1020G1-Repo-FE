@@ -159,7 +159,7 @@ export class AuctionPaymentComponent implements OnInit {
 
   }
 
-  isConfirmCode(){
+  isConfirmCode() {
     this.confirmCode = true;
   }
 
@@ -311,7 +311,7 @@ export class AuctionPaymentComponent implements OnInit {
               ],
               [
                 this.checkGuide(),
-                {},{}
+                {}, {}
               ]
             ]
           }
@@ -543,9 +543,13 @@ export class AuctionPaymentComponent implements OnInit {
         text: 'Hướng dẫn giao hàng: ' + this.order.guide,
         margin: [4, 0, 0, 3],
         colSpan: 3,
-      };
+      }
+    } else {
+      return {
+        text: '',
+        margin: [4, 0, 0, 3],
+        colSpan: 3,
+      }
     }
   }
-
-
 }

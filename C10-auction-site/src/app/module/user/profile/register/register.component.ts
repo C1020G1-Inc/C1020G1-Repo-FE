@@ -83,7 +83,7 @@ export class RegisterComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
         this.checkpass.bind(this)]),
       repassword: new FormControl('', [Validators.required, this.repasswordValidator.bind(this)]),
-      email: new FormControl(email, [Validators.required, Validators.pattern('[a-zA-z]\\w{6,20}[@][a-zA-Z]{2,10}([.][a-zA-Z]{2,5}){1,2}')],
+      email: new FormControl(email, [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)],
         [this.emailDuplicateValidator.bind(this)]),
       confirmCode: new FormControl('', [Validators.required, this.confirmCode.bind(this)]),
       birthday: new FormControl('', [Validators.required]),
@@ -113,7 +113,6 @@ export class RegisterComponent implements OnInit {
       this.accountService.getCodeConfirm(this.email.value).subscribe(data => {
         this.code = data.jwtToken;
         this.message = 'Đã gửi mã xác nhận đến email!';
-        console.log(this.code);
         this.confirmCodeForm.setErrors({ code: '' });
         this.dialog.closeAll();
       },() => {

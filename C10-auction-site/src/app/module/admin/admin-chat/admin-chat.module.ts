@@ -5,16 +5,25 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChatRoomComponent} from './chat-room/chat-room.component';
 import {LeftSideBarModule} from '../left-side-bar/left-side-bar.module';
 import {RouterModule} from '@angular/router';
+import { ZoomComponent } from './zoom/zoom.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
-  declarations: [AdminChatComponent, ChatRoomComponent],
+  declarations: [AdminChatComponent, ChatRoomComponent, ZoomComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     LeftSideBarModule,
     RouterModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
   ]
 })
 export class AdminChatModule { }

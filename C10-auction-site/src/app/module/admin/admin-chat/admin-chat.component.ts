@@ -43,6 +43,7 @@ export class AdminChatComponent implements OnInit {
           break;
         }
       }
+      console.log(this.rooms)
     });
 
     this.chatService.getNotiOfUser().on('value' , (resp: any) => {

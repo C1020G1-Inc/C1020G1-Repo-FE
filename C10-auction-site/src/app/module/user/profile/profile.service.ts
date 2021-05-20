@@ -23,6 +23,8 @@ export class ProfileService {
     };
   }
 
+
+
   getAllProductAuction(accountId, pageNumber: number): Observable<any> {
     return this.http.get(this.API + '/api/auction/product-auction/' + accountId + '?page=' + pageNumber, this.httpOptions);
   }
@@ -35,8 +37,8 @@ export class ProfileService {
     return this.http.put(this.API + '/product-register/update/' + id, null, this.httpOptions);
   }
 
-  setProduct(price, description, id): Observable<any> {
-    return this.http.put(this.API + '/product-register/update/' + price + '/' + description + '/' + id, null, this.httpOptions);
+  setProduct(product): Observable<any> {
+    return this.http.put(this.API + '/product-register/update/',product, this.httpOptions);
   }
 
 }

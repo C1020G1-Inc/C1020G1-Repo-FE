@@ -10,3 +10,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-shadow: none !important;
   overflow: inherit !important;
 }
+
+.custom-modalbox > mat-dialog-container {
+  padding: 0 !important;
+}

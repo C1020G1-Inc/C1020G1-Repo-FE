@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {TransactionService} from '../../../../service/transaction.service';
+import {Title} from "@angular/platform-browser";
 @Component({
   selector: 'app-list-transaction',
   templateUrl: './list-transaction.component.html',
   styleUrls: ['./list-transaction.component.css']
 })
 export class ListTransactionComponent implements OnInit {
-  public listTransaction;
+  public listTransaction = [];
   public transactionId: number;
   public namePost: string;
   public nameBuy: string;
@@ -16,8 +17,10 @@ export class ListTransactionComponent implements OnInit {
   page;
   constructor(
     private transactionService: TransactionService,
+    private title: Title
   ) { }
   ngOnInit(): void {
+    this.title.setTitle('Quản lý giao dịch');
     this.transactionService.getAllTransaction().subscribe(data => {
       this.listTransaction = data;
       console.log(this.listTransaction);
@@ -25,14 +28,13 @@ export class ListTransactionComponent implements OnInit {
   }
   showDelete(transactionId: number) {
     this.transactionId = transactionId;
-    console.log(this.transactionId);
   }
   delete() {
     this.transactionService.deleteTransaction(this.transactionId).subscribe( data => {
       this.ngOnInit();
     });
   }
-  seach() {
+  search() {
     if (this.price === undefined){
       this.price = 0;
     }

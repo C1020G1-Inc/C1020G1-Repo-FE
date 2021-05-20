@@ -18,7 +18,7 @@
     <ul class="m-b-0">
       <li class="clearfix" *ngFor="let chat of chats">
         <div class="message-data text-right" *ngIf="chat.nickname === roomName">
-          <span class="message-data-time">{{chat.date}} </span>
+          <span class="message-data-time">{{chat.timeSkip}} </span>
           <img src="{{user.avatar}}"
                alt="avatar">
         </div>
@@ -27,17 +27,17 @@
         </div>
         <div class="float-right" *ngIf="chat.nickname === roomName && chat.type === 'image'">
           <div *ngIf="chat.nickname === roomName && chat.type === 'image'">
-            <img class="message other-message float-right" style="width: 20%;height: 20%;" src="{{chat.message}}"
+            <img class="message other-message float-right" (click)="zoom(chat.message)" style="width: 20%;height: 20%;" src="{{chat.message}}"
                  alt="">
           </div>
         </div>
         <div class="message-data" *ngIf="chat.nickname !== roomName">
-          <span class="message-data-time">{{chat.date}} </span>
+          <span class="message-data-time">{{chat.timeSkip}} </span>
         </div>
         <div class="message my-message"
              *ngIf="chat.nickname !== roomName && chat.type === 'message'">{{chat.message}}</div>
         <div *ngIf="chat.nickname !== roomName && chat.type === 'image'">
-          <img class="message my-message" style="width: 20%;height: 20%;" src="{{chat.message}}" alt="">
+          <img class="message my-message" (click)="zoom(chat.message)" style="width: 20%;height: 20%;" src="{{chat.message}}" alt="">
         </div>
       </li>
       <li *ngIf="loadImage">
@@ -65,12 +65,13 @@
           <input type="file" (change)="importImages($event)" id="file-input" multiple class="inputfile">
         </label>
       </div>
-      <div style="overflow: auto; height: 100px" *ngIf="selectedImages.length !== 0">
-        <div *ngFor="let file of selectedImages; let i = index" class="d-inline-block" style="margin: 0; overflow: auto">
+    </div>
+    <div class="clearfix" style="overflow: auto; height: 100px" *ngIf="selectedImages.length !== 0">
+      <div *ngFor="let file of selectedImages; let i = index" class="d-inline-block"
+           style="margin: 0; overflow: auto;">
           <span><i class="fa fa-close delete-icon d-inline" (click)="deleteUpdateImage($event)"
                    [attr.data-index]="i"></i></span>
-          <img [src]="file.url" style="margin:3px; height: 100px; width: auto; float: left">
-        </div>
+        <img [src]="file.url" style="margin:3px; height: 100px; width: auto; float: left">
       </div>
     </div>
   </div>
@@ -81,5 +82,4 @@
     <p class="custom-p">Select a thread or start a new conversation</p>
   </div>
   <div class="chat-message clearfix border-0"></div>
-
 </div>

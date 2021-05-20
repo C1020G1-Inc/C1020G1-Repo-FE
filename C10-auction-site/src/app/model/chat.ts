@@ -1,7 +1,8 @@
 export class Chat {
   roomName: string;
   nickname: string;
-  date: Date;
+  date: number;
+  timeSkip: string;
   type: string;
   message: string;
 }

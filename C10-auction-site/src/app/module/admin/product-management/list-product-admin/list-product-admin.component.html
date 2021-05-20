@@ -150,27 +150,27 @@
           <div class="modal-body table-responsive">
             <table class="table">
               <tr>
-                <th style="padding: 30px">Tên sản phẩm:</th>
-                <th style="padding: 30px">{{product.productName}}</th>
+                <th style="padding: 2%">Tên sản phẩm:</th>
+                <th style="padding: 2%">{{product.productName}}</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Người đăng:</th>
-                <th style="padding: 30px">{{product.account.user.userName}}</th>
+                <th style="padding: 2%">Người đăng:</th>
+                <th style="padding: 2%">{{product.account.user.userName}}</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Chủng loại:</th>
-                <th style="padding: 30px">{{product.category.categoryName}}</th>
+                <th style="padding: 2%">Chủng loại:</th>
+                <th style="padding: 2%">{{product.category.categoryName}}</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Khởi điểm (VNĐ):</th>
-                <th style="padding: 30px">{{product.price | currency : '' : ''}}</th>
+                <th style="padding: 2%">Giá khởi điểm:</th>
+                <th style="padding: 2%">{{product.price | currency : '' : ''}} VNĐ</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Bước giá (VNĐ):</th>
-                <th style="padding: 30px">{{product.priceStep | currency : '' : ''}}</th>
+                <th style="padding: 2%">Bước giá:</th>
+                <th style="padding: 2%">{{product.priceStep | currency : '' : ''}} VNĐ</th>
               </tr>
               <tr>
-                <th style="padding: 30px">Hình ảnh:</th>
+                <th style="padding: 2%">Hình ảnh:</th>
                 <th>
                   <div style="height: 120px;width: 420px;overflow-y: auto">
                     <div *ngFor="let image of listProductImage" style="display: inline-block">
@@ -181,8 +181,8 @@
                 </th>
               </tr>
               <tr>
-                <th style="padding: 30px">Thời gian:</th>
-                <th style="padding: 30px">{{product.auctionTime}} phút</th>
+                <th style="padding: 2%">Thời gian:</th>
+                <th style="padding: 2%">{{product.auctionTime}} phút</th>
               </tr>
             </table>
           </div>
@@ -212,8 +212,8 @@
             <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
               <table class="table">
                 <tr>
-                  <th style=";padding-top: 30px;padding-bottom: 0;padding-left: 30px"> Tên sản phẩm:</th>
-                  <th style=";padding-top: 20px;padding-bottom: 0;padding-left: 30px">
+                  <th style="padding: 2%"> Tên sản phẩm:</th>
+                  <th style="padding: 2%">
                     <input type="text" id="productName" name="productName" style="color: black"
                            formControlName="productName" class="form-control"/>
                     <br>
@@ -232,12 +232,12 @@
                   </th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Người đăng:</th>
-                  <th style="padding: 30px">{{productEdit.account.user.userName}}</th>
+                  <th style="padding: 2%">Người đăng:</th>
+                  <th style="padding: 2%">{{productEdit.account.user.userName}}</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Chủng loại:</th>
-                  <td style="padding: 20px">
+                  <th style="padding: 2%">Chủng loại:</th>
+                  <td style="padding: 2%">
                     <select style="width: 130px" id="category" name="category" formControlName="category"
                             class="custom-select">
                       <option [ngValue]="category.id" *ngFor="let category of categoryList">
@@ -247,15 +247,15 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Khởi điểm (VNĐ):</th>
-                  <th style="padding: 30px">{{productEdit.price | currency : '' : ''}}</th>
+                  <th style="padding: 2%">Giá khởi điểm:</th>
+                  <th style="padding: 2%">{{productEdit.price | currency : '' : ''}} VNĐ</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Bước giá (VNĐ):</th>
-                  <th style="padding: 30px">{{productEdit.priceStep | currency : '' : ''}}</th>
+                  <th style="padding: 2%">Bước giá:</th>
+                  <th style="padding: 2%">{{productEdit.priceStep | currency : '' : ''}} VNĐ</th>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Hình ảnh:</th>
+                  <th style="padding: 2%">Hình ảnh:</th>
 
                   <td>
                     <div class="fileinputs">
@@ -297,8 +297,8 @@
                   </td>
                 </tr>
                 <tr>
-                  <th style="padding: 30px">Thời gian đấu giá:</th>
-                  <th style="padding: 20px">
+                  <th style="padding: 2%">Thời gian đấu giá:</th>
+                  <th style="padding: 2%">
                     <select style="width: 130px;" id="auctionTime" name="auctionTime"
                             formControlName="auctionTime" class="custom-select">
                       <option value="5">5 phút</option>

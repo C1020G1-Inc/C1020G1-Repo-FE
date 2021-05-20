@@ -29,7 +29,7 @@ export class AuctionBackendService {
   }
 
   public submitAuction(auctionSubmit: AuctionSubmit) {
-    return this.http.post(this.API_AUCTION + '/bidding/', auctionSubmit, this.httpOptions);
+    return this.http.post(this.API_AUCTION + '/bidding', auctionSubmit, this.httpOptions);
   }
 
   public getListTransaction(): Observable<any> {

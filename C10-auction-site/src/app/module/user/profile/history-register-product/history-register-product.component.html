@@ -4,7 +4,7 @@
     <div class="col-md-10">
       <div class="card card-plain">
         <div class="card-header card-header-primary">
-          <h4 class="card-title mt-0">Auction Item Registration History</h4>
+          <h2 class="card-title mt-0">Auction Item Registration History</h2>
           <p class="card-category"> (Lịch sử đăng ký mặt hàng đấu giá)</p>
         </div>
         <div class="card-body">
@@ -16,32 +16,42 @@
                 <th>Tên sản phẩm</th>
                 <th>Thông tin sản phẩm</th>
                 <th>Ngày đăng kí</th>
+                <th>Giá sản phẩm (VND)</th>
                 <th>Tình trạng</th>
                 <th>Huỷ đăng kí</th>
               </tr>
               <tbody>
-                <tr *ngFor="let items of productRegister,let i = index">
-                  <td>{{i+1}}</td>
-                  <td>{{items.productId}}</td>
-                  <td>{{items.productName}}</td>
-                  <td>{{items.description}}</td>
-                  <td>{{items.registerTime| date: 'dd/MM/yyyy'}}</td>
-                  <td>{{statusChange[items.productStatus.id]}}</td>
-
-                  <td *ngIf="items.productStatus.id == 1">
-                    <button class="btn btn-danger" type="submit" data-ripple="" data-toggle="modal" data-target="#exampleModal" (click)="product=items">Huỷ</button></td>
-                  <td *ngIf="items.productStatus.id == 6  || items.productStatus.id == 5"><button class="btn btn-warning" type="submit" data-ripple="" data-toggle="modal" data-target="#exampleModal1"(click)="product=items">Đăng lại</button></td>
-
-                </tr>
+              <tr *ngFor="let items of productRegister,let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{items.productId}}</td>
+                <td>{{items.productName}}</td>
+                <td>{{items.description}}</td>
+                <td>{{items.registerTime| date: 'dd/MM/yyyy'}}</td>
+                <td>{{items.price| currency: '':''}}</td>
+                <td>{{statusChange[items.productStatus.id]}}</td>
+                <td *ngIf="items.productStatus.id == 1">
+                  <button class="btn btn-danger" type="submit" data-ripple="" data-toggle="modal"
+                          data-target="#exampleModal" (click)="product=items">Huỷ
+                  </button>
+                </td>
+                <td *ngIf="items.productStatus.id == 2 || items.productStatus.id == 3 || items.productStatus.id == 4">
+                  <button class="btn btn-danger disabled">Huỷ
+                  </button>
+                </td>
+                <td *ngIf="items.productStatus.id == 6  || items.productStatus.id == 5">
+                  <button class="btn btn-warning" type="submit" data-ripple="" data-toggle="modal"
+                          data-target="#exampleModal1" (click)="openModal(items)">Đăng lại
+                  </button>
+                </td>
+              </tr>
               </tbody>
             </table>
             <br>
             <div class="text-center" *ngIf="productRegister">
               <span>Viewing {{productRegister.length}} of {{data.totalElements}} Items</span><br>
-              <i class="fas fa-chevron-circle-down " style="font-size: 150%; cursor: pointer" *ngIf="productRegister.length !== data.totalElements" (click)="loadMoreProduct()"></i>
+              <i class="fas fa-chevron-circle-down " style="font-size: 150%; cursor: pointer"
+                 *ngIf="productRegister.length !== data.totalElements" (click)="loadMoreProduct()"></i>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -49,7 +59,6 @@
     <div class="col-md-1"></div>
   </div>
 </div>
-
 <!--Huy dang ki-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -61,48 +70,76 @@
         </button>
       </div>
       <div class="modal-body" *ngIf="product">
-        <p class="my-3">Bạn có chắc chắn muốn huỷ đăng kí mặt hàng {{product.productName}} không? <br> Lưu ý: Thao tác này không thể hoàn tác !!!</p>
+        <p class="my-3">Bạn có chắc chắn muốn huỷ đăng kí mặt hàng <span style="color: red">{{product.productName}}</span> không? <br> <span style="color: red">Lưu ý: Thao tác
+          này không thể hoàn tác !!!</span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 80px">Hủy</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 80px" (click)="setStatus()">Đồng ý</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 80px" (click)="setStatus()">Đồng
+          ý
+        </button>
       </div>
     </div>
   </div>
 </div>
-
 <!--Đăng kí lại-->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div class="modal-dialog" *ngIf="product">
+    <div class="modal-content" >
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel1">Đăng lại mặt hàng</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" *ngIf="product">
-        <p class="my-3">
-          <span><b>ID sản phẩm:</b></span> <br>
-          {{product.productId}}
-        </p>
-        <p class="my-3">
-          <span><b>Tên sản phẩm:</b></span> <br>
-          {{product.productName}}
-        </p>
-        <p class="my-3">
-          <span><b>Thông tin sản phẩm:</b></span> <br>
-          <input type="text" [(ngModel)]="product.description">
-        </p>
-        <p class="my-3">
-          <span><b>Giá sản phẩm:</b></span> <br>
-          <input type="text" [(ngModel)]="product.price">
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal"  (click)="setProductRegister()">Đăng lại</button>
-      </div>
+      <form [formGroup]="formRePost" (ngSubmit)="setProductRegister()">
+        <div class="modal-body" *ngIf="product" style="overflow: visible">
+          <div class="form-group">
+            <label><b>ID sản phẩm:</b></label> <br>
+            {{product.productId}}
+          </div>
+          <div class="form-group">
+            <label><b>Tên sản phẩm:</b></label> <br>
+            {{product.productName}}
+          </div>
+          <div class="form-group">
+            <label><b>Thông tin sản phẩm:</b></label> <br>
+            <textarea type="text" formControlName="description" class="form-control"></textarea>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)"
+            >
+              <div *ngIf="description.errors.required">
+                <div class="text-danger" [hidden]="!description.errors.required">Thông tin sản phẩm
+                  không được để trống!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label><b>Giá sản phẩm (VND):</b></label> <br>
+            <input type="text" formControlName="price" class="form-control">
+            <div *ngIf="price.invalid && (price.dirty || price.touched)"
+            >
+              <div *ngIf="price.errors.required">
+                <div class="text-danger" [hidden]="!price.errors.required">Giá sản phẩm
+                  không được để trống!
+                </div>
+              </div>
+              <div *ngIf="price.errors.pattern">
+                <div class="text-danger" [hidden]="!price.errors.pattern">Vui lòng nhập số !!
+                </div>
+              </div>
+              <div *ngIf="price.errors.min">
+                <div class="text-danger" [hidden]="!price.errors.min">Giá sản phẩm phải lớn hơn 0
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-warning" [disabled]="formRePost.invalid">Đăng lại</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

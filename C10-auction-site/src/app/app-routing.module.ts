@@ -26,13 +26,11 @@ import {InvoiceComponent} from './module/user/auction/invoice/invoice.component'
 import {ListTransactionComponent} from './module/admin/transaction-management/list-transaction/list-transaction.component';
 import {AdminChatComponent} from './module/admin/admin-chat/admin-chat.component';
 import {ListProductEndAuctionComponent} from './module/user/home-page/list-product-home/list-product-end-auction/list-product-end-auction.component';
-import {ErrorComponent} from './module/error/error.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ListProductResultAuctionComponent} from './module/user/home-page/list-product-home/list-product-result-auction/list-product-result-auction.component';
 import {ListProductTopAuctionComponent} from './module/user/home-page/list-product-home/list-product-top-auction/list-product-top-auction.component';
 import {ResultSearchProductAuctionComponent} from './module/user/home-page/list-product-home/result-search-product-auction/result-search-product-auction.component';
 import {ProductChartDonutComponent} from './module/admin/product-management/product-chart-donut/product-chart-donut.component';
-import {HomePageModule} from './module/user/home-page/home-page.module';
 
 const routes: Routes = [
   {

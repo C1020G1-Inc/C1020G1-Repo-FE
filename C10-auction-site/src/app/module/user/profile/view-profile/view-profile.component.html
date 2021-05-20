@@ -1,16 +1,16 @@
 <div class="container bootstrap snippets bootdey mt-5 mb-5">
   <div class="panel-body inf-content">
     <div class="row" *ngIf="userLogin">
-      <div class="col-md-4 mt-4 ml-3">
-<!--        <img alt="" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" title="" class="img-thumbnail"-->
-<!--             src="{{userLogin.avatar}}">-->
+      <div class="col-md-4 ml-3 mt-5">
+        <!--        <img alt="" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" title="" class="img-thumbnail"-->
+        <!--             src="{{userLogin.avatar}}">-->
         <input accept=".jpg,.png" (change)="changeImage($event)" id="avatar" type="file" hidden>
         <div class="text-center d-inline-block avatar">
-          <img id="avt" style="width: 100%; height: 70%; overflow: hidden; object-fit: cover; border-radius: 50%" [src]="avatar"
-               alt="">
+          <img id="avt" style="width: 100%; height: 350px; overflow: hidden; object-fit: cover; border-radius: 50%" [src]="avatar"
+               alt=""><br>
           <i onclick="document.getElementById('avatar').click()"
-             title="Click to change avatar"
-             class="fa fa-camera position-relative right-50"></i>
+             title="Thay đổi ảnh"
+             class="fa fa-camera fa-2x"></i>
         </div>
       </div>
       <div class="col-md-6 mt-3">
@@ -69,7 +69,7 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-center align-items-center mb-4">
-            <a class="btn btn-warning" [routerLink]="['/profile/update', accountLogin.accountId]">Cập nhật</a>
+            <a class="btn" style="background: #a6c !important;" [routerLink]="['/profile/update', accountLogin.accountId]">Cập nhật</a>
           </div>
         </div>
       </div>

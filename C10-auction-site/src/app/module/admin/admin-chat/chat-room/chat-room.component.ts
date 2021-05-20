@@ -10,6 +10,8 @@ import {Notification} from '../../../../model/notification';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {ZoomComponent} from '../zoom/zoom.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -38,7 +40,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
               private chatService: ChatService,
               private tokenStorageService: TokenStorageService,
               public storage: AngularFireStorage,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private dialog: MatDialog) {
   }
 
   ngOnChanges(): void {
@@ -59,7 +62,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     if (this.roomName) {
       this.chatService.refChats.on('value', resp => {
         this.chats = this.chatService.snapshotToArray(resp).filter(x => x.roomName === this.roomName);
-        // this.setTimeForChat();
+        this.setTimeForChat();
         $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
 
       });
@@ -98,11 +101,14 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       return;
     }
     this.addImageToFireBase()
+    $('#file-input').val('')
+    this.chatForm.reset();
     if (form.message) {
       const chat = form;
       chat.roomName = this.roomName;
       chat.nickname = this.nickname;
-      chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+      chat.timeSkip = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+      chat.date = new Date().getTime();
       chat.type = type;
       this.chatService.refChats.push().set(chat).then(data => {
         this.loadImage = false;
@@ -112,34 +118,32 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
       const notification = new Notification(chat, false, 'admin', this.user.userName, this.user.avatar);
       this.chatService.addNewNoti(notification);
-      this.chatForm.reset();
+
     }
   }
 
-  // private setTimeForChat() {
-  //   const currentDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
-  //   for (const chat of this.chats) {
-  //     const minute = (Date.parse(currentDate) - Date.parse(chat.date)) / (1000 * 60);
-  //     if (minute < 1) {
-  //       chat.date = 'vừa xong';
-  //       return;
-  //     } else if (minute > 1 && minute < 60) {
-  //       chat.date = Math.round(minute) + ' phút trước';
-  //       return;
-  //     }
-  //     const hour = minute / 60;
-  //
-  //     if (hour < 2) {
-  //       chat.date = Math.round(hour) + ' giờ trước';
-  //     } else if (hour > 2 && hour < 24) {
-  //       chat.date = Math.round(hour) + ' giờ trước';
-  //     } else {
-  //       chat.date = chat.date.slice(0, 10);
-  //     }
-  //
-  //   }
-  //
-  // }
+  private setTimeForChat() {
+    const currentDate = new Date().getTime();
+    for (const chat of this.chats) {
+      const minute = (currentDate - chat.date) / (1000 * 60);
+      if (minute < 1) {
+        chat.timeSkip = 'vừa xong';
+        continue;
+      } else if (minute > 1 && minute < 60) {
+        chat.timeSkip = Math.round(minute) + ' phút trước';
+        continue;
+      }
+      const hour = minute / 60;
+
+      if (hour < 2) {
+        chat.timeSkip = Math.round(hour) + ' giờ trước';
+      } else if (hour > 2 && hour < 24) {
+        chat.timeSkip = Math.round(hour) + ' giờ trước';
+      } else {
+        chat.timeSkip = chat.timeSkip.slice(0,10);
+      }
+    }
+  }
 
   readAllNoti() {
     for (const readNotification of this.notifications) {
@@ -191,7 +195,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
                     chat.message = url;
                     chat.roomName = this.roomName;
                     chat.nickname = this.nickname;
-                    chat.date = new Date();
+                    chat.timeSkip = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+                    chat.date = new Date().getTime();
                     chat.type = 'image';
                     this.chatService.refChats.push().set(chat).then(data => {
                       this.loadImage = false;
@@ -208,11 +213,19 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   deleteUpdateImage($event) {
     if (this.selectedImages.length === 1) {
-      this.selectedImages = [];
+      this.selectedImages = []
+      $('#file-input').val('')
       return;
     }
     let index = $event.target.attributes['data-index'].value;
     this.selectedImages = this.selectedImages.slice(0, index).concat(this.selectedImages.slice(index + 1, this.selectedImages.length));
 
+  }
+
+  zoom(url) {
+    this.dialog.open(ZoomComponent,{
+      data: url,
+      panelClass: 'custom-modalbox'
+    });
   }
 }

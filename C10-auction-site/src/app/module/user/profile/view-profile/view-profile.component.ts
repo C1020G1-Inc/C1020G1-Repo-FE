@@ -5,9 +5,10 @@ import {TokenStorageService} from "../../../../service/authentication/token-stor
 import {Title} from "@angular/platform-browser";
 import {AccountService} from "../../../../service/account.service";
 import {finalize} from 'rxjs/operators';
-import {MatLoadingDiaComponent} from '../../material/mat-loading-dia/mat-loading-dia.component';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {MatDialog} from '@angular/material/dialog';
+import {UserService} from "../../../../service/user.service";
+import {LoadingComponent} from "../../../loading/loading/loading.component";
 @Component({
   selector: 'app-view-profile',
   templateUrl: './view-profile.component.html',
@@ -22,7 +23,9 @@ export class ViewProfileComponent implements OnInit {
               private title: Title,
               private accountService: AccountService,
               private storage: AngularFireStorage,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private userService: UserService,
+  ) {
   }
   ngOnInit(): void {
     this.title.setTitle('Xem thông tin người dùng')
@@ -32,7 +35,6 @@ export class ViewProfileComponent implements OnInit {
       this.avatar = this.accountLogin.user.avatar;
     });
   }
-
   submitAvatar() {
     if (this.selectedImage !== null) {
       const filePath = `avatar/${this.selectedImage.name}/${new Date().getTime()}`;
@@ -41,6 +43,11 @@ export class ViewProfileComponent implements OnInit {
         finalize(() => {
           fileRef.getDownloadURL().subscribe(url => {
             this.avatar = url;
+            this.userLogin.avatar = this.avatar;
+            this.userService.updateUser(this.userLogin.userId, this.userLogin).subscribe(data =>{
+              this.accountLogin.user = this.userLogin;
+              this.token.saveAccountStorage(this.accountLogin);
+            });
             this.dialog.closeAll();
           });
         })
@@ -48,10 +55,9 @@ export class ViewProfileComponent implements OnInit {
       );
     }
   }
-
   changeImage(event) {
-    this.avatar = ''
-    this.dialog.open(MatLoadingDiaComponent, { panelClass: 'loading-dialog', position: { top: '0', left: '17%' }, disableClose: true });
+    this.dialog.open(LoadingComponent, { width: '400px',height: '200px', disableClose: true });
+    setTimeout(() =>{}, 3000);
     if (event.target.files && event.target.files[0]) {
       this.selectedImage = event.target.files[0];
       this.submitAvatar();

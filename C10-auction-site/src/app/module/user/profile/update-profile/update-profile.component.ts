@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-// import {AccountService} from '../../../../service/account.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../../../../service/user.service";
 import {TokenStorageService} from "../../../../service/authentication/token-storage";
@@ -8,8 +7,12 @@ import {Account} from "../../../../model/Account";
 import {Title} from "@angular/platform-browser";
 import {AccountService} from '../../../../service/authentication/account-service';
 import {RegisDistrict, RegisProvince, RegisWard} from "../../../../service/authentication/account-province";
-import * as moment from 'moment';
-import {DatePipe} from '@angular/common';
+import {finalize} from "rxjs/operators";
+import {MatLoadingDiaComponent} from "../../material/mat-loading-dia/mat-loading-dia.component";
+import {AngularFireStorage} from "@angular/fire/storage";
+import {MatDialog} from "@angular/material/dialog";
+import {LoadingComponent} from "../../../admin/product-management/loading/loading.component";
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.component.html',
@@ -23,6 +26,8 @@ export class UpdateProfileComponent implements OnInit {
   provinceList: RegisProvince[];
   districtList: RegisDistrict[];
   wardList: RegisWard[];
+  public minDate = new Date(1921,0, 1);
+  public maxDate = new Date(2003, 1, 1);
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
@@ -31,6 +36,7 @@ export class UpdateProfileComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public tokenService: TokenStorageService,
     private title: Title,
+    private dialog: MatDialog
   ) { }
   ngOnInit(): void {
     this.title.setTitle('Chỉnh sửa thông tin người dùng');
@@ -43,7 +49,7 @@ export class UpdateProfileComponent implements OnInit {
       email: ['', [Validators.required, Validators.email, Validators.maxLength(40)]],
       birthday: ['', [Validators.required]],
       identity: ['', [Validators.required, Validators.pattern('\\d{9}')]],
-      phone: ['', [Validators.required, Validators.pattern('(090|091|[(]84[)][+]90|[(]84[)][+]91)\\d{7}')]],
+      phone: ['', [Validators.required, Validators.pattern('(0|84)\\d{9}')]],
       address: ['', [Validators.required, Validators.minLength(5)]],
       avatar: [''],
       province: ['', Validators.required],
@@ -82,13 +88,13 @@ export class UpdateProfileComponent implements OnInit {
     });
   }
   updateUser() {
+    this.openLoading();
     if (this.accountLogin.email != this.formEditUser.value.email){
       this.accountService.updateEmail(this.accountLogin.email, this.formEditUser.value.email).subscribe();
     }
     this.userService.updateUser(this.accountId, this.formEditUser.value).subscribe(data => {
       this.accountLogin.user = this.formEditUser.value;
       this.tokenService.saveAccountStorage(this.accountLogin);
-      this.message = 'Cập nhật thành công !!';
     });
   }
   get userName(){
@@ -127,6 +133,20 @@ export class UpdateProfileComponent implements OnInit {
   }
   resetForm() {
     this.setValueForm();
+  }
+  openLoading() {
+    this.dialog.open(LoadingComponent, {
+      width: '400px',
+      height: '200px',
+      disableClose: true
+    });
+    setTimeout(() => {
+      this.dialog.closeAll();
+      this.showSuccessAlert();
+    }, 3000);
+  }
+  showSuccessAlert() {
+    Swal.fire('Chỉnh sửa thành công !!', '', 'success')
   }
   changeProvince(provinceId: number) {
     this.district.setValue('');
