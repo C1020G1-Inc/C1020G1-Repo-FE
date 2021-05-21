@@ -37,6 +37,8 @@ export class AuctionRequestComponent implements OnInit {
   imageToUpFireBase = new Array<any>();
   // file ảnh mới dùng để lưu database.
   imageToSave = new Array<any>();
+  price: any;
+  priceStep: any;
   constructor(
     private createService: RequestService,
     private router: Router,
