@@ -5906,6 +5906,20 @@ button.close {
   opacity: 0;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  margin: 2px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
 .tooltip.show {
   opacity: 0.9;
 }
@@ -22106,7 +22120,7 @@ input.file {
 }
 
 .modal-lg {
-  max-width: 35% !important;
+  max-width: 45% !important;
 }
 
 ::-webkit-scrollbar {

@@ -39,7 +39,6 @@ export class UpdateProfileComponent implements OnInit {
     private dialog: MatDialog
   ) { }
   ngOnInit(): void {
-    this.title.setTitle('Chỉnh sửa thông tin người dùng');
     this.accountService.findAccount(this.tokenService.getAccount().accountId).subscribe(data =>{
       this.accountLogin = data;
     });

@@ -15,6 +15,35 @@
   </div>
   <div class="collapse navbar-collapse" id="myNavbar" style="margin-right: 5%">
     <ul class="navbar-nav ms-auto text-center nav ml-auto">
+      <li class="nav-item dropdown" *ngIf="isLogged && !isAdmin">
+        <a class="nav-link text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-bell" style="color: #fff748"></i>
+          <span class="noti-length text-light" *ngIf="notifications?.length > 0">{{notifications?.length}}</span>
+        </a>
+        <ul class="dropdown-menu text-center-md dropdown-menu-right drop-noti">
+          <li class="head text-light">
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12">
+                <a class="float-right text-decoration-none text-primary cursor" style="font-size: 12px" (click)="deleteAllNotification()">Xoá Thông Báo</a>
+              </div>
+            </div>
+          </li>
+          <li class="notification-box">
+            <div class="row">
+              <div class="col-lg-12 m-2 font-80">
+                <div *ngFor="let note of this.notifications.slice().reverse()" style="font-size: 12px">
+                  <a class="text-decoration-none"  [href]="this.note.url" (click)="deleteNotification(this.note.key)">
+                    <strong class="text-info">{{this.note.title}}</strong>
+                    <p class="text-dark">{{this.note.content}}</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr class="p-0 m-0">
+          </li>
+        </ul>
+      </li>
       <li class="nav-item">
         <a routerLink="/home" class="nav-link">
           <i class="fas fa-list" style="color: #fff748"></i>
@@ -78,35 +107,6 @@
           <i class="fas fa-sign-in-alt"  style="color: #fff748" ></i>
           <span  style="color: #fff748"> Đăng Nhập </span>
         </a>
-      </li>
-      <li class="nav-item dropdown" *ngIf="isLogged && !isAdmin">
-        <a class="nav-link text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-bell" style="color: #fff748"></i>
-          <span class="noti-length text-light" *ngIf="notifications?.length >0">{{notifications?.length}}</span>
-        </a>
-        <ul class="dropdown-menu text-center-md dropdown-menu-right drop-noti">
-          <li class="head text-light">
-            <div class="row">
-              <div class="col-lg-12 col-sm-12 col-12">
-                <a href="" class="float-right text-decoration-none text-primary" style="font-size: 12px">Delete All</a>
-              </div>
-            </div>
-          </li>
-          <li class="notification-box">
-            <div class="row">
-              <div class="col-lg-12 m-2 font-80">
-                <div *ngFor="let note of this.notifications" style="font-size: 12px">
-                  <a class="text-decoration-none"  [href]="this.note.url" (click)="deleteNotification(this.note.key)">
-                    <strong class="text-info">{{this.note.title}}</strong>
-                    <p class="text-dark">{{this.note.content}}</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <hr class="p-0 m-0">
-          </li>
-        </ul>
       </li>
     </ul>
   </div>

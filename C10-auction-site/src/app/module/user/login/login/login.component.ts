@@ -29,12 +29,9 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private authenticationService: AuthenticationService,
               private authService: SocialAuthService,
-              private title: Title,
-              private elementRef: ElementRef) { }
+              private title: Title) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Đăng nhập');
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
     if (this.tokenStorage.isLogged()) {
       if (this.tokenStorage.getRoles()[0] === 'MEMBER') {
         this.router.navigateByUrl('/home');

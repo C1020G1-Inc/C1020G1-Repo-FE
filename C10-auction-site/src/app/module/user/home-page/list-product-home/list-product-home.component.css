@@ -17,8 +17,15 @@ p {
   color: white;
 }
 .nav-link:hover{
-  background-color: #5a88ca;
-  color: white;
+  color: white !important;
+  cursor: pointer;
+}
+
+.nav-link:not(:disabled):not(.disabled).active, .nav-link:not(:disabled):not(.disabled):active, .show > .nav-link.dropdown-toggle {
+  color: whitesmoke !important;
+  background-color: #6F42C1;
+  border-color: #6F42C1;
+  box-shadow: 0 0 0 .2rem rgba(87, 64, 130, 0.5)
 }
 #search{
   width: 230px;

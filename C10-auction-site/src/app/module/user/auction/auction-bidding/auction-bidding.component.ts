@@ -5,6 +5,8 @@ import {HistoryAuction, ProductDetail} from '../../../../model/auction-bidding.m
 import {interval} from 'rxjs';
 import {FirebaseDatabaseService} from '../../../../service/auction-bidding/firebase-database.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ZoomComponent} from '../../../admin/admin-chat/zoom/zoom.component';
+import {MatDialog} from '@angular/material/dialog';
 
 declare const $: any;
 
@@ -38,7 +40,8 @@ export class AuctionBiddingComponent implements OnInit {
 
   constructor(public auctionBackendService: AuctionBackendService,
               public activateRoute: ActivatedRoute,
-              public firebaseDatabaseService: FirebaseDatabaseService) {
+              public firebaseDatabaseService: FirebaseDatabaseService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -154,6 +157,13 @@ export class AuctionBiddingComponent implements OnInit {
       return;
     }
     this.priceForm.controls.newPrice.setValue(Math.floor(+this.priceForm.controls.newPrice.value / this.currentStep) * this.currentStep);
+  }
+
+  zoom(url) {
+    this.dialog.open(ZoomComponent, {
+      data: url,
+      panelClass: 'custom-modalbox'
+    });
   }
 
 }

@@ -15,7 +15,7 @@
                   <div>
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tên sản phẩm:</span>
                     <input placeholder="Nhập tên..." [(ngModel)]="productName" class="form-control"
-                           style="width: 150px;float: left;margin-right: 10px">
+                           style="width: 120px;float: left;margin-right: 10px">
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Loại sản phẩm:</span>
                     <select style="width: 130px;height:35px;float: left;margin-right: 10px" [(ngModel)]="categoryId"
                             class="custom-select">
@@ -27,7 +27,7 @@
                     </select>
                     <span style="padding: 10px;color: white;float:left;margin-right: 10px">Người đăng:</span>
                     <input type="text" placeholder="Nhập tên..." [(ngModel)]="userName"
-                           style="width: 150px;float: left;margin-right: 10px" class="form-control">
+                           style="width: 120px;float: left;margin-right: 10px" class="form-control">
                     <span style="padding: 10px;color: white;float: left;margin-right: 10px">Tình trạng</span>
                     <select style="width: 130px;float: left;height: 35px;margin-right: 10px"
                             [(ngModel)]="productStatusId" class="custom-select">
@@ -115,7 +115,7 @@
   </div>
 
 
-  <div id="confirmModal" class="modal fade" *ngIf="productConfirm">
+  <div id="confirmModal" class="modal fade" style="height: 700px; overflow-y: auto" *ngIf="productConfirm">
     <div class="modal-dialog">
       <div class="modal-content">
         <form>
@@ -138,7 +138,7 @@
     </div>
   </div>
 
-  <div id="acceptProduct" class="modal fade" *ngIf="product">
+  <div id="acceptProduct" class="modal fade" *ngIf="product" >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
@@ -147,7 +147,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white">&times;
             </button>
           </div>
-          <div class="modal-body table-responsive">
+          <div class="modal-body table-responsive" style="height: 500px; overflow-y: auto">
             <table class="table">
               <tr>
                 <th style="padding: 2%">Tên sản phẩm:</th>
@@ -190,7 +190,7 @@
             <button type="submit" class="btn btn-primary" (click)="approveProduct()" data-dismiss="modal">Duyệt</button>
             <a class="btn btn-primary" data-toggle="modal" href="#confirmModal" data-dismiss="modal" (click)="sendProductToConfirm(product)">Phản Hồi</a>
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy"
-                   style="margin-right: 27%;margin-left: 10px">
+                   style="margin-right: 19%;margin-left: 10px">
           </div>
         </form>
       </div>
@@ -198,7 +198,7 @@
   </div>
 
 
-  <div id="editProduct" class="modal fade">
+  <div id="editProduct" class="modal fade" >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <form>
@@ -208,9 +208,9 @@
               &times;
             </button>
           </div>
-          <div class="modal-body table-responsive" *ngIf="productEdit">
-            <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
-              <table class="table">
+          <div class="modal-body table-responsive" *ngIf="productEdit" style="height: 600px; overflow-y: auto">
+            <form [formGroup]="editForm" (ngSubmit)="updateProduct()" >
+              <table class="table" >
                 <tr>
                   <th style="padding: 2%"> Tên sản phẩm:</th>
                   <th style="padding: 2%">
@@ -301,9 +301,9 @@
                   <th style="padding: 2%">
                     <select style="width: 130px;" id="auctionTime" name="auctionTime"
                             formControlName="auctionTime" class="custom-select">
+                      <option value="2">2 phút</option>
                       <option value="5">5 phút</option>
                       <option value="15">15 phút</option>
-                      <option value="30">30 phút</option>
                     </select>
                   </th>
                 </tr>

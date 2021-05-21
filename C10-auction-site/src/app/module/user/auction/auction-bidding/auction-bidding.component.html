@@ -14,7 +14,7 @@
                  [ngClass]="(i == 0)?'active':null">
               <img
                 [src]=image.image
-                class="d-block w-100 img-fluid" alt="...">
+                class="d-block w-100 img-fluid" alt="..." (click)="zoom(image.image)">
             </div>
           </div>
           <a class="carousel-control-prev" href="#image-auction-carousel" role="button" data-slide="prev">
@@ -45,44 +45,39 @@
     </div>
     <div class="col-6 col-lg-4">
       <div>
-      <p class="mt-lg-4 mb-lg-0 text-dark font-weight-bolder"
-         style="font-size: 20px">{{this.productDetail?.productName}}</p>
-      <p class="text-dark">Mã sản phẩm: SP-{{this.productDetail?.productId|number: '3.0-0'}}</p>
-      <p style="font-size: 17px"><span class="badge badge-pill"
+        <p class="mt-lg-4 mb-lg-0 font-weight-bolder"
+           style="font-size: 20px;color: #4e2179">{{this.productDetail?.productName}}</p>
+        <p style="color: #53407f">Mã sản phẩm: SP-{{this.productDetail?.productId|number: '3.0-0'}}</p>
+        <p style="font-size: 17px"><span class="badge badge-pill"
                                          [ngClass]="(this.status > 2)? 'badge-danger':(this.status == 2)? 'badge-success':'badge-secondary'">{{this.statusTranslate[this.status]}}</span>
         <p class="text-warning" style="font-size: 25px; font-weight: bold">{{this.currentPrice|number: '.0'}}
           đ
         </p>
         <div *ngIf="this.status > 1">
           <div class="text-secondary">Thời điểm kết thúc:</div>
-          <div class="text-danger">{{this.auctionEndTime |date :"HH:mm:ss dd/MM/yyyy":"+0700"}}
+          <div class="text-danger font-weight-bold">{{this.auctionEndTime |date :"HH:mm:ss dd/MM/yyyy":"+0700"}}
           </div>
-      </div>
-
         </div>
+
+      </div>
       <div class="my-3" style="font-size: 15px" *ngIf="isInProgress">
         <div class="row mb-4" *ngIf="isInProgress">
-          <div class="col-12">
-            <div>
-              <span class="text-success font-weight-bold float-left">{{+ this.priceForm.controls.newPrice.value |number:'.0'}}
-                đ</span>
-              <span class="text-info font-weight-bold float-right"><i
-                class="fas fa-plus"></i> {{this.historyAuction?.currentStep |number:'.0'}} đ</span>
+          <div class="col-12 pl-0 mb-3">
+            <div class="col-6">
+              <span class="text-info font-weight-bold"><i
+                class="fas fa-plus"></i>{{this.historyAuction?.currentStep |number:'.0'}} đ</span>
             </div>
-            <form [formGroup]="priceForm" class="mb-2">
+            <form [formGroup]="priceForm" class="mb-2 col-lg-8">
               <div class="input-group">
               <span class="input-group-btn">
-                <button type="button" class="quantity-left-minus btn btn-secondary" style="border-radius: 0"
-                        (click)="decreasePrice()"><i class="fas fa-backward"></i></button>
+                <button type="button" class="quantity-left-minus btn" style="border-radius: 0; background-color: #53407f; color: white"
+                        (click)="decreasePrice()"><i class="fas fa-minus"></i></button>
               </span>
                 <input type="text" class="form-control" style="border-radius: 0"
                        formControlName="newPrice">
-                <div class="input-group-append">
-                  <span class="input-group-text">đ</span>
-                </div>
                 <span class="input-group-btn">
-                <button type="button" class="quantity-right-plus btn btn-secondary" style="border-radius: 0"
-                        (click)="increasePrice()"><i class="fas fa-forward"></i></button>
+                <button type="button" class="quantity-right-plus btn" style="border-radius: 0; background-color: #53407f; color: white"
+                        (click)="increasePrice()"><i class="fas fa-plus"></i></button>
               </span>
               </div>
               <span class="text-danger" style="font-size: 12px"
@@ -103,10 +98,15 @@
             </span>
             </form>
           </div>
-          <div class="col-12">
-            <button class="btn btn-block btn-success btn-lg" [disabled]="!priceForm.valid" (click)="submit()"><i
-              class="fa fa-gavel"></i> Đặt giá
-            </button>
+          <div class="row col-12">
+            <div class="col-lg-12">
+              <p class="font-weight-bold float-left" style="font-size: 25px; color:#53407f; line-height: 50px">{{+this.priceForm.controls.newPrice.value |number:'.0'}} đ</p>
+            </div>
+            <div class="col-lg-6">
+              <button class="btn btn-block btn-lg" style="background-color: #53407f; color: yellow " [disabled]="!priceForm.valid" (click)="submit()"><i
+                class="fa fa-gavel"></i> Đặt giá
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -139,50 +139,61 @@
   <div class="row">
     <div class="card w-100">
       <div class="card-header">
-        Mô tả sản phẩm
-      </div>
-      <div class="card-body" style="font-size: 12px">
-        {{this.productDetail?.description}}
-      </div>
-    </div>
-    <div class="card w-100">
-      <div class="card-header">
-        Thông tin sản phẩm
-      </div>
-      <div class="card-body" style="font-size: 12px">
-        <p><strong>Người đăng sản phẩm: </strong>{{this.productDetail?.account.accountName}}</p>
-        <p><strong>Giá khởi điểm: </strong>{{this.productDetail?.price| number: '.0-2'}} đ</p>
-        <p><strong>Bắt đầu đấu
-          giá: </strong>{{(this.status > 1) ? (this.productDetail?.registerTime |date: 'HH:mm:ss dd/MM/yyyy') : '-'}}
-        </p>
-        <p><strong>Thời gian đấu giá: </strong>{{this.productDetail?.auctionTime}} phút</p>
-        <p><strong>Loại sản phẩm: </strong>{{this.productDetail?.category.categoryName}}</p>
-        <p><strong>Bước giá ban đầu: </strong>{{this.productDetail?.priceStep | number: '.0-2'}} đ</p>
-      </div>
-    </div>
-    <div class="card w-100">
-      <div class="card-header">
-        Điều khoản đấu giá
-      </div>
-      <div class="card-body" style="font-size: 12px">
-        <p>Người đấu giá phải đặt giá mới ít nhất bằng giá cũ cộng với bước giá và số tiền đặt phải
-          là bội số của bước giá</p>
-        <p>Bước gíá tính theo giá hiện tại theo các mức như sau:</p>
-        <ul>
-          <li>Dưới 20.000 -> bước giá 1000</li>
-          <li>Từ 20.000 đến 100.000 -> bước giá 5.000</li>
-          <li>Từ 100.000 đến 500.000 -> bước giá 10.000</li>
-          <li>Từ 500.000 đến 2.000.000 -> bước giá 20.000</li>
-          <li>Từ 2.000.000 đến 5.000.000 -> bước giá 50.000</li>
-          <li>Từ 5.000.000 đến 10.000.000 -> bước giá 100.000</li>
-          <li>Từ 10.000.000 đến 20.000.000 -> bước giá 200.000</li>
-          <li>Từ 20.000.000 đến 50.000.000 -> bước giá 500.000</li>
-          <li>Từ 50.000.000 đến 100.000.000 -> bước giá 1.000.000</li>
-          <li>Trên 100.000.000 -> bước giá 2.000.000</li>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+               aria-controls="pills-home" aria-selected="true">Mô tả sản phẩm</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+               aria-controls="pills-profile" aria-selected="false">Thông tin sản phẩm</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+               aria-controls="pills-contact" aria-selected="false">Điều khoản đấu giá</a>
+          </li>
         </ul>
-        <p>Trong vòng 24h, người thắng cuộc phải thanh toán giá trị của món hàng. Sau 24h thì giao dịch cho sản
-          phẩm sẽ bị khóa</p>
-        <p>Quý khách hàng không được hủy giao dịch quá 3 lần</p>
+      </div>
+      <div class="tab-content card-body" id="pills-tabContent" style="min-height: 300px">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          {{this.productDetail?.description}}
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <ul class="imglist">
+            <li><strong>Người đăng sản phẩm: </strong>{{this.productDetail?.account.accountName}}</li>
+            <li><strong>Giá khởi điểm: </strong>{{this.productDetail?.price| number: '.0-2'}} đ</li>
+            <li><strong>Bắt đầu đấu
+              giá: </strong>{{(this.status > 1) ? (this.productDetail?.registerTime |date: 'HH:mm:ss dd/MM/yyyy') : '-'}}
+            </li>
+            <li><strong>Thời gian đấu giá: </strong>{{this.productDetail?.auctionTime}} phút</li>
+            <li><strong>Loại sản phẩm: </strong>{{this.productDetail?.category.categoryName}}</li>
+            <li><strong>Bước giá ban đầu: </strong>{{this.productDetail?.priceStep | number: '.0-2'}} đ</li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          <ul class="imglist">
+            <li>Người đấu giá phải đặt giá mới ít nhất bằng giá cũ cộng với bước giá và số tiền đặt phải
+              là bội số của bước giá
+            </li>
+            <li>Bước gíá tính theo giá hiện tại theo các mức như sau:</li>
+            <ol style="margin-left: 20px">
+              <li>Dưới 20.000 -> bước giá 1000</li>
+              <li>Từ 20.000 đến 100.000 -> bước giá 5.000</li>
+              <li>Từ 100.000 đến 500.000 -> bước giá 10.000</li>
+              <li>Từ 500.000 đến 2.000.000 -> bước giá 20.000</li>
+              <li>Từ 2.000.000 đến 5.000.000 -> bước giá 50.000</li>
+              <li>Từ 5.000.000 đến 10.000.000 -> bước giá 100.000</li>
+              <li>Từ 10.000.000 đến 20.000.000 -> bước giá 200.000</li>
+              <li>Từ 20.000.000 đến 50.000.000 -> bước giá 500.000</li>
+              <li>Từ 50.000.000 đến 100.000.000 -> bước giá 1.000.000</li>
+              <li>Trên 100.000.000 -> bước giá 2.000.000</li>
+            </ol>
+            <li>Trong vòng 24h, người thắng cuộc phải thanh toán giá trị của món hàng. Sau 24h thì giao dịch cho sản
+              phẩm sẽ bị khóa
+            </li>
+            <li>Quý khách hàng không được hủy giao dịch quá 3 lần</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -200,3 +211,4 @@
     </div>
   </div>
 </div>
+

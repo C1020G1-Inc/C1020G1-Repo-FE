@@ -28,7 +28,6 @@ export class ViewProfileComponent implements OnInit {
   ) {
   }
   ngOnInit(): void {
-    this.title.setTitle('Xem thông tin người dùng')
     this.accountService.findAccount(this.token.getAccount().accountId).subscribe(data =>{
       this.accountLogin = data;
       this.userLogin = this.accountLogin.user;

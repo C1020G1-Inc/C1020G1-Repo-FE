@@ -42,8 +42,6 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.title.setTitle('Đăng ký');
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'hsla(0, 0%, 65.9%, .4)';
     if (this.tokenStorage.isLogged()) {
       this.router.navigateByUrl('/home');
     }

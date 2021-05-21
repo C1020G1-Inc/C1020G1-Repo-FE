@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2">
   <app-form-search-product-auction></app-form-search-product-auction>
   <div class="container bg-light">
-    <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-secondary bg-dark">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="nav-link" style="color: white"><i class="fa fa-align-justify"></i></span>
@@ -9,16 +9,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link ml-5" routerLink="/home"><i class="fa fa-gavel"></i> Đang Đấu Giá</a>
+            <a class="nav-link ml-5 text-warning" routerLink="/home"><i class="fa fa-gavel"></i> Đang Đấu Giá</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ml-5" routerLink="/home/end" ><i class="fa fa-times-circle"></i> Đã Kết Thúc</a>
+            <a class="nav-link ml-5 text-warning" routerLink="/home/end" ><i class="fa fa-times-circle"></i> Đã Kết Thúc</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ml-5 text-info"><i class="fa fa-calendar-o"></i> Kết Quả</a>
+            <a class="nav-link ml-5"><i class="fa fa-calendar-o"></i> Kết Quả</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ml-5" routerLink="/home/top"><i class="fa fa-bar-chart-o"></i> Top Đấu Giá</a>
+            <a class="nav-link ml-5 text-warning" routerLink="/home/top"><i class="fa fa-bar-chart-o"></i> Top Đấu Giá</a>
           </li>
         </ul>
       </div>
@@ -26,22 +26,22 @@
   </div>
   <div class="container bg-light">
     <div class="btn-toolbar" role="group" aria-label="Basic example">
-      <button (click)="showByAll()" type="button" class="btn btn-warning rounded-pill ml-5 mb-2 {{activeOne}} mt-2"><i
+      <button (click)="showByAll()" type="button" class="btn btn-purple rounded-pill ml-5 mb-2 {{activeOne}} mt-2"><i
         class="fa fa-bars"></i>
         Tất Cả
       </button>
       <button (click)="showByHouseHold()" type="button"
-              class="btn btn-warning rounded-pill ml-5 mb-2 {{activeTwo}} mt-2"><i
+              class="btn btn-purple rounded-pill ml-5 mb-2 {{activeTwo}} mt-2"><i
         class="fa fa-plug"></i> Gia Dụng
       </button>
       <button (click)="showByTechnology()" type="button"
-              class="btn btn-warning rounded-pill ml-5 mb-2 {{activeThree}} mt-2">
+              class="btn btn-purple rounded-pill ml-5 mb-2 {{activeThree}} mt-2">
         <i class="fa fa-laptop"></i> Công Nghệ
       </button>
-      <button (click)="showByHot()" type="button" class="btn btn-warning rounded-pill ml-5 mb-2 {{activeFour}} mt-2"><i
+      <button (click)="showByHot()" type="button" class="btn btn-purple rounded-pill ml-5 mb-2 {{activeFour}} mt-2"><i
         class="fa fa-fire"></i> Hot
       </button>
-      <button (click)="showByOther()" type="button" class="btn btn-warning rounded-pill ml-5 mb-2 {{activeFive}} mt-2">
+      <button (click)="showByOther()" type="button" class="btn btn-purple rounded-pill ml-5 mb-2 {{activeFive}} mt-2">
         ...
         Khác
       </button>

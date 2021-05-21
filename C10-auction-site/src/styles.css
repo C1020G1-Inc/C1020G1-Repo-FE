@@ -3,7 +3,9 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;
+  font-family: "Poppins", sans-serif !important;
+}
 .loading-dialog .mat-dialog-container {
   border: none !important;
   background-color: transparent !important;
@@ -13,4 +15,40 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .custom-modalbox > mat-dialog-container {
   padding: 0 !important;
+}
+
+.btn-purple {
+  color: yellow !important;
+  background-color: #63299d;
+  border-color: #63299d
+}
+
+.btn-purple:hover {
+  color: whitesmoke !important;
+  background-color: #6F42C1;
+  border-color: #6F42C1
+}
+
+.btn-purple.focus, .btn-purple:focus {
+  color: whitesmoke !important;
+  background-color: #6F42C1;
+  border-color: #6F42C1;
+  box-shadow: 0 0 0 .2rem rgba(87, 64, 130, 0.5)
+}
+
+.btn-purple.disabled, .btn-purple:disabled {
+  color: whitesmoke !important;
+  background-color: #6F42C1;
+  border-color: #644a96
+}
+
+.btn-purple:not(:disabled):not(.disabled).active, .btn-purple:not(:disabled):not(.disabled):active, .show > .btn-purple.dropdown-toggle {
+  color: whitesmoke !important;
+  background-color: #6F42C1;
+  border-color: #6F42C1;
+  box-shadow: 0 0 0 .2rem rgba(87, 64, 130, 1)
+}
+
+.btn-purple:not(:disabled):not(.disabled).active:focus, .btn-purple:not(:disabled):not(.disabled):active:focus, .show > .btn-purple.dropdown-toggle:focus {
+  box-shadow: 0 0 0 .2rem rgba(87, 64, 130, 1)
 }

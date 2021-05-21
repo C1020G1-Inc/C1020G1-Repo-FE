@@ -43,6 +43,7 @@ export class DetailProductComponent implements OnInit {
       this.productImage = data2 ;
       console.log(data2);
     });
+
   }
 
   // getTimeRemain(date) {

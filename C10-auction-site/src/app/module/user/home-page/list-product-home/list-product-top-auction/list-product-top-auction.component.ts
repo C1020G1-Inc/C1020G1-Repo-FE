@@ -33,7 +33,6 @@ export class ListProductTopAuctionComponent implements OnInit {
     this.openLoading();
     const changeBySecond = interval(1000).subscribe(() => {
       this.listProductService.showTop5ProductAuction(this.category).subscribe((data) => {
-        console.log(data);
         this.listProduct = data;
         this.checkListProduct = this.listProduct.length !== 0;
         if (this.checkListProduct === false) {

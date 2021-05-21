@@ -75,6 +75,10 @@ export class HeaderComponent implements OnInit {
     this.firebaseDatabaseService.deleteNotification(key, this.account.accountId).then();
   }
 
+  deleteAllNotification(){
+    this.firebaseDatabaseService.deleteAllNotification(this.account.accountId).then();
+  }
+
   /**
    * @author: PhinNl
    */

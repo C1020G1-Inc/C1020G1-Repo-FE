@@ -16,8 +16,8 @@ p {
   color: white;
 }
 .nav-link:hover{
-  background-color: #5a88ca;
-  color: white;
+  color: white !important;
+  cursor: pointer;
 }
 #search{
   width: 230px;

@@ -20,4 +20,8 @@ export class FirebaseDatabaseService {
   deleteNotification(key, accountId): Promise<void> {
     return this.database.object("/notification/" + accountId + "/" + key).remove();
   }
+
+  deleteAllNotification(accountId): Promise<void>{
+    return this.database.object("/notification/"+accountId).remove();
+  }
 }
