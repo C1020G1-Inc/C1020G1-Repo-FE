@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {LoadingComponent} from '../loading/loading.component';
 import Swal from 'sweetalert2';
+import {ZoomComponent} from '../../admin-chat/zoom/zoom.component';
 
 @Component({
   selector: 'app-list-product-admin',
@@ -268,6 +269,13 @@ export class ListProductAdminComponent implements OnInit {
 
   showSendMailAlert() {
     Swal.fire('Gửi mail phản hồi thành công !', '', 'success')
+  }
+
+  zoom(url) {
+    this.dialog.open(ZoomComponent,{
+      data: url,
+      panelClass: 'custom-modalbox'
+    });
   }
 }
 

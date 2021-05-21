@@ -52,3 +52,7 @@ body { margin: 0;
 .btn-purple:not(:disabled):not(.disabled).active:focus, .btn-purple:not(:disabled):not(.disabled):active:focus, .show > .btn-purple.dropdown-toggle:focus {
   box-shadow: 0 0 0 .2rem rgba(87, 64, 130, 1)
 }
+
+a {
+  text-decoration: none !important;
+}

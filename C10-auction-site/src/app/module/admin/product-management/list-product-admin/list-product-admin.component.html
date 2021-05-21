@@ -174,7 +174,7 @@
                 <th>
                   <div style="height: 120px;width: 420px;overflow-y: auto">
                     <div *ngFor="let image of listProductImage" style="display: inline-block">
-                      <img style="width: 150px;height: 100px;margin:5px;float: left"
+                      <img (click)="zoom(image.image)" style="width: 150px;height: 100px;margin:5px;float: left"
                            src="{{image.image}}">
                     </div>
                   </div>
@@ -273,7 +273,7 @@
                            style="color: red;cursor: pointer">
                         </i>
                       </span>
-                        <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                        <img (click)="zoom(image.image)" style="width: 150px;height: 100px;margin-right:5px;float: left"
                              src="{{image.image}}">
                       </div>
 
@@ -284,7 +284,7 @@
                            [attr.data-index]="i" style="color: red;cursor: pointer">
                         </i>
                       </span>
-                        <img style="width: 150px;height: 100px;margin-right:5px;float: left"
+                        <img (click)="zoom(imageUpdate.url)" style="width: 150px;height: 100px;margin-right:5px;float: left"
                              src="{{imageUpdate.url}}">
                       </div>
                     </div>

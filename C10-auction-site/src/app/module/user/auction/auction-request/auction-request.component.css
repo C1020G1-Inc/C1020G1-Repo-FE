@@ -72,6 +72,7 @@
   font-weight: 600;
   width: 50%;
   cursor: pointer;
+  text-align: center;
 }
 .register .nav-tabs{
   margin-top: 3%;

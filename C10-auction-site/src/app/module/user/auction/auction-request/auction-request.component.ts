@@ -13,6 +13,7 @@ import {ProductDTO} from '../../../../model/ProductDTO';
 import {MatDialog} from '@angular/material/dialog';
 import {LoadingComponent} from '../../../loading/loading/loading.component';
 import Swal from 'sweetalert2';
+import {ZoomComponent} from '../../../admin/admin-chat/zoom/zoom.component';
 
 
 
@@ -162,5 +163,12 @@ export class AuctionRequestComponent implements OnInit {
     this.productImage.splice(index, 1);
     this.imageToUpFireBase.splice(index, 1);
     this.lengthOfImage--;
+  }
+
+  zoom(url) {
+    this.dialog.open(ZoomComponent,{
+      data: url,
+      panelClass: 'custom-modalbox'
+    });
   }
 }

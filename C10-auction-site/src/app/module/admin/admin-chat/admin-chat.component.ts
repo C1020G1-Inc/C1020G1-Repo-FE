@@ -16,7 +16,7 @@ export class AdminChatComponent implements OnInit {
 
   nickname = '';
   rooms = new Array<Room>();
-  isLoadingResults = true;
+  isLoadingResults: boolean;
   notifications = new Array<Notification>();
   year = new Date().getFullYear();
   roomName: string;
@@ -31,12 +31,15 @@ export class AdminChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoadingResults = true
     this.account = this.tokenStorageService.getAccount();
     this.nickname = this.tokenStorageService.getAccount().accountName;
     this.chatService.refRooms.on('value', resp => {
       this.rooms = this.chatService.snapshotToArray(resp);
       this.tempRooms = this.rooms;
-      this.isLoadingResults = false;
+      if (this.rooms) {
+        this.isLoadingResults = false;
+      }
       for (const roomFB of this.rooms) {
         if (roomFB.active){
           this.roomName = roomFB.roomName;
